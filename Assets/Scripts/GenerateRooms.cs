@@ -16,7 +16,7 @@ public class GenerateRooms : MonoBehaviour
     void Start()
     {
         CreateRooms(roomsNum, circleRadius);
-        SeparateRooms();
+        StartCoroutine(SeparateRooms());
     }
 
     void CreateRooms(int roomsNum, float circleRadius)
@@ -30,25 +30,45 @@ public class GenerateRooms : MonoBehaviour
     Vector3 CalculatePosition(float circleRadius)
     {
         // Get Random Point In Circle
-        float rand = Random.Range(0, 100) / 100.0f;
+        Vector3 newPos;
 
-        float t = 2 * Mathf.PI * rand;
-        float u = rand + rand;
-        float r;
+        do
+        {
+            float rand = Random.Range(0, 100) / 100.0f;
 
-        if (u > 1) r = 2 - u;
-        else r = u;
+            float t = 2 * Mathf.PI * rand;
+            float u = rand + rand;
+            float r;
 
-        float x = circleRadius * r * Mathf.Cos(t);
-        float z = circleRadius * r * Mathf.Sin(t);
+            if (u > 1) r = 2 - u;
+            else r = u;
 
-        return new Vector3(Mathf.Floor((x + tileSize + 1) / tileSize) * tileSize, 0, Mathf.Floor((z + tileSize + 1) / tileSize) * tileSize);
+            float x = circleRadius * r * Mathf.Cos(t);
+            float z = circleRadius * r * Mathf.Sin(t);
+
+            newPos = new Vector3(Mathf.Floor((x + tileSize + 1) / tileSize) * tileSize, 0, Mathf.Floor((z + tileSize + 1) / tileSize) * tileSize);
+        } while (PositionAlreadyOccuped(newPos));
+        
+        
+
+        return newPos;
     }
 
-    void SeparateRooms()
+    bool PositionAlreadyOccuped(Vector3 pos)
+    {
+        for (int i = 0; i < createdRooms.Count; i++)
+        {
+            if (createdRooms[i].transform.position == pos) return true;
+        }
+
+        return false;
+    }
+
+    IEnumerator SeparateRooms()
     {
         do
         {
+            yield return new WaitForEndOfFrame();
             for (int current = 0; current < createdRooms.Count; current++)
             {
                 for (int other = 0; other < createdRooms.Count; other++)
@@ -57,8 +77,8 @@ public class GenerateRooms : MonoBehaviour
 
                     Vector3 direction = (createdRooms[other].transform.position - createdRooms[current].transform.position).normalized;
 
-                    createdRooms[current].transform.position = new Vector3(createdRooms[current].transform.position.x + Mathf.RoundToInt(-direction.x) * tileSize, createdRooms[current].transform.position.y, createdRooms[current].transform.position.z + Mathf.RoundToInt(-direction.z) * tileSize);
-                    createdRooms[other].transform.position = new Vector3(createdRooms[current].transform.position.x + Mathf.RoundToInt(direction.x) * tileSize, createdRooms[current].transform.position.y, createdRooms[current].transform.position.z + Mathf.RoundToInt(direction.z) * tileSize);
+                    createdRooms[current].transform.position = new Vector3(createdRooms[current].transform.position.x - direction.x * tileSize, createdRooms[current].transform.position.y, createdRooms[current].transform.position.z - direction.z * tileSize);
+                    createdRooms[other].transform.position = new Vector3(createdRooms[other].transform.position.x + direction.x * tileSize, createdRooms[other].transform.position.y, createdRooms[other].transform.position.z + direction.z * tileSize);
                 }
             }
         }
