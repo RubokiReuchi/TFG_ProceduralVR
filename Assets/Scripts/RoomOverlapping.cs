@@ -4,37 +4,35 @@ using UnityEngine;
 
 public class RoomOverlapping : MonoBehaviour
 {
-    [NonEditable] public bool overlapping = false;
+    [NonEditable] public bool overlaping = false;
     [HideInInspector] public List<int> overlapGameobject = new();
+    public LayerMask layerMask;
 
-    public int num;
+    BoxCollider bc;
 
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        num = overlapGameobject.Count;
-        overlapping = !(overlapGameobject.Count == 0);
+        bc = GetComponent<BoxCollider>();
     }
 
     public bool CheckOverlap(int otherInstanceID)
     {
-        return overlapGameobject.Contains(otherInstanceID);
+        Collider[] colliding = Physics.OverlapBox(bc.bounds.center, bc.bounds.size / 2.0f, Quaternion.identity, layerMask);
+        for (int i = 0; i < colliding.Length; i++)
+        {
+            if (colliding[i].gameObject.GetInstanceID() == otherInstanceID) return true;
+        }
+        return false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    // return if is overlaping something
+    public bool CheckAnyOverlap()
     {
-        int otherID = other.gameObject.GetInstanceID();
-        if (other.gameObject.CompareTag("RoomBound") && !overlapGameobject.Contains(otherID)) overlapGameobject.Add(otherID);
-    }
+        Collider[] colliding = Physics.OverlapBox(bc.bounds.center, bc.bounds.size / 2.0f, Quaternion.identity, layerMask);
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("RoomBound")) overlapGameobject.Remove(other.gameObject.GetInstanceID());
+        overlaping = !(colliding.Length == 1); // the one is him self
+
+        return overlaping;
     }
 }

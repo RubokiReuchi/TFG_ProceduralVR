@@ -91,9 +91,9 @@ GameObject:
   - component: {fileID: 8522523344050369915}
   - component: {fileID: 3371274307454214548}
   - component: {fileID: 6660885070447889680}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Room0
-  m_TagString: RoomBound
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,8 +128,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 988992c99b345af4c87088462774e048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  overlapping: 0
+  overlaping: 0
   overlapGameobject: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!65 &3371274307454214548
 BoxCollider:
   m_ObjectHideFlags: 0
