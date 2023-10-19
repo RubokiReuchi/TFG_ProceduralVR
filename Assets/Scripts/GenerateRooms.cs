@@ -16,12 +16,12 @@ public class GenerateRooms : MonoBehaviour
     void Start()
     {
         CreateRooms(roomsNum, circleRadius);
-        //StartCoroutine(SeparateRooms());
+        StartCoroutine(SeparateRooms());
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) StartCoroutine(SeparateRooms());
+        //if (Input.GetKeyDown(KeyCode.Space)) StartCoroutine(SeparateRooms());
     }
 
     void CreateRooms(int roomsNum, float circleRadius)
@@ -82,7 +82,8 @@ public class GenerateRooms : MonoBehaviour
                     // save check
                     if (direction == Vector3.zero) direction = GetRandomVector3();
 
-                    createdRooms[current].transform.position = new Vector3(createdRooms[current].transform.position.x - direction.x * tileSize, createdRooms[current].transform.position.y, createdRooms[current].transform.position.z - direction.z * tileSize);
+                    createdRooms[current].transform.position = new Vector3(createdRooms[current].transform.position.x - Mathf.RoundToInt(direction.x) * tileSize, createdRooms[current].transform.position.y, createdRooms[current].transform.position.z - Mathf.RoundToInt(direction.z) * tileSize);
+                    bool ret = createdRooms[current].GetComponent<RoomOverlapping>().CheckOverlap(createdRooms[other].GetInstanceID());
                 }
             }
         }

@@ -18,7 +18,7 @@ public class RoomOverlapping : MonoBehaviour
 
     public bool CheckOverlap(int otherInstanceID)
     {
-        Collider[] colliding = Physics.OverlapBox(bc.bounds.center, bc.bounds.size / 2.0f, Quaternion.identity, layerMask);
+        Collider[] colliding = Physics.OverlapBox(bc.bounds.center, bc.bounds.size / 2.0f - Vector3.one * 0.1f, Quaternion.identity, layerMask); // remove "Vector3.one * 0.1f" to space rooms
         for (int i = 0; i < colliding.Length; i++)
         {
             if (colliding[i].gameObject.GetInstanceID() == otherInstanceID) return true;
@@ -29,7 +29,7 @@ public class RoomOverlapping : MonoBehaviour
     // return if is overlaping something
     public bool CheckAnyOverlap()
     {
-        Collider[] colliding = Physics.OverlapBox(bc.bounds.center, bc.bounds.size / 2.0f, Quaternion.identity, layerMask);
+        Collider[] colliding = Physics.OverlapBox(bc.bounds.center, bc.bounds.size / 2.0f - Vector3.one * 0.1f, Quaternion.identity, layerMask); // remove "Vector3.one * 0.1f" to space rooms
 
         overlaping = !(colliding.Length == 1); // the one is him self
 
