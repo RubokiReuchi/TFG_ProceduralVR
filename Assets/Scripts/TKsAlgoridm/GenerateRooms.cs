@@ -10,15 +10,16 @@ using UnityEditor.Experimental.GraphView;
 
 public class GenerateRooms : MonoBehaviour
 {
-    public GameObject floorTile;
-    public GameObject emptyRoom;
-    public GameObject floorPool;
+    // Create and Separe
+    [SerializeField] GameObject floorTile;
+    [SerializeField] GameObject emptyRoom;
+    [SerializeField] GameObject floorPool;
 
     [Header("Note: High rooms number with small circle radius can cause undesired results (recomend 4/1 proporcion)")]
-    public int roomsNum;
+    [SerializeField] int roomsNum;
     [Range(0.5f, 100.0f)] public float circleRadius;
-    public int minTiles;
-    public int maxTiles;
+    [SerializeField] int minTiles;
+    [SerializeField] int maxTiles;
     int tileSize = 2;
 
     int countTotalWidth = 0;
@@ -26,7 +27,11 @@ public class GenerateRooms : MonoBehaviour
 
     List<GameObject> createdRooms = new();
     List<GameObject> mainRooms = new();
+    [Header("Higher Threshold means a bigger map")]
+    [Range(0.1f, 0.25f)] [SerializeField] float mainRoomsThreshold;
+    [SerializeField] int minimumMainRooms;
 
+    // Path
     struct Edge
     {
         public Vector3 start;
@@ -79,6 +84,7 @@ public class GenerateRooms : MonoBehaviour
     List<Edge> delaunatorEdges = new();
     Dictionary<int, int> mainRoomsKeys = new(); // key (mainRoomID), value (roomID)
     List<Edge> treeEdges = new();
+    List<Edge> returningEdges = new();
 
     // Start is called before the first frame update
     void Start()
@@ -107,6 +113,7 @@ public class GenerateRooms : MonoBehaviour
         //    }
         //}
 
+        // DisplayEdges
         if (delaunatorEdges.Count > 0)
         {
             for (int i = 0; i < delaunatorEdges.Count; i++)
@@ -120,6 +127,14 @@ public class GenerateRooms : MonoBehaviour
             for (int i = 0; i < treeEdges.Count; i++)
             {
                 Debug.DrawLine(treeEdges[i].start, treeEdges[i].end, Color.red);
+            }
+        }
+
+        if (returningEdges.Count > 0)
+        {
+            for (int i = 0; i < returningEdges.Count; i++)
+            {
+                Debug.DrawLine(returningEdges[i].start, returningEdges[i].end, Color.blue);
             }
         }
     }
@@ -234,12 +249,16 @@ public class GenerateRooms : MonoBehaviour
         int mediaWidth = countTotalWidth / roomsNum;
         int mediaHeight = countTotalHeight / roomsNum;
 
-        for (int i = 0; i < createdRooms.Count; i++)
+        while (mainRooms.Count < minimumMainRooms)
         {
-            RoomOverlapping script = createdRooms[i].GetComponent<RoomOverlapping>();
-            if (script.roomWidth >= mediaWidth * 1.25f && script.roomHeight >= mediaWidth * 1.25f)
+            mainRooms.Clear();
+            for (int i = 0; i < createdRooms.Count; i++)
             {
-                mainRooms.Add(createdRooms[i]);
+                RoomOverlapping script = createdRooms[i].GetComponent<RoomOverlapping>();
+                if (script.roomWidth >= mediaWidth * (1 + mainRoomsThreshold) && script.roomHeight >= mediaWidth * (1 + mainRoomsThreshold))
+                {
+                    mainRooms.Add(createdRooms[i]);
+                }
             }
         }
 
@@ -354,6 +373,7 @@ public class GenerateRooms : MonoBehaviour
         }
 
         treeEdges = ConvertFromKeyEdges(result);
+        RecoverSomeEdges();
     }
 
     int FindDisjointSet(TreeMaintainanceSet[] subsets, int i)
@@ -376,6 +396,18 @@ public class GenerateRooms : MonoBehaviour
         {
             subsets[yRoot].parent = xRoot;
             subsets[xRoot].rank++;
+        }
+    }
+
+    void RecoverSomeEdges()
+    {
+        for (int i = 0; i < delaunatorEdges.Count; i++)
+        {
+            if (!treeEdges.Contains(delaunatorEdges[i]))
+            {
+                int rand = Random.Range(0, 100);
+                if (rand < 15) returningEdges.Add(delaunatorEdges[i]);
+            }
         }
     }
 }
