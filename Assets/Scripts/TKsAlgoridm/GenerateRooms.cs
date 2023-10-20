@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using DelaunatorSharp;
+using DelaunatorSharp.Unity.Extensions;
+using UnityEditor.Rendering;
+using UnityEditor.Experimental.GraphView;
 
 public class GenerateRooms : MonoBehaviour
 {
@@ -23,6 +27,24 @@ public class GenerateRooms : MonoBehaviour
 
     List<GameObject> createdRooms = new();
     List<GameObject> mainRooms = new();
+
+    struct Edge
+    {
+        public Vector3 start;
+        public Vector3 end;
+        public int lenght;
+
+        public Edge(Vector3 start, Vector3 end, int lenght)
+        {
+            this.start = start;
+            this.end = end;
+            this.lenght = lenght;
+        }
+    }
+
+    Dictionary<int, Vector3> roomsCenter = new();
+    List<Edge> delaunatorEdges = new();
+    List<Edge> treeEdges = new();
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +72,22 @@ public class GenerateRooms : MonoBehaviour
         //        }
         //    }
         //}
+
+        if (delaunatorEdges.Count > 0)
+        {
+            for (int i = 0; i < delaunatorEdges.Count; i++)
+            {
+                Debug.DrawLine(delaunatorEdges[i].start, delaunatorEdges[i].end, Color.white);
+            }
+        }
+
+        if (treeEdges.Count > 0)
+        {
+            for (int i = 0; i < treeEdges.Count; i++)
+            {
+                Debug.DrawLine(treeEdges[i].start, treeEdges[i].end, Color.red);
+            }
+        }
     }
 
     void CreateRooms(int roomsNum, float circleRadius)
@@ -169,10 +207,84 @@ public class GenerateRooms : MonoBehaviour
             {
                 mainRooms.Add(createdRooms[i]);
             }
-            else
+        }
+
+        if (mainRooms.Count > 2) CreateDelaunayGraph();
+        else Debug.Log("Not enough main rooms");
+    }
+
+    void CreateDelaunayGraph()
+    {
+        Delaunator delaunator;
+        List<IPoint> delaunatorPoints = new();
+
+        for (int i = 0; i < mainRooms.Count; i++)
+        {
+            RoomOverlapping script = mainRooms[i].GetComponent<RoomOverlapping>();
+            Vector3 center = script.GetCentralPoint();
+            roomsCenter.Add(script.roomID, center);
+            delaunatorPoints.Add(new Point(center.x, center.z));
+        }
+
+        delaunator = new Delaunator(delaunatorPoints.ToArray());
+        delaunator.ForEachTriangleEdge(edge =>
+        {
+            Vector3 start = new Vector3(edge.P.ToVector2().x, 0, edge.P.ToVector2().y);
+            Vector3 end = new Vector3(edge.Q.ToVector2().x, 0, edge.Q.ToVector2().y);
+            delaunatorEdges.Add(new Edge(start, end, Mathf.RoundToInt(Vector3.Distance(end, start))));
+        });
+
+        // Bubble Sort
+        for (int i = 1; i < delaunatorEdges.Count; i++)
+        {
+            for (int j = 0; j < delaunatorEdges.Count - 1; j++)
             {
-                createdRooms[i].SetActive(false);
+                if (delaunatorEdges[j].lenght > delaunatorEdges[j + 1].lenght)
+                {
+                    Edge aux = delaunatorEdges[j];
+                    delaunatorEdges[j] = delaunatorEdges[j + 1];
+                    delaunatorEdges[j + 1] = aux;
+                }
             }
         }
+
+        CreateMST();
+    }
+
+    void CreateMST()
+    {
+        for (int i = 0; i < delaunatorEdges.Count; i++)
+        {
+            if (!Concidence(i)) treeEdges.Add(delaunatorEdges[i]);
+        }
+    }
+
+    bool Concidence(int edge)
+    {
+        List<Vector3> storeStartCoincidence = new();
+        List<Vector3> storeEndCoincidence = new();
+        for (int j = 0; j < treeEdges.Count; j++)
+        {
+            if (edge == j) continue;
+
+            if (delaunatorEdges[edge].start == treeEdges[j].start) storeStartCoincidence.Add(treeEdges[j].end);
+            else if (delaunatorEdges[edge].start == treeEdges[j].end) storeStartCoincidence.Add(treeEdges[j].start);
+
+            if (delaunatorEdges[edge].end == treeEdges[j].start) storeEndCoincidence.Add(treeEdges[j].end);
+            else if (delaunatorEdges[edge].end == treeEdges[j].end) storeEndCoincidence.Add(treeEdges[j].start);
+        }
+
+        for (int j = 0; j < storeStartCoincidence.Count; j++)
+        {
+            for (int k = 0; k < storeEndCoincidence.Count; k++)
+            {
+                if (storeStartCoincidence[j] == storeEndCoincidence[k])
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

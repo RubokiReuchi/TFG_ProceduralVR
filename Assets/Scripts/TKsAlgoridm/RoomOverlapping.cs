@@ -39,4 +39,9 @@ public class RoomOverlapping : MonoBehaviour
 
         return overlaping;
     }
+
+    public Vector3 GetCentralPoint()
+    {
+        return bc.bounds.center;
+    }
 }
