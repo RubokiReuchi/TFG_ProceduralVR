@@ -10,7 +10,6 @@ using UnityEditor.Experimental.GraphView;
 
 public class GenerateRooms : MonoBehaviour
 {
-    //public GameObject[] rooms;
     public GameObject floorTile;
     public GameObject emptyRoom;
     public GameObject floorPool;
@@ -42,8 +41,43 @@ public class GenerateRooms : MonoBehaviour
         }
     }
 
+    struct Graph
+    {
+        public int node;
+        public int e;
+        public List<KeyEdge> edges;
+
+        public Graph(int node, int e, List<KeyEdge> edges)
+        {
+            this.node = node;
+            this.e = e;
+            this.edges = edges;
+        }
+    }
+
+    struct TreeMaintainanceSet
+    {
+        public int parent;
+        public int rank;
+    }
+
+    struct KeyEdge
+    {
+        public int startID;
+        public int endID;
+        public int lenght;
+
+        public KeyEdge(int startID, int endID, int lenght)
+        {
+            this.startID = startID;
+            this.endID = endID;
+            this.lenght = lenght;
+        }
+    }
+
     Dictionary<int, Vector3> roomsCenter = new();
     List<Edge> delaunatorEdges = new();
+    Dictionary<int, int> mainRoomsKeys = new(); // key (mainRoomID), value (roomID)
     List<Edge> treeEdges = new();
 
     // Start is called before the first frame update
@@ -247,44 +281,101 @@ public class GenerateRooms : MonoBehaviour
                 }
             }
         }
-
-        CreateMST();
+        
+        CreateMST(new Graph(mainRooms.Count, delaunatorEdges.Count, ConvertToKeyEdges(delaunatorEdges)));
     }
 
-    void CreateMST()
+    List<KeyEdge> ConvertToKeyEdges(List<Edge> edges)
     {
-        for (int i = 0; i < delaunatorEdges.Count; i++)
+        for (int i = 0; i < mainRooms.Count; i++)
         {
-            if (!Concidence(i)) treeEdges.Add(delaunatorEdges[i]);
+            // link a mainRoomID to the mainRooms roomID
+            mainRoomsKeys.Add(i, mainRooms[i].GetComponent<RoomOverlapping>().roomID);
         }
+
+        List<KeyEdge> result = new();
+        for (int i = 0; i < edges.Count; i++)
+        {
+            // get roomID using room position
+            int roomStartKey = roomsCenter.FirstOrDefault(x => x.Value == edges[i].start).Key;
+            int roomEndKey = roomsCenter.FirstOrDefault(x => x.Value == edges[i].end).Key;
+
+            // convert roomID into mainRoomID
+            int mainRoomStartKey = mainRoomsKeys.FirstOrDefault(x => x.Value == roomStartKey).Key;
+            int mainRoomEndKey = mainRoomsKeys.FirstOrDefault(x => x.Value == roomEndKey).Key;
+            result.Add(new KeyEdge(mainRoomStartKey, mainRoomEndKey, edges[i].lenght));
+        }
+        return result;
     }
 
-    bool Concidence(int edge)
+    List<Edge> ConvertFromKeyEdges(List<KeyEdge> edges)
     {
-        List<Vector3> storeStartCoincidence = new();
-        List<Vector3> storeEndCoincidence = new();
-        for (int j = 0; j < treeEdges.Count; j++)
+        List<Edge> result = new();
+        for (int i = 0; i < edges.Count; i++)
         {
-            if (edge == j) continue;
+            // convert mainRoomID into roomID
+            int roomsStartKey = mainRoomsKeys[edges[i].startID];
+            int roomsEndKey = mainRoomsKeys[edges[i].endID];
 
-            if (delaunatorEdges[edge].start == treeEdges[j].start) storeStartCoincidence.Add(treeEdges[j].end);
-            else if (delaunatorEdges[edge].start == treeEdges[j].end) storeStartCoincidence.Add(treeEdges[j].start);
+            // get room position using roomID
+            Vector3 start = roomsCenter[roomsStartKey];
+            Vector3 end = roomsCenter[roomsEndKey];
+            result.Add(new Edge(start, end, edges[i].lenght));
+        }
+        return result;
+    }
 
-            if (delaunatorEdges[edge].end == treeEdges[j].start) storeEndCoincidence.Add(treeEdges[j].end);
-            else if (delaunatorEdges[edge].end == treeEdges[j].end) storeEndCoincidence.Add(treeEdges[j].start);
+    void CreateMST(Graph graph)
+    {
+        int node = graph.node;
+        List<KeyEdge> result = new();
+        int e = 0;
+        int i = 0;
+        TreeMaintainanceSet[] subsets = new TreeMaintainanceSet[node];
+
+        for (int v = 0; v < node; v++)
+        {
+            subsets[v].parent = v;
+            subsets[v].rank = 0;
         }
 
-        for (int j = 0; j < storeStartCoincidence.Count; j++)
+        while (e < node - 1 && i < graph.e)
         {
-            for (int k = 0; k < storeEndCoincidence.Count; k++)
+            KeyEdge nextEdge = graph.edges[i++];
+            int x = FindDisjointSet(subsets, nextEdge.startID);
+            int y = FindDisjointSet(subsets, nextEdge.endID);
+
+            if (x != y)
             {
-                if (storeStartCoincidence[j] == storeEndCoincidence[k])
-                {
-                    return true;
-                }
+                result.Add(nextEdge);
+                e++;
+                UnionDisjointSet(subsets, x, y);
             }
         }
 
-        return false;
+        treeEdges = ConvertFromKeyEdges(result);
+    }
+
+    int FindDisjointSet(TreeMaintainanceSet[] subsets, int i)
+    {
+        if (subsets[i].parent != i)
+        {
+            subsets[i].parent = FindDisjointSet(subsets, subsets[i].parent);
+        }
+        return subsets[i].parent;
+    }
+
+    void UnionDisjointSet(TreeMaintainanceSet[] subsets, int x, int y)
+    {
+        int xRoot = FindDisjointSet(subsets, x);
+        int yRoot = FindDisjointSet(subsets, y);
+
+        if (subsets[xRoot].rank < subsets[yRoot].rank) subsets[xRoot].parent = yRoot;
+        else if (subsets[xRoot].rank > subsets[yRoot].rank) subsets[yRoot].parent = xRoot;
+        else
+        {
+            subsets[yRoot].parent = xRoot;
+            subsets[xRoot].rank++;
+        }
     }
 }
