@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GenerateRooms : MonoBehaviour
@@ -17,13 +18,16 @@ public class GenerateRooms : MonoBehaviour
     public int maxTiles;
     int tileSize = 2;
 
+    int countTotalWidth = 0;
+    int countTotalHeight = 0;
+
     List<GameObject> createdRooms = new();
+    List<GameObject> mainRooms = new();
 
     // Start is called before the first frame update
     void Start()
     {
         CreateRooms(roomsNum, circleRadius);
-        StartCoroutine(SeparateRooms());
     }
 
     private void Update()
@@ -67,10 +71,18 @@ public class GenerateRooms : MonoBehaviour
             BoxCollider collider = newRoom.GetComponent<BoxCollider>();
             collider.center = new Vector3(roomSize.x, 0, roomSize.y);
             collider.size = new Vector3(roomSize.x * 2, 1, roomSize.y * 2);
-            newRoom.GetComponent<RoomOverlapping>().roomID = i;
+            RoomOverlapping script = newRoom.GetComponent<RoomOverlapping>();
+            script.roomID = i;
+            script.roomWidth = (int)roomSize.x;
+            script.roomHeight = (int)roomSize.y;
             newRoom.name = "Room" + i;
             createdRooms.Add(newRoom);
+
+            countTotalWidth += (int)roomSize.x;
+            countTotalHeight += (int)roomSize.y;
         }
+
+        StartCoroutine(SeparateRooms());
     }
 
     Vector2 CalculateSize()
@@ -122,6 +134,8 @@ public class GenerateRooms : MonoBehaviour
             }
         }
         while (IsAnyRoomOverlapping());
+
+        ChooseMainRooms();
     }
 
     bool IsAnyRoomOverlapping()
@@ -145,6 +159,20 @@ public class GenerateRooms : MonoBehaviour
 
     void ChooseMainRooms()
     {
+        int mediaWidth = countTotalWidth / roomsNum;
+        int mediaHeight = countTotalHeight / roomsNum;
 
+        for (int i = 0; i < createdRooms.Count; i++)
+        {
+            RoomOverlapping script = createdRooms[i].GetComponent<RoomOverlapping>();
+            if (script.roomWidth >= mediaWidth * 1.25f && script.roomHeight >= mediaWidth * 1.25f)
+            {
+                mainRooms.Add(createdRooms[i]);
+            }
+            else
+            {
+                createdRooms[i].SetActive(false);
+            }
+        }
     }
 }

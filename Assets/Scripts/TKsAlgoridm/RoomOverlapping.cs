@@ -11,6 +11,8 @@ public class RoomOverlapping : MonoBehaviour
     BoxCollider bc;
 
     [NonEditable] public int roomID;
+    [NonEditable] public int roomWidth;
+    [NonEditable] public int roomHeight;
 
     // Start is called before the first frame update
     void Start()
