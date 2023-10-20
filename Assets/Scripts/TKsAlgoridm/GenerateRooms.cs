@@ -27,6 +27,7 @@ public class GenerateRooms : MonoBehaviour
 
     List<GameObject> createdRooms = new();
     List<GameObject> mainRooms = new();
+    Dictionary<Vector3, GameObject> mainRoomsPosition = new();
     [Header("Higher Threshold means a bigger map")]
     [Range(0.1f, 0.25f)] [SerializeField] float mainRoomsThreshold;
     [SerializeField] int minimumMainRooms;
@@ -85,6 +86,21 @@ public class GenerateRooms : MonoBehaviour
     Dictionary<int, int> mainRoomsKeys = new(); // key (mainRoomID), value (roomID)
     List<Edge> treeEdges = new();
     List<Edge> returningEdges = new();
+    List<Edge> mapEdges = new();
+
+    // Hallways
+    struct Hallway
+    {
+        public Vector2 startPos;
+        public Vector2 endPos;
+
+        public Hallway(Vector2 startPos, Vector2 endPos)
+        {
+            this.startPos = startPos;
+            this.endPos = endPos;
+        }
+    }
+    List<Hallway> hallways = new();
 
     // Start is called before the first frame update
     void Start()
@@ -122,19 +138,36 @@ public class GenerateRooms : MonoBehaviour
             }
         }
 
-        if (treeEdges.Count > 0)
+        //if (treeEdges.Count > 0)
+        //{
+        //    for (int i = 0; i < treeEdges.Count; i++)
+        //    {
+        //        Debug.DrawLine(treeEdges[i].start, treeEdges[i].end, Color.red);
+        //    }
+        //}
+
+        //if (returningEdges.Count > 0)
+        //{
+        //    for (int i = 0; i < returningEdges.Count; i++)
+        //    {
+        //        Debug.DrawLine(returningEdges[i].start, returningEdges[i].end, Color.blue);
+        //    }
+        //}
+
+        if (mapEdges.Count > 0)
         {
-            for (int i = 0; i < treeEdges.Count; i++)
+            for (int i = 0; i < mapEdges.Count; i++)
             {
-                Debug.DrawLine(treeEdges[i].start, treeEdges[i].end, Color.red);
+                Debug.DrawLine(mapEdges[i].start, mapEdges[i].end, Color.red);
             }
         }
 
-        if (returningEdges.Count > 0)
+        if (hallways.Count > 0)
         {
-            for (int i = 0; i < returningEdges.Count; i++)
+            for (int i = 0; i < hallways.Count; i++)
             {
-                Debug.DrawLine(returningEdges[i].start, returningEdges[i].end, Color.blue);
+                if (hallways[i].startPos == hallways[i].endPos) Debug.DrawLine(new Vector3(hallways[i].startPos.x, 0, hallways[i].startPos.y), new Vector3(hallways[i].startPos.x, 1, hallways[i].startPos.y), Color.green);
+                else Debug.DrawLine(new Vector3(hallways[i].startPos.x, 0, hallways[i].startPos.y), new Vector3(hallways[i].endPos.x, 0, hallways[i].endPos.y), Color.blue);
             }
         }
     }
@@ -249,16 +282,21 @@ public class GenerateRooms : MonoBehaviour
         int mediaWidth = countTotalWidth / roomsNum;
         int mediaHeight = countTotalHeight / roomsNum;
 
-        while (mainRooms.Count < minimumMainRooms)
+        if (minimumMainRooms > createdRooms.Count) mainRooms = createdRooms;
+        else
         {
-            mainRooms.Clear();
-            for (int i = 0; i < createdRooms.Count; i++)
+            while (mainRooms.Count < minimumMainRooms)
             {
-                RoomOverlapping script = createdRooms[i].GetComponent<RoomOverlapping>();
-                if (script.roomWidth >= mediaWidth * (1 + mainRoomsThreshold) && script.roomHeight >= mediaWidth * (1 + mainRoomsThreshold))
+                mainRooms.Clear();
+                for (int i = 0; i < createdRooms.Count; i++)
                 {
-                    mainRooms.Add(createdRooms[i]);
+                    RoomOverlapping script = createdRooms[i].GetComponent<RoomOverlapping>();
+                    if (script.roomWidth >= mediaWidth * (1 + mainRoomsThreshold) && script.roomHeight >= mediaHeight * (1 + mainRoomsThreshold))
+                    {
+                        mainRooms.Add(createdRooms[i]);
+                    }
                 }
+                mainRoomsThreshold -= 0.05f;
             }
         }
 
@@ -277,6 +315,7 @@ public class GenerateRooms : MonoBehaviour
             Vector3 center = script.GetCentralPoint();
             roomsCenter.Add(script.roomID, center);
             delaunatorPoints.Add(new Point(center.x, center.z));
+            mainRoomsPosition.Add(center, mainRooms[i]);
         }
 
         delaunator = new Delaunator(delaunatorPoints.ToArray());
@@ -408,6 +447,129 @@ public class GenerateRooms : MonoBehaviour
                 int rand = Random.Range(0, 100);
                 if (rand < 15) returningEdges.Add(delaunatorEdges[i]);
             }
+        }
+
+        for (int i = 0; i < treeEdges.Count; i++) mapEdges.Add(treeEdges[i]);
+        for (int i = 0; i < returningEdges.Count; i++) mapEdges.Add(returningEdges[i]);
+
+        CalculateHallways();
+    }
+
+    void CalculateHallways()
+    {
+        for (int i = 0; i < mapEdges.Count; i++)
+        {
+            GameObject startRoom = mainRoomsPosition[mapEdges[i].start];
+            GameObject endRoom = mainRoomsPosition[mapEdges[i].end];
+            RoomOverlapping startScript = startRoom.GetComponent<RoomOverlapping>();
+            RoomOverlapping endScript = endRoom.GetComponent<RoomOverlapping>();
+
+            int verticalDir = 0, horizontalDir = 0;
+            bool oneLine = CanUseOnlyOneLine(startRoom, endRoom, ref verticalDir, ref horizontalDir);
+
+            if (oneLine)
+            {
+                if (verticalDir == 0)
+                {
+                    if (horizontalDir == -1) // path to the right
+                    {
+                        int middleHeight = Mathf.RoundToInt(GetMiddlePoint((int)startRoom.transform.position.z + 1, (int)startRoom.transform.position.z + (int)startScript.roomHeight * tileSize - 1, (int)endRoom.transform.position.z + 1, (int)endRoom.transform.position.z + (int)endScript.roomHeight * tileSize - 1));
+                        hallways.Add(new Hallway(new Vector2(endRoom.transform.position.x + endScript.roomWidth * tileSize, middleHeight), new Vector2(startRoom.transform.position.x, middleHeight)));
+                    }
+                    else // path to the left
+                    {
+
+                    }
+                }
+                else
+                {
+                    if (verticalDir == -1) // path to down
+                    {
+
+                    }
+                    else // path to up
+                    {
+
+                    }
+                }
+            }
+        }
+    }
+
+    bool CanUseOnlyOneLine(GameObject startRoom, GameObject endRoom, ref int vertical, ref int horizontal) // -1 negative, 0 don't need axis correction, 1 positive
+    {
+        RoomOverlapping startScript = startRoom.GetComponent<RoomOverlapping>();
+        RoomOverlapping endScript = endRoom.GetComponent<RoomOverlapping>();
+        // working arround Start Room
+        // check vertical
+        if (startRoom.transform.position.z == endRoom.transform.position.z)
+        {
+            vertical = 0; // don't need vertical hallway
+        }
+        else if (startRoom.transform.position.z < endRoom.transform.position.z && startRoom.transform.position.z + startScript.roomHeight * tileSize > endRoom.transform.position.z)
+        {
+            vertical = 0; // don't need vertical hallway
+        }
+        else if (startRoom.transform.position.z < endRoom.transform.position.z + endScript.roomHeight * tileSize && startRoom.transform.position.z + startScript.roomHeight * tileSize > endRoom.transform.position.z + endScript.roomHeight * tileSize)
+        {
+            vertical = 0; // don't need vertical hallway
+        }
+        else if (startRoom.transform.position.z < endRoom.transform.position.z)
+        {
+            vertical = 1; // need up hallway
+        }
+        else
+        {
+            vertical = -1; // need down hallway
+        }
+
+        // check horizontal
+        int startPoint1 = (int)startRoom.transform.position.x + 1; // 1 --> path width
+        int endPoint1 = (int)startRoom.transform.position.x + startScript.roomWidth * tileSize - 1;
+        int startPoint2 = (int)endRoom.transform.position.x + 1;
+        int endPoint12= (int)endRoom.transform.position.x + endScript.roomWidth * tileSize - 1;
+        if (startPoint1 == endRoom.transform.position.x)
+        {
+            horizontal = 0; // don't need horizontal hallway
+        }
+        else if (startPoint1 < startPoint2 && endPoint1 > startPoint2)
+        {
+            horizontal = 0; // don't need horizontal hallway
+        }
+        else if (startPoint1 < endPoint12 && endPoint1 > endPoint12)
+        {
+            horizontal = 0; // don't need horizontal hallway
+        }
+        else if (startPoint1 < startPoint2)
+        {
+            horizontal = 1; // need left hallway
+        }
+        else
+        {
+            horizontal = -1; // need right hallway
+        }
+
+        return (vertical == 0 ||  horizontal == 0);
+    }
+
+    int GetMiddlePoint(int startPoint1, int endPoint1, int startPoint2, int endPoint2)
+    {
+        int centerPoint1 = endPoint1 - startPoint1;
+        int centerPoint2 = endPoint2 - startPoint2;
+
+        int middleCenter = (centerPoint2 - centerPoint1) / 2;
+
+        if (startPoint1 <= middleCenter && endPoint1 >= middleCenter && startPoint2 <= middleCenter && endPoint2 >= middleCenter) return middleCenter;
+
+        int direction;
+        if (startPoint1 < startPoint2 && endPoint1 > startPoint2) direction = -1;
+        else direction = 1;
+
+        while (true)
+        {
+            middleCenter += direction;
+
+            if (startPoint1 <= middleCenter && endPoint1 >= middleCenter && startPoint2 <= middleCenter && endPoint2 >= middleCenter) return middleCenter;
         }
     }
 }
