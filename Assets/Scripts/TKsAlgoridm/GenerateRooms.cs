@@ -92,13 +92,13 @@ public class GenerateRooms : MonoBehaviour
     List<Vector2> doorVerticalHallways = new();
     List<Vector2> doorHorizontalHallways = new();
 
-    struct GeneralHayways
+    struct GeneralHallways
     {
         public Vector3 startPos;
         public Vector3 endPos;
         public int lenght;
 
-        public GeneralHayways(Vector3 startPos, Vector3 endPos, int lenght)
+        public GeneralHallways(Vector3 startPos, Vector3 endPos, int lenght)
         {
             this.startPos = startPos;
             this.endPos = endPos;
@@ -106,10 +106,13 @@ public class GenerateRooms : MonoBehaviour
         }
     }
 
-    List<GeneralHayways> generalHallways = new();
-    public LayerMask layerMask;
+    public GameObject hallwaysContainer;
+    List<GeneralHallways> generalHallways = new();
+    List<Vector3> cornerPoints = new();
+    public LayerMask layerMaskRoomBound;
     List<GameObject> returningRooms = new();
-
+    public LayerMask layerMaskFloor;
+    int loop = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -170,13 +173,13 @@ public class GenerateRooms : MonoBehaviour
         //    }
         //}
 
-        if (generalHallways.Count > 0)
-        {
-            for (int i = 0; i < generalHallways.Count; i++)
-            {
-                Debug.DrawLine(generalHallways[i].startPos, generalHallways[i].endPos, Color.red);
-            }
-        }
+        //if (generalHallways.Count > 0)
+        //{
+        //    for (int i = 0; i < generalHallways.Count; i++)
+        //    {
+        //        Debug.DrawLine(generalHallways[i].startPos, generalHallways[i].endPos, Color.red);
+        //    }
+        //}
 
         if (doorVerticalHallways.Count > 0)
         {
@@ -191,18 +194,6 @@ public class GenerateRooms : MonoBehaviour
             for (int i = 0; i < doorHorizontalHallways.Count; i++)
             {
                 Debug.DrawLine(new Vector3(doorHorizontalHallways[i].x, 0, doorHorizontalHallways[i].y), new Vector3(doorHorizontalHallways[i].x, 1, doorHorizontalHallways[i].y), Color.yellow);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            for (int i = 0; i < secondaryRooms.Count; i++)
-            {
-                secondaryRooms[i].SetActive(false);
-            }
-            for (int i = 0; i < returningRooms.Count; i++)
-            {
-                returningRooms[i].SetActive(true);
             }
         }
     }
@@ -524,7 +515,7 @@ public class GenerateRooms : MonoBehaviour
                         {
                             Vector3 startPos = new Vector3(endPoint2.x, 0, middleHeight);
                             Vector3 endPos = new Vector3(startPoint1.x, 0, middleHeight);
-                            generalHallways.Add(new GeneralHayways(startPos, endPos, (int)Vector3.Distance(startPos, endPos)));
+                            generalHallways.Add(new GeneralHallways(startPos, endPos, (int)Vector3.Distance(startPos, endPos)));
                         }
                     }
                     else // path to the left
@@ -535,7 +526,7 @@ public class GenerateRooms : MonoBehaviour
                         {
                             Vector3 startPos = new Vector3(endPoint1.x, 0, middleHeight);
                             Vector3 endPos = new Vector3(startPoint2.x, 0, middleHeight);
-                            generalHallways.Add(new GeneralHayways(startPos, endPos, (int)Vector3.Distance(startPos, endPos)));
+                            generalHallways.Add(new GeneralHallways(startPos, endPos, (int)Vector3.Distance(startPos, endPos)));
                         }
                     }
                 }
@@ -549,7 +540,7 @@ public class GenerateRooms : MonoBehaviour
                         {
                             Vector3 startPos = new Vector3(middleHeight, 0, endPoint2.z);
                             Vector3 endPos = new Vector3(middleHeight, 0, startPoint1.z);
-                            generalHallways.Add(new GeneralHayways(startPos, endPos, (int)Vector3.Distance(startPos, endPos)));
+                            generalHallways.Add(new GeneralHallways(startPos, endPos, (int)Vector3.Distance(startPos, endPos)));
                         }
                     }
                     else // path to up
@@ -560,7 +551,7 @@ public class GenerateRooms : MonoBehaviour
                         {
                             Vector3 startPos = new Vector3(middleHeight, 0, endPoint1.z);
                             Vector3 endPos = new Vector3(middleHeight, 0, startPoint2.z);
-                            generalHallways.Add(new GeneralHayways(startPos, endPos, (int)Vector3.Distance(startPos, endPos)));
+                            generalHallways.Add(new GeneralHallways(startPos, endPos, (int)Vector3.Distance(startPos, endPos)));
                         }
                     }
                 }
@@ -574,12 +565,16 @@ public class GenerateRooms : MonoBehaviour
                 if (startVertical == 1) // true
                 {
                     // vertical path
-                    if (verticalDir == -1) startPos = new Vector3(Random.Range((int)startPoint1.x + 1, (int)endPoint1.x - 1), 0, startPoint1.z);
-                    else startPos = new Vector3(Random.Range((int)startPoint1.x + 1, (int)endPoint1.x - 1), 0, endPoint1.z);
+                    float randOddNumber = 0;
+                    while (randOddNumber % 2 == 0) randOddNumber = Random.Range((int)startPoint1.x + 1, (int)endPoint1.x - 1);
+                    if (verticalDir == -1) startPos = new Vector3(randOddNumber, 0, startPoint1.z);
+                    else startPos = new Vector3(randOddNumber, 0, endPoint1.z);
 
                     // horizontal path
-                    if (horizontalDir == -1) endPos = new Vector3(endPoint2.x, 0, Random.Range((int)startPoint2.z + 1, (int)endPoint2.z - 1));
-                    else endPos = new Vector3(startPoint2.x, 0, Random.Range((int)startPoint2.z + 1, (int)endPoint2.z - 1));
+                    randOddNumber = 0;
+                    while (randOddNumber % 2 == 0) randOddNumber = Random.Range((int)startPoint2.z + 1, (int)endPoint2.z - 1);
+                    if (horizontalDir == -1) endPos = new Vector3(endPoint2.x, 0, randOddNumber);
+                    else endPos = new Vector3(startPoint2.x, 0, randOddNumber);
 
                     // join paths
                     cornerPos = new Vector3(startPos.x, 0, endPos.z);
@@ -587,23 +582,28 @@ public class GenerateRooms : MonoBehaviour
                 else // false
                 {
                     // horizontal path
-                    if (horizontalDir == -1) startPos = new Vector3(startPoint1.x, 0, Random.Range((int)startPoint1.z + 1, (int)endPoint1.z - 1));
-                    else startPos = new Vector3(endPoint1.x, 0, Random.Range((int)startPoint1.z + 1, (int)endPoint1.z - 1));
+                    float randOddNumber = 0;
+                    while (randOddNumber % 2 == 0) randOddNumber = Random.Range((int)startPoint1.z + 1, (int)endPoint1.z - 1);
+                    if (horizontalDir == -1) startPos = new Vector3(startPoint1.x, 0, randOddNumber);
+                    else startPos = new Vector3(endPoint1.x, 0, randOddNumber);
 
                     // vertical path
-                    if (verticalDir == -1) endPos = new Vector3(Random.Range((int)startPoint2.x + 1, (int)endPoint2.x - 1), 0, endPoint2.z);
-                    else endPos = new Vector3(Random.Range((int)startPoint2.x + 1, (int)endPoint2.x - 1), 0, startPoint2.z);
+                    randOddNumber = 0;
+                    while (randOddNumber % 2 == 0) randOddNumber = Random.Range((int)startPoint2.x + 1, (int)endPoint2.x - 1);
+                    if (verticalDir == -1) endPos = new Vector3(randOddNumber, 0, endPoint2.z);
+                    else endPos = new Vector3(randOddNumber, 0, startPoint2.z);
 
                     // join paths
                     cornerPos = new Vector3(endPos.x, 0, startPos.z);
                 }
-                
+
+                cornerPoints.Add(cornerPos);
                 Vector3 startPos1 = new Vector3(startPos.x, 0, startPos.z);
                 Vector3 endPos1 = new Vector3(cornerPos.x, 0, cornerPos.z);
-                generalHallways.Add(new GeneralHayways(startPos1, endPos1, (int)Vector3.Distance(startPos1, endPos1)));
-                Vector3 startPos2 = endPos1;
-                Vector3 endPos2 = new Vector3(endPos.x, 0, endPos.z);
-                generalHallways.Add(new GeneralHayways(startPos2, endPos2, (int)Vector3.Distance(startPos2, endPos2)));
+                generalHallways.Add(new GeneralHallways(startPos1, endPos1, (int)Vector3.Distance(startPos1, endPos1)));
+                Vector3 startPos2 = new Vector3(endPos.x, 0, endPos.z);
+                Vector3 endPos2 = endPos1;
+                generalHallways.Add(new GeneralHallways(startPos2, endPos2, (int)Vector3.Distance(startPos2, endPos2)));
             }
         }
 
@@ -703,7 +703,7 @@ public class GenerateRooms : MonoBehaviour
             if (nearest > 0) middleCenter++;
             else middleCenter--;
         }
-
+        
         if (startPoint1 <= middleCenter && endPoint1 >= middleCenter && startPoint2 <= middleCenter && endPoint2 >= middleCenter) return middleCenter;
 
         int direction;
@@ -722,7 +722,7 @@ public class GenerateRooms : MonoBehaviour
     {
         for (int i = 0; i < generalHallways.Count; i++)
         {
-            RaycastHit[] hits = Physics.RaycastAll(generalHallways[i].startPos, (generalHallways[i].endPos - generalHallways[i].startPos).normalized, generalHallways[i].lenght, layerMask, QueryTriggerInteraction.Collide);
+            RaycastHit[] hits = Physics.RaycastAll(generalHallways[i].startPos, (generalHallways[i].endPos - generalHallways[i].startPos).normalized, generalHallways[i].lenght, layerMaskRoomBound, QueryTriggerInteraction.Collide);
             for (int j = 0; j < secondaryRooms.Count; j++)
             {
                 for (int k = 0; k < hits.Length; k++)
@@ -734,5 +734,105 @@ public class GenerateRooms : MonoBehaviour
                 }
             }
         }
+
+        for (int i = 0; i < secondaryRooms.Count; i++)
+        {
+            secondaryRooms[i].SetActive(false);
+        }
+        for (int i = 0; i < returningRooms.Count; i++)
+        {
+            returningRooms[i].SetActive(true);
+        }
+
+        FillHallways();
+    }
+
+    void FillHallways()
+    {
+        for (int i = 0; i < generalHallways.Count; i++)
+        {
+            FillHallway(i);
+        }
+
+        for (int i = 0; i < cornerPoints.Count; i++)
+        {
+            Collider[] colliding = Physics.OverlapBox(cornerPoints[i], new Vector3(0.9f, 0.9f, 0.9f), Quaternion.identity, layerMaskFloor);
+            if (colliding.Length == 0) // no floor there
+            {
+                GameObject tile = GameObject.Instantiate(floorTile, hallwaysContainer.transform);
+                tile.transform.localPosition = cornerPoints[i];
+            }
+        }
+
+        FillWalls();
+    }
+
+    void FillHallway(int i)
+    {
+        Vector3 direction = (generalHallways[i].endPos - generalHallways[i].startPos).normalized;
+        Vector3 startPos = generalHallways[i].startPos + direction;
+        Vector3 endPos = generalHallways[i].endPos - direction;
+
+        if (direction.x == 0 && direction.z > 0) // up
+        {
+            while (startPos.z <= endPos.z)
+            {
+                Collider[] colliding = Physics.OverlapBox(startPos, new Vector3(0.9f, 0.9f, 0.9f), Quaternion.identity, layerMaskFloor);
+                if (colliding.Length == 0) // no floor there
+                {
+                    GameObject tile = GameObject.Instantiate(floorTile, hallwaysContainer.transform);
+                    tile.transform.localPosition = startPos;
+                }
+                startPos += direction * tileSize;
+            }
+        }
+        else if (direction.x == 0 && direction.z < 0) // down
+        {
+            while (startPos.z >= endPos.z)
+            {
+                Collider[] colliding = Physics.OverlapBox(startPos, new Vector3(0.9f, 0.9f, 0.9f), Quaternion.identity, layerMaskFloor);
+                if (colliding.Length == 0) // no floor there
+                {
+                    GameObject tile = GameObject.Instantiate(floorTile, hallwaysContainer.transform);
+                    tile.transform.localPosition = startPos;
+                }
+                startPos += direction * tileSize;
+            }
+        }
+        else if (direction.z == 0 && direction.x < 0) // left
+        {
+            while (startPos.x >= endPos.x)
+            {
+                Collider[] colliding = Physics.OverlapBox(startPos, new Vector3(0.9f, 0.9f, 0.9f), Quaternion.identity, layerMaskFloor);
+                if (colliding.Length == 0) // no floor there
+                {
+                    GameObject tile = GameObject.Instantiate(floorTile, hallwaysContainer.transform);
+                    tile.transform.localPosition = startPos;
+                }
+                startPos += direction * tileSize;
+            }
+        }
+        else if (direction.z == 0 && direction.x > 0) // right
+        {
+            while (startPos.x <= endPos.x)
+            {
+                Collider[] colliding = Physics.OverlapBox(startPos, new Vector3(0.9f, 0.9f, 0.9f), Quaternion.identity, layerMaskFloor);
+                if (colliding.Length == 0) // no floor there
+                {
+                    GameObject tile = GameObject.Instantiate(floorTile, hallwaysContainer.transform);
+                    tile.transform.localPosition = startPos;
+                }
+                startPos += direction * tileSize;
+            }
+        }
+    }
+
+    void FillWalls()
+    {
+        // columnas
+
+        // puertas
+
+        // paredes
     }
 }
