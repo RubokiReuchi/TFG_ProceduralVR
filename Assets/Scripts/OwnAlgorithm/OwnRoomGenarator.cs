@@ -87,7 +87,7 @@ public class OwnRoomGenarator : MonoBehaviour
             case DOOR_DIRECTION.TOP:
                 while (newRoomTypeID == -1)
                 {
-                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndDestroyDoor(door);
+                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndHoldDoor(door);
 
                     newRoomTypeID = Random.Range(0, posibleRooms.Count);
                     RoomInfo roomInfo = roomsInfo.GetRoomByType(newRoomTypeID);
@@ -116,7 +116,7 @@ public class OwnRoomGenarator : MonoBehaviour
                         }
                         else
                         {
-                            return ReturnNullGameobjectAndDestroyDoor(door);
+                            return ReturnNullGameobjectAndHoldDoor(door);
                         }
                     }
                     else
@@ -128,7 +128,7 @@ public class OwnRoomGenarator : MonoBehaviour
             case DOOR_DIRECTION.DOWN:
                 while (newRoomTypeID == -1)
                 {
-                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndDestroyDoor(door);
+                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndHoldDoor(door);
 
                     newRoomTypeID = Random.Range(0, posibleRooms.Count);
                     RoomInfo roomInfo = roomsInfo.GetRoomByType(newRoomTypeID);
@@ -157,7 +157,7 @@ public class OwnRoomGenarator : MonoBehaviour
                         }
                         else
                         {
-                            return ReturnNullGameobjectAndDestroyDoor(door);
+                            return ReturnNullGameobjectAndHoldDoor(door);
                         }
                     }
                     else
@@ -169,7 +169,7 @@ public class OwnRoomGenarator : MonoBehaviour
             case DOOR_DIRECTION.RIGHT:
                 while (newRoomTypeID == -1)
                 {
-                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndDestroyDoor(door);
+                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndHoldDoor(door);
 
                     newRoomTypeID = Random.Range(0, posibleRooms.Count);
                     RoomInfo roomInfo = roomsInfo.GetRoomByType(newRoomTypeID);
@@ -198,7 +198,7 @@ public class OwnRoomGenarator : MonoBehaviour
                         }
                         else
                         {
-                            return ReturnNullGameobjectAndDestroyDoor(door);
+                            return ReturnNullGameobjectAndHoldDoor(door);
                         }
                     }
                     else
@@ -210,7 +210,7 @@ public class OwnRoomGenarator : MonoBehaviour
             case DOOR_DIRECTION.LEFT:
                 while (newRoomTypeID == -1)
                 {
-                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndDestroyDoor(door);
+                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndHoldDoor(door);
 
                     newRoomTypeID = Random.Range(0, posibleRooms.Count);
                     RoomInfo roomInfo = roomsInfo.GetRoomByType(newRoomTypeID);
@@ -239,7 +239,7 @@ public class OwnRoomGenarator : MonoBehaviour
                         }
                         else
                         {
-                            return ReturnNullGameobjectAndDestroyDoor(door);
+                            return ReturnNullGameobjectAndHoldDoor(door);
                         }
                     }
                     else
@@ -249,7 +249,7 @@ public class OwnRoomGenarator : MonoBehaviour
                 }
                 break;
         }
-        return ReturnNullGameobjectAndDestroyDoor(door);
+        return ReturnNullGameobjectAndHoldDoor(door);
     }
 
 
@@ -264,7 +264,7 @@ public class OwnRoomGenarator : MonoBehaviour
             case DOOR_DIRECTION.TOP:
                 while (newRoomTypeID == -1)
                 {
-                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndDestroyDoor(door);
+                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndHoldDoor(door);
 
                     newRoomTypeID = Random.Range(0, posibleRooms.Count);
                     RoomInfo roomInfo = roomsInfo.GetRoomByType(newRoomTypeID);
@@ -291,7 +291,7 @@ public class OwnRoomGenarator : MonoBehaviour
                         }
                         else
                         {
-                            return ReturnNullGameobjectAndDestroyDoor(door);
+                            return ReturnNullGameobjectAndHoldDoor(door);
                         }
                     }
                     else
@@ -303,7 +303,7 @@ public class OwnRoomGenarator : MonoBehaviour
             case DOOR_DIRECTION.DOWN:
                 while (newRoomTypeID == -1)
                 {
-                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndDestroyDoor(door);
+                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndHoldDoor(door);
 
                     newRoomTypeID = Random.Range(0, posibleRooms.Count);
                     RoomInfo roomInfo = roomsInfo.GetRoomByType(newRoomTypeID);
@@ -330,7 +330,7 @@ public class OwnRoomGenarator : MonoBehaviour
                         }
                         else
                         {
-                            return ReturnNullGameobjectAndDestroyDoor(door);
+                            return ReturnNullGameobjectAndHoldDoor(door);
                         }
                     }
                     else
@@ -342,7 +342,7 @@ public class OwnRoomGenarator : MonoBehaviour
             case DOOR_DIRECTION.RIGHT:
                 while (newRoomTypeID == -1)
                 {
-                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndDestroyDoor(door);
+                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndHoldDoor(door);
 
                     newRoomTypeID = Random.Range(0, posibleRooms.Count);
                     RoomInfo roomInfo = roomsInfo.GetRoomByType(newRoomTypeID);
@@ -369,7 +369,7 @@ public class OwnRoomGenarator : MonoBehaviour
                         }
                         else
                         {
-                            return ReturnNullGameobjectAndDestroyDoor(door);
+                            return ReturnNullGameobjectAndHoldDoor(door);
                         }
                     }
                     else
@@ -381,7 +381,7 @@ public class OwnRoomGenarator : MonoBehaviour
             case DOOR_DIRECTION.LEFT:
                 while (newRoomTypeID == -1)
                 {
-                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndDestroyDoor(door);
+                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndHoldDoor(door);
 
                     newRoomTypeID = Random.Range(0, posibleRooms.Count);
                     RoomInfo roomInfo = roomsInfo.GetRoomByType(newRoomTypeID);
@@ -408,7 +408,7 @@ public class OwnRoomGenarator : MonoBehaviour
                         }
                         else
                         {
-                            return ReturnNullGameobjectAndDestroyDoor(door);
+                            return ReturnNullGameobjectAndHoldDoor(door);
                         }
                     }
                     else
@@ -418,12 +418,12 @@ public class OwnRoomGenarator : MonoBehaviour
                 }
                 break;
         }
-        return ReturnNullGameobjectAndDestroyDoor(door);
+        return ReturnNullGameobjectAndHoldDoor(door);
     }
 
-    GameObject ReturnNullGameobjectAndDestroyDoor(Door door)
+    GameObject ReturnNullGameobjectAndHoldDoor(Door door)
     {
-        door.state = DOOR_STATE.DESTROYED;
+        door.state = DOOR_STATE.HOLDED; // later I will check if door is next to another or next to the wall
         return new GameObject("NULL_GAMEOBJECT");
     }
 }

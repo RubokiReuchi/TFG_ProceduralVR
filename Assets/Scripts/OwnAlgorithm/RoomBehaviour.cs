@@ -6,8 +6,9 @@ public enum DOOR_STATE
 {
     FOR_FILL,
     YELLOW,
+    HOLDED,
     DESTROYED,
-    NULL // no important door
+    NULL // no tiene puerta
 }
 public enum DOOR_DIRECTION
 {
