@@ -112,7 +112,7 @@ public class GenerateRooms : MonoBehaviour
     public LayerMask layerMaskRoomBound;
     List<GameObject> returningRooms = new();
     public LayerMask layerMaskFloor;
-    int loop = 0;
+    
     // Start is called before the first frame update
     void Start()
     {
