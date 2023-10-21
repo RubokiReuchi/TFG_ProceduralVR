@@ -415,6 +415,9 @@ MonoBehaviour:
   maxTiles: 10
   mainRoomsThreshold: 0.2
   minimumMainRooms: 10
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!4 &2145438260
 Transform:
   m_ObjectHideFlags: 0

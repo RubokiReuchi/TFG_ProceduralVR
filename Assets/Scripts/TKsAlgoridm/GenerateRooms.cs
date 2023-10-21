@@ -89,34 +89,26 @@ public class GenerateRooms : MonoBehaviour
     List<Edge> mapEdges = new();
 
     // Hallways
-    struct LinearHallway
-    {
-        public Vector2 startPos;
-        public Vector2 endPos;
-
-        public LinearHallway(Vector2 startPos, Vector2 endPos)
-        {
-            this.startPos = startPos;
-            this.endPos = endPos;
-        }
-    }
-    struct CornerHallway
-    {
-        public Vector2 startPos;
-        public Vector2 cornerPos;
-        public Vector2 endPos;
-
-        public CornerHallway(Vector2 startPos, Vector2 cornerPos, Vector2 endPos)
-        {
-            this.startPos = startPos;
-            this.cornerPos = cornerPos;
-            this.endPos = endPos;
-        }
-    }
-    List<LinearHallway> linearHallways = new();
-    List<CornerHallway> cornerHallways = new();
     List<Vector2> doorVerticalHallways = new();
     List<Vector2> doorHorizontalHallways = new();
+
+    struct GeneralHayways
+    {
+        public Vector3 startPos;
+        public Vector3 endPos;
+        public int lenght;
+
+        public GeneralHayways(Vector3 startPos, Vector3 endPos, int lenght)
+        {
+            this.startPos = startPos;
+            this.endPos = endPos;
+            this.lenght = lenght;
+        }
+    }
+
+    List<GeneralHayways> generalHallways = new();
+    public LayerMask layerMask;
+    List<GameObject> returningRooms = new();
 
     // Start is called before the first frame update
     void Start()
@@ -178,20 +170,11 @@ public class GenerateRooms : MonoBehaviour
         //    }
         //}
 
-        if (linearHallways.Count > 0)
+        if (generalHallways.Count > 0)
         {
-            for (int i = 0; i < linearHallways.Count; i++)
+            for (int i = 0; i < generalHallways.Count; i++)
             {
-                Debug.DrawLine(new Vector3(linearHallways[i].startPos.x, 0, linearHallways[i].startPos.y), new Vector3(linearHallways[i].endPos.x, 0, linearHallways[i].endPos.y), Color.blue);
-            }
-        }
-
-        if (cornerHallways.Count > 0)
-        {
-            for (int i = 0; i < cornerHallways.Count; i++)
-            {
-                Debug.DrawLine(new Vector3(cornerHallways[i].startPos.x, 0, cornerHallways[i].startPos.y), new Vector3(cornerHallways[i].cornerPos.x, 0, cornerHallways[i].cornerPos.y), Color.cyan);
-                Debug.DrawLine(new Vector3(cornerHallways[i].cornerPos.x, 0, cornerHallways[i].cornerPos.y), new Vector3(cornerHallways[i].endPos.x, 0, cornerHallways[i].endPos.y), Color.cyan);
+                Debug.DrawLine(generalHallways[i].startPos, generalHallways[i].endPos, Color.red);
             }
         }
 
@@ -208,6 +191,18 @@ public class GenerateRooms : MonoBehaviour
             for (int i = 0; i < doorHorizontalHallways.Count; i++)
             {
                 Debug.DrawLine(new Vector3(doorHorizontalHallways[i].x, 0, doorHorizontalHallways[i].y), new Vector3(doorHorizontalHallways[i].x, 1, doorHorizontalHallways[i].y), Color.yellow);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            for (int i = 0; i < secondaryRooms.Count; i++)
+            {
+                secondaryRooms[i].SetActive(false);
+            }
+            for (int i = 0; i < returningRooms.Count; i++)
+            {
+                returningRooms[i].SetActive(true);
             }
         }
     }
@@ -323,8 +318,10 @@ public class GenerateRooms : MonoBehaviour
         if (minimumMainRooms > createdRooms.Count) mainRooms = createdRooms;
         else
         {
+            int loop = 0; // solve huge looping time
             while (mainRooms.Count < minimumMainRooms)
             {
+                loop++;
                 mainRooms.Clear();
                 secondaryRooms.Clear();
                 for (int i = 0; i < createdRooms.Count; i++)
@@ -339,14 +336,8 @@ public class GenerateRooms : MonoBehaviour
                         secondaryRooms.Add(createdRooms[i]);
                     }
                 }
-                mainRoomsThreshold -= 0.05f;
+                mainRoomsThreshold -= 0.05f * loop;
             }
-        }
-
-        // REMOVE
-        for (int i = 0; i < secondaryRooms.Count; i++)
-        {
-            secondaryRooms[i].SetActive(false);
         }
 
         if (mainRooms.Count > 2) CreateDelaunayGraph();
@@ -529,13 +520,23 @@ public class GenerateRooms : MonoBehaviour
                     {
                         int middleHeight = Mathf.RoundToInt(GetMiddlePoint((int)startPoint1.z + 1, (int)endPoint1.z - 1, (int)startPoint2.z + 1, (int)endPoint2.z - 1));
                         if (endPoint2.x == startPoint1.x) doorHorizontalHallways.Add(new Vector2(endPoint2.x, middleHeight));
-                        else linearHallways.Add(new LinearHallway(new Vector2(endPoint2.x, middleHeight), new Vector2(startPoint1.x, middleHeight)));
+                        else
+                        {
+                            Vector3 startPos = new Vector3(endPoint2.x, 0, middleHeight);
+                            Vector3 endPos = new Vector3(startPoint1.x, 0, middleHeight);
+                            generalHallways.Add(new GeneralHayways(startPos, endPos, (int)Vector3.Distance(startPos, endPos)));
+                        }
                     }
                     else // path to the left
                     {
                         int middleHeight = Mathf.RoundToInt(GetMiddlePoint((int)startPoint1.z + 1, (int)endPoint1.z - 1, (int)startPoint2.z + 1, (int)endPoint2.z - 1));
                         if (endPoint1.x == startPoint2.x) doorHorizontalHallways.Add(new Vector2(endPoint1.x, middleHeight));
-                        else linearHallways.Add(new LinearHallway(new Vector2(endPoint1.x, middleHeight), new Vector2(startPoint2.x, middleHeight)));
+                        else
+                        {
+                            Vector3 startPos = new Vector3(endPoint1.x, 0, middleHeight);
+                            Vector3 endPos = new Vector3(startPoint2.x, 0, middleHeight);
+                            generalHallways.Add(new GeneralHayways(startPos, endPos, (int)Vector3.Distance(startPos, endPos)));
+                        }
                     }
                 }
                 else
@@ -544,13 +545,23 @@ public class GenerateRooms : MonoBehaviour
                     {
                         int middleHeight = Mathf.RoundToInt(GetMiddlePoint((int)startPoint1.x + 1, (int)endPoint1.x - 1, (int)startPoint2.x + 1, (int)endPoint2.x - 1));
                         if (endPoint2.z == startPoint1.z) doorVerticalHallways.Add(new Vector2(middleHeight, endPoint2.z));
-                        else linearHallways.Add(new LinearHallway(new Vector2(middleHeight, endPoint2.z), new Vector2(middleHeight, startPoint1.z)));
+                        else
+                        {
+                            Vector3 startPos = new Vector3(middleHeight, 0, endPoint2.z);
+                            Vector3 endPos = new Vector3(middleHeight, 0, startPoint1.z);
+                            generalHallways.Add(new GeneralHayways(startPos, endPos, (int)Vector3.Distance(startPos, endPos)));
+                        }
                     }
                     else // path to up
                     {
                         int middleHeight = Mathf.RoundToInt(GetMiddlePoint((int)startPoint1.x + 1, (int)endPoint1.x - 1, (int)startPoint2.x + 1, (int)endPoint2.x - 1));
                         if (endPoint1.z == startPoint2.z) doorHorizontalHallways.Add(new Vector2(middleHeight, endPoint1.z));
-                        else linearHallways.Add(new LinearHallway(new Vector2(middleHeight, endPoint1.z), new Vector2(middleHeight, startPoint2.z)));
+                        else
+                        {
+                            Vector3 startPos = new Vector3(middleHeight, 0, endPoint1.z);
+                            Vector3 endPos = new Vector3(middleHeight, 0, startPoint2.z);
+                            generalHallways.Add(new GeneralHayways(startPos, endPos, (int)Vector3.Distance(startPos, endPos)));
+                        }
                     }
                 }
             }
@@ -586,9 +597,17 @@ public class GenerateRooms : MonoBehaviour
                     // join paths
                     cornerPos = new Vector3(endPos.x, 0, startPos.z);
                 }
-                cornerHallways.Add(new CornerHallway(new Vector2(startPos.x, startPos.z), new Vector2(cornerPos.x, cornerPos.z), new Vector2(endPos.x, endPos.z)));
+                
+                Vector3 startPos1 = new Vector3(startPos.x, 0, startPos.z);
+                Vector3 endPos1 = new Vector3(cornerPos.x, 0, cornerPos.z);
+                generalHallways.Add(new GeneralHayways(startPos1, endPos1, (int)Vector3.Distance(startPos1, endPos1)));
+                Vector3 startPos2 = endPos1;
+                Vector3 endPos2 = new Vector3(endPos.x, 0, endPos.z);
+                generalHallways.Add(new GeneralHayways(startPos2, endPos2, (int)Vector3.Distance(startPos2, endPos2)));
             }
         }
+
+        AddSecondaryRooms();
     }
 
     bool CanUseOnlyOneLine(GameObject startRoom, GameObject endRoom, ref int vertical, ref int horizontal) // -1 negative, 0 don't need axis correction, 1 positive
@@ -696,6 +715,24 @@ public class GenerateRooms : MonoBehaviour
             middleCenter += direction;
 
             if (startPoint1 <= middleCenter && endPoint1 >= middleCenter && startPoint2 <= middleCenter && endPoint2 >= middleCenter) return middleCenter;
+        }
+    }
+
+    void AddSecondaryRooms()
+    {
+        for (int i = 0; i < generalHallways.Count; i++)
+        {
+            RaycastHit[] hits = Physics.RaycastAll(generalHallways[i].startPos, (generalHallways[i].endPos - generalHallways[i].startPos).normalized, generalHallways[i].lenght, layerMask, QueryTriggerInteraction.Collide);
+            for (int j = 0; j < secondaryRooms.Count; j++)
+            {
+                for (int k = 0; k < hits.Length; k++)
+                {
+                    if (secondaryRooms[j].GetInstanceID() == hits[k].collider.gameObject.GetInstanceID())
+                    {
+                        returningRooms.Add(secondaryRooms[j]);
+                    }
+                }
+            }
         }
     }
 }
