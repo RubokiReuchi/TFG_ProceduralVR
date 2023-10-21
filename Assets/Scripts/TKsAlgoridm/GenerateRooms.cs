@@ -13,7 +13,6 @@ public class GenerateRooms : MonoBehaviour
     // Create and Separe
     [SerializeField] GameObject floorTile;
     [SerializeField] GameObject emptyRoom;
-    [SerializeField] GameObject floorPool;
 
     [Header("Note: High rooms number with small circle radius can cause undesired results (recomend 4/1 proporcion)")]
     [SerializeField] int roomsNum;
@@ -27,6 +26,7 @@ public class GenerateRooms : MonoBehaviour
 
     List<GameObject> createdRooms = new();
     List<GameObject> mainRooms = new();
+    List<GameObject> secondaryRooms = new();
     Dictionary<Vector3, GameObject> mainRoomsPosition = new();
     [Header("Higher Threshold means a bigger map")]
     [Range(0.1f, 0.25f)] [SerializeField] float mainRoomsThreshold;
@@ -89,18 +89,34 @@ public class GenerateRooms : MonoBehaviour
     List<Edge> mapEdges = new();
 
     // Hallways
-    struct Hallway
+    struct LinearHallway
     {
         public Vector2 startPos;
         public Vector2 endPos;
 
-        public Hallway(Vector2 startPos, Vector2 endPos)
+        public LinearHallway(Vector2 startPos, Vector2 endPos)
         {
             this.startPos = startPos;
             this.endPos = endPos;
         }
     }
-    List<Hallway> hallways = new();
+    struct CornerHallway
+    {
+        public Vector2 startPos;
+        public Vector2 cornerPos;
+        public Vector2 endPos;
+
+        public CornerHallway(Vector2 startPos, Vector2 cornerPos, Vector2 endPos)
+        {
+            this.startPos = startPos;
+            this.cornerPos = cornerPos;
+            this.endPos = endPos;
+        }
+    }
+    List<LinearHallway> linearHallways = new();
+    List<CornerHallway> cornerHallways = new();
+    List<Vector2> doorVerticalHallways = new();
+    List<Vector2> doorHorizontalHallways = new();
 
     // Start is called before the first frame update
     void Start()
@@ -130,13 +146,13 @@ public class GenerateRooms : MonoBehaviour
         //}
 
         // DisplayEdges
-        if (delaunatorEdges.Count > 0)
-        {
-            for (int i = 0; i < delaunatorEdges.Count; i++)
-            {
-                Debug.DrawLine(delaunatorEdges[i].start, delaunatorEdges[i].end, Color.white);
-            }
-        }
+        //if (delaunatorEdges.Count > 0)
+        //{
+        //    for (int i = 0; i < delaunatorEdges.Count; i++)
+        //    {
+        //        Debug.DrawLine(delaunatorEdges[i].start, delaunatorEdges[i].end, Color.white);
+        //    }
+        //}
 
         //if (treeEdges.Count > 0)
         //{
@@ -154,20 +170,44 @@ public class GenerateRooms : MonoBehaviour
         //    }
         //}
 
-        if (mapEdges.Count > 0)
+        //if (mapEdges.Count > 0)
+        //{
+        //    for (int i = 0; i < mapEdges.Count; i++)
+        //    {
+        //        Debug.DrawLine(mapEdges[i].start, mapEdges[i].end, Color.red);
+        //    }
+        //}
+
+        if (linearHallways.Count > 0)
         {
-            for (int i = 0; i < mapEdges.Count; i++)
+            for (int i = 0; i < linearHallways.Count; i++)
             {
-                Debug.DrawLine(mapEdges[i].start, mapEdges[i].end, Color.red);
+                Debug.DrawLine(new Vector3(linearHallways[i].startPos.x, 0, linearHallways[i].startPos.y), new Vector3(linearHallways[i].endPos.x, 0, linearHallways[i].endPos.y), Color.blue);
             }
         }
 
-        if (hallways.Count > 0)
+        if (cornerHallways.Count > 0)
         {
-            for (int i = 0; i < hallways.Count; i++)
+            for (int i = 0; i < cornerHallways.Count; i++)
             {
-                if (hallways[i].startPos == hallways[i].endPos) Debug.DrawLine(new Vector3(hallways[i].startPos.x, 0, hallways[i].startPos.y), new Vector3(hallways[i].startPos.x, 1, hallways[i].startPos.y), Color.green);
-                else Debug.DrawLine(new Vector3(hallways[i].startPos.x, 0, hallways[i].startPos.y), new Vector3(hallways[i].endPos.x, 0, hallways[i].endPos.y), Color.blue);
+                Debug.DrawLine(new Vector3(cornerHallways[i].startPos.x, 0, cornerHallways[i].startPos.y), new Vector3(cornerHallways[i].cornerPos.x, 0, cornerHallways[i].cornerPos.y), Color.cyan);
+                Debug.DrawLine(new Vector3(cornerHallways[i].cornerPos.x, 0, cornerHallways[i].cornerPos.y), new Vector3(cornerHallways[i].endPos.x, 0, cornerHallways[i].endPos.y), Color.cyan);
+            }
+        }
+
+        if (doorVerticalHallways.Count > 0)
+        {
+            for (int i = 0; i < doorVerticalHallways.Count; i++)
+            {
+                Debug.DrawLine(new Vector3(doorVerticalHallways[i].x, 0, doorVerticalHallways[i].y), new Vector3(doorVerticalHallways[i].x, 1, doorVerticalHallways[i].y), Color.yellow);
+            }
+        }
+
+        if (doorHorizontalHallways.Count > 0)
+        {
+            for (int i = 0; i < doorHorizontalHallways.Count; i++)
+            {
+                Debug.DrawLine(new Vector3(doorHorizontalHallways[i].x, 0, doorHorizontalHallways[i].y), new Vector3(doorHorizontalHallways[i].x, 1, doorHorizontalHallways[i].y), Color.yellow);
             }
         }
     }
@@ -182,9 +222,7 @@ public class GenerateRooms : MonoBehaviour
             {
                 for (int k = 0; k < roomSize.y; k++)
                 {
-                    if (floorPool.transform.childCount == 0) Debug.Log("No Children");
-                    GameObject tile = floorPool.transform.GetChild(0).gameObject;
-                    tile.transform.parent = newRoom.transform; //GameObject.Instantiate(floorTile, newRoom.transform);
+                    GameObject tile = GameObject.Instantiate(floorTile, newRoom.transform);
                     tile.transform.localPosition = new Vector3(1 + 2 * j, 0, 1 + 2 * k);
                 }
             }
@@ -288,6 +326,7 @@ public class GenerateRooms : MonoBehaviour
             while (mainRooms.Count < minimumMainRooms)
             {
                 mainRooms.Clear();
+                secondaryRooms.Clear();
                 for (int i = 0; i < createdRooms.Count; i++)
                 {
                     RoomOverlapping script = createdRooms[i].GetComponent<RoomOverlapping>();
@@ -295,9 +334,19 @@ public class GenerateRooms : MonoBehaviour
                     {
                         mainRooms.Add(createdRooms[i]);
                     }
+                    else
+                    {
+                        secondaryRooms.Add(createdRooms[i]);
+                    }
                 }
                 mainRoomsThreshold -= 0.05f;
             }
+        }
+
+        // REMOVE
+        for (int i = 0; i < secondaryRooms.Count; i++)
+        {
+            secondaryRooms[i].SetActive(false);
         }
 
         if (mainRooms.Count > 2) CreateDelaunayGraph();
@@ -467,31 +516,77 @@ public class GenerateRooms : MonoBehaviour
             int verticalDir = 0, horizontalDir = 0;
             bool oneLine = CanUseOnlyOneLine(startRoom, endRoom, ref verticalDir, ref horizontalDir);
 
+            Vector3 startPoint1 = startRoom.transform.position;
+            Vector3 endPoint1 = new Vector3(startRoom.transform.position.x + startScript.roomWidth * tileSize, 0, startRoom.transform.position.z + startScript.roomHeight * tileSize);
+            Vector3 startPoint2 = endRoom.transform.position;
+            Vector3 endPoint2 = new Vector3(endRoom.transform.position.x + endScript.roomWidth * tileSize, 0, endRoom.transform.position.z + endScript.roomHeight * tileSize);
+
             if (oneLine)
             {
                 if (verticalDir == 0)
                 {
                     if (horizontalDir == -1) // path to the right
                     {
-                        int middleHeight = Mathf.RoundToInt(GetMiddlePoint((int)startRoom.transform.position.z + 1, (int)startRoom.transform.position.z + (int)startScript.roomHeight * tileSize - 1, (int)endRoom.transform.position.z + 1, (int)endRoom.transform.position.z + (int)endScript.roomHeight * tileSize - 1));
-                        hallways.Add(new Hallway(new Vector2(endRoom.transform.position.x + endScript.roomWidth * tileSize, middleHeight), new Vector2(startRoom.transform.position.x, middleHeight)));
+                        int middleHeight = Mathf.RoundToInt(GetMiddlePoint((int)startPoint1.z + 1, (int)endPoint1.z - 1, (int)startPoint2.z + 1, (int)endPoint2.z - 1));
+                        if (endPoint2.x == startPoint1.x) doorHorizontalHallways.Add(new Vector2(endPoint2.x, middleHeight));
+                        else linearHallways.Add(new LinearHallway(new Vector2(endPoint2.x, middleHeight), new Vector2(startPoint1.x, middleHeight)));
                     }
                     else // path to the left
                     {
-
+                        int middleHeight = Mathf.RoundToInt(GetMiddlePoint((int)startPoint1.z + 1, (int)endPoint1.z - 1, (int)startPoint2.z + 1, (int)endPoint2.z - 1));
+                        if (endPoint1.x == startPoint2.x) doorHorizontalHallways.Add(new Vector2(endPoint1.x, middleHeight));
+                        else linearHallways.Add(new LinearHallway(new Vector2(endPoint1.x, middleHeight), new Vector2(startPoint2.x, middleHeight)));
                     }
                 }
                 else
                 {
                     if (verticalDir == -1) // path to down
                     {
-
+                        int middleHeight = Mathf.RoundToInt(GetMiddlePoint((int)startPoint1.x + 1, (int)endPoint1.x - 1, (int)startPoint2.x + 1, (int)endPoint2.x - 1));
+                        if (endPoint2.z == startPoint1.z) doorVerticalHallways.Add(new Vector2(middleHeight, endPoint2.z));
+                        else linearHallways.Add(new LinearHallway(new Vector2(middleHeight, endPoint2.z), new Vector2(middleHeight, startPoint1.z)));
                     }
                     else // path to up
                     {
-
+                        int middleHeight = Mathf.RoundToInt(GetMiddlePoint((int)startPoint1.x + 1, (int)endPoint1.x - 1, (int)startPoint2.x + 1, (int)endPoint2.x - 1));
+                        if (endPoint1.z == startPoint2.z) doorHorizontalHallways.Add(new Vector2(middleHeight, endPoint1.z));
+                        else linearHallways.Add(new LinearHallway(new Vector2(middleHeight, endPoint1.z), new Vector2(middleHeight, startPoint2.z)));
                     }
                 }
+            }
+            else
+            {
+                Vector3 startPos, cornerPos, endPos;
+
+                int startVertical = Random.Range(0, 2);
+
+                if (startVertical == 1) // true
+                {
+                    // vertical path
+                    if (verticalDir == -1) startPos = new Vector3(Random.Range((int)startPoint1.x + 1, (int)endPoint1.x - 1), 0, startPoint1.z);
+                    else startPos = new Vector3(Random.Range((int)startPoint1.x + 1, (int)endPoint1.x - 1), 0, endPoint1.z);
+
+                    // horizontal path
+                    if (horizontalDir == -1) endPos = new Vector3(endPoint2.x, 0, Random.Range((int)startPoint2.z + 1, (int)endPoint2.z - 1));
+                    else endPos = new Vector3(startPoint2.x, 0, Random.Range((int)startPoint2.z + 1, (int)endPoint2.z - 1));
+
+                    // join paths
+                    cornerPos = new Vector3(startPos.x, 0, endPos.z);
+                }
+                else // false
+                {
+                    // horizontal path
+                    if (horizontalDir == -1) startPos = new Vector3(startPoint1.x, 0, Random.Range((int)startPoint1.z + 1, (int)endPoint1.z - 1));
+                    else startPos = new Vector3(endPoint1.x, 0, Random.Range((int)startPoint1.z + 1, (int)endPoint1.z - 1));
+
+                    // vertical path
+                    if (verticalDir == -1) endPos = new Vector3(Random.Range((int)startPoint2.x + 1, (int)endPoint2.x - 1), 0, endPoint2.z);
+                    else endPos = new Vector3(Random.Range((int)startPoint2.x + 1, (int)endPoint2.x - 1), 0, startPoint2.z);
+
+                    // join paths
+                    cornerPos = new Vector3(endPos.x, 0, startPos.z);
+                }
+                cornerHallways.Add(new CornerHallway(new Vector2(startPos.x, startPos.z), new Vector2(cornerPos.x, cornerPos.z), new Vector2(endPos.x, endPos.z)));
             }
         }
     }
@@ -502,19 +597,31 @@ public class GenerateRooms : MonoBehaviour
         RoomOverlapping endScript = endRoom.GetComponent<RoomOverlapping>();
         // working arround Start Room
         // check vertical
-        if (startRoom.transform.position.z == endRoom.transform.position.z)
+        int startPoint1 = (int)startRoom.transform.position.z + 1; // 1 --> path width
+        int endPoint1 = (int)startRoom.transform.position.z + startScript.roomHeight * tileSize - 1;
+        int startPoint2 = (int)endRoom.transform.position.z + 1;
+        int endPoint2 = (int)endRoom.transform.position.z + endScript.roomHeight * tileSize - 1;
+        if (startPoint1 == startPoint2 && endPoint1 == endPoint2)
         {
             vertical = 0; // don't need vertical hallway
         }
-        else if (startRoom.transform.position.z < endRoom.transform.position.z && startRoom.transform.position.z + startScript.roomHeight * tileSize > endRoom.transform.position.z)
+        else if (startPoint1 < startPoint2 && endPoint1 > startPoint2)
         {
             vertical = 0; // don't need vertical hallway
         }
-        else if (startRoom.transform.position.z < endRoom.transform.position.z + endScript.roomHeight * tileSize && startRoom.transform.position.z + startScript.roomHeight * tileSize > endRoom.transform.position.z + endScript.roomHeight * tileSize)
+        else if (startPoint1 < endPoint2 && endPoint1 > endPoint2)
         {
             vertical = 0; // don't need vertical hallway
         }
-        else if (startRoom.transform.position.z < endRoom.transform.position.z)
+        else if (startPoint2 < startPoint1 && endPoint2 > startPoint1)
+        {
+            vertical = 0; // don't need vertical hallway
+        }
+        else if (startPoint2 < endPoint1 && endPoint2 > endPoint1)
+        {
+            vertical = 0; // don't need vertical hallway
+        }
+        else if (startPoint1 < startPoint2)
         {
             vertical = 1; // need up hallway
         }
@@ -524,19 +631,27 @@ public class GenerateRooms : MonoBehaviour
         }
 
         // check horizontal
-        int startPoint1 = (int)startRoom.transform.position.x + 1; // 1 --> path width
-        int endPoint1 = (int)startRoom.transform.position.x + startScript.roomWidth * tileSize - 1;
-        int startPoint2 = (int)endRoom.transform.position.x + 1;
-        int endPoint12= (int)endRoom.transform.position.x + endScript.roomWidth * tileSize - 1;
-        if (startPoint1 == endRoom.transform.position.x)
+        startPoint1 = (int)startRoom.transform.position.x + 1; // 1 --> path width
+        endPoint1 = (int)startRoom.transform.position.x + startScript.roomWidth * tileSize - 1;
+        startPoint2 = (int)endRoom.transform.position.x + 1;
+        endPoint2= (int)endRoom.transform.position.x + endScript.roomWidth * tileSize - 1;
+        if (startPoint1 == startPoint2 && endPoint1 == endPoint2)
         {
             horizontal = 0; // don't need horizontal hallway
         }
-        else if (startPoint1 < startPoint2 && endPoint1 > startPoint2)
+        else if (startPoint1 <= startPoint2 && endPoint1 >= startPoint2)
         {
             horizontal = 0; // don't need horizontal hallway
         }
-        else if (startPoint1 < endPoint12 && endPoint1 > endPoint12)
+        else if (startPoint1 <= endPoint2 && endPoint1 >= endPoint2)
+        {
+            horizontal = 0; // don't need horizontal hallway
+        }
+        else if (startPoint2 <= startPoint1 && endPoint2 >= startPoint1)
+        {
+            horizontal = 0; // don't need horizontal hallway
+        }
+        else if (startPoint2 <= endPoint1 && endPoint2 >= endPoint1)
         {
             horizontal = 0; // don't need horizontal hallway
         }
@@ -554,16 +669,27 @@ public class GenerateRooms : MonoBehaviour
 
     int GetMiddlePoint(int startPoint1, int endPoint1, int startPoint2, int endPoint2)
     {
-        int centerPoint1 = endPoint1 - startPoint1;
-        int centerPoint2 = endPoint2 - startPoint2;
+        int centerPoint1 = startPoint1 + (endPoint1 - startPoint1) /2;
+        int centerPoint2 = startPoint2 + (endPoint2 - startPoint2) / 2;
 
-        int middleCenter = (centerPoint2 - centerPoint1) / 2;
+        int middleCenter = centerPoint1 + (centerPoint2 - centerPoint1) / 2;
+        if (middleCenter % 2 == 0) // si es par
+        {
+            int nearest = 99999;
+            if (middleCenter - startPoint1 < nearest) nearest = startPoint1;
+            if (middleCenter - endPoint1 < nearest) nearest = startPoint1;
+            if (middleCenter - startPoint2 < nearest) nearest = startPoint1;
+            if (middleCenter - endPoint2 < nearest) nearest = startPoint1;
+
+            if (nearest > 0) middleCenter++;
+            else middleCenter--;
+        }
 
         if (startPoint1 <= middleCenter && endPoint1 >= middleCenter && startPoint2 <= middleCenter && endPoint2 >= middleCenter) return middleCenter;
 
         int direction;
-        if (startPoint1 < startPoint2 && endPoint1 > startPoint2) direction = -1;
-        else direction = 1;
+        if (startPoint1 < startPoint2 && endPoint1 > startPoint2) direction = -tileSize;
+        else direction = tileSize;
 
         while (true)
         {
