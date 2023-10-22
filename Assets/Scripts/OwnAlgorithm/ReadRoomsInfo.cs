@@ -8,12 +8,13 @@ public struct RoomInfo
     public int downDoor;
     public int leftDoor;
     public int rightDoor;
-    public int jointRoomTypeIdTop; // jointID, -1 == no joint
-    public int jointRoomTypeIdDown; // jointID, -1 == no joint
-    public int jointRoomTypeIdRight; // jointID, -1 == no joint
-    public int jointRoomTypeIdLeft; // jointID, -1 == no joint
+    public int jointRoomTypeIdTop; // jointID for top, -1 == no joint
+    public int jointRoomTypeIdDown; // jointID for down, -1 == no joint
+    public int jointRoomTypeIdRight; // jointID for right, -1 == no joint
+    public int jointRoomTypeIdLeft; // jointID for left, -1 == no joint
+    public int jointRoomNumber; // number of rooms that form it's joint room, 0 --> no joint
 
-    public RoomInfo(int topDoor, int downDoor, int leftDoor, int rightDoor, int jointRoomTypeIdTop, int jointRoomTypeIdDown, int jointRoomTypeIdRight, int jointRoomTypeIdLeft)
+    public RoomInfo(int topDoor, int downDoor, int leftDoor, int rightDoor, int jointRoomTypeIdTop, int jointRoomTypeIdDown, int jointRoomTypeIdRight, int jointRoomTypeIdLeft, int jointRoomNumber)
     {
         this.topDoor = topDoor;
         this.downDoor = downDoor;
@@ -23,6 +24,12 @@ public struct RoomInfo
         this.jointRoomTypeIdDown = jointRoomTypeIdDown;
         this.jointRoomTypeIdRight = jointRoomTypeIdRight;
         this.jointRoomTypeIdLeft = jointRoomTypeIdLeft;
+        this.jointRoomNumber = jointRoomNumber;
+    }
+
+    public bool IsJointRoom()
+    {
+        return (jointRoomTypeIdTop != -1 || jointRoomTypeIdDown != -1 || jointRoomTypeIdRight != -1 || jointRoomTypeIdLeft != -1);
     }
 }
 
@@ -80,7 +87,7 @@ public class ReadRoomsInfo : MonoBehaviour
     {
         string[] data = roomsInfoCSV.text.Split(new string[] { ";", "\r\n" }, System.StringSplitOptions.None);
 
-        int numOfColumns = 9;
+        int numOfColumns = 10;
 
         int i = numOfColumns;
         while (data[i] != "")
@@ -93,7 +100,8 @@ public class ReadRoomsInfo : MonoBehaviour
                 int.Parse(data[i + 5]),
                 int.Parse(data[i + 6]),
                 int.Parse(data[i + 7]),
-                int.Parse(data[i + 8]));
+                int.Parse(data[i + 8]),
+                int.Parse(data[i + 9]));
 
             roomInfoList.Add(int.Parse(data[i]), roomInfo);
             i += numOfColumns;

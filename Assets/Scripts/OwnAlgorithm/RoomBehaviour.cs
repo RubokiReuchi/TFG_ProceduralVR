@@ -27,9 +27,10 @@ public class Door
 
 public class RoomBehaviour : MonoBehaviour
 {
+    public int roomTypeID;
     [HideInInspector] public OwnRoomGenarator manager;
 
-    [NonEditable] public bool doorsFilled = false;
+    [NonEditable] bool doorsFilled = false;
     [SerializeField] Transform[] doorsTransform;
     [SerializeField] FOUR_DIRECTIONS[] doorsDirections;
     List<Door> doors = new();
@@ -38,6 +39,15 @@ public class RoomBehaviour : MonoBehaviour
     {
         if (doorsTransform.Length != doorsDirections.Length) Debug.LogError("Diferent number of doorsTransform and doorsDirections");
         for (int i = 0; i < doorsTransform.Length; i++) doors.Add(new Door(doorsTransform[i].position, doorsDirections[i]));
+    }
+
+    public bool GetDoorsFilled()
+    {
+        for (int i = 0; i < doors.Count; i++)
+        {
+            if (doors[i].state == DOOR_STATE.FOR_FILL) return false;
+        }
+        return true;
     }
 
     public Door GetRandomUnfilledDoor()

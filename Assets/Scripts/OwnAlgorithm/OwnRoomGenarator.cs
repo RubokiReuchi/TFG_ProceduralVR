@@ -25,13 +25,20 @@ public class OwnRoomGenarator : MonoBehaviour
     int roomsNormalHeight = 5;
 
     [Header("Rooms Between Start and Boss Rooms")]
-    [Range(0, 9)][SerializeField] int roomsBetween;
+    [Range(0, 9)][SerializeField] int minRoomsBetween;
+    [Range(0, 9)][SerializeField] int maxRoomsBetween;
+    [NonEditable][SerializeField] public int totalRoomsBetween = 0;
+    int roomsBetween = 0;
 
     List<RoomBehaviour> roomsScripts = new();
+
+    int lastRoomCreated = -1; // make imposible to have the same room in sequence
 
     // Start is called before the first frame update
     void Start()
     {
+        totalRoomsBetween = Random.Range(minRoomsBetween, maxRoomsBetween);
+        roomsBetween = totalRoomsBetween;
         CreateMainPath();
     }
 
@@ -39,6 +46,17 @@ public class OwnRoomGenarator : MonoBehaviour
     void Update()
     {
         
+    }
+
+    int GetScriptIndex(RoomBehaviour script)
+    {
+        for (int i = 0; i < roomsScripts.Count; i++)
+        {
+            if (script.GetInstanceID() == roomsScripts[i].GetInstanceID()) return i;
+        }
+
+        Debug.Log("Logic Error");
+        return -1;
     }
 
     void CreateMainPath()
@@ -55,12 +73,16 @@ public class OwnRoomGenarator : MonoBehaviour
         // start-boss path rooms
         while (roomsBetween > 0)
         {
-            if (script.doorsFilled) Debug.LogError("Logic Error");
+            if (script.GetDoorsFilled())
+            {
+                if (!FindRoomScriptWithDoors(ref script)) return;
+            }
             unfilledDoor = script.GetRandomUnfilledDoor();
 
             auxScript = CreateNextRoom(unfilledDoor);
             if (auxScript != null)
             {
+                lastRoomCreated = auxScript.roomTypeID;
                 unfilledDoor.state = DOOR_STATE.YELLOW;
                 script = auxScript;
                 roomsBetween--;
@@ -68,19 +90,56 @@ public class OwnRoomGenarator : MonoBehaviour
         }
 
         // boss room
-        if (script.doorsFilled) Debug.LogError("Logic Error");
-        unfilledDoor = script.GetRandomUnfilledDoor();
+        //if (script.doorsFilled)
+        //{
+        //    Debug.LogError("Logic Error");
+        //    return;
+        //}
+        //unfilledDoor = script.GetRandomUnfilledDoor();
 
-        auxScript = CreateNextRoom(unfilledDoor);
-        if (auxScript != null)
+        //auxScript = CreateNextRoom(unfilledDoor);
+        //if (auxScript != null)
+        //{
+        //    unfilledDoor.state = DOOR_STATE.YELLOW;
+        //}
+    }
+
+    bool FindRoomScriptWithDoors(ref RoomBehaviour script)
+    {
+        RoomInfo roomInfo = roomsInfo.roomInfoList[script.roomTypeID];
+        if (roomInfo.IsJointRoom())
         {
-            unfilledDoor.state = DOOR_STATE.YELLOW;
+            int currentScriptIndex = GetScriptIndex(script);
+            if (currentScriptIndex == -1)
+            {
+                Debug.LogError("Logic Error: Script not Stored on scriptList");
+                return false;
+            }
+
+            for (int i = 1; i < roomInfo.jointRoomNumber; i++) // start at 1 to ignore it self
+            {
+                if (!roomsScripts[currentScriptIndex + i].GetDoorsFilled())
+                {
+                    script = roomsScripts[currentScriptIndex + i];
+                    return true;
+                }
+            }
+
+            Debug.LogError("Logic Error");
+            return false;
+        }
+        else
+        {
+            // Retroceder en las salas
+            return false;
         }
     }
 
     RoomBehaviour CreateNextRoom(Door door)
     {
         List<GameObject> posibleRooms = roomsPrefabs.ToList<GameObject>();
+        List<int> imposibleRooms = new();
+        if (lastRoomCreated != -1) imposibleRooms.Add(lastRoomCreated);
         int newRoomTypeID = -1;
 
         switch (door.direction)
@@ -88,12 +147,14 @@ public class OwnRoomGenarator : MonoBehaviour
             case FOUR_DIRECTIONS.TOP:
                 while (newRoomTypeID == -1)
                 {
-                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndHoldDoor(door);
-
-                    newRoomTypeID = Random.Range(0, posibleRooms.Count);
+                    if (posibleRooms.Count == imposibleRooms.Count) return ReturnNullGameobjectAndHoldDoor(door);
+                    do
+                    {
+                        newRoomTypeID = Random.Range(0, posibleRooms.Count);
+                    } while (imposibleRooms.Contains(newRoomTypeID));
                     RoomInfo roomInfo = roomsInfo.roomInfoList[newRoomTypeID];
 
-                    if (roomInfo.jointRoomTypeIdTop == -1 && roomInfo.jointRoomTypeIdDown == -1 && roomInfo.jointRoomTypeIdRight == -1 && roomInfo.jointRoomTypeIdLeft == -1) // no joint room
+                    if (!roomInfo.IsJointRoom()) // no joint room
                     {
                         Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + 2/*HallwaySize*/ + roomsNormalHeight);
                         Collider[] colliding = Physics.OverlapBox(roomCenter, new Vector3(roomsNormalWidth, 5, roomsNormalHeight));
@@ -102,7 +163,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             if (roomInfo.downDoor == 1) // if room has a door down
                             {
                                 Vector3 roomPosition = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + 2);
-                                GameObject newRoom = GameObject.Instantiate(posibleRooms[newRoomTypeID], roomPosition, Quaternion.identity);
+                                GameObject newRoom = GameObject.Instantiate(roomsPrefabs[newRoomTypeID], roomPosition, Quaternion.identity);
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
                                 script.NullifyDoor(FOUR_DIRECTIONS.DOWN);
@@ -111,7 +172,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             }
                             else
                             {
-                                posibleRooms.RemoveAt(newRoomTypeID);
+                                imposibleRooms.Add(newRoomTypeID);
                                 newRoomTypeID = -1;
                                 continue;
                             }
@@ -125,7 +186,7 @@ public class OwnRoomGenarator : MonoBehaviour
                     {
                         if (roomInfo.downDoor != 1)
                         {
-                            posibleRooms.RemoveAt(newRoomTypeID);
+                            imposibleRooms.Add(newRoomTypeID);
                             newRoomTypeID = -1;
                             continue;
                         }
@@ -136,7 +197,7 @@ public class OwnRoomGenarator : MonoBehaviour
 
                         if (JointRoomOverlapping(localRooms)) // no space for joint room
                         {
-                            posibleRooms.RemoveAt(newRoomTypeID);
+                            imposibleRooms.Add(newRoomTypeID);
                             newRoomTypeID = -1;
                             continue;
                         }
@@ -153,12 +214,14 @@ public class OwnRoomGenarator : MonoBehaviour
             case FOUR_DIRECTIONS.DOWN:
                 while (newRoomTypeID == -1)
                 {
-                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndHoldDoor(door);
-
-                    newRoomTypeID = Random.Range(0, posibleRooms.Count);
+                    if (posibleRooms.Count == imposibleRooms.Count) return ReturnNullGameobjectAndHoldDoor(door);
+                    do
+                    {
+                        newRoomTypeID = Random.Range(0, posibleRooms.Count);
+                    } while (imposibleRooms.Contains(newRoomTypeID));
                     RoomInfo roomInfo = roomsInfo.roomInfoList[newRoomTypeID];
 
-                    if (roomInfo.jointRoomTypeIdTop == -1 && roomInfo.jointRoomTypeIdDown == -1 && roomInfo.jointRoomTypeIdRight == -1 && roomInfo.jointRoomTypeIdLeft == -1) // no joint room
+                    if (!roomInfo.IsJointRoom()) // no joint room
                     {
                         Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z - 2/*HallwaySize*/ - roomsNormalHeight);
                         Collider[] colliding = Physics.OverlapBox(roomCenter, new Vector3(roomsNormalWidth, 5, roomsNormalHeight));
@@ -167,7 +230,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             if (roomInfo.topDoor == 1) // if room has a door at top
                             {
                                 Vector3 roomPosition = new Vector3(door.position.x, door.position.y/*0*/, door.position.z - 2 - roomsNormalHeight * 2);
-                                GameObject newRoom = GameObject.Instantiate(posibleRooms[newRoomTypeID], roomPosition, Quaternion.identity);
+                                GameObject newRoom = GameObject.Instantiate(roomsPrefabs[newRoomTypeID], roomPosition, Quaternion.identity);
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
                                 script.NullifyDoor(FOUR_DIRECTIONS.TOP);
@@ -176,7 +239,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             }
                             else
                             {
-                                posibleRooms.RemoveAt(newRoomTypeID);
+                                imposibleRooms.Add(newRoomTypeID);
                                 newRoomTypeID = -1;
                                 continue;
                             }
@@ -190,7 +253,7 @@ public class OwnRoomGenarator : MonoBehaviour
                     {
                         if (roomInfo.topDoor != 1)
                         {
-                            posibleRooms.RemoveAt(newRoomTypeID);
+                            imposibleRooms.Add(newRoomTypeID);
                             newRoomTypeID = -1;
                             continue;
                         }
@@ -201,7 +264,7 @@ public class OwnRoomGenarator : MonoBehaviour
 
                         if (JointRoomOverlapping(localRooms)) // no space for joint room
                         {
-                            posibleRooms.RemoveAt(newRoomTypeID);
+                            imposibleRooms.Add(newRoomTypeID);
                             newRoomTypeID = -1;
                             continue;
                         }
@@ -218,12 +281,14 @@ public class OwnRoomGenarator : MonoBehaviour
             case FOUR_DIRECTIONS.RIGHT:
                 while (newRoomTypeID == -1)
                 {
-                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndHoldDoor(door);
-
-                    newRoomTypeID = Random.Range(0, posibleRooms.Count);
+                    if (posibleRooms.Count == imposibleRooms.Count) return ReturnNullGameobjectAndHoldDoor(door);
+                    do
+                    {
+                        newRoomTypeID = Random.Range(0, posibleRooms.Count);
+                    } while (imposibleRooms.Contains(newRoomTypeID));
                     RoomInfo roomInfo = roomsInfo.roomInfoList[newRoomTypeID];
 
-                    if (roomInfo.jointRoomTypeIdTop == -1 && roomInfo.jointRoomTypeIdDown == -1 && roomInfo.jointRoomTypeIdRight == -1 && roomInfo.jointRoomTypeIdLeft == -1) // no joint room
+                    if (!roomInfo.IsJointRoom()) // no joint room
                     {
                         Vector3 roomCenter = new Vector3(door.position.x + 2/*HallwaySize*/ + roomsNormalWidth, door.position.y/*0*/, door.position.z);
                         Collider[] colliding = Physics.OverlapBox(roomCenter, new Vector3(roomsNormalWidth, 5, roomsNormalHeight));
@@ -232,7 +297,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             if (roomInfo.leftDoor == 1) // if room has a door at left
                             {
                                 Vector3 roomPosition = new Vector3(door.position.x + 2 + roomsNormalWidth, door.position.y/*0*/, door.position.z - roomsNormalHeight);
-                                GameObject newRoom = GameObject.Instantiate(posibleRooms[newRoomTypeID], roomPosition, Quaternion.identity);
+                                GameObject newRoom = GameObject.Instantiate(roomsPrefabs[newRoomTypeID], roomPosition, Quaternion.identity);
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
                                 script.NullifyDoor(FOUR_DIRECTIONS.LEFT);
@@ -241,7 +306,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             }
                             else
                             {
-                                posibleRooms.RemoveAt(newRoomTypeID);
+                                imposibleRooms.Add(newRoomTypeID);
                                 newRoomTypeID = -1;
                                 continue;
                             }
@@ -255,7 +320,7 @@ public class OwnRoomGenarator : MonoBehaviour
                     {
                         if (roomInfo.leftDoor != 1)
                         {
-                            posibleRooms.RemoveAt(newRoomTypeID);
+                            imposibleRooms.Add(newRoomTypeID);
                             newRoomTypeID = -1;
                             continue;
                         }
@@ -266,7 +331,7 @@ public class OwnRoomGenarator : MonoBehaviour
 
                         if (JointRoomOverlapping(localRooms)) // no space for joint room
                         {
-                            posibleRooms.RemoveAt(newRoomTypeID);
+                            imposibleRooms.Add(newRoomTypeID);
                             newRoomTypeID = -1;
                             continue;
                         }
@@ -283,12 +348,14 @@ public class OwnRoomGenarator : MonoBehaviour
             case FOUR_DIRECTIONS.LEFT:
                 while (newRoomTypeID == -1)
                 {
-                    if (posibleRooms.Count == 0) return ReturnNullGameobjectAndHoldDoor(door);
-
-                    newRoomTypeID = Random.Range(0, posibleRooms.Count);
+                    if (posibleRooms.Count == imposibleRooms.Count) return ReturnNullGameobjectAndHoldDoor(door);
+                    do
+                    {
+                        newRoomTypeID = Random.Range(0, posibleRooms.Count);
+                    } while (imposibleRooms.Contains(newRoomTypeID));
                     RoomInfo roomInfo = roomsInfo.roomInfoList[newRoomTypeID];
 
-                    if (roomInfo.jointRoomTypeIdTop == -1 && roomInfo.jointRoomTypeIdDown == -1 && roomInfo.jointRoomTypeIdRight == -1 && roomInfo.jointRoomTypeIdLeft == -1) // no joint room
+                    if (!roomInfo.IsJointRoom()) // no joint room
                     {
                         Vector3 roomCenter = new Vector3(door.position.x - 2/*HallwaySize*/ - roomsNormalWidth, door.position.y/*0*/, door.position.z);
                         Collider[] colliding = Physics.OverlapBox(roomCenter, new Vector3(roomsNormalWidth, 5, roomsNormalHeight));
@@ -297,7 +364,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             if (roomInfo.rightDoor == 1) // if room has a door at right
                             {
                                 Vector3 roomPosition = new Vector3(door.position.x - 2 - roomsNormalWidth, door.position.y/*0*/, door.position.z - roomsNormalHeight);
-                                GameObject newRoom = GameObject.Instantiate(posibleRooms[newRoomTypeID], roomPosition, Quaternion.identity);
+                                GameObject newRoom = GameObject.Instantiate(roomsPrefabs[newRoomTypeID], roomPosition, Quaternion.identity);
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
                                 script.NullifyDoor(FOUR_DIRECTIONS.RIGHT);
@@ -306,7 +373,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             }
                             else
                             {
-                                posibleRooms.RemoveAt(newRoomTypeID);
+                                imposibleRooms.Add(newRoomTypeID);
                                 newRoomTypeID = -1;
                                 continue;
                             }
@@ -320,7 +387,7 @@ public class OwnRoomGenarator : MonoBehaviour
                     {
                         if (roomInfo.rightDoor != 1)
                         {
-                            posibleRooms.RemoveAt(newRoomTypeID);
+                            imposibleRooms.Add(newRoomTypeID);
                             newRoomTypeID = -1;
                             continue;
                         }
@@ -331,7 +398,7 @@ public class OwnRoomGenarator : MonoBehaviour
 
                         if (JointRoomOverlapping(localRooms)) // no space for joint room
                         {
-                            posibleRooms.RemoveAt(newRoomTypeID);
+                            imposibleRooms.Add(newRoomTypeID);
                             newRoomTypeID = -1;
                             continue;
                         }
