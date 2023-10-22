@@ -30,8 +30,10 @@ public class OwnRoomGenarator : MonoBehaviour
     [NonEditable][SerializeField] public int totalRoomsBetween = 0;
     int roomsBetween = 0;
 
-    List<RoomBehaviour> roomsScripts = new();
+    Dictionary<int, TreeNode> roomsTree = new();
+    //List<RoomBehaviour> roomsScripts = new();
 
+    int workingIndex = 0;
     int lastRoomCreated = -1; // make imposible to have the same room in sequence
 
     // Start is called before the first frame update
@@ -45,14 +47,26 @@ public class OwnRoomGenarator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // display tree
+        for (int i = 0; i < roomsTree.Count; i++)
+        {
+            for (int j = 0; j < 4; j++)
+            {
+                if (roomsTree[i].children[j] == null) continue;
+
+                Vector3 startPos = roomsTree[i].script.gameObject.transform.position;
+                Vector3 endPos = roomsTree[i].children[j].script.gameObject.transform.position;
+
+                Debug.DrawLine(startPos, endPos);
+            }
+        }
     }
 
-    int GetScriptIndex(RoomBehaviour script)
+    int GetTreeIndex(RoomBehaviour script)
     {
-        for (int i = 0; i < roomsScripts.Count; i++)
+        for (int i = 0; i < roomsTree.Count; i++)
         {
-            if (script.GetInstanceID() == roomsScripts[i].GetInstanceID()) return i;
+            if (roomsTree[i].script.GetInstanceID() == script.GetInstanceID()) return i;
         }
 
         Debug.Log("Logic Error");
@@ -67,6 +81,8 @@ public class OwnRoomGenarator : MonoBehaviour
         script.manager = this;
         script.SetDoors();
 
+        roomsTree.Add(0, new TreeNode(script, null));
+
         Door unfilledDoor;
         RoomBehaviour auxScript;
 
@@ -75,11 +91,12 @@ public class OwnRoomGenarator : MonoBehaviour
         {
             if (script.GetDoorsFilled())
             {
-                if (!FindRoomScriptWithDoors(ref script)) return;
+                if (!FindRoomScriptWithDoors(ref script)) return; // error ocurred
             }
-            unfilledDoor = script.GetRandomUnfilledDoor();
+            workingIndex = GetTreeIndex(script);
+            unfilledDoor = roomsTree[workingIndex].script.GetRandomUnfilledDoor();
 
-            auxScript = CreateNextRoom(unfilledDoor);
+            auxScript = CreateNextRoom(unfilledDoor, workingIndex);
             if (auxScript != null)
             {
                 lastRoomCreated = auxScript.roomTypeID;
@@ -109,18 +126,18 @@ public class OwnRoomGenarator : MonoBehaviour
         RoomInfo roomInfo = roomsInfo.roomInfoList[script.roomTypeID];
         if (roomInfo.IsJointRoom())
         {
-            int currentScriptIndex = GetScriptIndex(script);
-            if (currentScriptIndex == -1)
+            int currentTreeIndex = GetTreeIndex(script);
+            if (currentTreeIndex == -1)
             {
-                Debug.LogError("Logic Error: Script not Stored on scriptList");
+                Debug.LogError("Logic Error: Script not Stored on treeList");
                 return false;
             }
 
             for (int i = 1; i < roomInfo.jointRoomNumber; i++) // start at 1 to ignore it self
             {
-                if (!roomsScripts[currentScriptIndex + i].GetDoorsFilled())
+                if (!roomsTree[currentTreeIndex + i].script.GetDoorsFilled())
                 {
-                    script = roomsScripts[currentScriptIndex + i];
+                    script = roomsTree[currentTreeIndex + i].script;
                     return true;
                 }
             }
@@ -131,11 +148,12 @@ public class OwnRoomGenarator : MonoBehaviour
         else
         {
             // Retroceder en las salas
+            Debug.LogError("gggggggggggggggg");
             return false;
         }
     }
 
-    RoomBehaviour CreateNextRoom(Door door)
+    RoomBehaviour CreateNextRoom(Door door, int roomTreeIndex)
     {
         List<GameObject> posibleRooms = roomsPrefabs.ToList<GameObject>();
         List<int> imposibleRooms = new();
@@ -167,7 +185,9 @@ public class OwnRoomGenarator : MonoBehaviour
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
                                 script.NullifyDoor(FOUR_DIRECTIONS.DOWN);
-                                roomsScripts.Add(script);
+                                TreeNode node = new TreeNode(script, roomsTree[roomTreeIndex]);
+                                roomsTree[roomTreeIndex].children[0] = node; // 0 cause is top
+                                roomsTree.Add(roomsTree.Count, node);
                                 return script;
                             }
                             else
@@ -204,9 +224,9 @@ public class OwnRoomGenarator : MonoBehaviour
                         else
                         {
                             List<Vector3> storeRooms = new(); // prevent to duplicate rooms
-                            int lastRoomScriptIndex = roomsScripts.Count - 1;
-                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms);
-                            return roomsScripts[lastRoomScriptIndex + 1];
+                            int lastRoomScriptIndex = roomsTree.Count - 1;
+                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 0); // top
+                            return roomsTree[lastRoomScriptIndex + 1].script;
                         }
                     }
                 }
@@ -234,7 +254,9 @@ public class OwnRoomGenarator : MonoBehaviour
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
                                 script.NullifyDoor(FOUR_DIRECTIONS.TOP);
-                                roomsScripts.Add(script);
+                                TreeNode node = new TreeNode(script, roomsTree[roomTreeIndex]);
+                                roomsTree[roomTreeIndex].children[1] = node; // 1 cause is down
+                                roomsTree.Add(roomsTree.Count, node);
                                 return script;
                             }
                             else
@@ -271,9 +293,9 @@ public class OwnRoomGenarator : MonoBehaviour
                         else
                         {
                             List<Vector3> storeRooms = new(); // prevent to duplicate rooms
-                            int lastRoomScriptIndex = roomsScripts.Count - 1;
-                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms);
-                            return roomsScripts[lastRoomScriptIndex + 1];
+                            int lastRoomScriptIndex = roomsTree.Count - 1;
+                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 1); // down
+                            return roomsTree[lastRoomScriptIndex + 1].script;
                         }
                     }
                 }
@@ -301,7 +323,9 @@ public class OwnRoomGenarator : MonoBehaviour
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
                                 script.NullifyDoor(FOUR_DIRECTIONS.LEFT);
-                                roomsScripts.Add(script);
+                                TreeNode node = new TreeNode(script, roomsTree[roomTreeIndex]);
+                                roomsTree[roomTreeIndex].children[2] = node; // 2 cause is right
+                                roomsTree.Add(roomsTree.Count, node);
                                 return script;
                             }
                             else
@@ -338,9 +362,9 @@ public class OwnRoomGenarator : MonoBehaviour
                         else
                         {
                             List<Vector3> storeRooms = new(); // prevent to duplicate rooms
-                            int lastRoomScriptIndex = roomsScripts.Count - 1;
-                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms);
-                            return roomsScripts[lastRoomScriptIndex + 1];
+                            int lastRoomScriptIndex = roomsTree.Count - 1;
+                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 2); // right
+                            return roomsTree[lastRoomScriptIndex + 1].script;
                         }
                     }
                 }
@@ -368,7 +392,9 @@ public class OwnRoomGenarator : MonoBehaviour
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
                                 script.NullifyDoor(FOUR_DIRECTIONS.RIGHT);
-                                roomsScripts.Add(script);
+                                TreeNode node = new TreeNode(script, roomsTree[roomTreeIndex]);
+                                roomsTree[roomTreeIndex].children[3] = node; // 3 cause is left
+                                roomsTree.Add(roomsTree.Count, node);
                                 return script;
                             }
                             else
@@ -405,9 +431,9 @@ public class OwnRoomGenarator : MonoBehaviour
                         else
                         {
                             List<Vector3> storeRooms = new(); // prevent to duplicate rooms
-                            int lastRoomScriptIndex = roomsScripts.Count - 1;
-                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms);
-                            return roomsScripts[lastRoomScriptIndex + 1];
+                            int lastRoomScriptIndex = roomsTree.Count - 1;
+                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 3); // left
+                            return roomsTree[lastRoomScriptIndex + 1].script;
                         }
                     }
                 }
@@ -616,7 +642,7 @@ public class OwnRoomGenarator : MonoBehaviour
         return false;
     }
 
-    void BuildJointRoom(int currentRoomTypeID, Vector3 currentGridLocation, FOUR_DIRECTIONS nullifyDoor, List<Vector3> localRooms)
+    void BuildJointRoom(int currentRoomTypeID, Vector3 currentGridLocation, FOUR_DIRECTIONS nullifyDoor, List<Vector3> localRooms, int currentRoomTreeIndex, int currentRoomDirection)
     {
         if (localRooms.Contains(currentGridLocation)) return;
         else localRooms.Add(currentGridLocation);
@@ -628,7 +654,9 @@ public class OwnRoomGenarator : MonoBehaviour
         RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
         script.SetDoors();
         if (nullifyDoor != FOUR_DIRECTIONS.NONE) script.NullifyDoor(nullifyDoor);
-        roomsScripts.Add(script);
+        TreeNode node = new TreeNode(script, roomsTree[currentRoomTreeIndex]);
+        roomsTree[currentRoomTreeIndex].children[currentRoomDirection] = node; // 0 --> this room is on top of last one
+        roomsTree.Add(roomsTree.Count, node);
 
         // top
         if (currentRoomInfo.jointRoomTypeIdTop != -1)
@@ -643,7 +671,7 @@ public class OwnRoomGenarator : MonoBehaviour
                     case OBJECT_TYPE.BOSS_ROOM:
                         Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z + roomsNormalHeight * 2);
                         if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdTop], new Vector3(currentGridLocation.x, 0, currentGridLocation.z + 2 + roomsNormalHeight), Quaternion.identity);
-                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms);
+                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 0); // top
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -661,7 +689,7 @@ public class OwnRoomGenarator : MonoBehaviour
                     case OBJECT_TYPE.BOSS_ROOM:
                         Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z + roomsNormalHeight * 2);
                         if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdTop], new Vector3(currentGridLocation.x, 0, currentGridLocation.z + 2 + roomsNormalHeight), Quaternion.identity);
-                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms);
+                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 0); // top
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -689,7 +717,7 @@ public class OwnRoomGenarator : MonoBehaviour
                     case OBJECT_TYPE.BOSS_ROOM:
                         Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - 2 - roomsNormalHeight * 2);
                         if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdDown], new Vector3(currentGridLocation.x, 0, currentGridLocation.z - 2 - roomsNormalHeight), Quaternion.identity);
-                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms);
+                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 1); // down
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -707,7 +735,7 @@ public class OwnRoomGenarator : MonoBehaviour
                     case OBJECT_TYPE.BOSS_ROOM:
                         Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - 2 - roomsNormalHeight * 2);
                         if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdDown], new Vector3(currentGridLocation.x, 0, currentGridLocation.z - 2 - roomsNormalHeight), Quaternion.identity);
-                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms);
+                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 1); // down
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -735,7 +763,7 @@ public class OwnRoomGenarator : MonoBehaviour
                     case OBJECT_TYPE.BOSS_ROOM:
                         Vector3 roomCenter = new Vector3(currentGridLocation.x + 2 + roomsNormalWidth * 2, 0, currentGridLocation.z);
                         if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdRight], new Vector3(currentGridLocation.x + 1 + roomsNormalWidth, 0, currentGridLocation.z - roomsNormalHeight), Quaternion.identity);
-                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms);
+                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 2); // right
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -753,7 +781,7 @@ public class OwnRoomGenarator : MonoBehaviour
                     case OBJECT_TYPE.BOSS_ROOM:
                         Vector3 roomCenter = new Vector3(currentGridLocation.x + 2 + roomsNormalWidth * 2, 0, currentGridLocation.z);
                         if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdRight], new Vector3(currentGridLocation.x + 1 + roomsNormalWidth, 0, currentGridLocation.z - roomsNormalHeight), Quaternion.identity);
-                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms);
+                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 2); // right
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -781,7 +809,7 @@ public class OwnRoomGenarator : MonoBehaviour
                     case OBJECT_TYPE.BOSS_ROOM:
                         Vector3 roomCenter = new Vector3(currentGridLocation.x - 2 - roomsNormalWidth * 2, 0, currentGridLocation.z);
                         if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdLeft], new Vector3(currentGridLocation.x - 1 - roomsNormalWidth, 0, currentGridLocation.z - roomsNormalHeight), Quaternion.identity);
-                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms);
+                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 3); // left
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -799,7 +827,7 @@ public class OwnRoomGenarator : MonoBehaviour
                     case OBJECT_TYPE.BOSS_ROOM:
                         Vector3 roomCenter = new Vector3(currentGridLocation.x - 2 - roomsNormalWidth * 2, 0, currentGridLocation.z);
                         if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdLeft], new Vector3(currentGridLocation.x - 1 - roomsNormalWidth, 0, currentGridLocation.z - roomsNormalHeight), Quaternion.identity);
-                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms);
+                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 3); // left
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
