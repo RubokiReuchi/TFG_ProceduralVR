@@ -4,21 +4,58 @@ using UnityEngine;
 
 public struct RoomInfo
 {
-    public int roomTypeID;
     public int topDoor; // 0 --> no door, 1 --> door, 2 --> joint
     public int downDoor;
     public int leftDoor;
     public int rightDoor;
-    public int jointRoomTypeID; // room that joints it, -1 == no room
+    public int jointRoomTypeIdTop; // jointID, -1 == no joint
+    public int jointRoomTypeIdDown; // jointID, -1 == no joint
+    public int jointRoomTypeIdRight; // jointID, -1 == no joint
+    public int jointRoomTypeIdLeft; // jointID, -1 == no joint
 
-    public RoomInfo(int roomTypeID, int topDoor, int downDoor, int leftDoor, int rightDoor, int jointRoomTypeID)
+    public RoomInfo(int topDoor, int downDoor, int leftDoor, int rightDoor, int jointRoomTypeIdTop, int jointRoomTypeIdDown, int jointRoomTypeIdRight, int jointRoomTypeIdLeft)
     {
-        this.roomTypeID = roomTypeID;
         this.topDoor = topDoor;
         this.downDoor = downDoor;
         this.leftDoor = leftDoor;
         this.rightDoor = rightDoor;
-        this.jointRoomTypeID = jointRoomTypeID;
+        this.jointRoomTypeIdTop = jointRoomTypeIdTop;
+        this.jointRoomTypeIdDown = jointRoomTypeIdDown;
+        this.jointRoomTypeIdRight = jointRoomTypeIdRight;
+        this.jointRoomTypeIdLeft = jointRoomTypeIdLeft;
+    }
+}
+
+public enum OBJECT_TYPE
+{
+    ROOM,
+    BOSS_ROOM,
+    JOINT
+}
+
+public struct Joint
+{
+    public OBJECT_TYPE objectType; // 0 --> room, 1 --> boos room, 2 --> joint
+    public int objectTypeID;
+    public FOUR_DIRECTIONS direction; // 0 --> top, 1 --> down, 2 --> right, 3 --> left
+
+    public Joint(OBJECT_TYPE objectType, int objectTypeID, FOUR_DIRECTIONS direction)
+    {
+        this.objectType = objectType;
+        this.objectTypeID = objectTypeID;
+        this.direction = direction;
+    }
+}
+
+public struct JointInfo
+{
+    public Joint head;
+    public Joint tail;
+
+    public JointInfo(Joint head, Joint tail)
+    {
+        this.head = head;
+        this.tail = tail;
     }
 }
 
@@ -26,67 +63,81 @@ public class ReadRoomsInfo : MonoBehaviour
 {
     public TextAsset roomsInfoCSV;
     public TextAsset bossRoomsInfoCSV;
+    public TextAsset jointsInfoCSV;
 
-    public List<RoomInfo> roomInfoList = new();
+    public Dictionary<int, RoomInfo> roomInfoList = new();
     public List<RoomInfo> bossRoomInfoList = new();
+    public Dictionary<int, JointInfo> jointInfoList = new();
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         ReadRoomsCSV();
+        ReadJointsCSV();
     }
 
     void ReadRoomsCSV()
     {
         string[] data = roomsInfoCSV.text.Split(new string[] { ";", "\r\n" }, System.StringSplitOptions.None);
 
-        int numOfColumns = 6;
+        int numOfColumns = 9;
 
         int i = numOfColumns;
         while (data[i] != "")
         {
             RoomInfo roomInfo = new RoomInfo(
-                int.Parse(data[i]),
                 int.Parse(data[i + 1]),
                 int.Parse(data[i + 2]),
                 int.Parse(data[i + 3]),
                 int.Parse(data[i + 4]),
-                int.Parse(data[i + 5]));
+                int.Parse(data[i + 5]),
+                int.Parse(data[i + 6]),
+                int.Parse(data[i + 7]),
+                int.Parse(data[i + 8]));
 
-            roomInfoList.Add(roomInfo);
+            roomInfoList.Add(int.Parse(data[i]), roomInfo);
             i += numOfColumns;
         }
     }
 
     void ReadBossRoomsCSV()
     {
-        string[] data = bossRoomsInfoCSV.text.Split(new string[] { ";", "\r\n" }, System.StringSplitOptions.None);
+        //string[] data = bossRoomsInfoCSV.text.Split(new string[] { ";", "\r\n" }, System.StringSplitOptions.None);
 
-        int numOfColumns = 6;
+        //int numOfColumns = 6;
+
+        //int i = numOfColumns;
+        //while (data[i] != "")
+        //{
+        //    RoomInfo roomInfo = new RoomInfo(
+        //        int.Parse(data[i]),
+        //        int.Parse(data[i + 1]),
+        //        int.Parse(data[i + 2]),
+        //        int.Parse(data[i + 3]),
+        //        int.Parse(data[i + 4]),
+        //        int.Parse(data[i + 5]));
+
+        //    roomInfoList.Add(roomInfo);
+        //    i += numOfColumns;
+        //}
+    }
+
+    void ReadJointsCSV()
+    {
+        string[] data = jointsInfoCSV.text.Split(new string[] { ";", "\r\n" }, System.StringSplitOptions.None);
+
+        int numOfColumns = 7;
 
         int i = numOfColumns;
         while (data[i] != "")
         {
-            RoomInfo roomInfo = new RoomInfo(
-                int.Parse(data[i]),
-                int.Parse(data[i + 1]),
-                int.Parse(data[i + 2]),
-                int.Parse(data[i + 3]),
-                int.Parse(data[i + 4]),
-                int.Parse(data[i + 5]));
+            Joint head = new Joint((OBJECT_TYPE)int.Parse(data[i + 1]), int.Parse(data[i + 2]), (FOUR_DIRECTIONS)int.Parse(data[i + 3]));
+            Joint tail = new Joint((OBJECT_TYPE)int.Parse(data[i + 4]), int.Parse(data[i + 5]), (FOUR_DIRECTIONS)int.Parse(data[i + 6]));
 
-            roomInfoList.Add(roomInfo);
+            JointInfo jointInfo = new JointInfo(head, tail);
+
+            jointInfoList.Add(int.Parse(data[i]), jointInfo);
             i += numOfColumns;
         }
-    }
-
-    public RoomInfo GetRoomByType(int roomTypeID)
-    {
-        return roomInfoList[roomTypeID];
-    }
-
-    public RoomInfo GetBossRoomByType(int roomTypeID)
-    {
-        return bossRoomInfoList[roomTypeID];
     }
 }

@@ -10,21 +10,14 @@ public enum DOOR_STATE
     DESTROYED,
     NULL // no tiene puerta
 }
-public enum DOOR_DIRECTION
-{
-    TOP,
-    DOWN,
-    RIGHT,
-    LEFT
-}
 
 public class Door
 {
     public Vector3 position;
-    public DOOR_DIRECTION direction;
+    public FOUR_DIRECTIONS direction;
     public DOOR_STATE state;
 
-    public Door(Vector3 position, DOOR_DIRECTION direction)
+    public Door(Vector3 position, FOUR_DIRECTIONS direction)
     {
         this.position = position;
         this.direction = direction;
@@ -38,7 +31,7 @@ public class RoomBehaviour : MonoBehaviour
 
     [NonEditable] public bool doorsFilled = false;
     [SerializeField] Transform[] doorsTransform;
-    [SerializeField] DOOR_DIRECTION[] doorsDirections;
+    [SerializeField] FOUR_DIRECTIONS[] doorsDirections;
     List<Door> doors = new();
 
     public void SetDoors()
@@ -60,7 +53,7 @@ public class RoomBehaviour : MonoBehaviour
         return doors[rand];
     }
 
-    public void NullifyDoor(DOOR_DIRECTION direction)
+    public void NullifyDoor(FOUR_DIRECTIONS direction)
     {
         for (int i = 0; i < doors.Count; i++)
         {
