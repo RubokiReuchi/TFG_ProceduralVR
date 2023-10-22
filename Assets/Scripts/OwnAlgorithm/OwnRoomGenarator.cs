@@ -34,7 +34,7 @@ public class OwnRoomGenarator : MonoBehaviour
     int roomsBetween = 0;
 
     Dictionary<int, TreeNode> roomsTree = new();
-    //List<RoomBehaviour> roomsScripts = new();
+    GameObject bossRoom;
 
     int workingIndex = 0;
     int lastRoomCreated = -1; // make imposible to have the same room in sequence
@@ -44,6 +44,9 @@ public class OwnRoomGenarator : MonoBehaviour
     {
         totalRoomsBetween = Random.Range(minRoomsBetween, maxRoomsBetween);
         roomsBetween = totalRoomsBetween;
+
+        roomsPrefabs = pathRoomsPrefabs.Concat(endingRoomsPrefabs).ToArray();
+
         CreateMainPath();
     }
 
@@ -115,18 +118,8 @@ public class OwnRoomGenarator : MonoBehaviour
         }
 
         // boss room
-        //if (script.doorsFilled)
-        //{
-        //    Debug.LogError("Logic Error");
-        //    return;
-        //}
-        //unfilledDoor = script.GetRandomUnfilledDoor();
+        CreateBossRoom(script);
 
-        //auxScript = CreateNextRoom(unfilledDoor);
-        //if (auxScript != null)
-        //{
-        //    unfilledDoor.state = DOOR_STATE.YELLOW;
-        //}
     }
 
     bool FindRoomScriptWithDoors(ref RoomBehaviour script)
@@ -194,7 +187,7 @@ public class OwnRoomGenarator : MonoBehaviour
 
     RoomBehaviour CreateNextRoom(Door door, int roomTreeIndex, GameObject[] roomsPool)
     {
-        List<GameObject> posibleRooms = roomsPool.ToList<GameObject>();
+        List<GameObject> posibleRooms = roomsPool.ToList();
         List<int> imposibleRooms = new();
         if (lastRoomCreated != -1) imposibleRooms.Add(lastRoomCreated);
         int newRoomTypeID = -1;
@@ -880,5 +873,91 @@ public class OwnRoomGenarator : MonoBehaviour
                 Debug.LogError("Logic Error");
             }
         }
+    }
+
+    void CreateBossRoom(RoomBehaviour lastRoomScript)
+    {
+        GameObject bossRoomPrefab = bossRoomsPrefabs[Random.Range(0, bossRoomsPrefabs.Length)];
+        BossRoomBehaviour bossScript = bossRoomPrefab.GetComponent<BossRoomBehaviour>();
+
+        // find position
+        if (!CreateBossRoomLoop(roomsTree[GetTreeIndex(lastRoomScript)], bossRoomPrefab, bossScript)) Debug.LogError("Boss room was imposible to be created");
+    }
+
+    bool CreateBossRoomLoop(TreeNode node, GameObject bossRoomPrefab, BossRoomBehaviour bossScript) // true --> created, false --> imposible to create boss room
+    {
+        List<Door> lastRoomDoors = node.script.doors;
+        for (int i = 0; i < lastRoomDoors.Count; i++)
+        {
+            if (lastRoomDoors[i].state != DOOR_STATE.FOR_FILL) lastRoomDoors.Remove(lastRoomDoors[i]);
+        }
+        while (lastRoomDoors.Count > 0) // Check all room doors
+        {
+            Door bossEntrance = lastRoomDoors[Random.Range(0, lastRoomDoors.Count)];
+            Collider[] colliding;
+            switch (bossEntrance.direction)
+            {
+                case FOUR_DIRECTIONS.TOP:
+                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z + 2 + bossScript.height), new Vector3(bossScript.width, 5, bossScript.height), Quaternion.identity);
+                    if (colliding.Length == 0)
+                    {
+                        bossRoom = GameObject.Instantiate(bossRoomPrefab, new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z + 2), Quaternion.identity);
+                        bossEntrance.state = DOOR_STATE.BOSS;
+                        return true;
+                    }
+                    else // no space
+                    {
+                        lastRoomDoors.Remove(bossEntrance);
+                    }
+                    break;
+                case FOUR_DIRECTIONS.DOWN:
+                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z - 2 - bossScript.height), new Vector3(bossScript.width, 5, bossScript.height), Quaternion.AngleAxis(180, Vector3.up));
+                    if (colliding.Length == 0)
+                    {
+                        bossRoom = GameObject.Instantiate(bossRoomPrefab, new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z - 2), Quaternion.AngleAxis(180, Vector3.up));
+                        bossEntrance.state = DOOR_STATE.BOSS;
+                        return true;
+                    }
+                    else // no space
+                    {
+                        lastRoomDoors.Remove(bossEntrance);
+                    }
+                    break;
+                case FOUR_DIRECTIONS.RIGHT:
+                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x + 2 + bossScript.width, 0, bossEntrance.position.z), new Vector3(bossScript.width, 5, bossScript.height), Quaternion.AngleAxis(90, Vector3.up));
+                    if (colliding.Length == 0)
+                    {
+                        bossRoom = GameObject.Instantiate(bossRoomPrefab, new Vector3(bossEntrance.position.x + 2, 0, bossEntrance.position.z), Quaternion.AngleAxis(90, Vector3.up));
+                        bossEntrance.state = DOOR_STATE.BOSS;
+                        return true;
+                    }
+                    else // no space
+                    {
+                        lastRoomDoors.Remove(bossEntrance);
+                    }
+                    break;
+                case FOUR_DIRECTIONS.LEFT:
+                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x - 2 - bossScript.width, 0, bossEntrance.position.z), new Vector3(bossScript.width, 5, bossScript.height), Quaternion.AngleAxis(270, Vector3.up));
+                    if (colliding.Length == 0)
+                    {
+                        bossRoom = GameObject.Instantiate(bossRoomPrefab, new Vector3(bossEntrance.position.x - 2, 0, bossEntrance.position.z), Quaternion.AngleAxis(270, Vector3.up));
+                        bossEntrance.state = DOOR_STATE.BOSS;
+                        return true;
+                    }
+                    else // no space
+                    {
+                        lastRoomDoors.Remove(bossEntrance);
+                    }
+                    break;
+                case FOUR_DIRECTIONS.NONE:
+                default:
+                    Debug.LogError("Door Direction Undefined");
+                    break;
+            }
+        }
+
+        // no doors on that room
+        if (node.parent.parent == null) return false; // skip initial room
+        else return CreateBossRoomLoop(node.parent, bossRoomPrefab, bossScript);
     }
 }

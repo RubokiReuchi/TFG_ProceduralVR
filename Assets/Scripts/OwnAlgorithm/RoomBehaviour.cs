@@ -6,6 +6,7 @@ public enum DOOR_STATE
 {
     FOR_FILL,
     YELLOW,
+    BOSS,
     HOLDED,
     DESTROYED,
     NULL // no tiene puerta
@@ -33,7 +34,7 @@ public class RoomBehaviour : MonoBehaviour
     [NonEditable] bool doorsFilled = false;
     [SerializeField] Transform[] doorsTransform;
     [SerializeField] FOUR_DIRECTIONS[] doorsDirections;
-    List<Door> doors = new();
+    public List<Door> doors = new();
 
     public void SetDoors()
     {

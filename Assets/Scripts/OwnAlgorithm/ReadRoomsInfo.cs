@@ -68,12 +68,11 @@ public struct JointInfo
 
 public class ReadRoomsInfo : MonoBehaviour
 {
-    public TextAsset roomsInfoCSV;
-    public TextAsset bossRoomsInfoCSV;
+    public TextAsset pathRoomsInfoCSV;
+    public TextAsset endingRoomsInfoCSV;
     public TextAsset jointsInfoCSV;
 
     public Dictionary<int, RoomInfo> roomInfoList = new();
-    public List<RoomInfo> bossRoomInfoList = new();
     public Dictionary<int, JointInfo> jointInfoList = new();
 
     // Start is called before the first frame update
@@ -85,7 +84,8 @@ public class ReadRoomsInfo : MonoBehaviour
 
     void ReadRoomsCSV()
     {
-        string[] data = roomsInfoCSV.text.Split(new string[] { ";", "\r\n" }, System.StringSplitOptions.None);
+        // path rooms
+        string[] data = pathRoomsInfoCSV.text.Split(new string[] { ";", "\r\n" }, System.StringSplitOptions.None);
 
         int numOfColumns = 10;
 
@@ -106,28 +106,29 @@ public class ReadRoomsInfo : MonoBehaviour
             roomInfoList.Add(int.Parse(data[i]), roomInfo);
             i += numOfColumns;
         }
-    }
 
-    void ReadBossRoomsCSV()
-    {
-        //string[] data = bossRoomsInfoCSV.text.Split(new string[] { ";", "\r\n" }, System.StringSplitOptions.None);
+        int pathRoomsCount = roomInfoList.Count;
 
-        //int numOfColumns = 6;
+        // ending rooms
+        data = endingRoomsInfoCSV.text.Split(new string[] { ";", "\r\n" }, System.StringSplitOptions.None);
 
-        //int i = numOfColumns;
-        //while (data[i] != "")
-        //{
-        //    RoomInfo roomInfo = new RoomInfo(
-        //        int.Parse(data[i]),
-        //        int.Parse(data[i + 1]),
-        //        int.Parse(data[i + 2]),
-        //        int.Parse(data[i + 3]),
-        //        int.Parse(data[i + 4]),
-        //        int.Parse(data[i + 5]));
+        i = numOfColumns;
+        while (data[i] != "")
+        {
+            RoomInfo roomInfo = new RoomInfo(
+                int.Parse(data[i + 1]),
+                int.Parse(data[i + 2]),
+                int.Parse(data[i + 3]),
+                int.Parse(data[i + 4]),
+                int.Parse(data[i + 5]),
+                int.Parse(data[i + 6]),
+                int.Parse(data[i + 7]),
+                int.Parse(data[i + 8]),
+                int.Parse(data[i + 9]));
 
-        //    roomInfoList.Add(roomInfo);
-        //    i += numOfColumns;
-        //}
+            roomInfoList.Add(int.Parse(data[i]) + pathRoomsCount, roomInfo);
+            i += numOfColumns;
+        }
     }
 
     void ReadJointsCSV()

@@ -431,8 +431,13 @@ MonoBehaviour:
   - {fileID: 1564159611820697286, guid: 28a3e7d423de64b418baf7b73b6af1ec, type: 3}
   - {fileID: 2599125406676495358, guid: 4f0fca6ea65b8534dad995b3f7496089, type: 3}
   - {fileID: 5553226772894496264, guid: 16fcbbec792a1db4da478419004a3a7b, type: 3}
-  endingRoomsPrefabs: []
-  bossRoomsPrefabs: []
+  endingRoomsPrefabs:
+  - {fileID: 3344433085040336202, guid: fd6cae6d7b029d84db8516f9656b0da1, type: 3}
+  - {fileID: 7968399434077594877, guid: 0580117f94a76044ab6bee35d24eb4e0, type: 3}
+  - {fileID: 1888325700482242614, guid: bcc615a68a4617e43af53595f5158066, type: 3}
+  - {fileID: 7431681773406669014, guid: 6fbfea238c9cdb041a541c5505669ac3, type: 3}
+  bossRoomsPrefabs:
+  - {fileID: 5416255167793779950, guid: 2f5ef6a99a7a51b47b9bc23598032e5f, type: 3}
   jointsPrefabs:
   - {fileID: 304698545614544916, guid: 7db43e38e36e7f04eafea26fcf8c083c, type: 3}
   minRoomsBetween: 6
@@ -450,6 +455,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7065a6c2f6cebb4fa29fe40ef45e1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomsInfoCSV: {fileID: 4900000, guid: 7d92b4099cc74d44196ae4d3fef03da9, type: 3}
-  bossRoomsInfoCSV: {fileID: 4900000, guid: 5dfd1c91964655144a7f18f15ee99bb9, type: 3}
+  pathRoomsInfoCSV: {fileID: 4900000, guid: 7d92b4099cc74d44196ae4d3fef03da9, type: 3}
+  endingRoomsInfoCSV: {fileID: 4900000, guid: 2ee9988916f443542a585215b1ef5610, type: 3}
   jointsInfoCSV: {fileID: 4900000, guid: cc9ab84028487db4fa61d9a8fcd96bab, type: 3}
