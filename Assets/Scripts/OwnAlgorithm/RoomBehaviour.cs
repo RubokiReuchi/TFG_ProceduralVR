@@ -75,4 +75,17 @@ public class RoomBehaviour : MonoBehaviour
             }
         }
     }
+
+    public Door GetDoorByDirection(FOUR_DIRECTIONS direction)
+    {
+        for (int i = 0; i < doors.Count; i++)
+        {
+            if (doors[i].direction == direction)
+            {
+                return doors[i];
+            }
+        }
+
+        return null;
+    }
 }

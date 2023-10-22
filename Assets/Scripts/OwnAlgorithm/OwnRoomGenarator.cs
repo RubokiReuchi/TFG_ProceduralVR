@@ -30,8 +30,10 @@ public class OwnRoomGenarator : MonoBehaviour
     [Header("Rooms Between Start and Boss Rooms")]
     [Range(0, 9)][SerializeField] int minRoomsBetween;
     [Range(0, 9)][SerializeField] int maxRoomsBetween;
-    [NonEditable][SerializeField] public int totalRoomsBetween = 0;
+    [NonEditable][SerializeField] int totalRoomsBetween = 0;
     int roomsBetween = 0;
+    [SerializeField] int maxRooms;
+    [NonEditable][SerializeField] int currentRooms = 0;
 
     Dictionary<int, TreeNode> roomsTree = new();
     GameObject bossRoom;
@@ -39,32 +41,29 @@ public class OwnRoomGenarator : MonoBehaviour
     int workingIndex = 0;
     int lastRoomCreated = -1; // make imposible to have the same room in sequence
 
+    List<Door> draw = new();
+
     // Start is called before the first frame update
     void Start()
     {
         totalRoomsBetween = Random.Range(minRoomsBetween, maxRoomsBetween);
         roomsBetween = totalRoomsBetween;
+        if (maxRooms < roomsBetween) maxRooms = roomsBetween;
 
         roomsPrefabs = pathRoomsPrefabs.Concat(endingRoomsPrefabs).ToArray();
 
         CreateMainPath();
+
+        FillWithRooms();
     }
 
     // Update is called once per frame
     void Update()
     {
         // display tree
-        for (int i = 0; i < roomsTree.Count; i++)
+        for (int i = 0; i < draw.Count; i++)
         {
-            for (int j = 0; j < 4; j++)
-            {
-                if (roomsTree[i].children[j] == null) continue;
-
-                Vector3 startPos = roomsTree[i].script.gameObject.transform.position;
-                Vector3 endPos = roomsTree[i].children[j].script.gameObject.transform.position;
-
-                Debug.DrawLine(startPos, endPos);
-            }
+            Debug.DrawLine(draw[i].position, draw[i].position + Vector3.up * 5);
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -119,7 +118,6 @@ public class OwnRoomGenarator : MonoBehaviour
 
         // boss room
         CreateBossRoom(script);
-
     }
 
     bool FindRoomScriptWithDoors(ref RoomBehaviour script)
@@ -187,7 +185,7 @@ public class OwnRoomGenarator : MonoBehaviour
 
     RoomBehaviour CreateNextRoom(Door door, int roomTreeIndex, GameObject[] roomsPool)
     {
-        List<GameObject> posibleRooms = roomsPool.ToList();
+        List<GameObject> posibleRooms = new(roomsPool.ToList());
         List<int> imposibleRooms = new();
         if (lastRoomCreated != -1) imposibleRooms.Add(lastRoomCreated);
         int newRoomTypeID = -1;
@@ -214,6 +212,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             {
                                 Vector3 roomPosition = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + 2);
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
+                                currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
                                 script.NullifyDoor(FOUR_DIRECTIONS.DOWN);
@@ -258,6 +257,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             List<Vector3> storeRooms = new(); // prevent to duplicate rooms
                             int lastRoomScriptIndex = roomsTree.Count - 1;
                             BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 0, roomsPool); // top
+                            currentRooms++;
                             return roomsTree[lastRoomScriptIndex + 1].script;
                         }
                     }
@@ -283,6 +283,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             {
                                 Vector3 roomPosition = new Vector3(door.position.x, door.position.y/*0*/, door.position.z - 2 - roomsNormalHeight * 2);
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
+                                currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
                                 script.NullifyDoor(FOUR_DIRECTIONS.TOP);
@@ -327,6 +328,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             List<Vector3> storeRooms = new(); // prevent to duplicate rooms
                             int lastRoomScriptIndex = roomsTree.Count - 1;
                             BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 1, roomsPool); // down
+                            currentRooms++;
                             return roomsTree[lastRoomScriptIndex + 1].script;
                         }
                     }
@@ -352,6 +354,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             {
                                 Vector3 roomPosition = new Vector3(door.position.x + 2 + roomsNormalWidth, door.position.y/*0*/, door.position.z - roomsNormalHeight);
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
+                                currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
                                 script.NullifyDoor(FOUR_DIRECTIONS.LEFT);
@@ -396,6 +399,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             List<Vector3> storeRooms = new(); // prevent to duplicate rooms
                             int lastRoomScriptIndex = roomsTree.Count - 1;
                             BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 2, roomsPool); // right
+                            currentRooms++;
                             return roomsTree[lastRoomScriptIndex + 1].script;
                         }
                     }
@@ -421,6 +425,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             {
                                 Vector3 roomPosition = new Vector3(door.position.x - 2 - roomsNormalWidth, door.position.y/*0*/, door.position.z - roomsNormalHeight);
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
+                                currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
                                 script.NullifyDoor(FOUR_DIRECTIONS.RIGHT);
@@ -465,6 +470,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             List<Vector3> storeRooms = new(); // prevent to duplicate rooms
                             int lastRoomScriptIndex = roomsTree.Count - 1;
                             BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 3, roomsPool); // left
+                            currentRooms++;
                             return roomsTree[lastRoomScriptIndex + 1].script;
                         }
                     }
@@ -886,7 +892,7 @@ public class OwnRoomGenarator : MonoBehaviour
 
     bool CreateBossRoomLoop(TreeNode node, GameObject bossRoomPrefab, BossRoomBehaviour bossScript) // true --> created, false --> imposible to create boss room
     {
-        List<Door> lastRoomDoors = node.script.doors;
+        List<Door> lastRoomDoors = new(node.script.doors);
         for (int i = 0; i < lastRoomDoors.Count; i++)
         {
             if (lastRoomDoors[i].state != DOOR_STATE.FOR_FILL) lastRoomDoors.Remove(lastRoomDoors[i]);
@@ -959,5 +965,149 @@ public class OwnRoomGenarator : MonoBehaviour
         // no doors on that room
         if (node.parent.parent == null) return false; // skip initial room
         else return CreateBossRoomLoop(node.parent, bossRoomPrefab, bossScript);
+    }
+
+    void FillWithRooms()
+    {
+        //while (currentRooms < maxRooms)
+        {
+            List<Door> forFillDoors = new();
+            FindForFillDoors(roomsTree[1], ref forFillDoors); // 1 --> ignore start room
+            draw = forFillDoors;
+        }
+    }
+
+    void FindForFillDoors(TreeNode node, ref List<Door> forFillDoors)
+    {
+        RoomInfo roomInfo = roomsInfo.roomInfoList[node.script.roomTypeID];
+        if (node.script.doors.Count == 1 && !roomInfo.IsJointRoom()) return; // ending room
+
+        // top
+        if (roomInfo.topDoor == 1)
+        {
+            Door door = node.script.GetDoorByDirection(FOUR_DIRECTIONS.TOP);
+            if (door == null)
+            {
+                Debug.LogError("Door don't exist");
+            }
+            else
+            {
+                switch (door.state)
+                {
+                    case DOOR_STATE.FOR_FILL:
+                        forFillDoors.Add(door);
+                        break;
+                    case DOOR_STATE.YELLOW:
+                        FindForFillDoors(node.children[0], ref forFillDoors); // 0 --> top
+                        break;
+                    case DOOR_STATE.BOSS:
+                    case DOOR_STATE.HOLDED:
+                    case DOOR_STATE.DESTROYED:
+                    case DOOR_STATE.NULL:
+                    default:
+                        break;
+                }
+            }
+        }
+        else if (roomInfo.topDoor == 2)
+        {
+            if (node.children[0] != null) FindForFillDoors(node.children[0], ref forFillDoors);  // if null means top room is the parent
+        }
+
+        // down
+        if (roomInfo.downDoor == 1)
+        {
+            Door door = node.script.GetDoorByDirection(FOUR_DIRECTIONS.DOWN);
+            if (door == null)
+            {
+                Debug.LogError("Door don't exist");
+            }
+            else
+            {
+                switch (door.state)
+                {
+                    case DOOR_STATE.FOR_FILL:
+                        forFillDoors.Add(door);
+                        break;
+                    case DOOR_STATE.YELLOW:
+                        FindForFillDoors(node.children[1], ref forFillDoors); // 1 --> down
+                        break;
+                    case DOOR_STATE.BOSS:
+                    case DOOR_STATE.HOLDED:
+                    case DOOR_STATE.DESTROYED:
+                    case DOOR_STATE.NULL:
+                    default:
+                        break;
+                }
+            }
+        }
+        else if (roomInfo.downDoor == 2)
+        {
+            if (node.children[1] != null) FindForFillDoors(node.children[1], ref forFillDoors);  // if null means down room is the parent
+        }
+
+        // right
+        if (roomInfo.rightDoor == 1)
+        {
+            Door door = node.script.GetDoorByDirection(FOUR_DIRECTIONS.RIGHT);
+            if (door == null)
+            {
+                Debug.LogError("Door don't exist");
+            }
+            else
+            {
+                switch (door.state)
+                {
+                    case DOOR_STATE.FOR_FILL:
+                        forFillDoors.Add(door);
+                        break;
+                    case DOOR_STATE.YELLOW:
+                        FindForFillDoors(node.children[2], ref forFillDoors); // 2 --> right
+                        break;
+                    case DOOR_STATE.BOSS:
+                    case DOOR_STATE.HOLDED:
+                    case DOOR_STATE.DESTROYED:
+                    case DOOR_STATE.NULL:
+                    default:
+                        break;
+                }
+            }
+        }
+        else if (roomInfo.rightDoor == 2)
+        {
+            if (node.children[2] != null) FindForFillDoors(node.children[2], ref forFillDoors); // if null means right room is the parent
+        }
+
+        // left
+        if (roomInfo.leftDoor == 1)
+        {
+            Door door = node.script.GetDoorByDirection(FOUR_DIRECTIONS.LEFT);
+            if (door == null)
+            {
+                Debug.LogError("Door don't exist");
+            }
+            else
+            {
+                switch (door.state)
+                {
+                    case DOOR_STATE.FOR_FILL:
+                        forFillDoors.Add(door);
+                        break;
+                    case DOOR_STATE.YELLOW:
+                        FindForFillDoors(node.children[3], ref forFillDoors); // 3 --> left
+                        break;
+                    case DOOR_STATE.BOSS:
+                    case DOOR_STATE.HOLDED:
+                    case DOOR_STATE.DESTROYED:
+                    case DOOR_STATE.NULL:
+                    default:
+                        break;
+                }
+            }
+        }
+        else if (roomInfo.leftDoor == 2)
+        {
+            if (node.children[3] != null) FindForFillDoors(node.children[3], ref forFillDoors); // if null means left room is the parent
+        }
     }
 }

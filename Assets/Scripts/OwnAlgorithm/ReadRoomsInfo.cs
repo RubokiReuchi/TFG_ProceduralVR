@@ -68,9 +68,9 @@ public struct JointInfo
 
 public class ReadRoomsInfo : MonoBehaviour
 {
-    public TextAsset pathRoomsInfoCSV;
-    public TextAsset endingRoomsInfoCSV;
-    public TextAsset jointsInfoCSV;
+    [SerializeField] TextAsset pathRoomsInfoCSV;
+    [SerializeField] TextAsset endingRoomsInfoCSV;
+    [SerializeField] TextAsset jointsInfoCSV;
 
     public Dictionary<int, RoomInfo> roomInfoList = new();
     public Dictionary<int, JointInfo> jointInfoList = new();
