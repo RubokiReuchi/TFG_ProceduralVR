@@ -388,6 +388,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1892248150}
   - component: {fileID: 1892248151}
+  - component: {fileID: 1892248153}
   - component: {fileID: 1892248152}
   m_Layer: 0
   m_Name: RoomsManager
@@ -443,6 +444,8 @@ MonoBehaviour:
   minRoomsBetween: 6
   maxRoomsBetween: 9
   totalRoomsBetween: 0
+  maxRooms: 40
+  currentRooms: 0
 --- !u!114 &1892248152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,3 +461,15 @@ MonoBehaviour:
   pathRoomsInfoCSV: {fileID: 4900000, guid: 7d92b4099cc74d44196ae4d3fef03da9, type: 3}
   endingRoomsInfoCSV: {fileID: 4900000, guid: 2ee9988916f443542a585215b1ef5610, type: 3}
   jointsInfoCSV: {fileID: 4900000, guid: cc9ab84028487db4fa61d9a8fcd96bab, type: 3}
+--- !u!114 &1892248153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1892248149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57144053ab8100b4282ed240181ed117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

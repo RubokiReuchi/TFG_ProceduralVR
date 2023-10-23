@@ -17,12 +17,14 @@ public class Door
     public Vector3 position;
     public FOUR_DIRECTIONS direction;
     public DOOR_STATE state;
+    public RoomBehaviour script;
 
-    public Door(Vector3 position, FOUR_DIRECTIONS direction)
+    public Door(Vector3 position, FOUR_DIRECTIONS direction, RoomBehaviour script)
     {
         this.position = position;
         this.direction = direction;
         this.state = DOOR_STATE.FOR_FILL;
+        this.script = script;
     }
 }
 
@@ -39,7 +41,7 @@ public class RoomBehaviour : MonoBehaviour
     public void SetDoors()
     {
         if (doorsTransform.Length != doorsDirections.Length) Debug.LogError("Diferent number of doorsTransform and doorsDirections");
-        for (int i = 0; i < doorsTransform.Length; i++) doors.Add(new Door(doorsTransform[i].position, doorsDirections[i]));
+        for (int i = 0; i < doorsTransform.Length; i++) doors.Add(new Door(doorsTransform[i].position, doorsDirections[i], this));
     }
 
     public bool GetDoorsFilled()

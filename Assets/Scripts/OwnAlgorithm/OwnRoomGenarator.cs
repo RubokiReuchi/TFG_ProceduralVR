@@ -17,6 +17,9 @@ public enum FOUR_DIRECTIONS
 public class OwnRoomGenarator : MonoBehaviour
 {
     [SerializeField] ReadRoomsInfo roomsInfo;
+    [SerializeField] PlaceGates placeGates;
+
+    [Header("Rooms Prefabs")]
     [SerializeField] GameObject startRoomPrefab;
     [SerializeField] GameObject[] pathRoomsPrefabs; // room with 2 doors at least
     [SerializeField] GameObject[] endingRoomsPrefabs; // room with only one door
@@ -32,7 +35,8 @@ public class OwnRoomGenarator : MonoBehaviour
     [Range(0, 9)][SerializeField] int maxRoomsBetween;
     [NonEditable][SerializeField] int totalRoomsBetween = 0;
     int roomsBetween = 0;
-    [SerializeField] int maxRooms;
+    [Header("Number of Rooms")] // not counting start and boss
+    [SerializeField] int maxRooms; // if a lot of ending rooms are created, it maybe less rooms
     [NonEditable][SerializeField] int currentRooms = 0;
 
     Dictionary<int, TreeNode> roomsTree = new();
@@ -40,8 +44,6 @@ public class OwnRoomGenarator : MonoBehaviour
 
     int workingIndex = 0;
     int lastRoomCreated = -1; // make imposible to have the same room in sequence
-
-    List<Door> draw = new();
 
     // Start is called before the first frame update
     void Start()
@@ -55,17 +57,13 @@ public class OwnRoomGenarator : MonoBehaviour
         CreateMainPath();
 
         FillWithRooms();
+
+        CreateHallways();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // display tree
-        for (int i = 0; i < draw.Count; i++)
-        {
-            Debug.DrawLine(draw[i].position, draw[i].position + Vector3.up * 5);
-        }
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -969,18 +967,34 @@ public class OwnRoomGenarator : MonoBehaviour
 
     void FillWithRooms()
     {
-        //while (currentRooms < maxRooms)
+        RoomBehaviour auxScript;
+        List<Door> forFillDoors = new();
+
+        while (currentRooms < maxRooms)
         {
-            List<Door> forFillDoors = new();
             FindForFillDoors(roomsTree[1], ref forFillDoors); // 1 --> ignore start room
-            draw = forFillDoors;
+            if (forFillDoors.Count == 0)break; // no more rooms for fill
+            Door randomDoor = forFillDoors[Random.Range(0, forFillDoors.Count)];
+            
+            auxScript = CreateNextRoom(randomDoor, GetTreeIndex(randomDoor.script), roomsPrefabs);
+            if (auxScript != null)
+            {
+                lastRoomCreated = auxScript.roomTypeID;
+                randomDoor.state = DOOR_STATE.YELLOW;
+                roomsBetween--;
+                forFillDoors.Clear();
+            }
+            else // door imposible to fill
+            {
+                forFillDoors.Remove(randomDoor);
+            }
         }
     }
 
     void FindForFillDoors(TreeNode node, ref List<Door> forFillDoors)
     {
+        if (node.script.roomTypeID == -1) return; // ending room
         RoomInfo roomInfo = roomsInfo.roomInfoList[node.script.roomTypeID];
-        if (node.script.doors.Count == 1 && !roomInfo.IsJointRoom()) return; // ending room
 
         // top
         if (roomInfo.topDoor == 1)
@@ -1109,5 +1123,28 @@ public class OwnRoomGenarator : MonoBehaviour
         {
             if (node.children[3] != null) FindForFillDoors(node.children[3], ref forFillDoors); // if null means left room is the parent
         }
+    }
+
+    void CreateHallways()
+    {
+        List<Door> allDoors = new();
+        FindAllDoors(roomsTree[0], ref allDoors); // 0 --> start room
+
+    }
+
+    void FindAllDoors(TreeNode node, ref List<Door> allDoors)
+    {
+        if (node.script.roomTypeID == -1) return; // ending room
+        RoomInfo roomInfo = roomsInfo.roomInfoList[node.script.roomTypeID];
+
+        for (int i = 0; i < node.script.doors.Count; i++)
+        {
+            allDoors.Add(node.script.doors[i]);
+        }
+
+        if (node.children[0] != null) FindAllDoors(node.children[0], ref allDoors);
+        if (node.children[1] != null) FindAllDoors(node.children[1], ref allDoors);
+        if (node.children[2] != null) FindAllDoors(node.children[2], ref allDoors);
+        if (node.children[3] != null) FindAllDoors(node.children[3], ref allDoors);
     }
 }
