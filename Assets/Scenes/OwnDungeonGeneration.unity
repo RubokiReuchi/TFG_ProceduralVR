@@ -425,6 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomsInfo: {fileID: 1892248152}
+  placeGates: {fileID: 1892248153}
   startRoomPrefab: {fileID: 3960609761026812345, guid: ab13d3278c709f648a685abff92df31e, type: 3}
   pathRoomsPrefabs:
   - {fileID: 7095670007231783905, guid: 63ae53e70a8001143a36977a8f5135f5, type: 3}
@@ -446,6 +447,9 @@ MonoBehaviour:
   totalRoomsBetween: 0
   maxRooms: 40
   currentRooms: 0
+  doorLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &1892248152
 MonoBehaviour:
   m_ObjectHideFlags: 0

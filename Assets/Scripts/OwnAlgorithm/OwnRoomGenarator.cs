@@ -45,6 +45,9 @@ public class OwnRoomGenarator : MonoBehaviour
     int workingIndex = 0;
     int lastRoomCreated = -1; // make imposible to have the same room in sequence
 
+    public LayerMask doorLayer;
+    List<Gate> draw = new();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -64,6 +67,30 @@ public class OwnRoomGenarator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        for (int i = 0; i < draw.Count; i++)
+        {
+            Color color;
+            switch (draw[i].state)
+            {
+                case GATE_STATE.YELLOW:
+                    color = Color.yellow;
+                    break;
+                case GATE_STATE.BOSS:
+                    color = Color.black;
+                    break;
+                case GATE_STATE.DESTROYED:
+                    color = Color.green;
+                    break;
+                case GATE_STATE.NULL:
+                    color = Color.white;
+                    break;
+                default:
+                    color = Color.blue;
+                    break;
+            }
+            Debug.DrawLine(draw[i].position, draw[i].position + Vector3.up * 5, color);
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -973,7 +1000,7 @@ public class OwnRoomGenarator : MonoBehaviour
         while (currentRooms < maxRooms)
         {
             FindForFillDoors(roomsTree[1], ref forFillDoors); // 1 --> ignore start room
-            if (forFillDoors.Count == 0)break; // no more rooms for fill
+            if (forFillDoors.Count == 0) break; // no more rooms for fill
             Door randomDoor = forFillDoors[Random.Range(0, forFillDoors.Count)];
             
             auxScript = CreateNextRoom(randomDoor, GetTreeIndex(randomDoor.script), roomsPrefabs);
@@ -988,6 +1015,14 @@ public class OwnRoomGenarator : MonoBehaviour
             {
                 forFillDoors.Remove(randomDoor);
             }
+        }
+
+        // set rest of doors on hold state
+        forFillDoors.Clear();
+        FindForFillDoors(roomsTree[1], ref forFillDoors);
+        for (int i = 0; i < forFillDoors.Count; i++)
+        {
+            forFillDoors[i].state = DOOR_STATE.HOLDED;
         }
     }
 
@@ -1130,13 +1165,62 @@ public class OwnRoomGenarator : MonoBehaviour
         List<Door> allDoors = new();
         FindAllDoors(roomsTree[0], ref allDoors); // 0 --> start room
 
+        List<Gate> gates = new();
+        while (allDoors.Count > 0)
+        {
+            Door neighborDoor = NeighborDoor(allDoors[0]);
+            GATE_STATE state = GATE_STATE.NULL;
+            switch (allDoors[0].state)
+            {
+                case DOOR_STATE.FOR_FILL:
+                    Debug.LogError("Logic Error");
+                    break;
+                case DOOR_STATE.YELLOW:
+                    state = GATE_STATE.YELLOW;
+                    break;
+                case DOOR_STATE.BOSS:
+                    state = GATE_STATE.BOSS;
+                    break;
+                case DOOR_STATE.HOLDED:
+                    if (neighborDoor != null) state = GATE_STATE.YELLOW;
+                    else state = GATE_STATE.DESTROYED; // no conection
+                    break;
+                case DOOR_STATE.DESTROYED:
+                    state = GATE_STATE.DESTROYED;
+                    break;
+                case DOOR_STATE.NULL:
+                    Door aux = allDoors[0];
+                    allDoors.Remove(allDoors[0]);
+                    allDoors.Add(aux);
+                    continue;
+                default:
+                    Debug.LogError("Logic Error");
+                    break;
+            }
+
+            if (neighborDoor != null)
+            {
+                Gate gate1 = new Gate(allDoors[0].position, allDoors[0].direction, state, null);
+                Gate gate2 = new Gate(neighborDoor.position, neighborDoor.direction, state, gate1);
+                gate1.SetOther(gate2);
+                gates.Add(gate1);
+                gates.Add(gate2);
+                allDoors.Remove(allDoors[0]);
+                allDoors.Remove(neighborDoor);
+            }
+            else
+            {
+                Gate gate1 = new Gate(allDoors[0].position, allDoors[0].direction, state, null);
+                gates.Add(gate1);
+                allDoors.Remove(allDoors[0]);
+            }
+        }
+        draw = gates;
+        //placeGates.gates = gates;
     }
 
     void FindAllDoors(TreeNode node, ref List<Door> allDoors)
     {
-        if (node.script.roomTypeID == -1) return; // ending room
-        RoomInfo roomInfo = roomsInfo.roomInfoList[node.script.roomTypeID];
-
         for (int i = 0; i < node.script.doors.Count; i++)
         {
             allDoors.Add(node.script.doors[i]);
@@ -1146,5 +1230,65 @@ public class OwnRoomGenarator : MonoBehaviour
         if (node.children[1] != null) FindAllDoors(node.children[1], ref allDoors);
         if (node.children[2] != null) FindAllDoors(node.children[2], ref allDoors);
         if (node.children[3] != null) FindAllDoors(node.children[3], ref allDoors);
+    }
+
+    Door NeighborDoor(Door holdedDoor)
+    {
+        Collider[] colliding;
+        switch (holdedDoor.direction)
+        {
+            case FOUR_DIRECTIONS.TOP:
+                colliding = Physics.OverlapBox(new Vector3(holdedDoor.position.x, 0, holdedDoor.position.z + 2), new Vector3(1, 5, 1), Quaternion.identity, doorLayer);
+                if (colliding.Length == 1)
+                {
+                    RoomBehaviour script = FindScriptInParent(colliding[0].transform);
+                    return script.GetDoorByDirection(FOUR_DIRECTIONS.DOWN);
+                }
+                else if (colliding.Length > 0) Debug.LogError("Logic Error");
+                return null; // no neighbor door
+            case FOUR_DIRECTIONS.DOWN:
+                colliding = Physics.OverlapBox(new Vector3(holdedDoor.position.x, 0, holdedDoor.position.z - 2), new Vector3(1, 5, 1), Quaternion.identity, doorLayer);
+                if (colliding.Length == 1)
+                {
+                    RoomBehaviour script = FindScriptInParent(colliding[0].transform);
+                    return script.GetDoorByDirection(FOUR_DIRECTIONS.TOP);
+                }
+                else if (colliding.Length > 0) Debug.LogError("Logic Error");
+                return null; // no neighbor door
+            case FOUR_DIRECTIONS.RIGHT:
+                colliding = Physics.OverlapBox(new Vector3(holdedDoor.position.x + 2, 0, holdedDoor.position.z), new Vector3(1, 5, 1), Quaternion.identity, doorLayer);
+                if (colliding.Length == 1)
+                {
+                    RoomBehaviour script = FindScriptInParent(colliding[0].transform);
+                    return script.GetDoorByDirection(FOUR_DIRECTIONS.LEFT);
+                }
+                else if (colliding.Length > 0) Debug.LogError("Logic Error");
+                return null; // no neighbor door
+            case FOUR_DIRECTIONS.LEFT:
+                colliding = Physics.OverlapBox(new Vector3(holdedDoor.position.x - 2, 0, holdedDoor.position.z), new Vector3(1, 5, 1), Quaternion.identity, doorLayer);
+                if (colliding.Length == 1)
+                {
+                    RoomBehaviour script = FindScriptInParent(colliding[0].transform);
+                    return script.GetDoorByDirection(FOUR_DIRECTIONS.RIGHT);
+                }
+                else if (colliding.Length > 0) Debug.LogError("Logic Error");
+                return null; // no neighbor door
+            case FOUR_DIRECTIONS.NONE:
+            default:
+                Debug.LogError("Logic Error");
+                return null;
+        }
+    }
+
+    RoomBehaviour FindScriptInParent(Transform child)
+    {
+        Transform auxTransform = child;
+        while (auxTransform != null && auxTransform.GetComponent<RoomBehaviour>() == null)
+        {
+            auxTransform = auxTransform.parent;
+        }
+
+        if (auxTransform == null) return null;
+        else return auxTransform.GetComponent<RoomBehaviour>();
     }
 }
