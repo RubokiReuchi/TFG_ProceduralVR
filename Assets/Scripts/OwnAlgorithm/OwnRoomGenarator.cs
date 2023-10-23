@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,6 +25,7 @@ public class OwnRoomGenarator : MonoBehaviour
     GameObject[] roomsPrefabs; // pathRoomsPrefabs + endingRoomsPrefabs
     [SerializeField] GameObject[] bossRoomsPrefabs;
     [SerializeField] GameObject[] jointsPrefabs;
+    [SerializeField] GameObject hallwayPrefab;
 
     int roomsNormalWidth = 7;
     int roomsNormalHeight = 5;
@@ -1207,6 +1207,8 @@ public class OwnRoomGenarator : MonoBehaviour
                 gates.Add(gate2);
                 allDoors.Remove(allDoors[0]);
                 allDoors.Remove(neighborDoor);
+
+                PlaceHallway(gate1.position, gate1.direction);
             }
             else
             {
@@ -1290,5 +1292,30 @@ public class OwnRoomGenarator : MonoBehaviour
 
         if (auxTransform == null) return null;
         else return auxTransform.GetComponent<RoomBehaviour>();
+    }
+
+    void PlaceHallway(Vector3 doorPosition, FOUR_DIRECTIONS direction)
+    {
+        Quaternion rotation;
+        switch (direction)
+        {
+            case FOUR_DIRECTIONS.TOP:
+                rotation = Quaternion.identity;
+                break;
+            case FOUR_DIRECTIONS.DOWN:
+                rotation = Quaternion.AngleAxis(180, Vector3.up);
+                break;
+            case FOUR_DIRECTIONS.RIGHT:
+                rotation = Quaternion.AngleAxis(90, Vector3.up);
+                break;
+            case FOUR_DIRECTIONS.LEFT:
+                rotation = Quaternion.AngleAxis(270, Vector3.up);
+                break;
+            case FOUR_DIRECTIONS.NONE:
+            default:
+                Debug.LogError("Logic Error");
+                return;
+        }
+        GameObject.Instantiate(hallwayPrefab, doorPosition, rotation);
     }
 }
