@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 1705095775315207034}
   - component: {fileID: 7920600454177379217}
   m_Layer: 0
-  m_Name: PathRoomTemplate
+  m_Name: RoomTemplate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,7 +107,7 @@ Transform:
   - {fileID: 2204465211752052808}
   - {fileID: 4192483630613316788}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7920600454177379217
 MonoBehaviour:
@@ -144,7 +144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2204465211752052808
 Transform:
   m_ObjectHideFlags: 0

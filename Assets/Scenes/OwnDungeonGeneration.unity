@@ -255,7 +255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 42734825603055422, guid: bb2c66e0c6346fc41b073bc58d7cd6a4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6275698644058724443, guid: bb2c66e0c6346fc41b073bc58d7cd6a4, type: 3}
       propertyPath: m_RootOrder
@@ -354,27 +354,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomsInfo: {fileID: 1892248152}
   placeGates: {fileID: 1892248153}
-  startRoomPrefab: {fileID: 3960609761026812345, guid: ab13d3278c709f648a685abff92df31e, type: 3}
+  startRoomPrefab: {fileID: 6335016602820315356, guid: ab13d3278c709f648a685abff92df31e, type: 3}
   pathRoomsPrefabs:
   - {fileID: 7095670007231783905, guid: 63ae53e70a8001143a36977a8f5135f5, type: 3}
-  - {fileID: 4130072812889988684, guid: b6be6c695154cd440af8673f6efdd977, type: 3}
-  - {fileID: 1564159611820697286, guid: 28a3e7d423de64b418baf7b73b6af1ec, type: 3}
-  - {fileID: 2599125406676495358, guid: 4f0fca6ea65b8534dad995b3f7496089, type: 3}
-  - {fileID: 5553226772894496264, guid: 16fcbbec792a1db4da478419004a3a7b, type: 3}
+  - {fileID: 387776482342487528, guid: b6be6c695154cd440af8673f6efdd977, type: 3}
+  - {fileID: 5883281712992932717, guid: 28a3e7d423de64b418baf7b73b6af1ec, type: 3}
+  - {fileID: 1739885214159422312, guid: 4f0fca6ea65b8534dad995b3f7496089, type: 3}
+  - {fileID: 6248199509806231903, guid: 16fcbbec792a1db4da478419004a3a7b, type: 3}
   endingRoomsPrefabs:
-  - {fileID: 3344433085040336202, guid: fd6cae6d7b029d84db8516f9656b0da1, type: 3}
-  - {fileID: 7968399434077594877, guid: 0580117f94a76044ab6bee35d24eb4e0, type: 3}
-  - {fileID: 1888325700482242614, guid: bcc615a68a4617e43af53595f5158066, type: 3}
-  - {fileID: 7431681773406669014, guid: 6fbfea238c9cdb041a541c5505669ac3, type: 3}
+  - {fileID: 8483921739062307845, guid: fd6cae6d7b029d84db8516f9656b0da1, type: 3}
+  - {fileID: 6698619326181897974, guid: 0580117f94a76044ab6bee35d24eb4e0, type: 3}
+  - {fileID: 8685203408823694636, guid: bcc615a68a4617e43af53595f5158066, type: 3}
+  - {fileID: 4676106266365575691, guid: 6fbfea238c9cdb041a541c5505669ac3, type: 3}
   bossRoomsPrefabs:
-  - {fileID: 5416255167793779950, guid: 2f5ef6a99a7a51b47b9bc23598032e5f, type: 3}
+  - {fileID: 578699312927519967, guid: 2f5ef6a99a7a51b47b9bc23598032e5f, type: 3}
   jointsPrefabs:
-  - {fileID: 304698545614544916, guid: 7db43e38e36e7f04eafea26fcf8c083c, type: 3}
+  - {fileID: 2583963406992475519, guid: 9c46025b03c6727448d2c91f6d6966b9, type: 3}
   hallwayPrefab: {fileID: 7443195902359228358, guid: 9dc771bdde775f2478831f515261c54b, type: 3}
-  minRoomsBetween: 6
+  minRoomsBetween: 4
   maxRoomsBetween: 9
   totalRoomsBetween: 0
-  maxRooms: 40
+  maxRooms: 25
   currentRooms: 0
   doorLayer:
     serializedVersion: 2

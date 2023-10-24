@@ -27,8 +27,9 @@ public class OwnRoomGenarator : MonoBehaviour
     [SerializeField] GameObject[] jointsPrefabs;
     [SerializeField] GameObject hallwayPrefab;
 
-    int roomsNormalWidth = 7;
-    int roomsNormalHeight = 5;
+    float roomsNormalWidth = 7;
+    float roomsNormalHeight = 5;
+    float tileSize = 3;
 
     [Header("Rooms Between Start and Boss Rooms")]
     [Range(0, 9)][SerializeField] int minRoomsBetween;
@@ -76,7 +77,7 @@ public class OwnRoomGenarator : MonoBehaviour
                     color = Color.yellow;
                     break;
                 case GATE_STATE.BOSS:
-                    color = Color.black;
+                    color = Color.magenta;
                     break;
                 case GATE_STATE.DESTROYED:
                     color = Color.green;
@@ -229,13 +230,13 @@ public class OwnRoomGenarator : MonoBehaviour
 
                     if (!roomInfo.IsJointRoom()) // no joint room
                     {
-                        Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + 2/*HallwaySize*/ + roomsNormalHeight);
-                        Collider[] colliding = Physics.OverlapBox(roomCenter, new Vector3(roomsNormalWidth, 5, roomsNormalHeight));
+                        Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + tileSize/*HallwaySize*/ + roomsNormalHeight / 2 * tileSize);
+                        Collider[] colliding = Physics.OverlapBox(roomCenter, new Vector3(roomsNormalWidth / 2 * tileSize, 5, roomsNormalHeight / 2 * tileSize));
                         if (colliding.Length == 0) // no room there
                         {
                             if (roomInfo.downDoor == 1) // if room has a door down
                             {
-                                Vector3 roomPosition = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + 2);
+                                Vector3 roomPosition = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + tileSize);
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
                                 currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
@@ -267,7 +268,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             continue;
                         }
 
-                        Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + 2/*HallwaySize*/ + roomsNormalHeight);
+                        Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + tileSize/*HallwaySize*/ + roomsNormalHeight / 2 * tileSize);
                         List<Vector3> localRooms = new(); // contains all central room points that form the joint
                         CalculateJointedRoomGrid(newRoomTypeID, roomCenter, ref localRooms);
 
@@ -300,13 +301,13 @@ public class OwnRoomGenarator : MonoBehaviour
 
                     if (!roomInfo.IsJointRoom()) // no joint room
                     {
-                        Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z - 2/*HallwaySize*/ - roomsNormalHeight);
-                        Collider[] colliding = Physics.OverlapBox(roomCenter, new Vector3(roomsNormalWidth, 5, roomsNormalHeight));
+                        Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z - tileSize/*HallwaySize*/ - roomsNormalHeight / 2 * tileSize);
+                        Collider[] colliding = Physics.OverlapBox(roomCenter, new Vector3(roomsNormalWidth / 2 * tileSize, 5, roomsNormalHeight / 2 * tileSize));
                         if (colliding.Length == 0) // no room there
                         {
                             if (roomInfo.topDoor == 1) // if room has a door at top
                             {
-                                Vector3 roomPosition = new Vector3(door.position.x, door.position.y/*0*/, door.position.z - 2 - roomsNormalHeight * 2);
+                                Vector3 roomPosition = new Vector3(door.position.x, door.position.y/*0*/, door.position.z - tileSize - roomsNormalHeight * tileSize);
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
                                 currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
@@ -338,7 +339,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             continue;
                         }
 
-                        Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + 2/*HallwaySize*/ + roomsNormalHeight);
+                        Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + tileSize/*HallwaySize*/ + roomsNormalHeight / 2 * tileSize);
                         List<Vector3> localRooms = new(); // contains all central room points that form the joint
                         CalculateJointedRoomGrid(newRoomTypeID, roomCenter, ref localRooms);
 
@@ -371,13 +372,13 @@ public class OwnRoomGenarator : MonoBehaviour
 
                     if (!roomInfo.IsJointRoom()) // no joint room
                     {
-                        Vector3 roomCenter = new Vector3(door.position.x + 2/*HallwaySize*/ + roomsNormalWidth, door.position.y/*0*/, door.position.z);
-                        Collider[] colliding = Physics.OverlapBox(roomCenter, new Vector3(roomsNormalWidth, 5, roomsNormalHeight));
+                        Vector3 roomCenter = new Vector3(door.position.x + tileSize/*HallwaySize*/ + roomsNormalWidth / 2 * tileSize, door.position.y/*0*/, door.position.z);
+                        Collider[] colliding = Physics.OverlapBox(roomCenter, new Vector3(roomsNormalWidth / 2 * tileSize, 5, roomsNormalHeight / 2 * tileSize));
                         if (colliding.Length == 0) // no room there
                         {
                             if (roomInfo.leftDoor == 1) // if room has a door at left
                             {
-                                Vector3 roomPosition = new Vector3(door.position.x + 2 + roomsNormalWidth, door.position.y/*0*/, door.position.z - roomsNormalHeight);
+                                Vector3 roomPosition = new Vector3(door.position.x + tileSize + roomsNormalWidth / 2 * tileSize, door.position.y/*0*/, door.position.z - roomsNormalHeight / 2 * tileSize);
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
                                 currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
@@ -409,7 +410,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             continue;
                         }
 
-                        Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + 2/*HallwaySize*/ + roomsNormalHeight);
+                        Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + tileSize/*HallwaySize*/ + roomsNormalHeight / 2 * tileSize);
                         List<Vector3> localRooms = new(); // contains all central room points that form the joint
                         CalculateJointedRoomGrid(newRoomTypeID, roomCenter, ref localRooms);
 
@@ -442,13 +443,13 @@ public class OwnRoomGenarator : MonoBehaviour
 
                     if (!roomInfo.IsJointRoom()) // no joint room
                     {
-                        Vector3 roomCenter = new Vector3(door.position.x - 2/*HallwaySize*/ - roomsNormalWidth, door.position.y/*0*/, door.position.z);
-                        Collider[] colliding = Physics.OverlapBox(roomCenter, new Vector3(roomsNormalWidth, 5, roomsNormalHeight));
+                        Vector3 roomCenter = new Vector3(door.position.x - 2/*HallwaySize*/ - roomsNormalWidth / 2 * tileSize, door.position.y/*0*/, door.position.z);
+                        Collider[] colliding = Physics.OverlapBox(roomCenter, new Vector3(roomsNormalWidth / 2 * tileSize, 5, roomsNormalHeight / 2 * tileSize));
                         if (colliding.Length == 0) // no room there
                         {
                             if (roomInfo.rightDoor == 1) // if room has a door at right
                             {
-                                Vector3 roomPosition = new Vector3(door.position.x - 2 - roomsNormalWidth, door.position.y/*0*/, door.position.z - roomsNormalHeight);
+                                Vector3 roomPosition = new Vector3(door.position.x - tileSize - roomsNormalWidth / 2 * tileSize, door.position.y/*0*/, door.position.z - roomsNormalHeight / 2 * tileSize);
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
                                 currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
@@ -480,7 +481,7 @@ public class OwnRoomGenarator : MonoBehaviour
                             continue;
                         }
 
-                        Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + 2/*HallwaySize*/ + roomsNormalHeight);
+                        Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + tileSize/*HallwaySize*/ + roomsNormalHeight / 2 * tileSize);
                         List<Vector3> localRooms = new(); // contains all central room points that form the joint
                         CalculateJointedRoomGrid(newRoomTypeID, roomCenter, ref localRooms);
 
@@ -529,7 +530,7 @@ public class OwnRoomGenarator : MonoBehaviour
                 {
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
-                        Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z + 2 + roomsNormalHeight * 2);
+                        Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z + tileSize + roomsNormalHeight * tileSize);
                         CalculateJointedRoomGrid(jointInfo.tail.objectTypeID, roomCenter, ref localRooms);
                         break;
                     case OBJECT_TYPE.JOINT:
@@ -546,7 +547,7 @@ public class OwnRoomGenarator : MonoBehaviour
                 {
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
-                        Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z + 2 + roomsNormalHeight * 2);
+                        Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z + tileSize + roomsNormalHeight * tileSize);
                         CalculateJointedRoomGrid(jointInfo.head.objectTypeID, roomCenter, ref localRooms);
                         break;
                     case OBJECT_TYPE.JOINT:
@@ -573,7 +574,7 @@ public class OwnRoomGenarator : MonoBehaviour
                 {
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
-                        Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - 2 - roomsNormalHeight * 2);
+                        Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - tileSize - roomsNormalHeight * tileSize);
                         CalculateJointedRoomGrid(jointInfo.tail.objectTypeID, roomCenter, ref localRooms);
                         break;
                     case OBJECT_TYPE.JOINT:
@@ -590,7 +591,7 @@ public class OwnRoomGenarator : MonoBehaviour
                 {
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
-                        Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - 2 - roomsNormalHeight * 2);
+                        Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - tileSize - roomsNormalHeight * tileSize);
                         CalculateJointedRoomGrid(jointInfo.head.objectTypeID, roomCenter, ref localRooms);
                         break;
                     case OBJECT_TYPE.JOINT:
@@ -617,7 +618,7 @@ public class OwnRoomGenarator : MonoBehaviour
                 {
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
-                        Vector3 roomCenter = new Vector3(currentGridLocation.x + 2 + roomsNormalWidth * 2, 0, currentGridLocation.z);
+                        Vector3 roomCenter = new Vector3(currentGridLocation.x + tileSize + roomsNormalWidth * tileSize, 0, currentGridLocation.z);
                         CalculateJointedRoomGrid(jointInfo.tail.objectTypeID, roomCenter, ref localRooms);
                         break;
                     case OBJECT_TYPE.JOINT:
@@ -634,7 +635,7 @@ public class OwnRoomGenarator : MonoBehaviour
                 {
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
-                        Vector3 roomCenter = new Vector3(currentGridLocation.x + 2 + roomsNormalWidth * 2, 0, currentGridLocation.z);
+                        Vector3 roomCenter = new Vector3(currentGridLocation.x + tileSize + roomsNormalWidth * tileSize, 0, currentGridLocation.z);
                         CalculateJointedRoomGrid(jointInfo.head.objectTypeID, roomCenter, ref localRooms);
                         break;
                     case OBJECT_TYPE.JOINT:
@@ -661,7 +662,7 @@ public class OwnRoomGenarator : MonoBehaviour
                 {
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
-                        Vector3 roomCenter = new Vector3(currentGridLocation.x - 2 - roomsNormalWidth * 2, 0, currentGridLocation.z);
+                        Vector3 roomCenter = new Vector3(currentGridLocation.x - tileSize - roomsNormalWidth * tileSize, 0, currentGridLocation.z);
                         CalculateJointedRoomGrid(jointInfo.tail.objectTypeID, roomCenter, ref localRooms);
                         break;
                     case OBJECT_TYPE.JOINT:
@@ -678,7 +679,7 @@ public class OwnRoomGenarator : MonoBehaviour
                 {
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
-                        Vector3 roomCenter = new Vector3(currentGridLocation.x - 2 - roomsNormalWidth * 2, 0, currentGridLocation.z);
+                        Vector3 roomCenter = new Vector3(currentGridLocation.x - tileSize - roomsNormalWidth * tileSize, 0, currentGridLocation.z);
                         CalculateJointedRoomGrid(jointInfo.head.objectTypeID, roomCenter, ref localRooms);
                         break;
                     case OBJECT_TYPE.JOINT:
@@ -699,7 +700,7 @@ public class OwnRoomGenarator : MonoBehaviour
     {
         for (int i = 0; i < localRooms.Count; i++)
         {
-            Collider[] colliding = Physics.OverlapBox(localRooms[i], new Vector3(roomsNormalWidth, 5, roomsNormalHeight));
+            Collider[] colliding = Physics.OverlapBox(localRooms[i], new Vector3(roomsNormalWidth / 2 * tileSize, 5, roomsNormalHeight / 2 * tileSize));
             if (colliding.Length > 0) return true;
         }
         return false;
@@ -712,7 +713,7 @@ public class OwnRoomGenarator : MonoBehaviour
 
         RoomInfo currentRoomInfo = roomsInfo.roomInfoList[currentRoomTypeID];
 
-        Vector3 roomPosition = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - roomsNormalHeight);
+        Vector3 roomPosition = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - roomsNormalHeight / 2 * tileSize);
         GameObject newRoom = GameObject.Instantiate(roomsPool[currentRoomTypeID], roomPosition, Quaternion.identity);
         RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
         script.SetDoors();
@@ -732,8 +733,8 @@ public class OwnRoomGenarator : MonoBehaviour
                 {
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
-                        Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z + roomsNormalHeight * 2);
-                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdTop], new Vector3(currentGridLocation.x, 0, currentGridLocation.z + 2 + roomsNormalHeight), Quaternion.identity);
+                        Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z + roomsNormalHeight * tileSize);
+                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdTop], new Vector3(currentGridLocation.x, 0, currentGridLocation.z + tileSize + roomsNormalHeight / 2 * tileSize), Quaternion.identity);
                         BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 0, roomsPool); // top
                         break;
                     case OBJECT_TYPE.JOINT:
@@ -750,8 +751,8 @@ public class OwnRoomGenarator : MonoBehaviour
                 {
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
-                        Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z + roomsNormalHeight * 2);
-                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdTop], new Vector3(currentGridLocation.x, 0, currentGridLocation.z + 2 + roomsNormalHeight), Quaternion.identity);
+                        Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z + roomsNormalHeight * tileSize);
+                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdTop], new Vector3(currentGridLocation.x, 0, currentGridLocation.z + tileSize + roomsNormalHeight / 2 * tileSize), Quaternion.identity);
                         BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 0, roomsPool); // top
                         break;
                     case OBJECT_TYPE.JOINT:
@@ -778,8 +779,8 @@ public class OwnRoomGenarator : MonoBehaviour
                 {
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
-                        Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - 2 - roomsNormalHeight * 2);
-                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdDown], new Vector3(currentGridLocation.x, 0, currentGridLocation.z - 2 - roomsNormalHeight), Quaternion.identity);
+                        Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - tileSize - roomsNormalHeight * tileSize);
+                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdDown], new Vector3(currentGridLocation.x, 0, currentGridLocation.z - tileSize - roomsNormalHeight / 2 * tileSize), Quaternion.identity);
                         BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 1, roomsPool); // down
                         break;
                     case OBJECT_TYPE.JOINT:
@@ -796,8 +797,8 @@ public class OwnRoomGenarator : MonoBehaviour
                 {
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
-                        Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - 2 - roomsNormalHeight * 2);
-                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdDown], new Vector3(currentGridLocation.x, 0, currentGridLocation.z - 2 - roomsNormalHeight), Quaternion.identity);
+                        Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - tileSize - roomsNormalHeight * tileSize);
+                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdDown], new Vector3(currentGridLocation.x, 0, currentGridLocation.z - tileSize - roomsNormalHeight / 2 * tileSize), Quaternion.identity);
                         BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 1, roomsPool); // down
                         break;
                     case OBJECT_TYPE.JOINT:
@@ -824,8 +825,8 @@ public class OwnRoomGenarator : MonoBehaviour
                 {
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
-                        Vector3 roomCenter = new Vector3(currentGridLocation.x + 2 + roomsNormalWidth * 2, 0, currentGridLocation.z);
-                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdRight], new Vector3(currentGridLocation.x + 1 + roomsNormalWidth, 0, currentGridLocation.z - roomsNormalHeight), Quaternion.identity);
+                        Vector3 roomCenter = new Vector3(currentGridLocation.x + tileSize + roomsNormalWidth * tileSize, 0, currentGridLocation.z);
+                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdRight], new Vector3(currentGridLocation.x + tileSize / 2 + roomsNormalWidth / 2 * tileSize, 0, currentGridLocation.z - roomsNormalHeight / 2 * tileSize), Quaternion.identity);
                         BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 2, roomsPool); // right
                         break;
                     case OBJECT_TYPE.JOINT:
@@ -842,8 +843,8 @@ public class OwnRoomGenarator : MonoBehaviour
                 {
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
-                        Vector3 roomCenter = new Vector3(currentGridLocation.x + 2 + roomsNormalWidth * 2, 0, currentGridLocation.z);
-                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdRight], new Vector3(currentGridLocation.x + 1 + roomsNormalWidth, 0, currentGridLocation.z - roomsNormalHeight), Quaternion.identity);
+                        Vector3 roomCenter = new Vector3(currentGridLocation.x + tileSize + roomsNormalWidth * tileSize, 0, currentGridLocation.z);
+                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdRight], new Vector3(currentGridLocation.x + tileSize / 2 + roomsNormalWidth / 2 * tileSize, 0, currentGridLocation.z - roomsNormalHeight / 2 * tileSize), Quaternion.identity);
                         BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 2, roomsPool); // right
                         break;
                     case OBJECT_TYPE.JOINT:
@@ -870,8 +871,8 @@ public class OwnRoomGenarator : MonoBehaviour
                 {
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
-                        Vector3 roomCenter = new Vector3(currentGridLocation.x - 2 - roomsNormalWidth * 2, 0, currentGridLocation.z);
-                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdLeft], new Vector3(currentGridLocation.x - 1 - roomsNormalWidth, 0, currentGridLocation.z - roomsNormalHeight), Quaternion.identity);
+                        Vector3 roomCenter = new Vector3(currentGridLocation.x - tileSize - roomsNormalWidth * tileSize, 0, currentGridLocation.z);
+                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdLeft], new Vector3(currentGridLocation.x - tileSize / 2 - roomsNormalWidth / 2 * tileSize, 0, currentGridLocation.z - roomsNormalHeight / 2 * tileSize), Quaternion.identity);
                         BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 3, roomsPool); // left
                         break;
                     case OBJECT_TYPE.JOINT:
@@ -888,8 +889,8 @@ public class OwnRoomGenarator : MonoBehaviour
                 {
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
-                        Vector3 roomCenter = new Vector3(currentGridLocation.x - 2 - roomsNormalWidth * 2, 0, currentGridLocation.z);
-                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdLeft], new Vector3(currentGridLocation.x - 1 - roomsNormalWidth, 0, currentGridLocation.z - roomsNormalHeight), Quaternion.identity);
+                        Vector3 roomCenter = new Vector3(currentGridLocation.x - tileSize - roomsNormalWidth * tileSize, 0, currentGridLocation.z);
+                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdLeft], new Vector3(currentGridLocation.x - tileSize / 2 - roomsNormalWidth / 2 * tileSize, 0, currentGridLocation.z - roomsNormalHeight / 2 * tileSize), Quaternion.identity);
                         BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 3, roomsPool); // left
                         break;
                     case OBJECT_TYPE.JOINT:
@@ -929,10 +930,10 @@ public class OwnRoomGenarator : MonoBehaviour
             switch (bossEntrance.direction)
             {
                 case FOUR_DIRECTIONS.TOP:
-                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z + 2 + bossScript.height), new Vector3(bossScript.width, 5, bossScript.height), Quaternion.identity);
+                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z + tileSize + bossScript.height), new Vector3(bossScript.width, 5, bossScript.height), Quaternion.identity);
                     if (colliding.Length == 0)
                     {
-                        bossRoom = GameObject.Instantiate(bossRoomPrefab, new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z + 2), Quaternion.identity);
+                        bossRoom = GameObject.Instantiate(bossRoomPrefab, new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z + tileSize), Quaternion.identity);
                         bossEntrance.state = DOOR_STATE.BOSS;
                         return true;
                     }
@@ -942,10 +943,10 @@ public class OwnRoomGenarator : MonoBehaviour
                     }
                     break;
                 case FOUR_DIRECTIONS.DOWN:
-                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z - 2 - bossScript.height), new Vector3(bossScript.width, 5, bossScript.height), Quaternion.AngleAxis(180, Vector3.up));
+                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z - tileSize - bossScript.height), new Vector3(bossScript.width, 5, bossScript.height), Quaternion.AngleAxis(180, Vector3.up));
                     if (colliding.Length == 0)
                     {
-                        bossRoom = GameObject.Instantiate(bossRoomPrefab, new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z - 2), Quaternion.AngleAxis(180, Vector3.up));
+                        bossRoom = GameObject.Instantiate(bossRoomPrefab, new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z - tileSize), Quaternion.AngleAxis(180, Vector3.up));
                         bossEntrance.state = DOOR_STATE.BOSS;
                         return true;
                     }
@@ -955,10 +956,10 @@ public class OwnRoomGenarator : MonoBehaviour
                     }
                     break;
                 case FOUR_DIRECTIONS.RIGHT:
-                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x + 2 + bossScript.width, 0, bossEntrance.position.z), new Vector3(bossScript.width, 5, bossScript.height), Quaternion.AngleAxis(90, Vector3.up));
+                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x + tileSize + bossScript.width, 0, bossEntrance.position.z), new Vector3(bossScript.width, 5, bossScript.height), Quaternion.AngleAxis(90, Vector3.up));
                     if (colliding.Length == 0)
                     {
-                        bossRoom = GameObject.Instantiate(bossRoomPrefab, new Vector3(bossEntrance.position.x + 2, 0, bossEntrance.position.z), Quaternion.AngleAxis(90, Vector3.up));
+                        bossRoom = GameObject.Instantiate(bossRoomPrefab, new Vector3(bossEntrance.position.x + tileSize, 0, bossEntrance.position.z), Quaternion.AngleAxis(90, Vector3.up));
                         bossEntrance.state = DOOR_STATE.BOSS;
                         return true;
                     }
@@ -968,10 +969,10 @@ public class OwnRoomGenarator : MonoBehaviour
                     }
                     break;
                 case FOUR_DIRECTIONS.LEFT:
-                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x - 2 - bossScript.width, 0, bossEntrance.position.z), new Vector3(bossScript.width, 5, bossScript.height), Quaternion.AngleAxis(270, Vector3.up));
+                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x - tileSize - bossScript.width, 0, bossEntrance.position.z), new Vector3(bossScript.width, 5, bossScript.height), Quaternion.AngleAxis(270, Vector3.up));
                     if (colliding.Length == 0)
                     {
-                        bossRoom = GameObject.Instantiate(bossRoomPrefab, new Vector3(bossEntrance.position.x - 2, 0, bossEntrance.position.z), Quaternion.AngleAxis(270, Vector3.up));
+                        bossRoom = GameObject.Instantiate(bossRoomPrefab, new Vector3(bossEntrance.position.x - tileSize, 0, bossEntrance.position.z), Quaternion.AngleAxis(270, Vector3.up));
                         bossEntrance.state = DOOR_STATE.BOSS;
                         return true;
                     }
@@ -1210,6 +1211,14 @@ public class OwnRoomGenarator : MonoBehaviour
 
                 PlaceHallway(gate1.position, gate1.direction);
             }
+            else if (state == GATE_STATE.BOSS)
+            {
+                Gate gate1 = new Gate(allDoors[0].position, allDoors[0].direction, state, null);
+                gates.Add(gate1);
+                allDoors.Remove(allDoors[0]);
+
+                PlaceHallway(gate1.position, gate1.direction);
+            }
             else
             {
                 Gate gate1 = new Gate(allDoors[0].position, allDoors[0].direction, state, null);
@@ -1218,7 +1227,7 @@ public class OwnRoomGenarator : MonoBehaviour
             }
         }
         draw = gates;
-        //placeGates.gates = gates;
+        placeGates.gates = gates;
     }
 
     void FindAllDoors(TreeNode node, ref List<Door> allDoors)
@@ -1240,7 +1249,7 @@ public class OwnRoomGenarator : MonoBehaviour
         switch (holdedDoor.direction)
         {
             case FOUR_DIRECTIONS.TOP:
-                colliding = Physics.OverlapBox(new Vector3(holdedDoor.position.x, 0, holdedDoor.position.z + 2), new Vector3(1, 5, 1), Quaternion.identity, doorLayer);
+                colliding = Physics.OverlapBox(new Vector3(holdedDoor.position.x, 0, holdedDoor.position.z + tileSize), new Vector3(1, 5, 1), Quaternion.identity, doorLayer);
                 if (colliding.Length == 1)
                 {
                     RoomBehaviour script = FindScriptInParent(colliding[0].transform);
@@ -1249,7 +1258,7 @@ public class OwnRoomGenarator : MonoBehaviour
                 else if (colliding.Length > 0) Debug.LogError("Logic Error");
                 return null; // no neighbor door
             case FOUR_DIRECTIONS.DOWN:
-                colliding = Physics.OverlapBox(new Vector3(holdedDoor.position.x, 0, holdedDoor.position.z - 2), new Vector3(1, 5, 1), Quaternion.identity, doorLayer);
+                colliding = Physics.OverlapBox(new Vector3(holdedDoor.position.x, 0, holdedDoor.position.z - tileSize), new Vector3(1, 5, 1), Quaternion.identity, doorLayer);
                 if (colliding.Length == 1)
                 {
                     RoomBehaviour script = FindScriptInParent(colliding[0].transform);
@@ -1258,7 +1267,7 @@ public class OwnRoomGenarator : MonoBehaviour
                 else if (colliding.Length > 0) Debug.LogError("Logic Error");
                 return null; // no neighbor door
             case FOUR_DIRECTIONS.RIGHT:
-                colliding = Physics.OverlapBox(new Vector3(holdedDoor.position.x + 2, 0, holdedDoor.position.z), new Vector3(1, 5, 1), Quaternion.identity, doorLayer);
+                colliding = Physics.OverlapBox(new Vector3(holdedDoor.position.x + tileSize, 0, holdedDoor.position.z), new Vector3(1, 5, 1), Quaternion.identity, doorLayer);
                 if (colliding.Length == 1)
                 {
                     RoomBehaviour script = FindScriptInParent(colliding[0].transform);
@@ -1267,7 +1276,7 @@ public class OwnRoomGenarator : MonoBehaviour
                 else if (colliding.Length > 0) Debug.LogError("Logic Error");
                 return null; // no neighbor door
             case FOUR_DIRECTIONS.LEFT:
-                colliding = Physics.OverlapBox(new Vector3(holdedDoor.position.x - 2, 0, holdedDoor.position.z), new Vector3(1, 5, 1), Quaternion.identity, doorLayer);
+                colliding = Physics.OverlapBox(new Vector3(holdedDoor.position.x - tileSize, 0, holdedDoor.position.z), new Vector3(1, 5, 1), Quaternion.identity, doorLayer);
                 if (colliding.Length == 1)
                 {
                     RoomBehaviour script = FindScriptInParent(colliding[0].transform);
