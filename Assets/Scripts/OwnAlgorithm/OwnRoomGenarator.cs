@@ -46,6 +46,7 @@ public class OwnRoomGenarator : MonoBehaviour
     int workingIndex = 0;
     int lastRoomCreated = -1; // make imposible to have the same room in sequence
 
+    [Range(0, 20)] public float breakDoorChance;
     public LayerMask doorLayer;
     List<Gate> draw = new();
 
@@ -1003,6 +1004,13 @@ public class OwnRoomGenarator : MonoBehaviour
             FindForFillDoors(roomsTree[1], ref forFillDoors); // 1 --> ignore start room
             if (forFillDoors.Count == 0) break; // no more rooms for fill
             Door randomDoor = forFillDoors[Random.Range(0, forFillDoors.Count)];
+
+            if (Random.Range(0, 100) < breakDoorChance)
+            {
+                randomDoor.state = DOOR_STATE.DESTROYED;
+                forFillDoors.Remove(randomDoor);
+                continue;
+            }
             
             auxScript = CreateNextRoom(randomDoor, GetTreeIndex(randomDoor.script), roomsPrefabs);
             if (auxScript != null)
