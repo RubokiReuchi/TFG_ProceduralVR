@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class Hand : MonoBehaviour
+public class LeftHand : MonoBehaviour
 {
     [SerializeField] float animationSpeed;
     Animator animator;

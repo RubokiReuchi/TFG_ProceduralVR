@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 [RequireComponent(typeof(ActionBasedController))]
-public class HandController : MonoBehaviour
+public class GunController : MonoBehaviour
 {
     ActionBasedController controller;
-    [SerializeField] LeftHand hand;
+    [SerializeField] RightHand hand;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +19,10 @@ public class HandController : MonoBehaviour
     void Update()
     {
         hand.SetIndex(controller.activateActionValue.action.ReadValue<float>());
-        hand.SetGrip(controller.selectActionValue.action.ReadValue<float>());
+        if (controller.activateAction.action.ReadValue<float>() == 1.0f)
+        {
+            // cooldown...
+            hand.Dash();
+        }
     }
 }
