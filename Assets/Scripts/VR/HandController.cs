@@ -18,7 +18,7 @@ public class HandController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        hand.SetIndex(controller.activateAction.action.ReadValue<float>());
-        hand.SetGrip(controller.selectAction.action.ReadValue<float>());
+        hand.SetIndex(controller.activateActionValue.action.ReadValue<float>());
+        hand.SetGrip(controller.selectActionValue.action.ReadValue<float>());
     }
 }
