@@ -2,15 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GUN_TYPE // move it later to swap guns, or something like that
-{
-    YELLOW,
-    BLUE,
-    RED,
-    PURPLE,
-    GREEN
-}
-
 public class HandScreen : MonoBehaviour
 {
     [SerializeField] List<MeshRenderer> screenBlocks;
