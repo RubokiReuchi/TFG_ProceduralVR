@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: LeftHandGrip
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Hand_R_Jnt
+    m_Weight: 0
+  - m_Path: Hand_R_Jnt/Index1_R_Jnt
+    m_Weight: 0
+  - m_Path: Hand_R_Jnt/Index1_R_Jnt/Index2_R_Jnt
+    m_Weight: 0
+  - m_Path: Hand_R_Jnt/Index1_R_Jnt/Index2_R_Jnt/Index3_R_Jnt
+    m_Weight: 0
+  - m_Path: Hand_R_Jnt/Index1_R_Jnt/Index2_R_Jnt/Index3_R_Jnt/Index4_R_Jnt
+    m_Weight: 0
+  - m_Path: Hand_R_Jnt/Middle1_R_Jnt
+    m_Weight: 1
+  - m_Path: Hand_R_Jnt/Middle1_R_Jnt/Middle2_R_Jnt
+    m_Weight: 1
+  - m_Path: Hand_R_Jnt/Middle1_R_Jnt/Middle2_R_Jnt/Middle3_R_Jnt
+    m_Weight: 1
+  - m_Path: Hand_R_Jnt/Middle1_R_Jnt/Middle2_R_Jnt/Middle3_R_Jnt/Middle4_R_Jnt
+    m_Weight: 1
+  - m_Path: Hand_R_Jnt/Pinky1_R_Jnt
+    m_Weight: 1
+  - m_Path: Hand_R_Jnt/Pinky1_R_Jnt/Pinky2_R_Jnt
+    m_Weight: 1
+  - m_Path: Hand_R_Jnt/Pinky1_R_Jnt/Pinky2_R_Jnt/Pinky3_R_Jnt
+    m_Weight: 1
+  - m_Path: Hand_R_Jnt/Pinky1_R_Jnt/Pinky2_R_Jnt/Pinky3_R_Jnt/Pinky4_R_Jnt
+    m_Weight: 1
+  - m_Path: Hand_R_Jnt/Ring1_R_Jnt
+    m_Weight: 1
+  - m_Path: Hand_R_Jnt/Ring1_R_Jnt/Ring2_R_Jnt
+    m_Weight: 1
+  - m_Path: Hand_R_Jnt/Ring1_R_Jnt/Ring2_R_Jnt/Ring3_R_Jnt
+    m_Weight: 1
+  - m_Path: Hand_R_Jnt/Ring1_R_Jnt/Ring2_R_Jnt/Ring3_R_Jnt/Ring4_R_Jnt
+    m_Weight: 1
+  - m_Path: Hand_R_Jnt/Thumb1_R_Jnt
+    m_Weight: 0
+  - m_Path: Hand_R_Jnt/Thumb1_R_Jnt/Thumb2_R_Jnt
+    m_Weight: 0
+  - m_Path: Hand_R_Jnt/Thumb1_R_Jnt/Thumb2_R_Jnt/Thumb3_R_Jnt
+    m_Weight: 0
+  - m_Path: RightHand
+    m_Weight: 0
