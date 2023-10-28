@@ -1150,7 +1150,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Move",
+                    "name": "SwapGunType",
                     "type": "Value",
                     "id": "00a4dc9f-1ee6-4349-b0e9-72d5dccaadd6",
                     "expectedControlType": "Vector2",
@@ -1229,7 +1229,7 @@
                     "interactions": "",
                     "processors": "StickDeadzone",
                     "groups": "Continuous Move",
-                    "action": "Move",
+                    "action": "SwapGunType",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

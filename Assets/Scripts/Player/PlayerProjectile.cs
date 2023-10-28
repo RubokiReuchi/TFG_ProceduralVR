@@ -3,18 +3,9 @@ using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public enum GUN_TYPE
-{
-    YELLOW,
-    BLUE,
-    RED,
-    PURPLE,
-    GREEN
-}
-
 public class PlayerProjectile : MonoBehaviour
 {
-    GUN_TYPE selectedGunType = GUN_TYPE.YELLOW;
+    public GUN_TYPE selectedGunType;
     Rigidbody rb;
     [SerializeField] float speed;
     float lifeTime = 2;
@@ -35,6 +26,7 @@ public class PlayerProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        // gun type changes
         Destroy(this.gameObject);
     }
 }

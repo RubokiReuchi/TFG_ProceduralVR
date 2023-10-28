@@ -876,7 +876,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1dda8f80ce84a24f8a5a581c16ad940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stickAction:
+    m_UseReference: 0
+    m_Action:
+      m_Name: 
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 0}
   hand: {fileID: 4494160526208571882}
+  playerGun: {fileID: 0}
 --- !u!1 &5393538204586246931
 GameObject:
   m_ObjectHideFlags: 0
