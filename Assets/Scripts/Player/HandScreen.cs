@@ -4,19 +4,56 @@ using UnityEngine;
 
 public class HandScreen : MonoBehaviour
 {
+    [Header("Gun Type")]
     [SerializeField] List<MeshRenderer> screenBlocks;
     [SerializeField] Material yellowMat, blueMat, redMat, purpleMat, greenMat;
+
+    [Header("Menu")]
+    [SerializeField] Material openMenuMat;
+    [SerializeField] float openMenuSpeed;
+    [NonEditable][SerializeField] bool menuOpened;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        openMenuMat.SetFloat("_DisplayHeight", 0);
+        menuOpened = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void OpenMenu()
+    {
+        if (!menuOpened) StartCoroutine(OpenMenuCo());
+        else StartCoroutine(CloseMenuCo());
+    }
+
+    IEnumerator OpenMenuCo()
+    {
+        float openMenuProgress = openMenuMat.GetFloat("_DisplayHeight");
+        while (openMenuProgress < 1)
+        {
+            openMenuProgress += Time.deltaTime * openMenuSpeed;
+            if (openMenuProgress > 1) openMenuProgress = 1;
+            openMenuMat.SetFloat("_DisplayHeight", openMenuProgress);
+            yield return null;
+        }
+    }
+
+    public IEnumerator CloseMenuCo()
+    {
+        float openMenuProgress = openMenuMat.GetFloat("_DisplayHeight");
+        while (openMenuProgress < 1)
+        {
+            openMenuProgress += Time.deltaTime * openMenuSpeed;
+            if (openMenuProgress > 1) openMenuProgress = 1;
+            openMenuMat.SetFloat("_DisplayHeight", openMenuProgress);
+            yield return null;
+        }
     }
 
     public void SetScreen(GUN_TYPE type)
