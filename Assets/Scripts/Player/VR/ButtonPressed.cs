@@ -22,12 +22,12 @@ public class ButtonPressed : MonoBehaviour
     private void Awake()
     {
         selectableStateInfo = typeof(Selectable).GetProperty("currentSelectionState", BindingFlags.NonPublic | BindingFlags.Instance);
+        buttonMat = new Material(GetComponent<Image>().material);
+        GetComponent<Image>().material = buttonMat;
     }
 
     void Start()
     {
-        buttonMat = new Material(GetComponent<Image>().material);
-        GetComponent<Image>().material = buttonMat;
         selectable = GetComponent<Selectable>();
     }
 

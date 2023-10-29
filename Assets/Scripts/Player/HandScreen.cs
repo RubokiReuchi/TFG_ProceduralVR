@@ -55,7 +55,7 @@ public class HandScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("x: " + saveMapPosition.x + "y: " + saveMapPosition.y);
+
     }
 
     public void OpenMenu()
@@ -68,7 +68,6 @@ public class HandScreen : MonoBehaviour
     IEnumerator OpenMenuCo()
     {
         menuOpened = true;
-        map.localPosition = saveMapPosition;
 
         float openMenuProgress = openMenuMat.GetFloat("_DisplayHeight");
         while (openMenuProgress < 1) // ramp
@@ -88,15 +87,21 @@ public class HandScreen : MonoBehaviour
             panelMenuMat.SetFloat("_DisplayHeight", panelMenuProgress);
             frameMenuMat.SetFloat("_DisplayHeight", panelMenuProgress);
             backgroundMenuMat.SetFloat("_DisplayHeight", panelMenuProgress);
-            if (panelMenuProgress > 0.25f && panelMenuProgress < 0.75f)
+            if (panelMenuProgress > 0.35f && panelMenuProgress < 0.65f)
             {
-                arrowsMenuProgress += Time.deltaTime * openMenuSpeed * 2;
+                arrowsMenuProgress += Time.deltaTime * openMenuSpeed * 3;
                 if (arrowsMenuProgress > 0.9f) arrowsMenuProgress = 1;
                 arrows1MenuMat.SetFloat("_DisplayHeight", arrowsMenuProgress);
                 arrows2MenuMat.SetFloat("_DisplayHeight", arrowsMenuProgress);
             }
-            else if (arrowsMenuProgress != 1) arrowsMenuProgress = 1;
+            else if (panelMenuProgress >= 0.65f && arrowsMenuProgress != 1)
+            {
+                arrowsMenuProgress = 1;
+                arrows1MenuMat.SetFloat("_DisplayHeight", arrowsMenuProgress);
+                arrows2MenuMat.SetFloat("_DisplayHeight", arrowsMenuProgress);
+            }
             mapFix.localScale = new Vector3(1, panelMenuProgress, 1);
+            map.localPosition = saveMapPosition;
             yield return null;
         }
 
@@ -131,13 +136,18 @@ public class HandScreen : MonoBehaviour
             panelMenuMat.SetFloat("_DisplayHeight", panelMenuProgress);
             frameMenuMat.SetFloat("_DisplayHeight", panelMenuProgress);
             backgroundMenuMat.SetFloat("_DisplayHeight", panelMenuProgress);
-            if (panelMenuProgress > 0.25f && panelMenuProgress < 0.75f)
+            if (panelMenuProgress > 0.35f && panelMenuProgress < 0.65f)
             {
-                arrowsMenuProgress -= Time.deltaTime * openMenuSpeed * 2;
+                arrowsMenuProgress -= Time.deltaTime * openMenuSpeed * 3;
                 arrows1MenuMat.SetFloat("_DisplayHeight", arrowsMenuProgress);
                 arrows2MenuMat.SetFloat("_DisplayHeight", arrowsMenuProgress);
             }
-            else if (arrowsMenuProgress != 0) arrowsMenuProgress = 0;
+            else if (panelMenuProgress <= 0.35f && arrowsMenuProgress != 0)
+            {
+                arrowsMenuProgress = 0;
+                arrows1MenuMat.SetFloat("_DisplayHeight", arrowsMenuProgress);
+                arrows2MenuMat.SetFloat("_DisplayHeight", arrowsMenuProgress);
+            }
             mapFix.localScale = new Vector3(1, panelMenuProgress, 1);
             yield return null;
         }

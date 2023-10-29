@@ -76,6 +76,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_5d876fb98d1e4dff94eed6fed9f7b860_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: f3db3d0236998064cacbbc7bf051c1b3, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -114,10 +118,11 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DisplayHeight: 0
+    - _DisplayHeight: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
+    - _GlitchStrenght: 0.1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -127,7 +132,9 @@ Material:
     - _Pressed: 0
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _RECIEVE_SHADOWS_OFF: 0
     - _ReceiveShadows: 1
+    - _ScrollSpeed: 2.66
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -142,6 +149,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0.3372549, g: 0.40784314, b: 0.9529412, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FresnelColor: {r: 1, g: 1, b: 1, a: 0}
     - _NormalColor: {r: 0.36482915, g: 0.34109113, b: 0.990566, a: 0}
     - _PressedColor: {r: 0.9150943, g: 0.61785936, b: 0.30647027, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
