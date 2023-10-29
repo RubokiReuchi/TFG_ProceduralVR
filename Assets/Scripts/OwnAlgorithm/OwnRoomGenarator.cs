@@ -50,6 +50,16 @@ public class OwnRoomGenarator : MonoBehaviour
     public LayerMask doorLayer;
     List<Gate> draw = new();
 
+    [Header("Map Rooms")]
+    [SerializeField] Transform createMap;
+    [SerializeField] GameObject mapStartRoomPrefab;
+    [SerializeField] GameObject[] mapPathRoomsPrefabs;
+    [SerializeField] GameObject[] mapEndingRoomsPrefabs;
+    GameObject[] mapRoomsPrefabs; // mapPathRoomsPrefabs + mapEndingRoomsPrefabs
+    [SerializeField] GameObject[] mapBossRoomsPrefabs;
+    [SerializeField] GameObject[] mapJointsPrefabs;
+    [SerializeField] GameObject mapHallwayPrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +68,7 @@ public class OwnRoomGenarator : MonoBehaviour
         if (maxRooms < roomsBetween) maxRooms = roomsBetween;
 
         roomsPrefabs = pathRoomsPrefabs.Concat(endingRoomsPrefabs).ToArray();
+        mapRoomsPrefabs = mapPathRoomsPrefabs.Concat(mapEndingRoomsPrefabs).ToArray();
 
         CreateMainPath();
 
@@ -114,6 +125,8 @@ public class OwnRoomGenarator : MonoBehaviour
     {
         // start room
         GameObject room = GameObject.Instantiate(startRoomPrefab, Vector3.zero, Quaternion.identity);
+        GameObject newMapRoom = GameObject.Instantiate(mapStartRoomPrefab, createMap);
+        newMapRoom.transform.localPosition = Vector3.zero;
         RoomBehaviour script = room.GetComponent<RoomBehaviour>();
         script.manager = this;
         script.SetDoors();
@@ -133,7 +146,7 @@ public class OwnRoomGenarator : MonoBehaviour
             workingIndex = GetTreeIndex(script);
             unfilledDoor = roomsTree[workingIndex].script.GetRandomUnfilledDoor();
 
-            auxScript = CreateNextRoom(unfilledDoor, workingIndex, pathRoomsPrefabs);
+            auxScript = CreateNextRoom(unfilledDoor, workingIndex, pathRoomsPrefabs, mapPathRoomsPrefabs);
             if (auxScript != null)
             {
                 lastRoomCreated = auxScript.roomTypeID;
@@ -210,7 +223,7 @@ public class OwnRoomGenarator : MonoBehaviour
         return null; // no more doors for fill on linear backtraking
     }
 
-    RoomBehaviour CreateNextRoom(Door door, int roomTreeIndex, GameObject[] roomsPool)
+    RoomBehaviour CreateNextRoom(Door door, int roomTreeIndex, GameObject[] roomsPool, GameObject[] mapRoomsPool)
     {
         List<GameObject> posibleRooms = new(roomsPool.ToList());
         List<int> imposibleRooms = new();
@@ -239,6 +252,8 @@ public class OwnRoomGenarator : MonoBehaviour
                             {
                                 Vector3 roomPosition = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + tileSize);
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
+                                GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[newRoomTypeID], createMap);
+                                newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
                                 currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
@@ -283,7 +298,7 @@ public class OwnRoomGenarator : MonoBehaviour
                         {
                             List<Vector3> storeRooms = new(); // prevent to duplicate rooms
                             int lastRoomScriptIndex = roomsTree.Count - 1;
-                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 0, roomsPool); // top
+                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 0, roomsPool, mapRoomsPool); // top
                             currentRooms++;
                             return roomsTree[lastRoomScriptIndex + 1].script;
                         }
@@ -310,6 +325,8 @@ public class OwnRoomGenarator : MonoBehaviour
                             {
                                 Vector3 roomPosition = new Vector3(door.position.x, door.position.y/*0*/, door.position.z - tileSize - roomsNormalHeight * tileSize);
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
+                                GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[newRoomTypeID], createMap);
+                                newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
                                 currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
@@ -354,7 +371,7 @@ public class OwnRoomGenarator : MonoBehaviour
                         {
                             List<Vector3> storeRooms = new(); // prevent to duplicate rooms
                             int lastRoomScriptIndex = roomsTree.Count - 1;
-                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 1, roomsPool); // down
+                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 1, roomsPool, mapRoomsPool); // down
                             currentRooms++;
                             return roomsTree[lastRoomScriptIndex + 1].script;
                         }
@@ -381,6 +398,8 @@ public class OwnRoomGenarator : MonoBehaviour
                             {
                                 Vector3 roomPosition = new Vector3(door.position.x + tileSize + roomsNormalWidth / 2 * tileSize, door.position.y/*0*/, door.position.z - roomsNormalHeight / 2 * tileSize);
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
+                                GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[newRoomTypeID], createMap);
+                                newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
                                 currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
@@ -425,7 +444,7 @@ public class OwnRoomGenarator : MonoBehaviour
                         {
                             List<Vector3> storeRooms = new(); // prevent to duplicate rooms
                             int lastRoomScriptIndex = roomsTree.Count - 1;
-                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 2, roomsPool); // right
+                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 2, roomsPool, mapRoomsPool); // right
                             currentRooms++;
                             return roomsTree[lastRoomScriptIndex + 1].script;
                         }
@@ -452,6 +471,8 @@ public class OwnRoomGenarator : MonoBehaviour
                             {
                                 Vector3 roomPosition = new Vector3(door.position.x - tileSize - roomsNormalWidth / 2 * tileSize, door.position.y/*0*/, door.position.z - roomsNormalHeight / 2 * tileSize);
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
+                                GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[newRoomTypeID], createMap);
+                                newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
                                 currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
@@ -496,7 +517,7 @@ public class OwnRoomGenarator : MonoBehaviour
                         {
                             List<Vector3> storeRooms = new(); // prevent to duplicate rooms
                             int lastRoomScriptIndex = roomsTree.Count - 1;
-                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 3, roomsPool); // left
+                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 3, roomsPool, mapRoomsPool); // left
                             currentRooms++;
                             return roomsTree[lastRoomScriptIndex + 1].script;
                         }
@@ -707,7 +728,7 @@ public class OwnRoomGenarator : MonoBehaviour
         return false;
     }
 
-    void BuildJointRoom(int currentRoomTypeID, Vector3 currentGridLocation, FOUR_DIRECTIONS nullifyDoor, List<Vector3> localRooms, int currentRoomTreeIndex, int currentRoomDirection, GameObject[] roomsPool)
+    void BuildJointRoom(int currentRoomTypeID, Vector3 currentGridLocation, FOUR_DIRECTIONS nullifyDoor, List<Vector3> localRooms, int currentRoomTreeIndex, int currentRoomDirection, GameObject[] roomsPool, GameObject[] mapRoomsPool)
     {
         if (localRooms.Contains(currentGridLocation)) return;
         else localRooms.Add(currentGridLocation);
@@ -716,6 +737,8 @@ public class OwnRoomGenarator : MonoBehaviour
 
         Vector3 roomPosition = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - roomsNormalHeight / 2 * tileSize);
         GameObject newRoom = GameObject.Instantiate(roomsPool[currentRoomTypeID], roomPosition, Quaternion.identity);
+        GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[currentRoomTypeID], createMap);
+        newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
         RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
         script.SetDoors();
         if (nullifyDoor != FOUR_DIRECTIONS.NONE) script.NullifyDoor(nullifyDoor);
@@ -735,8 +758,14 @@ public class OwnRoomGenarator : MonoBehaviour
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
                         Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z + roomsNormalHeight * tileSize);
-                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdTop], new Vector3(currentGridLocation.x, 0, currentGridLocation.z + tileSize + roomsNormalHeight / 2 * tileSize), Quaternion.identity);
-                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 0, roomsPool); // top
+                        if (!localRooms.Contains(roomCenter))
+                        {
+                            roomPosition = new Vector3(currentGridLocation.x, 0, currentGridLocation.z + tileSize + roomsNormalHeight / 2 * tileSize);
+                            GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdTop], roomPosition, Quaternion.identity);
+                            newMapRoom = GameObject.Instantiate(mapJointsPrefabs[currentRoomInfo.jointRoomTypeIdTop], createMap);
+                            newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                        }
+                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 0, roomsPool, mapRoomsPool); // top
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -753,8 +782,14 @@ public class OwnRoomGenarator : MonoBehaviour
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
                         Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z + roomsNormalHeight * tileSize);
-                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdTop], new Vector3(currentGridLocation.x, 0, currentGridLocation.z + tileSize + roomsNormalHeight / 2 * tileSize), Quaternion.identity);
-                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 0, roomsPool); // top
+                        if (!localRooms.Contains(roomCenter))
+                        {
+                            roomPosition = new Vector3(currentGridLocation.x, 0, currentGridLocation.z + tileSize + roomsNormalHeight / 2 * tileSize);
+                            GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdTop], roomPosition, Quaternion.identity);
+                            newMapRoom = GameObject.Instantiate(mapJointsPrefabs[currentRoomInfo.jointRoomTypeIdTop], createMap);
+                            newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                        }
+                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 0, roomsPool, mapRoomsPool); // top
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -781,8 +816,15 @@ public class OwnRoomGenarator : MonoBehaviour
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
                         Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - tileSize - roomsNormalHeight * tileSize);
-                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdDown], new Vector3(currentGridLocation.x, 0, currentGridLocation.z - tileSize - roomsNormalHeight / 2 * tileSize), Quaternion.identity);
-                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 1, roomsPool); // down
+                        if (!localRooms.Contains(roomCenter))
+                        {
+                            roomPosition = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - tileSize - roomsNormalHeight / 2 * tileSize);
+                            GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdDown], roomPosition, Quaternion.identity);
+                            newMapRoom = GameObject.Instantiate(mapJointsPrefabs[currentRoomInfo.jointRoomTypeIdDown], createMap);
+                            newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+
+                        }
+                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 1, roomsPool, mapRoomsPool); // down
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -799,8 +841,14 @@ public class OwnRoomGenarator : MonoBehaviour
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
                         Vector3 roomCenter = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - tileSize - roomsNormalHeight * tileSize);
-                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdDown], new Vector3(currentGridLocation.x, 0, currentGridLocation.z - tileSize - roomsNormalHeight / 2 * tileSize), Quaternion.identity);
-                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 1, roomsPool); // down
+                        if (!localRooms.Contains(roomCenter))
+                        {
+                            roomPosition = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - tileSize - roomsNormalHeight / 2 * tileSize);
+                            GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdDown], roomPosition, Quaternion.identity);
+                            newMapRoom = GameObject.Instantiate(mapJointsPrefabs[currentRoomInfo.jointRoomTypeIdDown], createMap);
+                            newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                        }
+                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 1, roomsPool, mapRoomsPool); // down
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -827,8 +875,14 @@ public class OwnRoomGenarator : MonoBehaviour
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
                         Vector3 roomCenter = new Vector3(currentGridLocation.x + tileSize + roomsNormalWidth * tileSize, 0, currentGridLocation.z);
-                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdRight], new Vector3(currentGridLocation.x + tileSize / 2 + roomsNormalWidth / 2 * tileSize, 0, currentGridLocation.z - roomsNormalHeight / 2 * tileSize), Quaternion.identity);
-                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 2, roomsPool); // right
+                        if (!localRooms.Contains(roomCenter))
+                        {
+                            roomPosition = new Vector3(currentGridLocation.x + tileSize / 2 + roomsNormalWidth / 2 * tileSize, 0, currentGridLocation.z - roomsNormalHeight / 2 * tileSize);
+                            GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdRight], roomPosition, Quaternion.identity);
+                            newMapRoom = GameObject.Instantiate(mapJointsPrefabs[currentRoomInfo.jointRoomTypeIdRight], createMap);
+                            newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                        }
+                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 2, roomsPool, mapRoomsPool); // right
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -845,8 +899,14 @@ public class OwnRoomGenarator : MonoBehaviour
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
                         Vector3 roomCenter = new Vector3(currentGridLocation.x + tileSize + roomsNormalWidth * tileSize, 0, currentGridLocation.z);
-                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdRight], new Vector3(currentGridLocation.x + tileSize / 2 + roomsNormalWidth / 2 * tileSize, 0, currentGridLocation.z - roomsNormalHeight / 2 * tileSize), Quaternion.identity);
-                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 2, roomsPool); // right
+                        if (!localRooms.Contains(roomCenter))
+                        {
+                            roomPosition = new Vector3(currentGridLocation.x + tileSize / 2 + roomsNormalWidth / 2 * tileSize, 0, currentGridLocation.z - roomsNormalHeight / 2 * tileSize);
+                            GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdRight], roomPosition, Quaternion.identity);
+                            newMapRoom = GameObject.Instantiate(mapJointsPrefabs[currentRoomInfo.jointRoomTypeIdRight], createMap);
+                            newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                        }
+                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 2, roomsPool, mapRoomsPool); // right
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -873,8 +933,14 @@ public class OwnRoomGenarator : MonoBehaviour
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
                         Vector3 roomCenter = new Vector3(currentGridLocation.x - tileSize - roomsNormalWidth * tileSize, 0, currentGridLocation.z);
-                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdLeft], new Vector3(currentGridLocation.x - tileSize / 2 - roomsNormalWidth / 2 * tileSize, 0, currentGridLocation.z - roomsNormalHeight / 2 * tileSize), Quaternion.identity);
-                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 3, roomsPool); // left
+                        if (!localRooms.Contains(roomCenter))
+                        {
+                            roomPosition = new Vector3(currentGridLocation.x - tileSize / 2 - roomsNormalWidth / 2 * tileSize, 0, currentGridLocation.z - roomsNormalHeight / 2 * tileSize);
+                            GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdLeft], roomPosition, Quaternion.identity);
+                            newMapRoom = GameObject.Instantiate(mapJointsPrefabs[currentRoomInfo.jointRoomTypeIdLeft], createMap);
+                            newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                        }
+                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 3, roomsPool, mapRoomsPool); // left
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -891,8 +957,14 @@ public class OwnRoomGenarator : MonoBehaviour
                     case OBJECT_TYPE.ROOM:
                     case OBJECT_TYPE.BOSS_ROOM:
                         Vector3 roomCenter = new Vector3(currentGridLocation.x - tileSize - roomsNormalWidth * tileSize, 0, currentGridLocation.z);
-                        if (!localRooms.Contains(roomCenter)) GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdLeft], new Vector3(currentGridLocation.x - tileSize / 2 - roomsNormalWidth / 2 * tileSize, 0, currentGridLocation.z - roomsNormalHeight / 2 * tileSize), Quaternion.identity);
-                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 3, roomsPool); // left
+                        if (!localRooms.Contains(roomCenter))
+                        {
+                            roomPosition = new Vector3(currentGridLocation.x - tileSize / 2 - roomsNormalWidth / 2 * tileSize, 0, currentGridLocation.z - roomsNormalHeight / 2 * tileSize);
+                            GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdLeft], roomPosition, Quaternion.identity);
+                            newMapRoom = GameObject.Instantiate(mapJointsPrefabs[currentRoomInfo.jointRoomTypeIdLeft], createMap);
+                            newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                        }
+                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 3, roomsPool, mapRoomsPool); // left
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -911,13 +983,14 @@ public class OwnRoomGenarator : MonoBehaviour
     void CreateBossRoom(RoomBehaviour lastRoomScript)
     {
         GameObject bossRoomPrefab = bossRoomsPrefabs[Random.Range(0, bossRoomsPrefabs.Length)];
+        GameObject mapBossRoomPrefab = mapBossRoomsPrefabs[Random.Range(0, mapBossRoomsPrefabs.Length)];
         BossRoomBehaviour bossScript = bossRoomPrefab.GetComponent<BossRoomBehaviour>();
 
         // find position
-        if (!CreateBossRoomLoop(roomsTree[GetTreeIndex(lastRoomScript)], bossRoomPrefab, bossScript)) Debug.LogError("Boss room was imposible to be created");
+        if (!CreateBossRoomLoop(roomsTree[GetTreeIndex(lastRoomScript)], bossRoomPrefab, mapBossRoomPrefab, bossScript)) Debug.LogError("Boss room was imposible to be created");
     }
 
-    bool CreateBossRoomLoop(TreeNode node, GameObject bossRoomPrefab, BossRoomBehaviour bossScript) // true --> created, false --> imposible to create boss room
+    bool CreateBossRoomLoop(TreeNode node, GameObject bossRoomPrefab, GameObject mapBossRoomPrefab, BossRoomBehaviour bossScript) // true --> created, false --> imposible to create boss room
     {
         List<Door> lastRoomDoors = new(node.script.doors);
         for (int i = 0; i < lastRoomDoors.Count; i++)
@@ -931,10 +1004,14 @@ public class OwnRoomGenarator : MonoBehaviour
             switch (bossEntrance.direction)
             {
                 case FOUR_DIRECTIONS.TOP:
-                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z + tileSize + bossScript.height), new Vector3(bossScript.width, 5, bossScript.height), Quaternion.identity);
+                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z + tileSize + bossScript.height * tileSize / 2), new Vector3(bossScript.width * tileSize / 2, 5, bossScript.height * tileSize / 2), Quaternion.identity);
                     if (colliding.Length == 0)
                     {
-                        bossRoom = GameObject.Instantiate(bossRoomPrefab, new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z + tileSize), Quaternion.identity);
+                        Vector3 roomPosition = new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z + tileSize);
+                        bossRoom = GameObject.Instantiate(bossRoomPrefab, roomPosition, Quaternion.identity);
+                        GameObject newMapRoom = GameObject.Instantiate(mapBossRoomPrefab, createMap);
+                        newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                        newMapRoom.transform.localRotation = Quaternion.identity;
                         bossEntrance.state = DOOR_STATE.BOSS;
                         return true;
                     }
@@ -944,10 +1021,14 @@ public class OwnRoomGenarator : MonoBehaviour
                     }
                     break;
                 case FOUR_DIRECTIONS.DOWN:
-                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z - tileSize - bossScript.height), new Vector3(bossScript.width, 5, bossScript.height), Quaternion.AngleAxis(180, Vector3.up));
+                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z - tileSize - bossScript.height * tileSize / 2), new Vector3(bossScript.width * tileSize / 2, 5, bossScript.height * tileSize / 2), Quaternion.AngleAxis(180, Vector3.up));
                     if (colliding.Length == 0)
                     {
-                        bossRoom = GameObject.Instantiate(bossRoomPrefab, new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z - tileSize), Quaternion.AngleAxis(180, Vector3.up));
+                        Vector3 roomPosition = new Vector3(bossEntrance.position.x, 0, bossEntrance.position.z - tileSize);
+                        bossRoom = GameObject.Instantiate(bossRoomPrefab, roomPosition, Quaternion.AngleAxis(180, Vector3.up));
+                        GameObject newMapRoom = GameObject.Instantiate(mapBossRoomPrefab, createMap);
+                        newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                        newMapRoom.transform.localRotation = Quaternion.AngleAxis(180, Vector3.forward);
                         bossEntrance.state = DOOR_STATE.BOSS;
                         return true;
                     }
@@ -957,10 +1038,14 @@ public class OwnRoomGenarator : MonoBehaviour
                     }
                     break;
                 case FOUR_DIRECTIONS.RIGHT:
-                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x + tileSize + bossScript.width, 0, bossEntrance.position.z), new Vector3(bossScript.width, 5, bossScript.height), Quaternion.AngleAxis(90, Vector3.up));
+                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x + tileSize + bossScript.width * tileSize / 2, 0, bossEntrance.position.z), new Vector3(bossScript.width * tileSize / 2, 5, bossScript.height * tileSize / 2), Quaternion.AngleAxis(90, Vector3.up));
                     if (colliding.Length == 0)
                     {
-                        bossRoom = GameObject.Instantiate(bossRoomPrefab, new Vector3(bossEntrance.position.x + tileSize, 0, bossEntrance.position.z), Quaternion.AngleAxis(90, Vector3.up));
+                        Vector3 roomPosition = new Vector3(bossEntrance.position.x + tileSize, 0, bossEntrance.position.z);
+                        bossRoom = GameObject.Instantiate(bossRoomPrefab, roomPosition, Quaternion.AngleAxis(90, Vector3.up));
+                        GameObject newMapRoom = GameObject.Instantiate(mapBossRoomPrefab, createMap);
+                        newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                        newMapRoom.transform.localRotation = Quaternion.AngleAxis(270, Vector3.forward);
                         bossEntrance.state = DOOR_STATE.BOSS;
                         return true;
                     }
@@ -970,10 +1055,14 @@ public class OwnRoomGenarator : MonoBehaviour
                     }
                     break;
                 case FOUR_DIRECTIONS.LEFT:
-                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x - tileSize - bossScript.width, 0, bossEntrance.position.z), new Vector3(bossScript.width, 5, bossScript.height), Quaternion.AngleAxis(270, Vector3.up));
+                    colliding = Physics.OverlapBox(new Vector3(bossEntrance.position.x - tileSize - bossScript.width * tileSize / 2, 0, bossEntrance.position.z), new Vector3(bossScript.width * tileSize / 2, 5, bossScript.height * tileSize / 2), Quaternion.AngleAxis(270, Vector3.up));
                     if (colliding.Length == 0)
                     {
-                        bossRoom = GameObject.Instantiate(bossRoomPrefab, new Vector3(bossEntrance.position.x - tileSize, 0, bossEntrance.position.z), Quaternion.AngleAxis(270, Vector3.up));
+                        Vector3 roomPosition = new Vector3(bossEntrance.position.x - tileSize, 0, bossEntrance.position.z);
+                        bossRoom = GameObject.Instantiate(bossRoomPrefab, roomPosition, Quaternion.AngleAxis(270, Vector3.up));
+                        GameObject newMapRoom = GameObject.Instantiate(mapBossRoomPrefab, createMap);
+                        newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                        newMapRoom.transform.localRotation = Quaternion.AngleAxis(90, Vector3.forward);
                         bossEntrance.state = DOOR_STATE.BOSS;
                         return true;
                     }
@@ -991,7 +1080,7 @@ public class OwnRoomGenarator : MonoBehaviour
 
         // no doors on that room
         if (node.parent.parent == null) return false; // skip initial room
-        else return CreateBossRoomLoop(node.parent, bossRoomPrefab, bossScript);
+        else return CreateBossRoomLoop(node.parent, bossRoomPrefab, mapBossRoomPrefab, bossScript);
     }
 
     void FillWithRooms()
@@ -1011,8 +1100,8 @@ public class OwnRoomGenarator : MonoBehaviour
                 forFillDoors.Remove(randomDoor);
                 continue;
             }
-            
-            auxScript = CreateNextRoom(randomDoor, GetTreeIndex(randomDoor.script), roomsPrefabs);
+
+            auxScript = CreateNextRoom(randomDoor, GetTreeIndex(randomDoor.script), roomsPrefabs, mapRoomsPrefabs);
             if (auxScript != null)
             {
                 lastRoomCreated = auxScript.roomTypeID;
@@ -1314,19 +1403,24 @@ public class OwnRoomGenarator : MonoBehaviour
     void PlaceHallway(Vector3 doorPosition, FOUR_DIRECTIONS direction)
     {
         Quaternion rotation;
+        Quaternion mapRotation;
         switch (direction)
         {
             case FOUR_DIRECTIONS.TOP:
                 rotation = Quaternion.identity;
+                mapRotation = Quaternion.identity;
                 break;
             case FOUR_DIRECTIONS.DOWN:
                 rotation = Quaternion.AngleAxis(180, Vector3.up);
+                mapRotation = Quaternion.AngleAxis(180, Vector3.forward);
                 break;
             case FOUR_DIRECTIONS.RIGHT:
                 rotation = Quaternion.AngleAxis(90, Vector3.up);
+                mapRotation = Quaternion.AngleAxis(270, Vector3.forward);
                 break;
             case FOUR_DIRECTIONS.LEFT:
                 rotation = Quaternion.AngleAxis(270, Vector3.up);
+                mapRotation = Quaternion.AngleAxis(90, Vector3.forward);
                 break;
             case FOUR_DIRECTIONS.NONE:
             default:
@@ -1334,5 +1428,8 @@ public class OwnRoomGenarator : MonoBehaviour
                 return;
         }
         GameObject.Instantiate(hallwayPrefab, doorPosition, rotation);
+        GameObject newMapHallway = GameObject.Instantiate(mapHallwayPrefab, createMap);
+        newMapHallway.transform.localPosition = new Vector3(doorPosition.x / 3, doorPosition.z / 3, 0);
+        newMapHallway.transform.localRotation = mapRotation;
     }
 }

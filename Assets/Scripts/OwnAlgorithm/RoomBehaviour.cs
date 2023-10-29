@@ -37,6 +37,7 @@ public class RoomBehaviour : MonoBehaviour
     [SerializeField] Transform[] doorsTransform;
     [SerializeField] FOUR_DIRECTIONS[] doorsDirections;
     public List<Door> doors = new();
+    RoomInMap roomInMap;
 
     public void SetDoors()
     {
