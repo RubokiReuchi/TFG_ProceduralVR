@@ -80,6 +80,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1705095775315207034}
   - component: {fileID: 7920600454177379217}
+  - component: {fileID: 6980874528954370335}
   m_Layer: 0
   m_Name: RoomTemplate
   m_TagString: Untagged
@@ -129,6 +130,28 @@ MonoBehaviour:
   - {fileID: 2716433755382056291}
   - {fileID: 7579767587134555862}
   doorsDirections: 01000000020000000300000000000000
+  roomInMap: {fileID: 0}
+--- !u!65 &6980874528954370335
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2662181372500574258}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 20, y: 9, z: 14}
+  m_Center: {x: 0, y: 4.5, z: 7.5}
 --- !u!1 &3055449558292466083
 GameObject:
   m_ObjectHideFlags: 0

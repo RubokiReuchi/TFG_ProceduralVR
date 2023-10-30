@@ -6,6 +6,10 @@ public enum DOOR_STATE
 {
     FOR_FILL,
     YELLOW,
+    BLUE,
+    RED,
+    PURPLE,
+    GREEN,
     BOSS,
     HOLDED,
     DESTROYED,
@@ -38,6 +42,14 @@ public class RoomBehaviour : MonoBehaviour
     [SerializeField] FOUR_DIRECTIONS[] doorsDirections;
     public List<Door> doors = new();
     [HideInInspector] public GameObject roomInMap;
+    public List<GameObject> joinedRooms = new();
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Player")) return;
+
+        roomInMap.SetActive(true);
+    }
 
     public void SetDoors()
     {

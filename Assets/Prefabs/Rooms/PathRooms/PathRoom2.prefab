@@ -268,6 +268,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3064111235127637815}
   - component: {fileID: 3123530999890352911}
+  - component: {fileID: 8528347383891174012}
   m_Layer: 0
   m_Name: PathRoom2
   m_TagString: Untagged
@@ -295,7 +296,7 @@ Transform:
   - {fileID: 5108639618357126995}
   - {fileID: 66314677318181702}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3123530999890352911
 MonoBehaviour:
@@ -317,6 +318,28 @@ MonoBehaviour:
   - {fileID: 3633478507251948634}
   - {fileID: 6451051187508084870}
   doorsDirections: 01000000020000000300000000000000
+  roomInMap: {fileID: 0}
+--- !u!65 &8528347383891174012
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5883281712992932717}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 20, y: 9, z: 14}
+  m_Center: {x: 0, y: 4.5, z: 7.5}
 --- !u!1 &6214080663120925210
 GameObject:
   m_ObjectHideFlags: 0

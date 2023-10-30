@@ -390,6 +390,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6554217152074612232}
   - component: {fileID: 3631185434614304138}
+  - component: {fileID: 8883153833411400983}
   m_Layer: 0
   m_Name: EndingRoom0
   m_TagString: Untagged
@@ -417,7 +418,7 @@ Transform:
   - {fileID: 2048834404180432817}
   - {fileID: 2780763756278744354}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3631185434614304138
 MonoBehaviour:
@@ -436,6 +437,28 @@ MonoBehaviour:
   doorsTransform:
   - {fileID: 7022624458578551612}
   doorsDirections: 01000000
+  roomInMap: {fileID: 0}
+--- !u!65 &8883153833411400983
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8483921739062307845}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 20, y: 9, z: 14}
+  m_Center: {x: 0, y: 4.5, z: 7.5}
 --- !u!1001 &91276694154920159
 PrefabInstance:
   m_ObjectHideFlags: 0

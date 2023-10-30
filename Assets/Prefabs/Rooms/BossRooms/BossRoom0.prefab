@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6658492070083833180}
   - component: {fileID: 8894551608352710886}
+  - component: {fileID: 3129191772901327492}
   m_Layer: 0
   m_Name: BossRoom0
   m_TagString: Untagged
@@ -37,7 +38,7 @@ Transform:
   - {fileID: 7222299303195656065}
   - {fileID: 5011464473698368733}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8894551608352710886
 MonoBehaviour:
@@ -54,6 +55,28 @@ MonoBehaviour:
   manager: {fileID: 0}
   width: 13
   height: 13
+  roomInMap: {fileID: 0}
+--- !u!65 &3129191772901327492
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578699312927519967}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 38, y: 9, z: 38}
+  m_Center: {x: 0, y: 4.5, z: 19.5}
 --- !u!1 &1219187112134020312
 GameObject:
   m_ObjectHideFlags: 0

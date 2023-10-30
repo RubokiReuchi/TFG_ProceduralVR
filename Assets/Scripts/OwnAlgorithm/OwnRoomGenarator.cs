@@ -1131,7 +1131,7 @@ public class OwnRoomGenarator : MonoBehaviour
             if (auxScript != null)
             {
                 lastRoomCreated = auxScript.roomTypeID;
-                randomDoor.state = DOOR_STATE.YELLOW;
+                randomDoor.state = GetDoorColor();
                 roomsBetween--;
                 forFillDoors.Clear();
             }
@@ -1171,6 +1171,10 @@ public class OwnRoomGenarator : MonoBehaviour
                         forFillDoors.Add(door);
                         break;
                     case DOOR_STATE.YELLOW:
+                    case DOOR_STATE.BLUE:
+                    case DOOR_STATE.RED:
+                    case DOOR_STATE.PURPLE:
+                    case DOOR_STATE.GREEN:
                         FindForFillDoors(node.children[0], ref forFillDoors); // 0 --> top
                         break;
                     case DOOR_STATE.BOSS:
@@ -1203,6 +1207,10 @@ public class OwnRoomGenarator : MonoBehaviour
                         forFillDoors.Add(door);
                         break;
                     case DOOR_STATE.YELLOW:
+                    case DOOR_STATE.BLUE:
+                    case DOOR_STATE.RED:
+                    case DOOR_STATE.PURPLE:
+                    case DOOR_STATE.GREEN:
                         FindForFillDoors(node.children[1], ref forFillDoors); // 1 --> down
                         break;
                     case DOOR_STATE.BOSS:
@@ -1235,6 +1243,10 @@ public class OwnRoomGenarator : MonoBehaviour
                         forFillDoors.Add(door);
                         break;
                     case DOOR_STATE.YELLOW:
+                    case DOOR_STATE.BLUE:
+                    case DOOR_STATE.RED:
+                    case DOOR_STATE.PURPLE:
+                    case DOOR_STATE.GREEN:
                         FindForFillDoors(node.children[2], ref forFillDoors); // 2 --> right
                         break;
                     case DOOR_STATE.BOSS:
@@ -1267,6 +1279,10 @@ public class OwnRoomGenarator : MonoBehaviour
                         forFillDoors.Add(door);
                         break;
                     case DOOR_STATE.YELLOW:
+                    case DOOR_STATE.BLUE:
+                    case DOOR_STATE.RED:
+                    case DOOR_STATE.PURPLE:
+                    case DOOR_STATE.GREEN:
                         FindForFillDoors(node.children[3], ref forFillDoors); // 3 --> left
                         break;
                     case DOOR_STATE.BOSS:
@@ -1301,6 +1317,18 @@ public class OwnRoomGenarator : MonoBehaviour
                     break;
                 case DOOR_STATE.YELLOW:
                     state = GATE_STATE.YELLOW;
+                    break;
+                case DOOR_STATE.BLUE:
+                    state = GATE_STATE.BLUE;
+                    break;
+                case DOOR_STATE.RED:
+                    state = GATE_STATE.RED;
+                    break;
+                case DOOR_STATE.PURPLE:
+                    state = GATE_STATE.PURPLE;
+                    break;
+                case DOOR_STATE.GREEN:
+                    state = GATE_STATE.GREEN;
                     break;
                 case DOOR_STATE.BOSS:
                     state = GATE_STATE.BOSS;
@@ -1351,6 +1379,7 @@ public class OwnRoomGenarator : MonoBehaviour
         }
         draw = gates;
         placeGates.gates = gates;
+        placeGates.PlaceAllGates();
     }
 
     void FindAllDoors(TreeNode node, ref List<Door> allDoors)
@@ -1457,6 +1486,16 @@ public class OwnRoomGenarator : MonoBehaviour
         GameObject newMapHallway = GameObject.Instantiate(mapHallwayPrefab, createMap);
         newMapHallway.transform.localPosition = new Vector3(doorPosition.x / 3, doorPosition.z / 3, 0);
         newMapHallway.transform.localRotation = mapRotation;
+    }
+
+    DOOR_STATE GetDoorColor()
+    {
+        int rand = Random.Range(0, 100);
+        if (rand < 60) return DOOR_STATE.YELLOW;
+        else if (rand < 75) return DOOR_STATE.BLUE;
+        else if (rand < 90) return DOOR_STATE.RED;
+        else if (rand < 98) return DOOR_STATE.PURPLE;
+        else return DOOR_STATE.GREEN;
     }
 
     // Map
