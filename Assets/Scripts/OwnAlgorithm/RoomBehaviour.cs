@@ -41,14 +41,24 @@ public class RoomBehaviour : MonoBehaviour
     [SerializeField] Transform[] doorsTransform;
     [SerializeField] FOUR_DIRECTIONS[] doorsDirections;
     public List<Door> doors = new();
+    [NonEditable][SerializeField] bool entered;
     [HideInInspector] public GameObject roomInMap;
+    [HideInInspector] public List<GameObject> gatesInMap = new();
     public List<GameObject> joinedRooms = new();
+
+    void Start()
+    {
+        entered = false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (entered) return;
         if (!other.CompareTag("Player")) return;
 
+        entered = true;
         roomInMap.SetActive(true);
+        for (int i = 0; i < gatesInMap.Count; i++) gatesInMap[i].SetActive(true);
     }
 
     public void SetDoors()

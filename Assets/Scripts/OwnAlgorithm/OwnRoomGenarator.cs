@@ -1352,8 +1352,8 @@ public class OwnRoomGenarator : MonoBehaviour
 
             if (neighborDoor != null)
             {
-                Gate gate1 = new Gate(allDoors[0].position, allDoors[0].direction, state, null);
-                Gate gate2 = new Gate(neighborDoor.position, neighborDoor.direction, state, gate1);
+                Gate gate1 = new Gate(allDoors[0].position, allDoors[0].direction, state, null, allDoors[0].script);
+                Gate gate2 = new Gate(neighborDoor.position, neighborDoor.direction, state, gate1, neighborDoor.script);
                 gate1.SetOther(gate2);
                 gates.Add(gate1);
                 gates.Add(gate2);
@@ -1364,7 +1364,7 @@ public class OwnRoomGenarator : MonoBehaviour
             }
             else if (state == GATE_STATE.BOSS)
             {
-                Gate gate1 = new Gate(allDoors[0].position, allDoors[0].direction, state, null);
+                Gate gate1 = new Gate(allDoors[0].position, allDoors[0].direction, state, null, allDoors[0].script);
                 gates.Add(gate1);
                 allDoors.Remove(allDoors[0]);
 
@@ -1372,7 +1372,7 @@ public class OwnRoomGenarator : MonoBehaviour
             }
             else
             {
-                Gate gate1 = new Gate(allDoors[0].position, allDoors[0].direction, state, null);
+                Gate gate1 = new Gate(allDoors[0].position, allDoors[0].direction, state, null, allDoors[0].script);
                 gates.Add(gate1);
                 allDoors.Remove(allDoors[0]);
             }
