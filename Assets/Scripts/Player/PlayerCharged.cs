@@ -9,7 +9,7 @@ public class PlayerCharged : MonoBehaviour
     Rigidbody rb;
     SphereCollider col;
     [SerializeField] float speed;
-    float lifeTime = 2;
+    float lifeTime = 4;
     bool launch;
     Vector3 initialScale;
 

@@ -8,6 +8,7 @@ public class BossRoomBehaviour : MonoBehaviour
     public int width; // in tiles
     public int height; // in tiles
 
+    [HideInInspector] public GameObject roomInMap;
 
     // Start is called before the first frame update
     void Start()

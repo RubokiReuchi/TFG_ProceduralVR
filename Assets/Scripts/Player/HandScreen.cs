@@ -73,7 +73,7 @@ public class HandScreen : MonoBehaviour
         while (openMenuProgress < 1) // ramp
         {
             openMenuProgress += Time.deltaTime * openMenuSpeed;
-            if (openMenuProgress > 1) openMenuProgress = 1;
+            //if (openMenuProgress > 1) openMenuProgress = 1;
             openMenuMat.SetFloat("_DisplayHeight", openMenuProgress);
             yield return null;
         }
@@ -83,7 +83,7 @@ public class HandScreen : MonoBehaviour
         while (panelMenuProgress < 1) // panel
         {
             panelMenuProgress += Time.deltaTime * openMenuSpeed;
-            if (panelMenuProgress > 1) panelMenuProgress = 1;
+            //if (panelMenuProgress > 1) panelMenuProgress = 1;
             panelMenuMat.SetFloat("_DisplayHeight", panelMenuProgress);
             frameMenuMat.SetFloat("_DisplayHeight", panelMenuProgress);
             backgroundMenuMat.SetFloat("_DisplayHeight", panelMenuProgress);

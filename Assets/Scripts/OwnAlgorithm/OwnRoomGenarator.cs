@@ -59,6 +59,9 @@ public class OwnRoomGenarator : MonoBehaviour
     [SerializeField] GameObject[] mapBossRoomsPrefabs;
     [SerializeField] GameObject[] mapJointsPrefabs;
     [SerializeField] GameObject mapHallwayPrefab;
+    [SerializeField] Transform mapCenterPos;
+    List<RoomInMap> roomsInMap = new();
+    [SerializeField] Transform playerMark;
 
     // Start is called before the first frame update
     void Start()
@@ -74,7 +77,12 @@ public class OwnRoomGenarator : MonoBehaviour
 
         FillWithRooms();
 
+        SetMapSize(); // map
+
         CreateHallways();
+
+        playerMark.SetParent(createMap); // map
+        playerMark.localScale = Vector3.one;
     }
 
     // Update is called once per frame
@@ -254,10 +262,12 @@ public class OwnRoomGenarator : MonoBehaviour
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
                                 GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[newRoomTypeID], createMap);
                                 newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                                roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
                                 currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
                                 script.NullifyDoor(FOUR_DIRECTIONS.DOWN);
+                                script.roomInMap = newMapRoom;
                                 TreeNode node = new TreeNode(script, roomsTree[roomTreeIndex]);
                                 roomsTree[roomTreeIndex].children[0] = node; // 0 cause is top
                                 roomsTree.Add(roomsTree.Count, node);
@@ -327,10 +337,12 @@ public class OwnRoomGenarator : MonoBehaviour
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
                                 GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[newRoomTypeID], createMap);
                                 newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                                roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
                                 currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
                                 script.NullifyDoor(FOUR_DIRECTIONS.TOP);
+                                script.roomInMap = newMapRoom;
                                 TreeNode node = new TreeNode(script, roomsTree[roomTreeIndex]);
                                 roomsTree[roomTreeIndex].children[1] = node; // 1 cause is down
                                 roomsTree.Add(roomsTree.Count, node);
@@ -400,10 +412,12 @@ public class OwnRoomGenarator : MonoBehaviour
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
                                 GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[newRoomTypeID], createMap);
                                 newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                                roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
                                 currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
                                 script.NullifyDoor(FOUR_DIRECTIONS.LEFT);
+                                script.roomInMap = newMapRoom;
                                 TreeNode node = new TreeNode(script, roomsTree[roomTreeIndex]);
                                 roomsTree[roomTreeIndex].children[2] = node; // 2 cause is right
                                 roomsTree.Add(roomsTree.Count, node);
@@ -473,10 +487,12 @@ public class OwnRoomGenarator : MonoBehaviour
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
                                 GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[newRoomTypeID], createMap);
                                 newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                                roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
                                 currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
                                 script.NullifyDoor(FOUR_DIRECTIONS.RIGHT);
+                                script.roomInMap = newMapRoom;
                                 TreeNode node = new TreeNode(script, roomsTree[roomTreeIndex]);
                                 roomsTree[roomTreeIndex].children[3] = node; // 3 cause is left
                                 roomsTree.Add(roomsTree.Count, node);
@@ -739,9 +755,11 @@ public class OwnRoomGenarator : MonoBehaviour
         GameObject newRoom = GameObject.Instantiate(roomsPool[currentRoomTypeID], roomPosition, Quaternion.identity);
         GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[currentRoomTypeID], createMap);
         newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+        roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
         RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
         script.SetDoors();
         if (nullifyDoor != FOUR_DIRECTIONS.NONE) script.NullifyDoor(nullifyDoor);
+        script.roomInMap = newMapRoom;
         TreeNode node = new TreeNode(script, roomsTree[currentRoomTreeIndex]);
         roomsTree[currentRoomTreeIndex].children[currentRoomDirection] = node; // 0 --> this room is on top of last one
         roomsTree.Add(roomsTree.Count, node);
@@ -1012,6 +1030,8 @@ public class OwnRoomGenarator : MonoBehaviour
                         GameObject newMapRoom = GameObject.Instantiate(mapBossRoomPrefab, createMap);
                         newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
                         newMapRoom.transform.localRotation = Quaternion.identity;
+                        roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
+                        bossScript.roomInMap = newMapRoom;
                         bossEntrance.state = DOOR_STATE.BOSS;
                         return true;
                     }
@@ -1029,6 +1049,8 @@ public class OwnRoomGenarator : MonoBehaviour
                         GameObject newMapRoom = GameObject.Instantiate(mapBossRoomPrefab, createMap);
                         newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
                         newMapRoom.transform.localRotation = Quaternion.AngleAxis(180, Vector3.forward);
+                        roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
+                        bossScript.roomInMap = newMapRoom;
                         bossEntrance.state = DOOR_STATE.BOSS;
                         return true;
                     }
@@ -1046,6 +1068,8 @@ public class OwnRoomGenarator : MonoBehaviour
                         GameObject newMapRoom = GameObject.Instantiate(mapBossRoomPrefab, createMap);
                         newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
                         newMapRoom.transform.localRotation = Quaternion.AngleAxis(270, Vector3.forward);
+                        roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
+                        bossScript.roomInMap = newMapRoom;
                         bossEntrance.state = DOOR_STATE.BOSS;
                         return true;
                     }
@@ -1063,6 +1087,8 @@ public class OwnRoomGenarator : MonoBehaviour
                         GameObject newMapRoom = GameObject.Instantiate(mapBossRoomPrefab, createMap);
                         newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
                         newMapRoom.transform.localRotation = Quaternion.AngleAxis(90, Vector3.forward);
+                        roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
+                        bossScript.roomInMap = newMapRoom;
                         bossEntrance.state = DOOR_STATE.BOSS;
                         return true;
                     }
@@ -1431,5 +1457,22 @@ public class OwnRoomGenarator : MonoBehaviour
         GameObject newMapHallway = GameObject.Instantiate(mapHallwayPrefab, createMap);
         newMapHallway.transform.localPosition = new Vector3(doorPosition.x / 3, doorPosition.z / 3, 0);
         newMapHallway.transform.localRotation = mapRotation;
+    }
+
+    // Map
+    void SetMapSize()
+    {
+        float maxX = -9999, maxY = -9999, minX = 9999, minY = 9999;
+
+        for (int i = 0; i < roomsInMap.Count; i++)
+        {
+            if (roomsInMap[i].transform.localPosition.x > maxX) maxX = roomsInMap[i].transform.localPosition.x;
+            if (roomsInMap[i].transform.localPosition.y > maxY) maxY = roomsInMap[i].transform.localPosition.y;
+            if (roomsInMap[i].transform.localPosition.x < minX) minX = roomsInMap[i].transform.localPosition.x;
+            if (roomsInMap[i].transform.localPosition.y < minY) minY = roomsInMap[i].transform.localPosition.y;
+        }
+
+        mapCenterPos.GetComponent<RectTransform>().sizeDelta = new Vector2(maxX - minX + 20, maxY - minY + 20);
+        createMap.GetComponent<RectTransform>().localPosition = new Vector3(-(maxX + minX) / 2.0f, -(maxY + minY + 5) / 2.0f, 0);
     }
 }

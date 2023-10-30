@@ -8,7 +8,7 @@ public class PlayerProjectile : MonoBehaviour
     public GUN_TYPE selectedGunType;
     Rigidbody rb;
     [SerializeField] float speed;
-    float lifeTime = 2;
+    float lifeTime = 4;
 
     // Start is called before the first frame update
     void Start()
