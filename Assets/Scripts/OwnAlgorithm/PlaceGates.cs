@@ -73,7 +73,7 @@ public class PlaceGates : MonoBehaviour
             }
             else if (gates[i].direction == FOUR_DIRECTIONS.DOWN)
             {
-                rotation = Quaternion.identity;
+                rotation = Quaternion.AngleAxis(180, Vector3.up);
                 mapRotation = Quaternion.AngleAxis(180, Vector3.forward);
             }
             else if (gates[i].direction == FOUR_DIRECTIONS.RIGHT)
@@ -83,7 +83,7 @@ public class PlaceGates : MonoBehaviour
             }
             else
             {
-                rotation = Quaternion.AngleAxis(90, Vector3.up);
+                rotation = Quaternion.AngleAxis(270, Vector3.up);
                 mapRotation = Quaternion.AngleAxis(90, Vector3.forward);
             }
             GameObject newMapGate;
@@ -91,7 +91,7 @@ public class PlaceGates : MonoBehaviour
             switch (gates[i].state)
             {
                 case GATE_STATE.YELLOW:
-                    gate = GameObject.Instantiate(yellowGatePrefab, gates[i].position, rotation).transform.GetChild(0).gameObject;
+                    gate = GameObject.Instantiate(yellowGatePrefab, gates[i].position, rotation);
                     script = gate.GetComponent<GateBehaviour>();
                     script.other = gates[i].other;
                     newMapGate = GameObject.Instantiate(mapYellowGatePrefab, createMap);
@@ -102,7 +102,7 @@ public class PlaceGates : MonoBehaviour
                     gates[i].roomBehaviour.gatesInMap.Add(newMapGate);
                     break;
                 case GATE_STATE.BLUE:
-                    gate = GameObject.Instantiate(blueGatePrefab, gates[i].position, rotation).transform.GetChild(0).gameObject;
+                    gate = GameObject.Instantiate(blueGatePrefab, gates[i].position, rotation);
                     script = gate.GetComponent<GateBehaviour>();
                     script.other = gates[i].other;
                     newMapGate = GameObject.Instantiate(mapBlueGatePrefab, createMap);
@@ -113,7 +113,7 @@ public class PlaceGates : MonoBehaviour
                     gates[i].roomBehaviour.gatesInMap.Add(newMapGate);
                     break;
                 case GATE_STATE.RED:
-                    gate = GameObject.Instantiate(redGatePrefab, gates[i].position, rotation).transform.GetChild(0).gameObject;
+                    gate = GameObject.Instantiate(redGatePrefab, gates[i].position, rotation);
                     script = gate.GetComponent<GateBehaviour>();
                     script.other = gates[i].other;
                     newMapGate = GameObject.Instantiate(mapRedGatePrefab, createMap);
@@ -124,7 +124,7 @@ public class PlaceGates : MonoBehaviour
                     gates[i].roomBehaviour.gatesInMap.Add(newMapGate);
                     break;
                 case GATE_STATE.PURPLE:
-                    gate = GameObject.Instantiate(purpleGatePrefab, gates[i].position, rotation).transform.GetChild(0).gameObject;
+                    gate = GameObject.Instantiate(purpleGatePrefab, gates[i].position, rotation);
                     script = gate.GetComponent<GateBehaviour>();
                     script.other = gates[i].other;
                     newMapGate = GameObject.Instantiate(mapPurpleGatePrefab, createMap);
@@ -135,7 +135,7 @@ public class PlaceGates : MonoBehaviour
                     gates[i].roomBehaviour.gatesInMap.Add(newMapGate);
                     break;
                 case GATE_STATE.GREEN:
-                    gate = GameObject.Instantiate(greenGatePrefab, gates[i].position, rotation).transform.GetChild(0).gameObject;
+                    gate = GameObject.Instantiate(greenGatePrefab, gates[i].position, rotation);
                     script = gate.GetComponent<GateBehaviour>();
                     script.other = gates[i].other;
                     newMapGate = GameObject.Instantiate(mapGreenGatePrefab, createMap);
@@ -146,7 +146,7 @@ public class PlaceGates : MonoBehaviour
                     gates[i].roomBehaviour.gatesInMap.Add(newMapGate);
                     break;
                 case GATE_STATE.BOSS:
-                    gate = GameObject.Instantiate(bossGatePrefab, gates[i].position, rotation).transform.GetChild(0).gameObject;
+                    gate = GameObject.Instantiate(bossGatePrefab, gates[i].position, rotation);
                     script = gate.GetComponent<GateBehaviour>();
                     script.other = gates[i].other;
                     newMapGate = GameObject.Instantiate(mapBossGatePrefab, createMap);
@@ -157,7 +157,7 @@ public class PlaceGates : MonoBehaviour
                     gates[i].roomBehaviour.gatesInMap.Add(newMapGate);
                     break;
                 case GATE_STATE.DESTROYED:
-                    gate = GameObject.Instantiate(destroyedGatePrefab, gates[i].position, rotation).transform.GetChild(0).gameObject;
+                    gate = GameObject.Instantiate(destroyedGatePrefab, gates[i].position, rotation);
                     newMapGate = GameObject.Instantiate(mapDestroyedGatePrefab, createMap);
                     newMapGate.transform.localPosition = new Vector3(gates[i].position.x / 3, gates[i].position.z / 3, 0);
                     newMapGate.transform.rotation *= mapRotation;

@@ -24,9 +24,13 @@ public class PlayerProjectile : MonoBehaviour
         if (lifeTime < 0) Destroy(this.gameObject);
     }
 
-    private void OnTriggerEnter(Collider other)
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    Destroy(this.gameObject);
+    //}
+
+    private void OnCollisionEnter(Collision collision)
     {
-        // gun type changes
         Destroy(this.gameObject);
     }
 }

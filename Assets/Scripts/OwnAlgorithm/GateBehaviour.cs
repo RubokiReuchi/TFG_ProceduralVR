@@ -7,7 +7,7 @@ public class GateBehaviour : MonoBehaviour
     [SerializeField] GATE_STATE type;
     [HideInInspector] public Animator animator;
     [HideInInspector] public Gate other;
-    bool opened;
+    [HideInInspector] public bool opened;
     [HideInInspector] public GameObject gateInMap;
 
     // Start is called before the first frame update
@@ -23,42 +23,40 @@ public class GateBehaviour : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OpenTriggered(GameObject collisionGO)
     {
-        if (opened) return;
-        if (!other.CompareTag("YellowProjectile") && !other.CompareTag("BlueProjectile") && !other.CompareTag("RedProjectile") && !other.CompareTag("PurpleProjectile") && !other.CompareTag("GreenProjectile")) return;
         switch (type)
         {
             case GATE_STATE.YELLOW:
-                if (other.CompareTag("YellowProjectile"))
+                if (collisionGO.CompareTag("YellowProjectile"))
                 {
                     OpenGate();
                     this.other.self.GetComponent<GateBehaviour>().OpenGate();
                 }
                 break;
             case GATE_STATE.BLUE:
-                if (other.CompareTag("BlueProjectile"))
+                if (collisionGO.CompareTag("BlueProjectile"))
                 {
                     OpenGate();
                     this.other.self.GetComponent<GateBehaviour>().OpenGate();
                 }
                 break;
             case GATE_STATE.RED:
-                if (other.CompareTag("RedProjectile"))
+                if (collisionGO.CompareTag("RedProjectile"))
                 {
                     OpenGate();
                     this.other.self.GetComponent<GateBehaviour>().OpenGate();
                 }
                 break;
             case GATE_STATE.PURPLE:
-                if (other.CompareTag("PurpleProjectile"))
+                if (collisionGO.CompareTag("PurpleProjectile"))
                 {
                     OpenGate();
                     this.other.self.GetComponent<GateBehaviour>().OpenGate();
                 }
                 break;
             case GATE_STATE.GREEN:
-                if (other.CompareTag("GreenProjectile"))
+                if (collisionGO.CompareTag("GreenProjectile"))
                 {
                     OpenGate();
                     this.other.self.GetComponent<GateBehaviour>().OpenGate();
@@ -66,7 +64,6 @@ public class GateBehaviour : MonoBehaviour
                 break;
             case GATE_STATE.BOSS:
                 OpenGate();
-                this.other.self.GetComponent<GateBehaviour>().OpenGate();
                 break;
             case GATE_STATE.DESTROYED:
             case GATE_STATE.NULL:
@@ -84,6 +81,6 @@ public class GateBehaviour : MonoBehaviour
 
     public void Dye()
     {
-        Destroy(this.transform.parent.gameObject);
+        Destroy(this.gameObject);
     }
 }

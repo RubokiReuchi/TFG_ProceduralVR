@@ -45,6 +45,7 @@ public class RoomBehaviour : MonoBehaviour
     [HideInInspector] public GameObject roomInMap;
     [HideInInspector] public List<GameObject> gatesInMap = new();
     public List<GameObject> joinedRooms = new();
+    public List<GameObject> mapJoints = new();
 
     void Start()
     {
@@ -56,15 +57,22 @@ public class RoomBehaviour : MonoBehaviour
         if (entered) return;
         if (!other.CompareTag("Player")) return;
 
-        entered = true;
-        roomInMap.SetActive(true);
-        for (int i = 0; i < gatesInMap.Count; i++) gatesInMap[i].GetComponent<GateInMap>().ShowGate();
+        EnteredInRoom();
+        for (int i = 0; i < joinedRooms.Count; i++) joinedRooms[i].GetComponent<RoomBehaviour>().EnteredInRoom();
+        for (int i = 0; i < mapJoints.Count; i++) mapJoints[i].SetActive(true);
     }
 
     public void SetDoors()
     {
         if (doorsTransform.Length != doorsDirections.Length) Debug.LogError("Diferent number of doorsTransform and doorsDirections");
         for (int i = 0; i < doorsTransform.Length; i++) doors.Add(new Door(doorsTransform[i].position, doorsDirections[i], this));
+    }
+
+    public void EnteredInRoom()
+    {
+        entered = true;
+        roomInMap.SetActive(true);
+        for (int i = 0; i < gatesInMap.Count; i++) gatesInMap[i].GetComponent<GateInMap>().ShowGate();
     }
 
     public bool GetDoorsFilled()

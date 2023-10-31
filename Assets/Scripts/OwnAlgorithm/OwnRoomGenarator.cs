@@ -309,7 +309,10 @@ public class OwnRoomGenarator : MonoBehaviour
                         {
                             List<Vector3> storeRooms = new(); // prevent to duplicate rooms
                             int lastRoomScriptIndex = roomsTree.Count - 1;
-                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 0, roomsPool, mapRoomsPool); // top
+                            List<GameObject> jointedRooms = new();
+                            List<GameObject> mapJoints = new();
+                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 0, roomsPool, mapRoomsPool, ref jointedRooms, ref mapJoints); // top
+                            StoreJointedRooms(jointedRooms, mapJoints);
                             currentRooms++;
                             return roomsTree[lastRoomScriptIndex + 1].script;
                         }
@@ -384,7 +387,10 @@ public class OwnRoomGenarator : MonoBehaviour
                         {
                             List<Vector3> storeRooms = new(); // prevent to duplicate rooms
                             int lastRoomScriptIndex = roomsTree.Count - 1;
-                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 1, roomsPool, mapRoomsPool); // down
+                            List<GameObject> jointedRooms = new();
+                            List<GameObject> mapJoints = new();
+                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 1, roomsPool, mapRoomsPool, ref jointedRooms, ref mapJoints); // down
+                            StoreJointedRooms(jointedRooms, mapJoints);
                             currentRooms++;
                             return roomsTree[lastRoomScriptIndex + 1].script;
                         }
@@ -459,7 +465,10 @@ public class OwnRoomGenarator : MonoBehaviour
                         {
                             List<Vector3> storeRooms = new(); // prevent to duplicate rooms
                             int lastRoomScriptIndex = roomsTree.Count - 1;
-                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 2, roomsPool, mapRoomsPool); // right
+                            List<GameObject> jointedRooms = new();
+                            List<GameObject> mapJoints = new();
+                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 2, roomsPool, mapRoomsPool, ref jointedRooms, ref mapJoints); // right
+                            StoreJointedRooms(jointedRooms, mapJoints);
                             currentRooms++;
                             return roomsTree[lastRoomScriptIndex + 1].script;
                         }
@@ -534,7 +543,10 @@ public class OwnRoomGenarator : MonoBehaviour
                         {
                             List<Vector3> storeRooms = new(); // prevent to duplicate rooms
                             int lastRoomScriptIndex = roomsTree.Count - 1;
-                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 3, roomsPool, mapRoomsPool); // left
+                            List<GameObject> jointedRooms = new();
+                            List<GameObject> mapJoints = new();
+                            BuildJointRoom(newRoomTypeID, roomCenter, FOUR_DIRECTIONS.DOWN, storeRooms, roomTreeIndex, 3, roomsPool, mapRoomsPool, ref jointedRooms, ref mapJoints); // left
+                            StoreJointedRooms(jointedRooms, mapJoints);
                             currentRooms++;
                             return roomsTree[lastRoomScriptIndex + 1].script;
                         }
@@ -745,7 +757,7 @@ public class OwnRoomGenarator : MonoBehaviour
         return false;
     }
 
-    void BuildJointRoom(int currentRoomTypeID, Vector3 currentGridLocation, FOUR_DIRECTIONS nullifyDoor, List<Vector3> localRooms, int currentRoomTreeIndex, int currentRoomDirection, GameObject[] roomsPool, GameObject[] mapRoomsPool)
+    void BuildJointRoom(int currentRoomTypeID, Vector3 currentGridLocation, FOUR_DIRECTIONS nullifyDoor, List<Vector3> localRooms, int currentRoomTreeIndex, int currentRoomDirection, GameObject[] roomsPool, GameObject[] mapRoomsPool, ref List<GameObject> jointedRooms, ref List<GameObject> mapJoints)
     {
         if (localRooms.Contains(currentGridLocation)) return;
         else localRooms.Add(currentGridLocation);
@@ -754,6 +766,7 @@ public class OwnRoomGenarator : MonoBehaviour
 
         Vector3 roomPosition = new Vector3(currentGridLocation.x, 0, currentGridLocation.z - roomsNormalHeight / 2 * tileSize);
         GameObject newRoom = GameObject.Instantiate(roomsPool[currentRoomTypeID], roomPosition, Quaternion.identity);
+        jointedRooms.Add(newRoom);
         GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[currentRoomTypeID], createMap);
         newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
         roomsInMap.Add(newMapRoom);
@@ -783,8 +796,9 @@ public class OwnRoomGenarator : MonoBehaviour
                             GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdTop], roomPosition, Quaternion.identity);
                             newMapRoom = GameObject.Instantiate(mapJointsPrefabs[currentRoomInfo.jointRoomTypeIdTop], createMap);
                             newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                            mapJoints.Add(newMapRoom);
                         }
-                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 0, roomsPool, mapRoomsPool); // top
+                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 0, roomsPool, mapRoomsPool, ref jointedRooms, ref mapJoints); // top
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -807,8 +821,9 @@ public class OwnRoomGenarator : MonoBehaviour
                             GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdTop], roomPosition, Quaternion.identity);
                             newMapRoom = GameObject.Instantiate(mapJointsPrefabs[currentRoomInfo.jointRoomTypeIdTop], createMap);
                             newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                            mapJoints.Add(newMapRoom);
                         }
-                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 0, roomsPool, mapRoomsPool); // top
+                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 0, roomsPool, mapRoomsPool, ref jointedRooms, ref mapJoints); // top
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -841,9 +856,10 @@ public class OwnRoomGenarator : MonoBehaviour
                             GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdDown], roomPosition, Quaternion.identity);
                             newMapRoom = GameObject.Instantiate(mapJointsPrefabs[currentRoomInfo.jointRoomTypeIdDown], createMap);
                             newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                            mapJoints.Add(newMapRoom);
 
                         }
-                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 1, roomsPool, mapRoomsPool); // down
+                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 1, roomsPool, mapRoomsPool, ref jointedRooms, ref mapJoints); // down
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -866,8 +882,9 @@ public class OwnRoomGenarator : MonoBehaviour
                             GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdDown], roomPosition, Quaternion.identity);
                             newMapRoom = GameObject.Instantiate(mapJointsPrefabs[currentRoomInfo.jointRoomTypeIdDown], createMap);
                             newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                            mapJoints.Add(newMapRoom);
                         }
-                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 1, roomsPool, mapRoomsPool); // down
+                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 1, roomsPool, mapRoomsPool, ref jointedRooms, ref mapJoints); // down
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -900,8 +917,9 @@ public class OwnRoomGenarator : MonoBehaviour
                             GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdRight], roomPosition, Quaternion.identity);
                             newMapRoom = GameObject.Instantiate(mapJointsPrefabs[currentRoomInfo.jointRoomTypeIdRight], createMap);
                             newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                            mapJoints.Add(newMapRoom);
                         }
-                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 2, roomsPool, mapRoomsPool); // right
+                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 2, roomsPool, mapRoomsPool, ref jointedRooms, ref mapJoints); // right
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -924,8 +942,9 @@ public class OwnRoomGenarator : MonoBehaviour
                             GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdRight], roomPosition, Quaternion.identity);
                             newMapRoom = GameObject.Instantiate(mapJointsPrefabs[currentRoomInfo.jointRoomTypeIdRight], createMap);
                             newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                            mapJoints.Add(newMapRoom);
                         }
-                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 2, roomsPool, mapRoomsPool); // right
+                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 2, roomsPool, mapRoomsPool, ref jointedRooms, ref mapJoints); // right
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -958,8 +977,9 @@ public class OwnRoomGenarator : MonoBehaviour
                             GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdLeft], roomPosition, Quaternion.identity);
                             newMapRoom = GameObject.Instantiate(mapJointsPrefabs[currentRoomInfo.jointRoomTypeIdLeft], createMap);
                             newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                            mapJoints.Add(newMapRoom);
                         }
-                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 3, roomsPool, mapRoomsPool); // left
+                        BuildJointRoom(jointInfo.tail.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 3, roomsPool, mapRoomsPool, ref jointedRooms, ref mapJoints); // left
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -982,8 +1002,9 @@ public class OwnRoomGenarator : MonoBehaviour
                             GameObject.Instantiate(jointsPrefabs[currentRoomInfo.jointRoomTypeIdLeft], roomPosition, Quaternion.identity);
                             newMapRoom = GameObject.Instantiate(mapJointsPrefabs[currentRoomInfo.jointRoomTypeIdLeft], createMap);
                             newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                            mapJoints.Add(newMapRoom);
                         }
-                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 3, roomsPool, mapRoomsPool); // left
+                        BuildJointRoom(jointInfo.head.objectTypeID, roomCenter, FOUR_DIRECTIONS.NONE, localRooms, roomsTree.Count - 1, 3, roomsPool, mapRoomsPool, ref jointedRooms, ref mapJoints); // left
                         break;
                     case OBJECT_TYPE.JOINT:
                         break;
@@ -995,6 +1016,23 @@ public class OwnRoomGenarator : MonoBehaviour
             else
             {
                 Debug.LogError("Logic Error");
+            }
+        }
+    }
+
+    void StoreJointedRooms(List<GameObject> jointedRooms, List<GameObject> mapJoints)
+    {
+        for (int i = 0; i < jointedRooms.Count; i++)
+        {
+            RoomBehaviour script = jointedRooms[i].GetComponent<RoomBehaviour>();
+            for (int j = 0; j < jointedRooms.Count; j++)
+            {
+                if (i == j) continue;
+                script.joinedRooms.Add(jointedRooms[j]);
+            }
+            for (int j = 0; j < mapJoints.Count; j++)
+            {
+                script.mapJoints.Add(mapJoints[j]);
             }
         }
     }
