@@ -2745,7 +2745,7 @@ GameObject:
   - component: {fileID: 4355343081673119150}
   m_Layer: 8
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4001,6 +4001,7 @@ PrefabInstance:
     - {fileID: 6766345714407278744, guid: 65420e78dcd71cf47afb92df38723316, type: 3}
     - {fileID: 6962085740268008257, guid: 65420e78dcd71cf47afb92df38723316, type: 3}
     - {fileID: 201197787322323935, guid: 65420e78dcd71cf47afb92df38723316, type: 3}
+    - {fileID: 6455889432970319569, guid: 65420e78dcd71cf47afb92df38723316, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6401918274109834049, guid: 65420e78dcd71cf47afb92df38723316, type: 3}
@@ -4690,6 +4691,7 @@ PrefabInstance:
     - {fileID: 8684332510933222204, guid: 4abd22b34bb3fe94197684e1446e8735, type: 3}
     - {fileID: 2311960955958048432, guid: 4abd22b34bb3fe94197684e1446e8735, type: 3}
     - {fileID: 766299929224625227, guid: 4abd22b34bb3fe94197684e1446e8735, type: 3}
+    - {fileID: 3939035328816681976, guid: 4abd22b34bb3fe94197684e1446e8735, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2277183694202663453, guid: 4abd22b34bb3fe94197684e1446e8735, type: 3}
