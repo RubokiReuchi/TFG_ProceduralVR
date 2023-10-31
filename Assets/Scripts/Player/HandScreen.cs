@@ -70,20 +70,20 @@ public class HandScreen : MonoBehaviour
         menuOpened = true;
 
         float openMenuProgress = openMenuMat.GetFloat("_DisplayHeight");
-        while (openMenuProgress < 1) // ramp
+        while (openMenuProgress < 0.999f) // ramp
         {
             openMenuProgress += Time.deltaTime * openMenuSpeed;
-            //if (openMenuProgress > 1) openMenuProgress = 1;
+            if (openMenuProgress > 0.999f) openMenuProgress = 0.999f;
             openMenuMat.SetFloat("_DisplayHeight", openMenuProgress);
             yield return null;
         }
 
         float panelMenuProgress = panelMenuMat.GetFloat("_DisplayHeight");
         float arrowsMenuProgress = arrows1MenuMat.GetFloat("_DisplayHeight");
-        while (panelMenuProgress < 1) // panel
+        while (panelMenuProgress < 0.999f) // panel
         {
             panelMenuProgress += Time.deltaTime * openMenuSpeed;
-            //if (panelMenuProgress > 1) panelMenuProgress = 1;
+            if (panelMenuProgress > 0.999f) panelMenuProgress = 0.999f;
             panelMenuMat.SetFloat("_DisplayHeight", panelMenuProgress);
             frameMenuMat.SetFloat("_DisplayHeight", panelMenuProgress);
             backgroundMenuMat.SetFloat("_DisplayHeight", panelMenuProgress);

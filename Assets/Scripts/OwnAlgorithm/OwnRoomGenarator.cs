@@ -60,7 +60,7 @@ public class OwnRoomGenarator : MonoBehaviour
     [SerializeField] GameObject[] mapJointsPrefabs;
     [SerializeField] GameObject mapHallwayPrefab;
     [SerializeField] Transform mapCenterPos;
-    List<RoomInMap> roomsInMap = new();
+    List<GameObject> roomsInMap = new();
     [SerializeField] Transform playerMark;
 
     // Start is called before the first frame update
@@ -138,6 +138,7 @@ public class OwnRoomGenarator : MonoBehaviour
         RoomBehaviour script = room.GetComponent<RoomBehaviour>();
         script.manager = this;
         script.SetDoors();
+        script.roomInMap = newMapRoom;
 
         roomsTree.Add(0, new TreeNode(script, null));
 
@@ -262,7 +263,7 @@ public class OwnRoomGenarator : MonoBehaviour
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
                                 GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[newRoomTypeID], createMap);
                                 newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
-                                roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
+                                roomsInMap.Add(newMapRoom);
                                 currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
@@ -337,7 +338,7 @@ public class OwnRoomGenarator : MonoBehaviour
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
                                 GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[newRoomTypeID], createMap);
                                 newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
-                                roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
+                                roomsInMap.Add(newMapRoom);
                                 currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
@@ -412,7 +413,7 @@ public class OwnRoomGenarator : MonoBehaviour
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
                                 GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[newRoomTypeID], createMap);
                                 newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
-                                roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
+                                roomsInMap.Add(newMapRoom);
                                 currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
@@ -487,7 +488,7 @@ public class OwnRoomGenarator : MonoBehaviour
                                 GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
                                 GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[newRoomTypeID], createMap);
                                 newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
-                                roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
+                                roomsInMap.Add(newMapRoom);
                                 currentRooms++;
                                 RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
                                 script.SetDoors();
@@ -755,7 +756,7 @@ public class OwnRoomGenarator : MonoBehaviour
         GameObject newRoom = GameObject.Instantiate(roomsPool[currentRoomTypeID], roomPosition, Quaternion.identity);
         GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[currentRoomTypeID], createMap);
         newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
-        roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
+        roomsInMap.Add(newMapRoom);
         RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
         script.SetDoors();
         if (nullifyDoor != FOUR_DIRECTIONS.NONE) script.NullifyDoor(nullifyDoor);
@@ -1030,7 +1031,7 @@ public class OwnRoomGenarator : MonoBehaviour
                         GameObject newMapRoom = GameObject.Instantiate(mapBossRoomPrefab, createMap);
                         newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
                         newMapRoom.transform.localRotation = Quaternion.identity;
-                        roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
+                        roomsInMap.Add(newMapRoom);
                         bossScript.roomInMap = newMapRoom;
                         bossEntrance.state = DOOR_STATE.BOSS;
                         return true;
@@ -1049,7 +1050,7 @@ public class OwnRoomGenarator : MonoBehaviour
                         GameObject newMapRoom = GameObject.Instantiate(mapBossRoomPrefab, createMap);
                         newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
                         newMapRoom.transform.localRotation = Quaternion.AngleAxis(180, Vector3.forward);
-                        roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
+                        roomsInMap.Add(newMapRoom);
                         bossScript.roomInMap = newMapRoom;
                         bossEntrance.state = DOOR_STATE.BOSS;
                         return true;
@@ -1068,7 +1069,7 @@ public class OwnRoomGenarator : MonoBehaviour
                         GameObject newMapRoom = GameObject.Instantiate(mapBossRoomPrefab, createMap);
                         newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
                         newMapRoom.transform.localRotation = Quaternion.AngleAxis(270, Vector3.forward);
-                        roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
+                        roomsInMap.Add(newMapRoom);
                         bossScript.roomInMap = newMapRoom;
                         bossEntrance.state = DOOR_STATE.BOSS;
                         return true;
@@ -1087,7 +1088,7 @@ public class OwnRoomGenarator : MonoBehaviour
                         GameObject newMapRoom = GameObject.Instantiate(mapBossRoomPrefab, createMap);
                         newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
                         newMapRoom.transform.localRotation = Quaternion.AngleAxis(90, Vector3.forward);
-                        roomsInMap.Add(newMapRoom.GetComponent<RoomInMap>());
+                        roomsInMap.Add(newMapRoom);
                         bossScript.roomInMap = newMapRoom;
                         bossEntrance.state = DOOR_STATE.BOSS;
                         return true;
@@ -1482,10 +1483,11 @@ public class OwnRoomGenarator : MonoBehaviour
                 Debug.LogError("Logic Error");
                 return;
         }
-        GameObject.Instantiate(hallwayPrefab, doorPosition, rotation);
+        GameObject newHallway = GameObject.Instantiate(hallwayPrefab, doorPosition, rotation);
         GameObject newMapHallway = GameObject.Instantiate(mapHallwayPrefab, createMap);
         newMapHallway.transform.localPosition = new Vector3(doorPosition.x / 3, doorPosition.z / 3, 0);
         newMapHallway.transform.localRotation = mapRotation;
+        newHallway.GetComponent<HallwayBehaviour>().hallwayInMap = newMapHallway;
     }
 
     DOOR_STATE GetDoorColor()

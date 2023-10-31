@@ -302,6 +302,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6730263656850993165, guid: bb2c66e0c6346fc41b073bc58d7cd6a4, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 8481360667889932010, guid: bb2c66e0c6346fc41b073bc58d7cd6a4, type: 3}
       propertyPath: m_PositionInput.m_Action.m_Id
       value: ec0c8508-ab5d-4200-b1b8-2db952f0fa35
@@ -650,13 +654,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57144053ab8100b4282ed240181ed117, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yellowGatePrefab: {fileID: 4104955618190541512, guid: a65c5b2b4f21cd4438eeba9ce1fb5a5a, type: 3}
-  blueGatePrefab: {fileID: 1674254972984618730, guid: 942b23ab84def8c4892c5989a619a322, type: 3}
-  redGatePrefab: {fileID: 6087160763903033935, guid: f84f8cdc01c77604f93e7dc2b49b8471, type: 3}
-  purpleGatePrefab: {fileID: 4798714982547127363, guid: bceb68f62301d664b960950831be2193, type: 3}
-  greenGatePrefab: {fileID: 238798307095703146, guid: 2ebf398de57928243b7bd857fe8a9e6a, type: 3}
-  bossGatePrefab: {fileID: 7927199196256743615, guid: a5c1a7a82c126c34396546513ab8384a, type: 3}
-  destroyedGatePrefab: {fileID: 5330035008998976636, guid: c1a7e419591272049a2d5db0c9dbdfb5, type: 3}
+  yellowGatePrefab: {fileID: 8243858562980881620, guid: a65c5b2b4f21cd4438eeba9ce1fb5a5a, type: 3}
+  blueGatePrefab: {fileID: 2809661348466148238, guid: 942b23ab84def8c4892c5989a619a322, type: 3}
+  redGatePrefab: {fileID: 823898787971170820, guid: f84f8cdc01c77604f93e7dc2b49b8471, type: 3}
+  purpleGatePrefab: {fileID: 1611756395254833054, guid: bceb68f62301d664b960950831be2193, type: 3}
+  greenGatePrefab: {fileID: 2985649463472976435, guid: 2ebf398de57928243b7bd857fe8a9e6a, type: 3}
+  bossGatePrefab: {fileID: 4516843865746915373, guid: a5c1a7a82c126c34396546513ab8384a, type: 3}
+  destroyedGatePrefab: {fileID: 8693289660291032771, guid: c1a7e419591272049a2d5db0c9dbdfb5, type: 3}
   createMap: {fileID: 262585425}
   mapYellowGatePrefab: {fileID: 3156090114150064992, guid: c177f068b384bf947bc9f3c554a1d688, type: 3}
   mapBlueGatePrefab: {fileID: 2573124079201047263, guid: ab52a55a4c9a3fa40ae4c3e8bf25bb90, type: 3}

@@ -58,7 +58,7 @@ public class RoomBehaviour : MonoBehaviour
 
         entered = true;
         roomInMap.SetActive(true);
-        for (int i = 0; i < gatesInMap.Count; i++) gatesInMap[i].SetActive(true);
+        for (int i = 0; i < gatesInMap.Count; i++) gatesInMap[i].GetComponent<GateInMap>().ShowGate();
     }
 
     public void SetDoors()

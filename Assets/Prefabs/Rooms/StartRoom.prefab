@@ -295,7 +295,7 @@ GameObject:
   - component: {fileID: 5721576331803372398}
   - component: {fileID: 458252086417904472}
   - component: {fileID: 3248624809156072380}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: StartRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,7 +341,10 @@ MonoBehaviour:
   doorsTransform:
   - {fileID: 1538060590782122705}
   doorsDirections: 00000000
+  entered: 0
   roomInMap: {fileID: 0}
+  gatesInMap: []
+  joinedRooms: []
 --- !u!65 &3248624809156072380
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -79,11 +79,11 @@ public class GateBehaviour : MonoBehaviour
     {
         animator.SetTrigger("Open");
         opened = true;
-        gateInMap.SetActive(false);
+        gateInMap.GetComponent<GateInMap>().HideGate();
     }
 
     public void Dye()
     {
-        Destroy(this.gameObject);
+        Destroy(this.transform.parent.gameObject);
     }
 }
