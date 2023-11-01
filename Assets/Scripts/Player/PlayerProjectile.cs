@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public class PlayerProjectile : MonoBehaviour
+public class PlayerProjectile : Projectile
 {
     public GUN_TYPE selectedGunType;
-    Rigidbody rb;
-    [SerializeField] float speed;
-    float lifeTime = 4;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
     }
 
     void Update()
@@ -23,11 +20,6 @@ public class PlayerProjectile : MonoBehaviour
         lifeTime -= Time.deltaTime;
         if (lifeTime < 0) Destroy(this.gameObject);
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    Destroy(this.gameObject);
-    //}
 
     private void OnCollisionEnter(Collision collision)
     {

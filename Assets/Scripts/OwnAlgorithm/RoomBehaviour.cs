@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum DOOR_STATE
 {
@@ -50,6 +52,8 @@ public class RoomBehaviour : MonoBehaviour
     void Start()
     {
         entered = false;
+        NavMeshSurface navMesh = GetComponent<NavMeshSurface>();
+        if (navMesh) navMesh.BuildNavMesh();
     }
 
     private void OnTriggerEnter(Collider other)

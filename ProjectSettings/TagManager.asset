@@ -11,6 +11,7 @@ TagManager:
   - RedProjectile
   - PurpleProjectile
   - GreenProjectile
+  - PlayerHead
   layers:
   - Default
   - TransparentFX
@@ -18,13 +19,13 @@ TagManager:
   - RoomBound
   - Water
   - UI
-  - Floor
+  - Foundations
   - Door
   - VR_Body
   - PlayerProjectile
   - IndexPoke
-  - 
-  - 
+  - Enemy
+  - EnemyProjectile
   - 
   - 
   - 

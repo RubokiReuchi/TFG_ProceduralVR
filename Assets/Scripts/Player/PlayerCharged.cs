@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public class PlayerCharged : MonoBehaviour
+public class PlayerCharged : Projectile
 {
     public GUN_TYPE selectedGunType;
-    Rigidbody rb;
     SphereCollider col;
-    [SerializeField] float speed;
-    float lifeTime = 4;
     bool launch;
     Vector3 initialScale;
 
@@ -28,11 +25,6 @@ public class PlayerCharged : MonoBehaviour
         lifeTime -= Time.deltaTime;
         if (lifeTime < 0) Destroy(this.gameObject);
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    Destroy(this.gameObject);
-    //}
 
     private void OnCollisionEnter(Collision collision)
     {

@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] float maxHealth;
     float currentHealth;
+    [SerializeField] protected LayerMask foundationsLayers;
 
     // Start is called before the first frame update
     void Start()
