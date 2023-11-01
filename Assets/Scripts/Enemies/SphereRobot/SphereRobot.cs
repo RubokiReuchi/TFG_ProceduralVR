@@ -11,7 +11,6 @@ public class SphereRobot : Enemy
     public enum STATE
     {
         REST,
-        IDLE,
         ROLL,
         SIDE_ROLLING, // roll for change shooting position
         WALK,
@@ -21,7 +20,6 @@ public class SphereRobot : Enemy
         WAITING
     }
 
-    [SerializeField] STATE initialState;
     Transform player;
     Transform playerHead;
     [NonEditable][SerializeField] STATE state;
@@ -51,7 +49,7 @@ public class SphereRobot : Enemy
         material = new Material(materialGO.GetComponent<Renderer>().material);
         materialGO.GetComponent<Renderer>().material = material;
         exploting = false;
-        state = initialState;
+        state = STATE.REST;
         lastCanShoot = 0;
     }
 
@@ -72,10 +70,6 @@ public class SphereRobot : Enemy
             case STATE.REST:
                 animator.SetTrigger("Activate");
                 state = STATE.WAITING;
-                break;
-            case STATE.IDLE:
-                agent.speed = 0;
-                CheckOptions();
                 break;
             case STATE.ROLL:
                 agent.destination = player.position;
@@ -229,6 +223,7 @@ public class SphereRobot : Enemy
         agent.speed = 0;
         animator.SetTrigger("Explote");
         transform.GetComponentInChildren<AnimSphereRobot>().StopRing();
+        state = STATE.WAITING;
         float value = 1;
         while (value > 0)
         {
@@ -279,7 +274,7 @@ public class SphereRobot : Enemy
             {
                 material.color = new Color(1, 0.145f, 0);
             }
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.007f);
         }
         // spawn explosion
         // notice manager

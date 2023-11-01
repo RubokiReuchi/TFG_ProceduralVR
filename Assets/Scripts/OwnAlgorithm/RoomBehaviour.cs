@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -36,6 +37,7 @@ public class Door
 
 public class RoomBehaviour : MonoBehaviour
 {
+    [Header("Room")]
     public int roomTypeID;
     [HideInInspector] public OwnRoomGenarator manager;
 
@@ -44,10 +46,15 @@ public class RoomBehaviour : MonoBehaviour
     [SerializeField] FOUR_DIRECTIONS[] doorsDirections;
     public List<Door> doors = new();
     [NonEditable][SerializeField] bool entered;
+
+    [Header("Map Room")]
     [HideInInspector] public GameObject roomInMap;
     [HideInInspector] public List<GameObject> gatesInMap = new();
     public List<GameObject> joinedRooms = new();
     public List<GameObject> mapJoints = new();
+
+    [Header("Enemies")]
+    [SerializeField] GameObject[] enemies;
 
     void Start()
     {
@@ -77,6 +84,9 @@ public class RoomBehaviour : MonoBehaviour
         entered = true;
         roomInMap.SetActive(true);
         for (int i = 0; i < gatesInMap.Count; i++) gatesInMap[i].GetComponent<GateInMap>().ShowGate();
+
+        InitEnemies();
+        // close gates
     }
 
     public bool GetDoorsFilled()
@@ -124,5 +134,20 @@ public class RoomBehaviour : MonoBehaviour
         }
 
         return null;
+    }
+
+    void InitEnemies()
+    {
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            switch (enemies[i].GetComponent<EnemyType>().type)
+            {
+                case ENEMY_TYPE.SPHERE_ROBOT:
+                    enemies[i].GetComponent<SphereRobot>().enabled = true;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
