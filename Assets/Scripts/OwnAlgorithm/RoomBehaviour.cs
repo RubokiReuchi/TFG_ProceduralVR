@@ -59,8 +59,8 @@ public class RoomBehaviour : MonoBehaviour
     void Start()
     {
         entered = false;
-        NavMeshSurface navMesh = GetComponent<NavMeshSurface>();
-        if (navMesh) navMesh.BuildNavMesh();
+        //NavMeshSurface navMesh = GetComponent<NavMeshSurface>();
+        //if (navMesh) navMesh.BuildNavMesh();
     }
 
     private void OnTriggerEnter(Collider other)

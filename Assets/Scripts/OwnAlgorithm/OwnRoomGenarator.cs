@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 
 public enum FOUR_DIRECTIONS
@@ -63,6 +65,8 @@ public class OwnRoomGenarator : MonoBehaviour
     List<GameObject> roomsInMap = new();
     [SerializeField] Transform playerMark;
 
+    NavMeshSurface navMesh;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -76,6 +80,8 @@ public class OwnRoomGenarator : MonoBehaviour
         CreateMainPath();
 
         FillWithRooms();
+
+        navMesh.BuildNavMesh();
 
         SetMapSize(); // map
 
@@ -139,6 +145,7 @@ public class OwnRoomGenarator : MonoBehaviour
         script.manager = this;
         script.SetDoors();
         script.roomInMap = newMapRoom;
+        navMesh = room.GetComponent<NavMeshSurface>();
 
         roomsTree.Add(0, new TreeNode(script, null));
 
