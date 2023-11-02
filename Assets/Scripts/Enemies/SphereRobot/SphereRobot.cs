@@ -39,6 +39,7 @@ public class SphereRobot : Enemy
     [SerializeField] GameObject materialGO;
     Material material;
     bool exploting;
+    [SerializeField] GameObject explosionPrefab;
 
     private void OnEnable()
     {
@@ -177,7 +178,8 @@ public class SphereRobot : Enemy
 
             if (error) // explote
             {
-
+                StartCoroutine(Exploting());
+                return;
             }
             
             agent.destination = hit.position;
@@ -232,7 +234,7 @@ public class SphereRobot : Enemy
             material.color = new Color(1, value, value);
             yield return null;
         }
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 50; i++)
         {
             if (i % 10 == 0) // i --> 0, 10, 20, 30...
             {
@@ -276,7 +278,7 @@ public class SphereRobot : Enemy
             }
             yield return new WaitForSeconds(0.007f);
         }
-        // spawn explosion
+        GameObject.Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         // notice manager
         Destroy(this.gameObject);
     }

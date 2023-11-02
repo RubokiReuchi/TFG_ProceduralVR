@@ -1597,7 +1597,7 @@ GameObject:
   - component: {fileID: 7408445098388188636}
   m_Layer: 11
   m_Name: SphereRobot
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1616,7 +1616,7 @@ Transform:
   m_Children:
   - {fileID: 282068180601103798}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7448977935876576358
 MonoBehaviour:
@@ -1659,6 +1659,7 @@ MonoBehaviour:
   rayOrigin: {fileID: 1379438102063257257}
   rayPrefab: {fileID: 2808344545672089244, guid: 8131f1f9eaed3fb418f269919e0b2b3f, type: 3}
   materialGO: {fileID: 8705714510429378518}
+  explosionPrefab: {fileID: 4430677680676368363, guid: 552fb462cbf339c4eac112a210a846fe, type: 3}
 --- !u!195 &8527958410363451332
 NavMeshAgent:
   m_ObjectHideFlags: 0
