@@ -54,19 +54,35 @@ public class RoomBehaviour : MonoBehaviour
     public List<GameObject> mapJoints = new();
 
     [Header("Enemies")]
+    [NonEditable][SerializeField] bool onCombat;
     [SerializeField] GameObject[] enemies;
+    [SerializeField] GameObject[] blockedGates;
 
     void Start()
     {
         entered = false;
-        //NavMeshSurface navMesh = GetComponent<NavMeshSurface>();
-        //if (navMesh) navMesh.BuildNavMesh();
+        onCombat = false;
+    }
+
+    void Update()
+    {
+        if (!onCombat) return;
+        
+        foreach (GameObject enemy in enemies)
+        {
+            if (enemy) return;
+        }
+        onCombat = false;
+        foreach (GameObject blockedGate in blockedGates)
+        {
+            blockedGate.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Open");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (entered) return;
-        if (!other.CompareTag("Player")) return;
+        if (!other.CompareTag("PlayerHead")) return;
 
         EnteredInRoom();
         for (int i = 0; i < joinedRooms.Count; i++) joinedRooms[i].GetComponent<RoomBehaviour>().EnteredInRoom();
@@ -82,11 +98,16 @@ public class RoomBehaviour : MonoBehaviour
     public void EnteredInRoom()
     {
         entered = true;
-        roomInMap.SetActive(true);
+        if (roomInMap) roomInMap.SetActive(true);
         for (int i = 0; i < gatesInMap.Count; i++) gatesInMap[i].GetComponent<GateInMap>().ShowGate();
 
+        if (enemies.Length == 0) return;
+        onCombat = true;
         InitEnemies();
-        // close gates
+        foreach (GameObject blockedGate in blockedGates)
+        {
+            blockedGate.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Close");
+        }
     }
 
     public bool GetDoorsFilled()

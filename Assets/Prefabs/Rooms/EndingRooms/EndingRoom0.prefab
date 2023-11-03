@@ -289,6 +289,37 @@ Transform:
   m_Father: {fileID: 6554217152074612232}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7047276985550109676
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3797725173060750358}
+  m_Layer: 3
+  m_Name: BlockedGates
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3797725173060750358
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7047276985550109676}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6554217152074612232}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7470817827171896413
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,6 +512,7 @@ Transform:
   - {fileID: 2780763756278744354}
   - {fileID: 365063806687488230}
   - {fileID: 3484159754792105434}
+  - {fileID: 3797725173060750358}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -506,6 +538,7 @@ MonoBehaviour:
   gatesInMap: []
   joinedRooms: []
   mapJoints: []
+  enemies: []
 --- !u!65 &8883153833411400983
 BoxCollider:
   m_ObjectHideFlags: 0
