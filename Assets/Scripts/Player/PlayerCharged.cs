@@ -9,6 +9,7 @@ public class PlayerCharged : Projectile
     SphereCollider col;
     bool launch;
     Vector3 initialScale;
+    [SerializeField] GameObject decal;
 
     public void SetUp()
     {
@@ -28,6 +29,12 @@ public class PlayerCharged : Projectile
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Foundations"))
+        {
+            Physics.Raycast(transform.position, transform.forward, out RaycastHit hit);
+            GameObject decalGo = GameObject.Instantiate(decal, hit.point + hit.normal * 0.01f, Quaternion.LookRotation(hit.normal) * Quaternion.AngleAxis(90, Vector3.right));
+            decalGo.transform.localScale = transform.localScale * 0.2f;
+        }
         Destroy(this.gameObject);
     }
 

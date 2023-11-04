@@ -25,7 +25,8 @@ public class PlayerProjectile : Projectile
     {
         if (collision.gameObject.CompareTag("Foundations"))
         {
-            GameObject.Instantiate(decal, new Vector3(transform.position.x, transform.position.y, transform.position.z - 0.01f), transform.rotation);
+            Physics.Raycast(transform.position, transform.forward, out RaycastHit hit);
+            GameObject.Instantiate(decal, hit.point + hit.normal * 0.01f, Quaternion.LookRotation(hit.normal) * Quaternion.AngleAxis(90, Vector3.right));
         }
         Destroy(this.gameObject);
     }
