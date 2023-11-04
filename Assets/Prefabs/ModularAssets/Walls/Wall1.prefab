@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7734720155280431981}
   m_Layer: 6
   m_Name: Wall1
-  m_TagString: Untagged
+  m_TagString: Foundations
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   m_Children:
   - {fileID: 8103989804905350410}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5235875580136022291
 GameObject:
@@ -163,7 +163,7 @@ GameObject:
   - component: {fileID: 967850276753427309}
   m_Layer: 6
   m_Name: LP_Window_Wall_snaps
-  m_TagString: Untagged
+  m_TagString: Foundations
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

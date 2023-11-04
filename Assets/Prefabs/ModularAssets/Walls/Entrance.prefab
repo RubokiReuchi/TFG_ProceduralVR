@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7074806829464302680}
   m_Layer: 7
   m_Name: Entrance
-  m_TagString: Untagged
+  m_TagString: Foundations
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   m_Children:
   - {fileID: 8175950033366745326}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1475902568547937564
 GameObject:
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 3671356441881721299}
   m_Layer: 7
   m_Name: LP_Bay_Door_Wall_snaps
-  m_TagString: Untagged
+  m_TagString: Foundations
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

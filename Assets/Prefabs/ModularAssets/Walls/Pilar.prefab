@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8416737055056130869}
   m_Layer: 6
   m_Name: Pillar
-  m_TagString: Untagged
+  m_TagString: Foundations
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 3846316853286748417}
   m_Layer: 6
   m_Name: Pilar
-  m_TagString: Untagged
+  m_TagString: Foundations
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,5 +135,5 @@ Transform:
   m_Children:
   - {fileID: 8451772471204965635}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 658311453794199149}
   m_Layer: 6
   m_Name: BlockedGate
-  m_TagString: Untagged
+  m_TagString: Foundations
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,7 +30,7 @@ Transform:
   m_Children:
   - {fileID: 1618619739181369186}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4518040457898009463
 GameObject:
@@ -4932,7 +4932,7 @@ GameObject:
   - component: {fileID: 1414694145272065552}
   m_Layer: 6
   m_Name: Wall Plain
-  m_TagString: Untagged
+  m_TagString: Foundations
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
