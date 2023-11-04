@@ -10,6 +10,7 @@ public class PlayerCharged : Projectile
     bool launch;
     Vector3 initialScale;
     [SerializeField] GameObject decal;
+    [SerializeField] GameObject hitMark;
 
     public void SetUp()
     {
@@ -34,6 +35,10 @@ public class PlayerCharged : Projectile
             Physics.Raycast(transform.position, transform.forward, out RaycastHit hit);
             GameObject decalGo = GameObject.Instantiate(decal, hit.point + hit.normal * 0.01f, Quaternion.LookRotation(hit.normal) * Quaternion.AngleAxis(90, Vector3.right));
             decalGo.transform.localScale = transform.localScale * 0.2f;
+        }
+        else if (collision.gameObject.CompareTag("Enemy"))
+        {
+            GameObject hit = GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
         }
         Destroy(this.gameObject);
     }
