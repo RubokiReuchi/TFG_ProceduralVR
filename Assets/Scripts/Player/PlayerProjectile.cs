@@ -24,7 +24,6 @@ public class PlayerProjectile : Projectile
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Foundations"))
         {
             Physics.Raycast(transform.position, transform.forward, out RaycastHit hit);

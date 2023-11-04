@@ -8,9 +8,11 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class GunController : MonoBehaviour
 {
     ActionBasedController controller;
+
     [SerializeField] InputActionProperty stickAction;
     [SerializeField] RightHand hand;
     [SerializeField] PlayerGun playerGun;
+
 
     // Start is called before the first frame update
     void Start()
@@ -22,11 +24,6 @@ public class GunController : MonoBehaviour
     void Update()
     {
         hand.SetIndex(controller.activateActionValue.action.ReadValue<float>());
-        if (controller.activateAction.action.ReadValue<float>() == 1.0f)
-        {
-            // cooldown...
-            hand.Dash();
-        }
 
         float stickX = stickAction.action.ReadValue<Vector2>().x;
         float stickY = stickAction.action.ReadValue<Vector2>().y;

@@ -31,11 +31,6 @@ public class RightHand : MonoBehaviour
         gunTriggerTarget = value;
     }
 
-    public void Dash()
-    {
-        
-    }
-
     void AnimateHand()
     {
         if (indexCurrent != indexTarget)

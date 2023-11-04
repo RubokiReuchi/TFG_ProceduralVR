@@ -17,7 +17,7 @@ public class PlayerState : MonoBehaviour
     public static PlayerState instance;
 
     [NonEditable] public LEFT_HAND_POSE leftHandPose;
-    [NonEditable] public float headSpeed;
+    [HideInInspector] public float headSpeed;
     public Transform head;
     Vector3 lastFrameHeadPosition = Vector3.zero;
 
@@ -36,7 +36,7 @@ public class PlayerState : MonoBehaviour
     void Update()
     {
         // head speed
-        headSpeed = (head.position - lastFrameHeadPosition).magnitude / Time.deltaTime;
-        lastFrameHeadPosition = head.position;
+        //headSpeed = (head.position - lastFrameHeadPosition).magnitude / Time.deltaTime;
+        //lastFrameHeadPosition = head.position;
     }
 }
