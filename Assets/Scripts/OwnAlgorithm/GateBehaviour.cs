@@ -10,20 +10,33 @@ public class GateBehaviour : MonoBehaviour
     [HideInInspector] public bool opened;
     [HideInInspector] public GameObject gateInMap;
     [HideInInspector] public Bounds roomBounds;
+    Bounds hallwayBounds;
     Transform player;
+    bool close;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         opened = false;
+        close = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        if (other != null) hallwayBounds = new Bounds(new Vector3(transform.position.x - (transform.position.x - other.position.x) / 2.0f, 2.5f, transform.position.z - (transform.position.z - other.position.z) / 2.0f), new Vector3(3.001f, 6, 3.001f));
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (other == null) return;
+        if (opened && close && !hallwayBounds.Contains(player.position))
+        {
+            close = false;
+            animator.SetTrigger("Close");
+        }
+        else if (!opened && hallwayBounds.Contains(player.position))
+        {
+            OpenGate();
+        }
     }
 
     public void OpenTriggered(GameObject collisionGO)
@@ -86,12 +99,16 @@ public class GateBehaviour : MonoBehaviour
     public IEnumerator CloseGateDelay()
     {
         yield return new WaitForSeconds(3);
-        animator.SetTrigger("Close");
-        opened = false;
+        close = true;
     }
 
     public void Dye()
     {
         Destroy(this.gameObject);
+    }
+
+    public void Closed()
+    {
+        opened = false;
     }
 }

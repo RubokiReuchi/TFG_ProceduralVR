@@ -101,34 +101,34 @@ public class RoomGenarator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < draw.Count; i++)
-        {
-            Color color;
-            switch (draw[i].state)
-            {
-                case GATE_STATE.YELLOW:
-                    color = Color.yellow;
-                    break;
-                case GATE_STATE.BOSS:
-                    color = Color.magenta;
-                    break;
-                case GATE_STATE.DESTROYED:
-                    color = Color.green;
-                    break;
-                case GATE_STATE.NULL:
-                    color = Color.white;
-                    break;
-                default:
-                    color = Color.blue;
-                    break;
-            }
-            Debug.DrawLine(draw[i].position, draw[i].position + Vector3.up * 5, color);
-        }
+        //for (int i = 0; i < draw.Count; i++)
+        //{
+        //    Color color;
+        //    switch (draw[i].state)
+        //    {
+        //        case GATE_STATE.YELLOW:
+        //            color = Color.yellow;
+        //            break;
+        //        case GATE_STATE.BOSS:
+        //            color = Color.magenta;
+        //            break;
+        //        case GATE_STATE.DESTROYED:
+        //            color = Color.green;
+        //            break;
+        //        case GATE_STATE.NULL:
+        //            color = Color.white;
+        //            break;
+        //        default:
+        //            color = Color.blue;
+        //            break;
+        //    }
+        //    Debug.DrawLine(draw[i].position, draw[i].position + Vector3.up * 5, color);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //}
     }
 
     int GetTreeIndex(RoomBehaviour script)
@@ -1592,6 +1592,7 @@ public class RoomGenarator : MonoBehaviour
         foreach (var jointedRoom in currentRoom.joinedRooms)
         {
             RoomBehaviour jointedRoomScript = jointedRoom.GetComponent<RoomBehaviour>();
+            newActiveRooms.Add(jointedRoomScript);
             foreach (var door in jointedRoomScript.doors)
             {
                 if (door.otherScript) newActiveRooms.Add(door.otherScript);

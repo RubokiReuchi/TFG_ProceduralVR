@@ -105,7 +105,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 1.15, z: 0.12}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2780230911328971881
 MonoBehaviour:
@@ -224,7 +224,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 1.15, z: 0.12}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3762908695374137065
 MonoBehaviour:
@@ -343,7 +343,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 1.15, z: 0.12}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6255606815172221620
 MonoBehaviour:
@@ -431,6 +431,9 @@ MonoBehaviour:
   animator: {fileID: 0}
   opened: 0
   gateInMap: {fileID: 0}
+  roomBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!1 &8984302917177618394
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,7 +539,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 1.15, z: 0.12}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &844933620663292619
 MonoBehaviour:

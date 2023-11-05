@@ -213,6 +213,7 @@ public class SphereRobot : Enemy
 
     public override void TakeDamage(float amount)
     {
+        if (!enabled) return;
         currentHealth -= amount;
         // change color???
         if (currentHealth <= 0)
