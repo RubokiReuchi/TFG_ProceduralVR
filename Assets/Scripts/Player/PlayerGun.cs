@@ -94,6 +94,7 @@ public class PlayerGun : MonoBehaviour
         {
             if (repeatTime >= 0.5f && chargedProjectile)
             {
+                chargedProjectile.SetDamage((repeatTime - 0.5f) * increaseSpeed, 0, maxIncrease);
                 chargedProjectile.Launch(projectileOriginCurrent.rotation);
                 chargedProjectile = null;
                 projectileOriginCurrent.position = projectileOriginStart.position;

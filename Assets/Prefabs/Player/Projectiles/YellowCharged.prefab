@@ -278,5 +278,7 @@ MonoBehaviour:
   speed: 50
   lifeTime: 4
   selectedGunType: 0
+  minDamage: 25
+  maxDamage: 75
   decal: {fileID: 8860044147275984740, guid: 0d7dcb98b4583074791b387f01d9728d, type: 3}
   hitMark: {fileID: 286907324385993817, guid: 93daf9a11c1393940ac83173918dd37d, type: 3}

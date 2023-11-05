@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerProjectile : Projectile
 {
     public GUN_TYPE selectedGunType;
+    [SerializeField] float damage;
     [SerializeField] GameObject decal;
     [SerializeField] GameObject hitMark;
 
@@ -32,6 +33,7 @@ public class PlayerProjectile : Projectile
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
+            collision.gameObject.GetComponent<Enemy>().TakeDamage(damage);
         }
         Destroy(this.gameObject);
     }

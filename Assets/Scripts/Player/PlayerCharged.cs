@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.UIElements;
+using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerCharged : Projectile
 {
     public GUN_TYPE selectedGunType;
+    [SerializeField] float minDamage;
+    [SerializeField] float maxDamage;
+    float damage;
     SphereCollider col;
     bool launch;
     Vector3 initialScale;
@@ -39,6 +46,7 @@ public class PlayerCharged : Projectile
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             GameObject hit = GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
+            collision.gameObject.GetComponent<Enemy>().TakeDamage(damage);
         }
         Destroy(this.gameObject);
     }
@@ -54,5 +62,12 @@ public class PlayerCharged : Projectile
         transform.rotation = rotation;
         col.enabled = true;
         launch = true;
+    }
+
+    public void SetDamage(float current, float min, float max)
+    {
+        float normal = Mathf.InverseLerp(min, max, current);
+        damage = Mathf.Lerp(minDamage, maxDamage, normal);
+        Debug.Log(damage);
     }
 }

@@ -40,6 +40,7 @@ public class SphereRobot : Enemy
     Material material;
     bool exploting;
     [SerializeField] GameObject explosionPrefab;
+    [SerializeField] GameObject corpsPrefab;
 
     private void OnEnable()
     {
@@ -52,6 +53,8 @@ public class SphereRobot : Enemy
         exploting = false;
         state = STATE.REST;
         lastCanShoot = 0;
+
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -208,15 +211,27 @@ public class SphereRobot : Enemy
         agent.speed = rollSpeed;
     }
 
-    public override void TakeDamage(float damage)
+    public override void TakeDamage(float amount)
     {
-
+        currentHealth -= amount;
+        // change color???
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            Die();
+        }
     }
 
     public override void Die()
     {
-        // destroy anim
+        animator.SetTrigger("Destroy");
         state = STATE.DESTROYING;
+    }
+
+    public void Destroyed()
+    {
+        GameObject.Instantiate(corpsPrefab, transform.position, transform.rotation);
+        Destroy(this.gameObject);
     }
 
     IEnumerator Exploting()
@@ -279,7 +294,6 @@ public class SphereRobot : Enemy
             yield return new WaitForSeconds(0.007f);
         }
         GameObject.Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        // notice manager
         Destroy(this.gameObject);
     }
 }

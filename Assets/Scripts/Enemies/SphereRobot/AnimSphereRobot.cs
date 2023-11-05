@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AnimSphereRobot : MonoBehaviour
@@ -26,6 +27,11 @@ public class AnimSphereRobot : MonoBehaviour
     public void Stop()
     {
         script.Stop();
+    }
+
+    public void Destroyed()
+    {
+        script.Destroyed();
     }
 
     public void RollSpeed()

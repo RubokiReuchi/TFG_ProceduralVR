@@ -14,7 +14,7 @@ public class HallwayBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (entered) return;
+        if (entered || !other.CompareTag("PlayerHead")) return;
         hallwayInMap.SetActive(true);
         entered = true;
     }

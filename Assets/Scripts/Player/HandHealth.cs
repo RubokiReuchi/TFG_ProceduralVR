@@ -1,19 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class HandHealth : MonoBehaviour
 {
-    [SerializeField] float maxHealth; // start 250, max upgraded 500
     [SerializeField] List<MeshRenderer> healthBlocks; // 50 hp per block
     [SerializeField] Material hasCellMat, noCellMat;
     int cellsAmount;
-    
+
     // Start is called before the first frame update
     void Start()
     {
-        SetCells();
-        UpdateHealthDisplay(maxHealth);
+        
     }
 
     private void Update()
@@ -21,9 +20,10 @@ public class HandHealth : MonoBehaviour
         
     }
 
-    void SetCells()
+    public void SetCells(float maxHealth)
     {
         cellsAmount = 0;
+        hasCellMat.SetFloat("_FillPercentage", 50.0f);
 
         for (int i = 0; i < 10; i++)
         {
@@ -44,15 +44,15 @@ public class HandHealth : MonoBehaviour
             float value;
             if (auxHealth > 50)
             {
-                value = 1;
+                value = 50;
                 healthBlocks[i].GetComponent<MeshRenderer>().material.SetFloat("_FillPercentage", value);
             }
             else
             {
-                value = auxHealth / 50.0f;
+                value = auxHealth;
                 healthBlocks[i].GetComponent<MeshRenderer>().material.SetFloat("_FillPercentage", value);
             }
-            auxHealth -= value * 50.0f;
+            auxHealth -= value;
         }
     }
 

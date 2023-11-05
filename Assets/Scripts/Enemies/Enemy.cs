@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] float maxHealth;
-    float currentHealth;
+    [SerializeField] protected float maxHealth;
+    protected float currentHealth;
     [SerializeField] protected LayerMask foundationsLayers;
 
     // Start is called before the first frame update
@@ -20,7 +20,7 @@ public class Enemy : MonoBehaviour
         
     }
 
-    public virtual void TakeDamage(float damage)
+    public virtual void TakeDamage(float amount)
     {
 
     }

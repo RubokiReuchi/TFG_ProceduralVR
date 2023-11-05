@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SphereRobotRay : Projectile
 {
+    [SerializeField] float damage;
     Transform psTransform;
     BoxCollider bc;
 
@@ -31,6 +32,10 @@ public class SphereRobotRay : Projectile
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("PlayerHead"))
+        {
+            collision.transform.root.GetComponent<PlayerState>().TakeDamage(damage);
+        }
         Destroy(this.gameObject);
     }
 }

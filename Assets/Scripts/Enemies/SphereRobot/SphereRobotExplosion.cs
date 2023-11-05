@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class SphereRobotExplosion : MonoBehaviour
 {
+    [SerializeField] float damage;
     ParticleSystem ps;
     List<Transform> entityDamaged = new();
 
@@ -25,12 +26,12 @@ public class SphereRobotExplosion : MonoBehaviour
         if (entityDamaged.Contains(other.transform.root)) return;
         if (other.CompareTag("Player") || other.CompareTag("PlayerHead"))
         {
-            Debug.Log("Player Damaged");
+            other.transform.root.GetComponent<PlayerState>().TakeDamage(damage);
             entityDamaged.Add(other.transform.root);
         }
         else if (other.CompareTag("Enemy"))
         {
-            Debug.Log("Enemy Damaged");
+            other.transform.root.GetComponent<Enemy>().TakeDamage(damage);
             entityDamaged.Add(other.transform.root);
         }
     }
