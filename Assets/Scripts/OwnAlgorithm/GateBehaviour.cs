@@ -9,12 +9,15 @@ public class GateBehaviour : MonoBehaviour
     [HideInInspector] public Gate other;
     [HideInInspector] public bool opened;
     [HideInInspector] public GameObject gateInMap;
+    [HideInInspector] public Bounds roomBounds;
+    Transform player;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         opened = false;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // Update is called once per frame
@@ -25,6 +28,7 @@ public class GateBehaviour : MonoBehaviour
 
     public void OpenTriggered(GameObject collisionGO)
     {
+        if (opened || !roomBounds.Contains(player.position)) return;
         switch (type)
         {
             case GATE_STATE.YELLOW:
@@ -76,7 +80,14 @@ public class GateBehaviour : MonoBehaviour
     {
         animator.SetTrigger("Open");
         opened = true;
-        gateInMap.GetComponent<GateInMap>().HideGate();
+        //gateInMap.GetComponent<GateInMap>().HideGate();
+    }
+
+    public IEnumerator CloseGateDelay()
+    {
+        yield return new WaitForSeconds(3);
+        animator.SetTrigger("Close");
+        opened = false;
     }
 
     public void Dye()

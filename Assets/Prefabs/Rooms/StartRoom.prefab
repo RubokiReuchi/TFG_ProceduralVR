@@ -295,7 +295,6 @@ GameObject:
   - component: {fileID: 5721576331803372398}
   - component: {fileID: 458252086417904472}
   - component: {fileID: 3248624809156072380}
-  - component: {fileID: 4351172081903132793}
   m_Layer: 3
   m_Name: StartRoom
   m_TagString: Untagged
@@ -338,7 +337,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomTypeID: -1
-  manager: {fileID: 0}
+  startRoom: 1
   doorsTransform:
   - {fileID: 1538060590782122705}
   doorsDirections: 00000000
@@ -347,7 +346,9 @@ MonoBehaviour:
   gatesInMap: []
   joinedRooms: []
   mapJoints: []
+  onCombat: 0
   enemies: []
+  blockedGates: []
 --- !u!65 &3248624809156072380
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -369,37 +370,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 20, y: 9, z: 14}
   m_Center: {x: 0, y: 4.5, z: 7.5}
---- !u!114 &4351172081903132793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6335016602820315356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AgentTypeID: -1372625422
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 1
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.083333336
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
-  m_BuildHeightMesh: 0
 --- !u!1 &9126531041888008423
 GameObject:
   m_ObjectHideFlags: 0

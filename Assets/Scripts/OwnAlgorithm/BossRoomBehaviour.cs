@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BossRoomBehaviour : MonoBehaviour
 {
-    [HideInInspector] public OwnRoomGenarator manager;
+    [HideInInspector] public RoomGenarator manager;
     public int width; // in tiles
     public int height; // in tiles
 

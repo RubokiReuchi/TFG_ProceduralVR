@@ -25,6 +25,7 @@ public class Door
     public FOUR_DIRECTIONS direction;
     public DOOR_STATE state;
     public RoomBehaviour script;
+    public RoomBehaviour otherScript; // neightbour
 
     public Door(Vector3 position, FOUR_DIRECTIONS direction, RoomBehaviour script)
     {
@@ -39,13 +40,13 @@ public class RoomBehaviour : MonoBehaviour
 {
     [Header("Room")]
     public int roomTypeID;
-    [HideInInspector] public OwnRoomGenarator manager;
 
     [NonEditable] bool doorsFilled = false;
     [SerializeField] Transform[] doorsTransform;
     [SerializeField] FOUR_DIRECTIONS[] doorsDirections;
     public List<Door> doors = new();
     [NonEditable][SerializeField] bool entered;
+
 
     [Header("Map Room")]
     [HideInInspector] public GameObject roomInMap;
@@ -62,6 +63,8 @@ public class RoomBehaviour : MonoBehaviour
     {
         entered = false;
         onCombat = false;
+
+        if (!RoomGenarator.instance.activeRooms.Contains(this)) gameObject.SetActive(false);
     }
 
     void Update()
@@ -81,9 +84,10 @@ public class RoomBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (entered) return;
         if (!other.CompareTag("PlayerHead")) return;
+        RoomGenarator.instance.UpdateRooms(this);
 
+        if (entered) return;
         EnteredInRoom();
         for (int i = 0; i < joinedRooms.Count; i++) joinedRooms[i].GetComponent<RoomBehaviour>().EnteredInRoom();
         for (int i = 0; i < mapJoints.Count; i++) mapJoints[i].SetActive(true);
