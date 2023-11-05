@@ -110,7 +110,7 @@ public class SphereRobot : Enemy
                 Vector3 lookAtPos = new Vector3(player.position.x, transform.position.y, player.position.z);
                 Quaternion targetRotation = Quaternion.LookRotation(lookAtPos - transform.position);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-                if (Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
+                if (Quaternion.Angle(transform.rotation, targetRotation) < 30.0f)
                 {
                     animator.SetTrigger("Shoot");
                     state = STATE.SHOOTING;
@@ -225,6 +225,7 @@ public class SphereRobot : Enemy
     public override void Die()
     {
         animator.SetTrigger("Destroy");
+        transform.GetComponentInChildren<AnimSphereRobot>().StopRing();
         state = STATE.DESTROYING;
     }
 
