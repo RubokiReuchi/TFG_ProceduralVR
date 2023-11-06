@@ -100,7 +100,7 @@ public class PlaceGates : MonoBehaviour
                     newMapGate.GetComponent<GateInMap>().SetUp();
                     script.gateInMap = newMapGate;
                     script.roomBounds = gates[i].roomBehaviour.GetComponent<BoxCollider>().bounds;
-                    script.roomBounds.Expand(0.5f);
+                    script.roomBounds.Expand(1.5f);
                     gates[i].roomBehaviour.gatesInMap.Add(newMapGate);
                     break;
                 case GATE_STATE.BLUE:
@@ -113,7 +113,7 @@ public class PlaceGates : MonoBehaviour
                     newMapGate.GetComponent<GateInMap>().SetUp();
                     script.gateInMap = newMapGate;
                     script.roomBounds = gates[i].roomBehaviour.GetComponent<BoxCollider>().bounds;
-                    script.roomBounds.Expand(0.5f);
+                    script.roomBounds.Expand(1.5f);
                     gates[i].roomBehaviour.gatesInMap.Add(newMapGate);
                     break;
                 case GATE_STATE.RED:
@@ -126,7 +126,7 @@ public class PlaceGates : MonoBehaviour
                     newMapGate.GetComponent<GateInMap>().SetUp();
                     script.gateInMap = newMapGate;
                     script.roomBounds = gates[i].roomBehaviour.GetComponent<BoxCollider>().bounds;
-                    script.roomBounds.Expand(0.5f);
+                    script.roomBounds.Expand(1.5f);
                     gates[i].roomBehaviour.gatesInMap.Add(newMapGate);
                     break;
                 case GATE_STATE.PURPLE:
@@ -139,7 +139,7 @@ public class PlaceGates : MonoBehaviour
                     newMapGate.GetComponent<GateInMap>().SetUp();
                     script.gateInMap = newMapGate;
                     script.roomBounds = gates[i].roomBehaviour.GetComponent<BoxCollider>().bounds;
-                    script.roomBounds.Expand(0.5f);
+                    script.roomBounds.Expand(1.5f);
                     gates[i].roomBehaviour.gatesInMap.Add(newMapGate);
                     break;
                 case GATE_STATE.GREEN:
@@ -152,7 +152,7 @@ public class PlaceGates : MonoBehaviour
                     newMapGate.GetComponent<GateInMap>().SetUp();
                     script.gateInMap = newMapGate;
                     script.roomBounds = gates[i].roomBehaviour.GetComponent<BoxCollider>().bounds;
-                    script.roomBounds.Expand(0.5f);
+                    script.roomBounds.Expand(1.5f);
                     gates[i].roomBehaviour.gatesInMap.Add(newMapGate);
                     break;
                 case GATE_STATE.BOSS:
@@ -165,7 +165,7 @@ public class PlaceGates : MonoBehaviour
                     newMapGate.GetComponent<GateInMap>().SetUp();
                     script.gateInMap = newMapGate;
                     script.roomBounds = gates[i].roomBehaviour.GetComponent<BoxCollider>().bounds;
-                    script.roomBounds.Expand(0.5f);
+                    script.roomBounds.Expand(1.5f);
                     gates[i].roomBehaviour.gatesInMap.Add(newMapGate);
                     break;
                 case GATE_STATE.DESTROYED:
