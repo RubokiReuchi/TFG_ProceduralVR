@@ -52,6 +52,7 @@ public class RoomGenarator : MonoBehaviour
 
     [Range(0, 20)] public float breakDoorChance;
     public LayerMask doorLayer;
+    List<HallwayBehaviour> hallways = new();
     List<Gate> draw = new();
 
     [Header("Map Rooms")]
@@ -68,6 +69,7 @@ public class RoomGenarator : MonoBehaviour
     [SerializeField] Transform playerMark;
 
     [HideInInspector] public List<RoomBehaviour> activeRooms = new();
+    [HideInInspector] public List<HallwayBehaviour> activeHallways = new();
 
     private void Awake()
     {
@@ -1409,26 +1411,29 @@ public class RoomGenarator : MonoBehaviour
                 Gate gate1 = new Gate(allDoors[0].position, allDoors[0].direction, state, null, allDoors[0].script);
                 Gate gate2 = new Gate(neighborDoor.position, neighborDoor.direction, state, gate1, neighborDoor.script);
                 gate1.SetOther(gate2);
+
+                PlaceHallway(gate1.position, gate1.direction, allDoors[0].script, neighborDoor.script);
+
                 gates.Add(gate1);
                 gates.Add(gate2);
                 allDoors.Remove(allDoors[0]);
                 allDoors.Remove(neighborDoor);
-
-                PlaceHallway(gate1.position, gate1.direction);
             }
             else if (state == GATE_STATE.BOSS)
             {
                 allDoors[0].otherScript = null;
                 Gate gate1 = new Gate(allDoors[0].position, allDoors[0].direction, state, null, allDoors[0].script);
+
+                PlaceHallway(gate1.position, gate1.direction, allDoors[0].script, null);
+
                 gates.Add(gate1);
                 allDoors.Remove(allDoors[0]);
-
-                PlaceHallway(gate1.position, gate1.direction);
             }
             else
             {
                 allDoors[0].otherScript = null;
                 Gate gate1 = new Gate(allDoors[0].position, allDoors[0].direction, state, null, allDoors[0].script);
+
                 gates.Add(gate1);
                 allDoors.Remove(allDoors[0]);
             }
@@ -1511,7 +1516,7 @@ public class RoomGenarator : MonoBehaviour
         else return auxTransform.GetComponent<RoomBehaviour>();
     }
 
-    void PlaceHallway(Vector3 doorPosition, FOUR_DIRECTIONS direction)
+    void PlaceHallway(Vector3 doorPosition, FOUR_DIRECTIONS direction, RoomBehaviour headRoom, RoomBehaviour tailRoom)
     {
         Quaternion rotation;
         Quaternion mapRotation;
@@ -1542,7 +1547,11 @@ public class RoomGenarator : MonoBehaviour
         GameObject newMapHallway = GameObject.Instantiate(mapHallwayPrefab, createMap);
         newMapHallway.transform.localPosition = new Vector3(doorPosition.x / 3, doorPosition.z / 3, 0);
         newMapHallway.transform.localRotation = mapRotation;
-        newHallway.GetComponent<HallwayBehaviour>().hallwayInMap = newMapHallway;
+        HallwayBehaviour script = newHallway.GetComponent<HallwayBehaviour>();
+        script.hallwayInMap = newMapHallway;
+        script.headRoom = headRoom;
+        script.tailRoom = tailRoom;
+        hallways.Add(script);
     }
 
     DOOR_STATE GetDoorColor()
@@ -1575,6 +1584,7 @@ public class RoomGenarator : MonoBehaviour
     // Enable and Disable Rooms
     public void UpdateRooms(RoomBehaviour currentRoom)
     {
+        // rooms
         List<RoomBehaviour> newActiveRooms = new();
         newActiveRooms.Add(currentRoom);
 
@@ -1610,5 +1620,34 @@ public class RoomGenarator : MonoBehaviour
         }
 
         activeRooms = newActiveRooms;
+
+        List<HallwayBehaviour> newActiveHallways = new();
+
+        // hallways
+        foreach (var hallway in hallways)
+        {
+            foreach (var headRoom in newActiveRooms)
+            {
+                if (hallway.headRoom == headRoom)
+                {
+                    foreach (var tailRoom in newActiveRooms)
+                    {
+                        if (hallway.tailRoom == tailRoom) newActiveHallways.Add(hallway);
+                    }
+                }
+            }
+        }
+
+        foreach (var halway in activeHallways)
+        {
+            if (!newActiveHallways.Contains(halway)) halway.gameObject.SetActive(false);
+        }
+
+        foreach (var halway in newActiveHallways)
+        {
+            if (!halway.gameObject.activeSelf) halway.gameObject.SetActive(true);
+        }
+
+        activeHallways = newActiveHallways;
     }
 }
