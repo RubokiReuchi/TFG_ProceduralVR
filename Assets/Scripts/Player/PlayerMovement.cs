@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,8 +10,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jump")]
     [SerializeField] InputActionProperty jumpAction;
+    [SerializeField] ActionBasedContinuousMoveProvider moveProvider;
     [SerializeField] float jumpHeight;
-    int remainingJumps;
+    float expectedGravity;
+    bool groundJump;
+    bool airJump;
     float gravity = Physics.gravity.y;
     Vector3 movement;
 
@@ -30,7 +34,9 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        remainingJumps = 0;
+        groundJump = true;
+        airJump = true;
+        expectedGravity = 0;
         dashCd = 0;
 
         tunnelingMaterial.SetFloat("_ApertureSize", 1);
@@ -42,18 +48,27 @@ public class PlayerMovement : MonoBehaviour
         // jump
         if (IsGrounded())
         {
-            remainingJumps = 2;
+            groundJump = true;
+            airJump = true;
             movement.y = 0;
         }
-        else movement.y += gravity * Time.deltaTime; // apply gravity
+        else groundJump = false;
 
-        if (remainingJumps > 0 && jumpAction.action.WasPressedThisFrame())
+        if (expectedGravity > 0)
         {
-            remainingJumps--;
-            movement.y = 0;
-            movement.y += jumpHeight;
+            expectedGravity -= gravity * Time.deltaTime;
+            if (expectedGravity < 0) movement.y = 0;
         }
-        controller.Move(movement * Time.deltaTime);
+
+        if ((groundJump || airJump) && jumpAction.action.WasPressedThisFrame())
+        {
+            if (groundJump) groundJump = false;
+            else airJump = false;
+            movement.y = jumpHeight;
+            expectedGravity = jumpHeight;
+            moveProvider.m_VerticalVelocity = Vector3.zero; // m_VerticalVelocity wasn't public, I change it
+        }
+        if (movement.y > 0) controller.Move(movement * Time.deltaTime);
 
         // dash
         if (dashCd > 0)

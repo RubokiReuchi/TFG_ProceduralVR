@@ -68,6 +68,5 @@ public class PlayerCharged : Projectile
     {
         float normal = Mathf.InverseLerp(min, max, current);
         damage = Mathf.Lerp(minDamage, maxDamage, normal);
-        Debug.Log(damage);
     }
 }
