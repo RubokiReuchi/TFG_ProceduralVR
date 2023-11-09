@@ -12,10 +12,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] InputActionProperty jumpAction;
     [SerializeField] ActionBasedContinuousMoveProvider moveProvider;
     [SerializeField] float jumpHeight;
+    [SerializeField] float superJumpHeight;
     float expectedGravity;
     bool groundJump;
     bool airJump;
-    float gravity = Physics.gravity.y;
     Vector3 movement;
 
     [Header("Dash")]
@@ -56,7 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (expectedGravity > 0)
         {
-            expectedGravity -= gravity * Time.deltaTime;
+            expectedGravity -= Physics.gravity.y * Time.deltaTime;
             if (expectedGravity < 0) movement.y = 0;
         }
 
@@ -64,7 +64,8 @@ public class PlayerMovement : MonoBehaviour
         {
             if (groundJump) groundJump = false;
             else airJump = false;
-            movement.y = jumpHeight;
+            //if (PlayerState.instance.superJump) movement.y = superJumpHeight;
+            /*else*/ movement.y = jumpHeight;
             expectedGravity = jumpHeight;
             moveProvider.m_VerticalVelocity = Vector3.zero; // m_VerticalVelocity wasn't public, I change it
         }

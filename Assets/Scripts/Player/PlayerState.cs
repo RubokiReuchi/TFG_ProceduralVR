@@ -27,6 +27,7 @@ public class PlayerState : MonoBehaviour
     float maxHealth = 250;
     float currentHealth;
     [SerializeField] HandHealth displayHealth;
+    [SerializeField] Material takeDamageMaterial;
 
     private void Awake()
     {
@@ -39,6 +40,7 @@ public class PlayerState : MonoBehaviour
         currentHealth = maxHealth;
         displayHealth.SetCells(maxHealth);
         displayHealth.UpdateHealthDisplay(currentHealth);
+        takeDamageMaterial.SetFloat("_Opacity", 0);
     }
 
     // Update is called once per frame
@@ -58,6 +60,9 @@ public class PlayerState : MonoBehaviour
             // game over
         }
         displayHealth.UpdateHealthDisplay(currentHealth);
+
+        StopAllCoroutines();
+        StartCoroutine(TakeDamegeCo());
     }
 
     public void Heal(float amount)
@@ -65,5 +70,26 @@ public class PlayerState : MonoBehaviour
         currentHealth += amount;
         if (currentHealth > maxHealth) currentHealth = maxHealth;
         displayHealth.UpdateHealthDisplay(currentHealth);
+    }
+
+    IEnumerator TakeDamegeCo()
+    {
+        float opacity = 0.0f;
+        while (opacity < 1)
+        {
+            opacity += Time.deltaTime * 5;
+            if (opacity > 1) opacity = 1;
+            takeDamageMaterial.SetFloat("_Opacity", opacity);
+            yield return null;
+        }
+        yield return new WaitForSeconds(1.0f);
+        opacity = 1.0f;
+        while (opacity > 0)
+        {
+            opacity -= Time.deltaTime * 2;
+            if (opacity < 0) opacity = 0;
+            takeDamageMaterial.SetFloat("_Opacity", opacity);
+            yield return null;
+        }
     }
 }
