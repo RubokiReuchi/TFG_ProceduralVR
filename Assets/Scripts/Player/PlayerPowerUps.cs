@@ -7,6 +7,7 @@ public class PlayerPowerUps : MonoBehaviour
     public static PlayerPowerUps instance;
 
     [SerializeField] Transform leftHand;
+    [SerializeField] PlayerGun playerGun;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class PlayerPowerUps : MonoBehaviour
             case POWER_UP_TYPE.XRAY_VISION:
                 break;
             case POWER_UP_TYPE.AUTOMATIC_MODE:
+                playerGun.projectileType = PROJECTILE_TYPE.AUTOMATIC;
                 break;
             default:
                 break;

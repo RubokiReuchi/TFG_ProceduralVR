@@ -10120,6 +10120,19 @@ MonoBehaviour:
   redChargedPrefab: {fileID: 8696879561171596771, guid: 8af88b94f8ad0d342944d60b829be5e3, type: 3}
   purpleChargedPrefab: {fileID: 8696879561171596771, guid: de531d1e9f5931946a61dbe849b7ee23, type: 3}
   greenChargedPrefab: {fileID: 8696879561171596771, guid: fbee6678b9f6f64428efc2a1e9967a15, type: 3}
+  projectileType: 0
+  automaticCadence: 0
+  yellowLaserPrefab: {fileID: 0}
+  blueLaserPrefab: {fileID: 0}
+  redLaserPrefab: {fileID: 0}
+  purpleLaserPrefab: {fileID: 0}
+  greenLaserPrefab: {fileID: 0}
+  laserCadence: 0
+  laserStartDelay: 0
+  projectileOrigin2Start: {fileID: 0}
+  projectileOrigin2Current: {fileID: 0}
+  projectileOrigin3Start: {fileID: 0}
+  projectileOrigin3Current: {fileID: 0}
 --- !u!23 &7631245282251171859 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3495243847210584139, guid: 4abd22b34bb3fe94197684e1446e8735, type: 3}
