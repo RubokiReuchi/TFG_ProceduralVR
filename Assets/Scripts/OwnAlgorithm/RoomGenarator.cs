@@ -60,6 +60,10 @@ public class RoomGenarator : MonoBehaviour
     List<HallwayBehaviour> hallways = new();
     List<Gate> draw = new();
 
+    [Header("PowerUps & Upgrades")]
+    [SerializeField] GameObject[] powerUpPrefabs;
+    List<PowerUp> currentPowerUps = new();
+
     [Header("Map Rooms")]
     [SerializeField] Transform createMap;
     [SerializeField] GameObject mapStartRoomPrefab;
@@ -100,6 +104,8 @@ public class RoomGenarator : MonoBehaviour
         CreateMainPath();
 
         FillWithRooms();
+
+        PlacePowerUps();
 
         GetComponent<NavMeshSurface>().BuildNavMesh();
 
@@ -1217,7 +1223,6 @@ public class RoomGenarator : MonoBehaviour
                 {
                     lastRoomCreated = auxScript.roomTypeID;
                     randomDoor.state = GetDoorColor();
-                    roomsBetween--;
                     forFillDoors.Clear();
                     powerUpRoomsLeft--;
                 }
@@ -1230,7 +1235,6 @@ public class RoomGenarator : MonoBehaviour
                 {
                     lastRoomCreated = auxScript.roomTypeID;
                     randomDoor.state = GetDoorColor();
-                    roomsBetween--;
                     forFillDoors.Clear();
                 }
                 else // door imposible to fill
@@ -1809,6 +1813,40 @@ public class RoomGenarator : MonoBehaviour
                 break;
         }
         return null;
+    }
+
+    void PlacePowerUps()
+    {
+        List<GameObject> posiblePowerUps = new(powerUpPrefabs.ToList());
+        GameObject[] powerUpGO = GameObject.FindGameObjectsWithTag("PowerUp");
+
+        foreach (var go in powerUpGO) // each powe up spot
+        {
+            bool compatible = false;
+            GameObject newPowerUp = null;
+            while (!compatible)
+            {
+                newPowerUp = posiblePowerUps[Random.Range(0, posiblePowerUps.Count)];
+                PowerUp script = newPowerUp.GetComponent<PowerUp>();
+                compatible = IsCompatible(script.type);
+                if (!compatible) posiblePowerUps.Remove(newPowerUp);
+            }
+
+            posiblePowerUps.Remove(newPowerUp);
+            GameObject.Instantiate(newPowerUp, go.transform);
+        }
+    }
+
+    bool IsCompatible(POWER_UP_TYPE type)
+    {
+        foreach(var powerUp in currentPowerUps)
+        {
+            foreach (var incompatibility in powerUp.incompatibilities)
+            {
+                if (incompatibility == type) return false;
+            }
+        }
+        return true;
     }
 
     // Map

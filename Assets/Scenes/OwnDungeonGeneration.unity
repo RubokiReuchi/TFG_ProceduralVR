@@ -600,15 +600,19 @@ MonoBehaviour:
   jointsPrefabs:
   - {fileID: 2583963406992475519, guid: 9c46025b03c6727448d2c91f6d6966b9, type: 3}
   hallwayPrefab: {fileID: 7443195902359228358, guid: 9dc771bdde775f2478831f515261c54b, type: 3}
-  minRoomsBetween: 4
+  minRoomsBetween: 6
   maxRoomsBetween: 9
   totalRoomsBetween: 0
   maxRooms: 25
   currentRooms: 0
-  breakDoorChance: 0
+  breakDoorChance: 5
   doorLayer:
     serializedVersion: 2
     m_Bits: 128
+  powerUpPrefabs:
+  - {fileID: 418554562881714168, guid: 996b949f035e06e48a62a29bf2df714d, type: 3}
+  - {fileID: 4734988606657967624, guid: 0192bb8071f01494e9ee3cb71679b967, type: 3}
+  - {fileID: 5879438222777538407, guid: f95b99dae795f9a499125d15f637c5a8, type: 3}
   createMap: {fileID: 262585425}
   mapStartRoomPrefab: {fileID: 978247062494792624, guid: 721952ab78a20a84eac276137047e4c7, type: 3}
   mapPathRoomsPrefabs:
