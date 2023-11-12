@@ -590,6 +590,11 @@ MonoBehaviour:
   - {fileID: 6698619326181897974, guid: 0580117f94a76044ab6bee35d24eb4e0, type: 3}
   - {fileID: 8685203408823694636, guid: bcc615a68a4617e43af53595f5158066, type: 3}
   - {fileID: 4676106266365575691, guid: 6fbfea238c9cdb041a541c5505669ac3, type: 3}
+  powerUpPathRoomsPrefabs:
+  - {fileID: 7987309077170717309, guid: 3c5db5b4d43f225488ea439d3fc11001, type: 3}
+  - {fileID: 4927600078426804326, guid: c0b63a091990a7242843daa304083b4c, type: 3}
+  powerUpEndingRoomsPrefabs:
+  - {fileID: 6331366710229583462, guid: 79ca7d64ebf730940a23b9f409f5d35a, type: 3}
   bossRoomsPrefabs:
   - {fileID: 578699312927519967, guid: 2f5ef6a99a7a51b47b9bc23598032e5f, type: 3}
   jointsPrefabs:
@@ -617,6 +622,11 @@ MonoBehaviour:
   - {fileID: 8233548387822017142, guid: aab8e9fb0bb65af4cb6d008a6a7f9d96, type: 3}
   - {fileID: 2402225669010455273, guid: 6d1b4e547d5bafc4c830ddf99d07d2ba, type: 3}
   - {fileID: 3187152519247558728, guid: f55f00c8c25cbdb42b436985ffe415b3, type: 3}
+  mapPowerUpPathRoomsPrefabs:
+  - {fileID: 3410384824601102124, guid: ea806e4c0a4e51f4f891904afdf39083, type: 3}
+  - {fileID: 4360573084842403018, guid: 39830ace777860c4f87d613622dca6cb, type: 3}
+  mapPowerUpEndingRoomsPrefabs:
+  - {fileID: 221150327330874798, guid: ae9cb2c5c57cb654f9517ae5f9453f96, type: 3}
   mapBossRoomsPrefabs:
   - {fileID: 8181379179684344601, guid: fb8677394ac2f4042a7b3f17bc1ff846, type: 3}
   mapJointsPrefabs:
@@ -625,6 +635,7 @@ MonoBehaviour:
   mapCenterPos: {fileID: 1758151257}
   playerMark: {fileID: 1417450006}
   activeRooms: []
+  activeHallways: []
 --- !u!114 &1892248152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -639,6 +650,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pathRoomsInfoCSV: {fileID: 4900000, guid: 7d92b4099cc74d44196ae4d3fef03da9, type: 3}
   endingRoomsInfoCSV: {fileID: 4900000, guid: 2ee9988916f443542a585215b1ef5610, type: 3}
+  powerUpPathRoomsInfoCSV: {fileID: 4900000, guid: f52551aa45a18bf4aa5e9e10da3a0d2c, type: 3}
+  powerUpEndingRoomsInfoCSV: {fileID: 4900000, guid: 30044cf5d86365b4cb4c3f131b1764d4, type: 3}
   jointsInfoCSV: {fileID: 4900000, guid: cc9ab84028487db4fa61d9a8fcd96bab, type: 3}
 --- !u!114 &1892248153
 MonoBehaviour:

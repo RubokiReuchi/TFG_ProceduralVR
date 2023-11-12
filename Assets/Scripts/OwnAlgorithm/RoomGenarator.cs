@@ -27,9 +27,14 @@ public class RoomGenarator : MonoBehaviour
     [SerializeField] GameObject[] pathRoomsPrefabs; // room with 2 doors at least
     [SerializeField] GameObject[] endingRoomsPrefabs; // room with only one door
     GameObject[] roomsPrefabs; // pathRoomsPrefabs + endingRoomsPrefabs
+    [SerializeField] GameObject[] powerUpPathRoomsPrefabs; // power up room with 2 doors at least
+    [SerializeField] GameObject[] powerUpEndingRoomsPrefabs; // power up room with only one door
+    GameObject[] powerUpRoomsPrefabs; // powerUpPathRoomsPrefabs + powerUpEndingRoomsPrefabs
     [SerializeField] GameObject[] bossRoomsPrefabs;
     [SerializeField] GameObject[] jointsPrefabs;
     [SerializeField] GameObject hallwayPrefab;
+
+    int powerUpRoomsLeft = 3;
 
     float roomsNormalWidth = 7;
     float roomsNormalHeight = 5;
@@ -61,6 +66,9 @@ public class RoomGenarator : MonoBehaviour
     [SerializeField] GameObject[] mapPathRoomsPrefabs;
     [SerializeField] GameObject[] mapEndingRoomsPrefabs;
     GameObject[] mapRoomsPrefabs; // mapPathRoomsPrefabs + mapEndingRoomsPrefabs
+    [SerializeField] GameObject[] mapPowerUpPathRoomsPrefabs;
+    [SerializeField] GameObject[] mapPowerUpEndingRoomsPrefabs;
+    GameObject[] mapPowerUpRoomsPrefabs; // mapPowerUpPathRoomsPrefabs + mapPowerUpEndingRoomsPrefabs
     [SerializeField] GameObject[] mapBossRoomsPrefabs;
     [SerializeField] GameObject[] mapJointsPrefabs;
     [SerializeField] GameObject mapHallwayPrefab;
@@ -85,6 +93,9 @@ public class RoomGenarator : MonoBehaviour
 
         roomsPrefabs = pathRoomsPrefabs.Concat(endingRoomsPrefabs).ToArray();
         mapRoomsPrefabs = mapPathRoomsPrefabs.Concat(mapEndingRoomsPrefabs).ToArray();
+
+        powerUpRoomsPrefabs = powerUpPathRoomsPrefabs.Concat(powerUpEndingRoomsPrefabs).ToArray();
+        mapPowerUpRoomsPrefabs = mapPowerUpPathRoomsPrefabs.Concat(mapPowerUpEndingRoomsPrefabs).ToArray();
 
         CreateMainPath();
 
@@ -170,13 +181,30 @@ public class RoomGenarator : MonoBehaviour
             workingIndex = GetTreeIndex(script);
             unfilledDoor = roomsTree[workingIndex].script.GetRandomUnfilledDoor();
 
-            auxScript = CreateNextRoom(unfilledDoor, workingIndex, pathRoomsPrefabs, mapPathRoomsPrefabs);
-            if (auxScript != null)
+            bool powerUpRoom = !(Random.Range(0, 100) < 80) && powerUpRoomsLeft > 0;
+            if (powerUpRoom)
             {
-                lastRoomCreated = auxScript.roomTypeID;
-                unfilledDoor.state = DOOR_STATE.YELLOW;
-                script = auxScript;
-                roomsBetween--;
+                auxScript = CreateNextPowerUpRoom(unfilledDoor, workingIndex, powerUpPathRoomsPrefabs, mapPowerUpPathRoomsPrefabs); // powerUp room
+                if (auxScript != null)
+                {
+                    lastRoomCreated = auxScript.roomTypeID;
+                    unfilledDoor.state = DOOR_STATE.YELLOW;
+                    script = auxScript;
+                    roomsBetween--;
+                    powerUpRoomsLeft--;
+                }
+                else powerUpRoom = false;
+            }
+            if (!powerUpRoom)
+            {
+                auxScript = CreateNextRoom(unfilledDoor, workingIndex, pathRoomsPrefabs, mapPathRoomsPrefabs); // no powerUp room
+                if (auxScript != null)
+                {
+                    lastRoomCreated = auxScript.roomTypeID;
+                    unfilledDoor.state = DOOR_STATE.YELLOW;
+                    script = auxScript;
+                    roomsBetween--;
+                }
             }
         }
 
@@ -1181,17 +1209,34 @@ public class RoomGenarator : MonoBehaviour
                 continue;
             }
 
-            auxScript = CreateNextRoom(randomDoor, GetTreeIndex(randomDoor.script), roomsPrefabs, mapRoomsPrefabs);
-            if (auxScript != null)
+            bool powerUpRoom = !(Random.Range(0, 100) < 80) && powerUpRoomsLeft > 0;
+            if (powerUpRoom)
             {
-                lastRoomCreated = auxScript.roomTypeID;
-                randomDoor.state = GetDoorColor();
-                roomsBetween--;
-                forFillDoors.Clear();
+                auxScript = CreateNextPowerUpRoom(randomDoor, GetTreeIndex(randomDoor.script), powerUpRoomsPrefabs, mapPowerUpRoomsPrefabs); // power up room
+                if (auxScript != null)
+                {
+                    lastRoomCreated = auxScript.roomTypeID;
+                    randomDoor.state = GetDoorColor();
+                    roomsBetween--;
+                    forFillDoors.Clear();
+                    powerUpRoomsLeft--;
+                }
+                else powerUpRoom = false;
             }
-            else // door imposible to fill
+            if (!powerUpRoom)
             {
-                forFillDoors.Remove(randomDoor);
+                auxScript = CreateNextRoom(randomDoor, GetTreeIndex(randomDoor.script), roomsPrefabs, mapRoomsPrefabs); // no power up room
+                if (auxScript != null)
+                {
+                    lastRoomCreated = auxScript.roomTypeID;
+                    randomDoor.state = GetDoorColor();
+                    roomsBetween--;
+                    forFillDoors.Clear();
+                }
+                else // door imposible to fill
+                {
+                    forFillDoors.Remove(randomDoor);
+                }
             }
         }
 
@@ -1207,7 +1252,20 @@ public class RoomGenarator : MonoBehaviour
     void FindForFillDoors(TreeNode node, ref List<Door> forFillDoors)
     {
         if (node.script.roomTypeID == -1) return; // ending room
-        RoomInfo roomInfo = roomsInfo.roomInfoList[node.script.roomTypeID];
+        RoomInfo roomInfo;
+        switch (node.script.roomType)
+        {
+            case ROOM_TYPE.POWER_UP:
+                roomInfo = roomsInfo.powerUpRoomInfoList[node.script.roomTypeID];
+                break;
+            case ROOM_TYPE.UPGRADE:
+                roomInfo = roomsInfo.powerUpRoomInfoList[node.script.roomTypeID];
+                break;
+            case ROOM_TYPE.NORMAL:
+            default:
+                roomInfo = roomsInfo.roomInfoList[node.script.roomTypeID];
+                break;
+        }
 
         // top
         if (roomInfo.topDoor == 1)
@@ -1562,6 +1620,195 @@ public class RoomGenarator : MonoBehaviour
         else if (rand < 90) return DOOR_STATE.RED;
         else if (rand < 98) return DOOR_STATE.PURPLE;
         else return DOOR_STATE.GREEN;
+    }
+
+    RoomBehaviour CreateNextPowerUpRoom(Door door, int roomTreeIndex, GameObject[] roomsPool, GameObject[] mapRoomsPool)
+    {
+        List<GameObject> posibleRooms = new(roomsPool.ToList());
+        List<int> imposibleRooms = new();
+        if (lastRoomCreated != -1) imposibleRooms.Add(lastRoomCreated);
+        int newRoomTypeID = -1;
+
+        switch (door.direction)
+        {
+            case FOUR_DIRECTIONS.TOP:
+                while (newRoomTypeID == -1)
+                {
+                    if (posibleRooms.Count == imposibleRooms.Count) return null;
+                    do
+                    {
+                        newRoomTypeID = Random.Range(0, posibleRooms.Count);
+                    } while (imposibleRooms.Contains(newRoomTypeID));
+                    RoomInfo roomInfo = roomsInfo.powerUpRoomInfoList[newRoomTypeID];
+
+                    Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + tileSize/*HallwaySize*/ + roomsNormalHeight / 2 * tileSize);
+                    Collider[] colliding = Physics.OverlapBox(roomCenter, new Vector3(roomsNormalWidth / 2 * tileSize, 5, roomsNormalHeight / 2 * tileSize));
+                    if (colliding.Length == 0) // no room there
+                    {
+                        if (roomInfo.downDoor == 1) // if room has a door down
+                        {
+                            Vector3 roomPosition = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + tileSize);
+                            GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
+                            GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[newRoomTypeID], createMap);
+                            newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                            roomsInMap.Add(newMapRoom);
+                            currentRooms++;
+                            RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
+                            script.SetDoors();
+                            script.NullifyDoor(FOUR_DIRECTIONS.DOWN);
+                            script.roomInMap = newMapRoom;
+                            TreeNode node = new TreeNode(script, roomsTree[roomTreeIndex]);
+                            roomsTree[roomTreeIndex].children[0] = node; // 0 cause is top
+                            roomsTree.Add(roomsTree.Count, node);
+                            return script;
+                        }
+                        else
+                        {
+                            imposibleRooms.Add(newRoomTypeID);
+                            newRoomTypeID = -1;
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                break;
+            case FOUR_DIRECTIONS.DOWN:
+                while (newRoomTypeID == -1)
+                {
+                    if (posibleRooms.Count == imposibleRooms.Count) return null;
+                    do
+                    {
+                        newRoomTypeID = Random.Range(0, posibleRooms.Count);
+                    } while (imposibleRooms.Contains(newRoomTypeID));
+                    RoomInfo roomInfo = roomsInfo.powerUpRoomInfoList[newRoomTypeID];
+
+                    Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z - tileSize/*HallwaySize*/ - roomsNormalHeight / 2 * tileSize);
+                    Collider[] colliding = Physics.OverlapBox(roomCenter, new Vector3(roomsNormalWidth / 2 * tileSize, 5, roomsNormalHeight / 2 * tileSize));
+                    if (colliding.Length == 0) // no room there
+                    {
+                        if (roomInfo.topDoor == 1) // if room has a door at top
+                        {
+                            Vector3 roomPosition = new Vector3(door.position.x, door.position.y/*0*/, door.position.z - tileSize - roomsNormalHeight * tileSize);
+                            GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
+                            GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[newRoomTypeID], createMap);
+                            newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                            roomsInMap.Add(newMapRoom);
+                            currentRooms++;
+                            RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
+                            script.SetDoors();
+                            script.NullifyDoor(FOUR_DIRECTIONS.TOP);
+                            script.roomInMap = newMapRoom;
+                            TreeNode node = new TreeNode(script, roomsTree[roomTreeIndex]);
+                            roomsTree[roomTreeIndex].children[1] = node; // 1 cause is down
+                            roomsTree.Add(roomsTree.Count, node);
+                            return script;
+                        }
+                        else
+                        {
+                            imposibleRooms.Add(newRoomTypeID);
+                            newRoomTypeID = -1;
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                break;
+            case FOUR_DIRECTIONS.RIGHT:
+                while (newRoomTypeID == -1)
+                {
+                    if (posibleRooms.Count == imposibleRooms.Count) return null;
+                    do
+                    {
+                        newRoomTypeID = Random.Range(0, posibleRooms.Count);
+                    } while (imposibleRooms.Contains(newRoomTypeID));
+                    RoomInfo roomInfo = roomsInfo.powerUpRoomInfoList[newRoomTypeID];
+
+                    Vector3 roomCenter = new Vector3(door.position.x + tileSize/*HallwaySize*/ + roomsNormalWidth / 2 * tileSize, door.position.y/*0*/, door.position.z);
+                    Collider[] colliding = Physics.OverlapBox(roomCenter, new Vector3(roomsNormalWidth / 2 * tileSize, 5, roomsNormalHeight / 2 * tileSize));
+                    if (colliding.Length == 0) // no room there
+                    {
+                        if (roomInfo.leftDoor == 1) // if room has a door at left
+                        {
+                            Vector3 roomPosition = new Vector3(door.position.x + tileSize + roomsNormalWidth / 2 * tileSize, door.position.y/*0*/, door.position.z - roomsNormalHeight / 2 * tileSize);
+                            GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
+                            GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[newRoomTypeID], createMap);
+                            newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                            roomsInMap.Add(newMapRoom);
+                            currentRooms++;
+                            RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
+                            script.SetDoors();
+                            script.NullifyDoor(FOUR_DIRECTIONS.LEFT);
+                            script.roomInMap = newMapRoom;
+                            TreeNode node = new TreeNode(script, roomsTree[roomTreeIndex]);
+                            roomsTree[roomTreeIndex].children[2] = node; // 2 cause is right
+                            roomsTree.Add(roomsTree.Count, node);
+                            return script;
+                        }
+                        else
+                        {
+                            imposibleRooms.Add(newRoomTypeID);
+                            newRoomTypeID = -1;
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                break;
+            case FOUR_DIRECTIONS.LEFT:
+                while (newRoomTypeID == -1)
+                {
+                    if (posibleRooms.Count == imposibleRooms.Count) return null;
+                    do
+                    {
+                        newRoomTypeID = Random.Range(0, posibleRooms.Count);
+                    } while (imposibleRooms.Contains(newRoomTypeID));
+                    RoomInfo roomInfo = roomsInfo.powerUpRoomInfoList[newRoomTypeID];
+
+                    Vector3 roomCenter = new Vector3(door.position.x - 2/*HallwaySize*/ - roomsNormalWidth / 2 * tileSize, door.position.y/*0*/, door.position.z);
+                    Collider[] colliding = Physics.OverlapBox(roomCenter, new Vector3(roomsNormalWidth / 2 * tileSize, 5, roomsNormalHeight / 2 * tileSize));
+                    if (colliding.Length == 0) // no room there
+                    {
+                        if (roomInfo.rightDoor == 1) // if room has a door at right
+                        {
+                            Vector3 roomPosition = new Vector3(door.position.x - tileSize - roomsNormalWidth / 2 * tileSize, door.position.y/*0*/, door.position.z - roomsNormalHeight / 2 * tileSize);
+                            GameObject newRoom = GameObject.Instantiate(roomsPool[newRoomTypeID], roomPosition, Quaternion.identity);
+                            GameObject newMapRoom = GameObject.Instantiate(mapRoomsPool[newRoomTypeID], createMap);
+                            newMapRoom.transform.localPosition = new Vector3(roomPosition.x / 3, roomPosition.z / 3, 0);
+                            roomsInMap.Add(newMapRoom);
+                            currentRooms++;
+                            RoomBehaviour script = newRoom.GetComponent<RoomBehaviour>();
+                            script.SetDoors();
+                            script.NullifyDoor(FOUR_DIRECTIONS.RIGHT);
+                            script.roomInMap = newMapRoom;
+                            TreeNode node = new TreeNode(script, roomsTree[roomTreeIndex]);
+                            roomsTree[roomTreeIndex].children[3] = node; // 3 cause is left
+                            roomsTree.Add(roomsTree.Count, node);
+                            return script;
+                        }
+                        else
+                        {
+                            imposibleRooms.Add(newRoomTypeID);
+                            newRoomTypeID = -1;
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                break;
+        }
+        return null;
     }
 
     // Map

@@ -19,6 +19,13 @@ public enum DOOR_STATE
     NULL // no tiene puerta
 }
 
+public enum ROOM_TYPE
+{
+    NORMAL,
+    POWER_UP,
+    UPGRADE
+}
+
 public class Door
 {
     public Vector3 position;
@@ -40,6 +47,7 @@ public class RoomBehaviour : MonoBehaviour
 {
     [Header("Room")]
     public int roomTypeID;
+    public ROOM_TYPE roomType;
 
     [NonEditable] bool doorsFilled = false;
     [SerializeField] Transform[] doorsTransform;

@@ -70,15 +70,19 @@ public class ReadRoomsInfo : MonoBehaviour
 {
     [SerializeField] TextAsset pathRoomsInfoCSV;
     [SerializeField] TextAsset endingRoomsInfoCSV;
+    [SerializeField] TextAsset powerUpPathRoomsInfoCSV;
+    [SerializeField] TextAsset powerUpEndingRoomsInfoCSV;
     [SerializeField] TextAsset jointsInfoCSV;
 
     public Dictionary<int, RoomInfo> roomInfoList = new();
+    public Dictionary<int, RoomInfo> powerUpRoomInfoList = new();
     public Dictionary<int, JointInfo> jointInfoList = new();
 
     // Start is called before the first frame update
     void OnEnable()
     {
         ReadRoomsCSV();
+        ReadPowerUpRoomsCSV();
         ReadJointsCSV();
     }
 
@@ -107,7 +111,7 @@ public class ReadRoomsInfo : MonoBehaviour
             i += numOfColumns;
         }
 
-        int pathRoomsCount = roomInfoList.Count;
+        int roomsCount = roomInfoList.Count;
 
         // ending rooms
         data = endingRoomsInfoCSV.text.Split(new string[] { ";", "\r\n" }, System.StringSplitOptions.None);
@@ -126,7 +130,56 @@ public class ReadRoomsInfo : MonoBehaviour
                 int.Parse(data[i + 8]),
                 int.Parse(data[i + 9]));
 
-            roomInfoList.Add(int.Parse(data[i]) + pathRoomsCount, roomInfo);
+            roomInfoList.Add(int.Parse(data[i]) + roomsCount, roomInfo);
+            i += numOfColumns;
+        }
+    }
+
+    void ReadPowerUpRoomsCSV()
+    {
+        // power up path rooms
+        string[] data = powerUpPathRoomsInfoCSV.text.Split(new string[] { ";", "\r\n" }, System.StringSplitOptions.None);
+
+        int numOfColumns = 10;
+
+        int i = numOfColumns;
+        while (data[i] != "")
+        {
+            RoomInfo roomInfo = new RoomInfo(
+                int.Parse(data[i + 1]),
+                int.Parse(data[i + 2]),
+                int.Parse(data[i + 3]),
+                int.Parse(data[i + 4]),
+                int.Parse(data[i + 5]),
+                int.Parse(data[i + 6]),
+                int.Parse(data[i + 7]),
+                int.Parse(data[i + 8]),
+                int.Parse(data[i + 9]));
+
+            powerUpRoomInfoList.Add(int.Parse(data[i]), roomInfo);
+            i += numOfColumns;
+        }
+
+        int roomsCount = powerUpRoomInfoList.Count;
+
+        // ending rooms
+        data = powerUpEndingRoomsInfoCSV.text.Split(new string[] { ";", "\r\n" }, System.StringSplitOptions.None);
+
+        i = numOfColumns;
+        while (data[i] != "")
+        {
+            RoomInfo roomInfo = new RoomInfo(
+                int.Parse(data[i + 1]),
+                int.Parse(data[i + 2]),
+                int.Parse(data[i + 3]),
+                int.Parse(data[i + 4]),
+                int.Parse(data[i + 5]),
+                int.Parse(data[i + 6]),
+                int.Parse(data[i + 7]),
+                int.Parse(data[i + 8]),
+                int.Parse(data[i + 9]));
+
+            powerUpRoomInfoList.Add(int.Parse(data[i]) + roomsCount, roomInfo);
             i += numOfColumns;
         }
     }
