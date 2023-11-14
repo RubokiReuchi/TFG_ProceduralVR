@@ -16,7 +16,7 @@ public class GenerateRooms : MonoBehaviour
     [Range(0.5f, 100.0f)] public float circleRadius;
     [SerializeField] int minTiles;
     [SerializeField] int maxTiles;
-    int tileSize = 2;
+    int tileSize = 3;
 
     int countTotalWidth = 0;
     int countTotalHeight = 0;
@@ -206,12 +206,12 @@ public class GenerateRooms : MonoBehaviour
                 for (int k = 0; k < roomSize.y; k++)
                 {
                     GameObject tile = GameObject.Instantiate(floorTile, newRoom.transform);
-                    tile.transform.localPosition = new Vector3(1 + 2 * j, 0, 1 + 2 * k);
+                    tile.transform.localPosition = new Vector3(1.5f + tileSize * j, 0, 1.5f + tileSize * k);
                 }
             }
             BoxCollider collider = newRoom.GetComponent<BoxCollider>();
             collider.center = new Vector3(roomSize.x, 0, roomSize.y);
-            collider.size = new Vector3(roomSize.x * 2, 1, roomSize.y * 2);
+            collider.size = new Vector3(roomSize.x * tileSize, 1, roomSize.y * tileSize);
             RoomOverlapping script = newRoom.GetComponent<RoomOverlapping>();
             script.roomID = i;
             script.roomWidth = (int)roomSize.x;
@@ -250,7 +250,7 @@ public class GenerateRooms : MonoBehaviour
         float x = circleRadius * r * Mathf.Cos(t);
         float z = circleRadius * r * Mathf.Sin(t);
 
-        newPos = new Vector3(Mathf.Floor((x + tileSize + 1) / tileSize) * tileSize, 0, Mathf.Floor((z + tileSize + 1) / tileSize) * tileSize);
+        newPos = new Vector3(Mathf.Floor((x + tileSize + 1.5f) / tileSize) * tileSize, 0, Mathf.Floor((z + tileSize + 1.5f) / tileSize) * tileSize);
         return newPos;
     }
 
