@@ -6,6 +6,7 @@ using UnityEngine.VFX;
 public class ProjectileHitMark : MonoBehaviour
 {
     VisualEffect vfx;
+    float lifeTime = 2.0f;
 
     // Start is called before the first frame update
     void OnEnable()
@@ -16,6 +17,10 @@ public class ProjectileHitMark : MonoBehaviour
 
     void Update()
     {
-        if (vfx.aliveParticleCount == 0) Destroy(gameObject);
+        lifeTime -= Time.deltaTime;
+        if (lifeTime < 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

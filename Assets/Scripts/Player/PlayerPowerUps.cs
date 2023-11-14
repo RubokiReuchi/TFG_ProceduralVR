@@ -7,6 +7,7 @@ public class PlayerPowerUps : MonoBehaviour
     public static PlayerPowerUps instance;
 
     [SerializeField] Transform leftHand;
+    [SerializeField] PlayerPunch playerPunch;
     [SerializeField] PlayerGun playerGun;
 
     private void Awake()
@@ -42,5 +43,6 @@ public class PlayerPowerUps : MonoBehaviour
             leftHand.localScale = new Vector3(currentScale, currentScale, currentScale);
             yield return null;
         }
+        playerPunch.giantPunch = true;
     }
 }

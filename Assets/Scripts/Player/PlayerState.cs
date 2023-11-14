@@ -18,11 +18,6 @@ public class PlayerState : MonoBehaviour
 
     [NonEditable] public LEFT_HAND_POSE leftHandPose;
 
-    [Header("Head Speed")]
-    [HideInInspector] public float headSpeed;
-    public Transform head;
-    Vector3 lastFrameHeadPosition = Vector3.zero;
-
     [Header("Health")]
     float maxHealth = 250;
     float currentHealth;
@@ -41,14 +36,6 @@ public class PlayerState : MonoBehaviour
         displayHealth.SetCells(maxHealth);
         displayHealth.UpdateHealthDisplay(currentHealth);
         takeDamageMaterial.SetFloat("_Opacity", 0);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // head speed
-        //headSpeed = (head.position - lastFrameHeadPosition).magnitude / Time.deltaTime;
-        //lastFrameHeadPosition = head.position;
     }
 
     public void TakeDamage(float amount)

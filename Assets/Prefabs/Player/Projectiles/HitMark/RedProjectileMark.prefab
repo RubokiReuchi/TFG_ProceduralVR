@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5532339195847523200}
   - component: {fileID: 5626636713462015320}
   - component: {fileID: 627738968276137234}
+  - component: {fileID: 3532189298083466131}
   m_Layer: 1
   m_Name: RedProjectileMark
   m_TagString: Untagged
@@ -120,3 +121,15 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &3532189298083466131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 286907324385993817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93729f9ad3d60bf4882a6e5e894d06e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
