@@ -32,7 +32,7 @@ public class SphereRobotRay : Projectile
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("PlayerHead"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("PlayerHead") || collision.gameObject.CompareTag("NormalHand"))
         {
             collision.transform.root.GetComponent<PlayerState>().TakeDamage(damage);
         }

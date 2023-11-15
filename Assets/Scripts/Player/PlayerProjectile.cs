@@ -25,7 +25,7 @@ public class PlayerProjectile : Projectile
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Foundations"))
+        if (collision.gameObject.CompareTag("FoundationsF") || collision.gameObject.CompareTag("FoundationsW"))
         {
             Physics.Raycast(transform.position, transform.forward, out RaycastHit hit);
             GameObject.Instantiate(decal, hit.point + hit.normal * 0.01f, Quaternion.LookRotation(hit.normal) * Quaternion.AngleAxis(90, Vector3.right));

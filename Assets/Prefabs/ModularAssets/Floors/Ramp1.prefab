@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6104623173225525837}
   m_Layer: 6
   m_Name: Floor Tile 02
-  m_TagString: Foundations
+  m_TagString: FoundationsF
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 2674394017092470772}
   m_Layer: 6
   m_Name: Ramp1
-  m_TagString: Foundations
+  m_TagString: FoundationsF
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,5 +135,5 @@ Transform:
   m_Children:
   - {fileID: 276653228810394473}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

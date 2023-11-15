@@ -12,24 +12,34 @@ public class PlayerPunch : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Vector3 leftHandVelocity = rigidBody.velocity;
-        if (PlayerState.instance.leftHandPose != LEFT_HAND_POSE.CLOSE || leftHandVelocity.magnitude < 2) return;
+        if (PlayerState.instance.leftHandPose != LEFT_HAND_POSE.CLOSE || leftHandVelocity.magnitude < 1.5f) return;
 
         if (other.CompareTag("Enemy"))
         {
+            Enemy script = other.GetComponent<Enemy>();
             float finalForce = !giantPunch ? punchForce : giantPunchForce;
-            Rigidbody rb = other.GetComponent<Rigidbody>();
 
             if (Mathf.Abs(leftHandVelocity.y) > new Vector2(leftHandVelocity.x, leftHandVelocity.z).magnitude)
             {
                 if (leftHandVelocity.y > 0)
                 {
-                    rb.AddForce(Vector3.up * finalForce, ForceMode.VelocityChange);
+                    if (!script.verticalPushed)
+                    {
+                        script.Airbourne(finalForce, giantPunch);
+                        script.verticalPushed = true;
+                    }
+                    // shield damage
                 }
                 //else shield damage
             }
             else
             {
-                rb.AddForce(new Vector3(leftHandVelocity.x, 0, leftHandVelocity.z).normalized * finalForce, ForceMode.VelocityChange);
+                if (!script.horizontalPushed)
+                {
+                    script.Pushed(new Vector3(leftHandVelocity.x, 0, leftHandVelocity.z).normalized * finalForce, giantPunch);
+                    script.horizontalPushed = true;
+                }
+                // shield damage
             }
         }
     }

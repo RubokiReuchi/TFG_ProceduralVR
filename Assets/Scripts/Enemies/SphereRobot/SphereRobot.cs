@@ -24,7 +24,6 @@ public class SphereRobot : Enemy
     Transform playerHead;
     [NonEditable][SerializeField] STATE state;
     Animator animator;
-    NavMeshAgent agent;
     [SerializeField] float walkDistance;
     [SerializeField] float shootDistance;
     [SerializeField] float minSideRollDistance;
@@ -63,11 +62,11 @@ public class SphereRobot : Enemy
         if (exploting) return;
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        if (distanceToPlayer < explosionDistance && !Physics.Raycast(transform.position, player.position, distanceToPlayer, foundationsLayers))
-        {
-            StartCoroutine(Exploting());
-            return;
-        }
+        //if (distanceToPlayer < explosionDistance && !Physics.Raycast(transform.position, player.position, distanceToPlayer, foundationsLayers))
+        //{
+        //    StartCoroutine(Exploting());
+        //    return;
+        //}
 
         switch (state)
         {
@@ -126,7 +125,7 @@ public class SphereRobot : Enemy
         }
     }
 
-    public void StartCheckOptions()
+    public override void StartCheckOptions()
     {
         StartCoroutine(CheckOptions());
     }
