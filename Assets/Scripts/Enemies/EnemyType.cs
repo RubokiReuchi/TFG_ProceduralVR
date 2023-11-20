@@ -22,6 +22,7 @@ public class EnemyType : MonoBehaviour
 
     private void Update()
     {
+        if (enemyScript.firstEnable) return;
         if (enemyScript.enabled == enemyScript.onCC)
         {
             if (enemyScript.onCC)

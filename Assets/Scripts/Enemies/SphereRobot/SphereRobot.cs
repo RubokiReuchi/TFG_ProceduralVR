@@ -40,7 +40,6 @@ public class SphereRobot : Enemy
     bool exploting;
     [SerializeField] GameObject explosionPrefab;
     [SerializeField] GameObject corpsPrefab;
-    bool firstEnable = true;
     Vector3 sideRollingDestination;
 
     private void OnEnable()

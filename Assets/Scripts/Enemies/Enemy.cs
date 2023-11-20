@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    [HideInInspector] public bool firstEnable = true;
     protected NavMeshAgent agent;
     Rigidbody rb;
     [SerializeField] protected float maxHealth;

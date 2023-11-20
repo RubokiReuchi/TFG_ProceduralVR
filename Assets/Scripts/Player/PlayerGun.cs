@@ -19,7 +19,6 @@ public enum PROJECTILE_TYPE
 {
     NORMAL,
     AUTOMATIC,
-    LASER,
     TRIPLE,
     MISILE
 }
@@ -69,13 +68,6 @@ public class PlayerGun : MonoBehaviour
     [Header("Automatic")]
     [SerializeField] float automaticCadence;
     float automaticCd = 0;
-    [Header("Laser")]
-    ParticleSystem selectedLaserPs;
-    [SerializeField] ParticleSystem yellowLaserPs;
-    [SerializeField] ParticleSystem blueLaserPs;
-    [SerializeField] ParticleSystem redLaserPs;
-    [SerializeField] ParticleSystem purpleLaserPs;
-    [SerializeField] ParticleSystem greenLaserPs;
     [Header("Triple")]
     [SerializeField] Transform projectileOrigin2Start;
     [SerializeField] Transform projectileOrigin2Current;
@@ -143,16 +135,6 @@ public class PlayerGun : MonoBehaviour
                         GameObject.Instantiate(selectedProjectilePrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
                         automaticCd = 1 / automaticCadence;
                     }
-                }
-                break;
-            case PROJECTILE_TYPE.LASER:
-                if (triggerState == TRIGGER_STATE.DOWN)
-                {
-                    selectedLaserPs.Play();
-                }
-                else if (triggerState == TRIGGER_STATE.DOWN)
-                {
-                    selectedLaserPs.Stop(true, ParticleSystemStopBehavior.StopEmitting);
                 }
                 break;
             case PROJECTILE_TYPE.TRIPLE:
@@ -235,62 +217,28 @@ public class PlayerGun : MonoBehaviour
 
     public void SwapGunType(GUN_TYPE newType)
     {
+        bool laserPressed = false;
         switch (newType)
         {
             case GUN_TYPE.YELLOW:
-                if (projectileType != PROJECTILE_TYPE.LASER)
-                {
-                    selectedProjectilePrefab = yellowProjectilePrefab;
-                    selectedChargedPrefab = yellowChargedPrefab;
-                }
-                else
-                {
-                    selectedLaserPs = yellowLaserPs;
-                }
+                selectedProjectilePrefab = yellowProjectilePrefab;
+                selectedChargedPrefab = yellowChargedPrefab;
                 break;
             case GUN_TYPE.BLUE:
-                if (projectileType != PROJECTILE_TYPE.LASER)
-                {
-                    selectedProjectilePrefab = blueProjectilePrefab;
-                    selectedChargedPrefab = blueChargedPrefab;
-                }
-                else
-                {
-                    selectedLaserPs = blueLaserPs;
-                } 
+                selectedProjectilePrefab = blueProjectilePrefab;
+                selectedChargedPrefab = blueChargedPrefab;
                 break;
             case GUN_TYPE.RED:
-                if (projectileType != PROJECTILE_TYPE.LASER)
-                {
-                    selectedProjectilePrefab = redProjectilePrefab;
-                    selectedChargedPrefab = redChargedPrefab;
-                }
-                else
-                {
-                    selectedLaserPs = redLaserPs;
-                }
+                selectedProjectilePrefab = redProjectilePrefab;
+                selectedChargedPrefab = redChargedPrefab;
                 break;
             case GUN_TYPE.PURPLE:
-                if (projectileType != PROJECTILE_TYPE.LASER)
-                {
-                    selectedProjectilePrefab = purpleProjectilePrefab;
-                    selectedChargedPrefab = purpleChargedPrefab;
-                }
-                else
-                {
-                    selectedLaserPs = purpleLaserPs;
-                }
+                selectedProjectilePrefab = purpleProjectilePrefab;
+                selectedChargedPrefab = purpleChargedPrefab;
                 break;
             case GUN_TYPE.GREEN:
-                if (projectileType != PROJECTILE_TYPE.LASER)
-                {
-                    selectedProjectilePrefab = greenProjectilePrefab;
-                    selectedChargedPrefab = greenChargedPrefab;
-                }
-                else
-                {
-                    selectedLaserPs = greenLaserPs;
-                }
+                selectedProjectilePrefab = greenProjectilePrefab;
+                selectedChargedPrefab = greenChargedPrefab;
                 break;
         }
         screen.SetScreen(newType);
