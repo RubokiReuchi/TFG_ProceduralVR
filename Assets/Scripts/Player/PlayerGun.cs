@@ -70,11 +70,7 @@ public class PlayerGun : MonoBehaviour
     float automaticCd = 0;
     [Header("Triple")]
     [SerializeField] Transform projectileOrigin2Start;
-    [SerializeField] Transform projectileOrigin2Current;
     [SerializeField] Transform projectileOrigin3Start;
-    [SerializeField] Transform projectileOrigin3Current;
-    PlayerCharged chargedProjectile2 = null;
-    PlayerCharged chargedProjectile3 = null;
 
     // Start is called before the first frame update
     void Start()
@@ -141,8 +137,8 @@ public class PlayerGun : MonoBehaviour
                 if (triggerState == TRIGGER_STATE.DOWN)
                 {
                     GameObject.Instantiate(selectedProjectilePrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
-                    GameObject.Instantiate(selectedProjectilePrefab, projectileOrigin2Current.position, projectileOrigin2Current.rotation);
-                    GameObject.Instantiate(selectedProjectilePrefab, projectileOrigin3Current.position, projectileOrigin3Current.rotation);
+                    GameObject.Instantiate(selectedProjectilePrefab, projectileOrigin2Start.position, projectileOrigin2Start.rotation);
+                    GameObject.Instantiate(selectedProjectilePrefab, projectileOrigin3Start.position, projectileOrigin3Start.rotation);
                 }
                 else if (triggerState == TRIGGER_STATE.REPEAT)
                 {
@@ -153,22 +149,14 @@ public class PlayerGun : MonoBehaviour
                         if (holdTime < maxIncrease)
                         {
                             projectileOriginCurrent.position = projectileOriginStart.position + projectileOriginCurrent.forward * holdTime / 2.0f;
-                            projectileOrigin2Current.position = projectileOrigin2Start.position + projectileOrigin2Current.forward * holdTime / 2.0f;
-                            projectileOrigin3Current.position = projectileOrigin3Start.position + projectileOrigin3Current.forward * holdTime / 2.0f;
                         }
                         if (!chargedProjectile)
                         {
                             chargedProjectile = GameObject.Instantiate(selectedChargedPrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation).GetComponent<PlayerCharged>();
                             chargedProjectile.SetUp();
-                            chargedProjectile2 = GameObject.Instantiate(selectedChargedPrefab, projectileOrigin2Current.position, projectileOrigin2Current.rotation).GetComponent<PlayerCharged>();
-                            chargedProjectile2.SetUp();
-                            chargedProjectile3 = GameObject.Instantiate(selectedChargedPrefab, projectileOrigin3Current.position, projectileOrigin3Current.rotation).GetComponent<PlayerCharged>();
-                            chargedProjectile3.SetUp();
                         }
                         if (holdTime > maxIncrease) holdTime = maxIncrease;
                         chargedProjectile.Increase(new Vector3(holdTime, holdTime, holdTime), projectileOriginCurrent.position);
-                        chargedProjectile2.Increase(new Vector3(holdTime, holdTime, holdTime), projectileOrigin2Current.position);
-                        chargedProjectile3.Increase(new Vector3(holdTime, holdTime, holdTime), projectileOrigin3Current.position);
                     }
                 }
                 else if (triggerState == TRIGGER_STATE.UP)
@@ -179,14 +167,6 @@ public class PlayerGun : MonoBehaviour
                         chargedProjectile.Launch(projectileOriginCurrent.rotation);
                         chargedProjectile = null;
                         projectileOriginCurrent.position = projectileOriginStart.position;
-                        chargedProjectile2.SetDamage((repeatTime - 0.5f) * increaseSpeed, 0, maxIncrease);
-                        chargedProjectile2.Launch(projectileOrigin2Current.rotation);
-                        chargedProjectile2 = null;
-                        projectileOrigin2Current.position = projectileOrigin2Start.position;
-                        chargedProjectile3.SetDamage((repeatTime - 0.5f) * increaseSpeed, 0, maxIncrease);
-                        chargedProjectile3.Launch(projectileOrigin3Current.rotation);
-                        chargedProjectile3 = null;
-                        projectileOrigin3Current.position = projectileOrigin3Start.position;
                     }
                     repeatTime = 0;
                 }
@@ -217,7 +197,6 @@ public class PlayerGun : MonoBehaviour
 
     public void SwapGunType(GUN_TYPE newType)
     {
-        bool laserPressed = false;
         switch (newType)
         {
             case GUN_TYPE.YELLOW:

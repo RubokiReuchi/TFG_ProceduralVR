@@ -1291,14 +1291,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3030064592749746485}
-  m_LocalRotation: {x: 0, y: 0.13052616, z: 0, w: 0.9914449}
-  m_LocalPosition: {x: 0.1, y: 0.045494307, z: 0.1932408}
+  m_LocalRotation: {x: 0, y: 0.043619405, z: 0, w: 0.9990483}
+  m_LocalPosition: {x: 0, y: 0.045494307, z: 0.1932408}
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1645026028528013279}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 15, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 5, z: 0}
 --- !u!1 &3292934911323327865
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,14 +1322,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3292934911323327865}
-  m_LocalRotation: {x: 0, y: -0.13052624, z: 0, w: 0.9914449}
-  m_LocalPosition: {x: -0.1, y: 0.045494307, z: 0.1932408}
+  m_LocalRotation: {x: 0, y: -0.043619405, z: 0, w: 0.9990483}
+  m_LocalPosition: {x: 0, y: 0.045494307, z: 0.1932408}
   m_LocalScale: {x: 0, y: 0, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1645026028528013279}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: -15, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -5, z: 0}
 --- !u!1 &3401146007319516516
 GameObject:
   m_ObjectHideFlags: 0
@@ -7268,9 +7268,7 @@ Transform:
   - {fileID: 5423521305535551117}
   - {fileID: 1530479621129123535}
   - {fileID: 9167591100657879468}
-  - {fileID: 516353500126854693}
   - {fileID: 4445053782705207128}
-  - {fileID: 7268490459616148196}
   m_Father: {fileID: 5114987901501657669}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8723,68 +8721,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &8494409510176052233
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 516353500126854693}
-  m_Layer: 0
-  m_Name: ProjectileOrigin2Current
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &516353500126854693
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8494409510176052233}
-  m_LocalRotation: {x: 0, y: 0.13052616, z: 0, w: 0.9914449}
-  m_LocalPosition: {x: 0.1, y: 0.045494307, z: 0.1932408}
-  m_LocalScale: {x: 0, y: 0, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1645026028528013279}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 15, z: 0}
---- !u!1 &8572901219215186079
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7268490459616148196}
-  m_Layer: 0
-  m_Name: ProjectileOrigin3Current
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7268490459616148196
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8572901219215186079}
-  m_LocalRotation: {x: 0, y: -0.13052624, z: 0, w: 0.9914449}
-  m_LocalPosition: {x: -0.1, y: 0.045494307, z: 0.1932408}
-  m_LocalScale: {x: 0, y: 0, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1645026028528013279}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: -15, z: 0}
 --- !u!1 &8594369917580554984
 GameObject:
   m_ObjectHideFlags: 0
@@ -10313,15 +10249,8 @@ MonoBehaviour:
   greenChargedPrefab: {fileID: 8696879561171596771, guid: fbee6678b9f6f64428efc2a1e9967a15, type: 3}
   projectileType: 0
   automaticCadence: 8
-  yellowLaserPs: {fileID: 0}
-  blueLaserPs: {fileID: 0}
-  redLaserPs: {fileID: 0}
-  purpleLaserPs: {fileID: 0}
-  greenLaserPs: {fileID: 0}
   projectileOrigin2Start: {fileID: 9167591100657879468}
-  projectileOrigin2Current: {fileID: 516353500126854693}
   projectileOrigin3Start: {fileID: 4445053782705207128}
-  projectileOrigin3Current: {fileID: 7268490459616148196}
 --- !u!23 &7631245282251171859 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3495243847210584139, guid: 4abd22b34bb3fe94197684e1446e8735, type: 3}
