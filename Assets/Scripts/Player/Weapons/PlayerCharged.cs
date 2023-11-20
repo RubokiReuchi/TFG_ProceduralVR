@@ -9,7 +9,6 @@ using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerCharged : Projectile
 {
-    public GUN_TYPE selectedGunType;
     [SerializeField] float minDamage;
     [SerializeField] float maxDamage;
     float damage;

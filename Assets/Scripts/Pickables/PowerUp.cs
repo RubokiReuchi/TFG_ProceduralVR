@@ -6,7 +6,14 @@ public enum POWER_UP_TYPE
 {
     HAND_OF_THE_GIANT,
     XRAY_VISION,
-    AUTOMATIC_MODE
+    AUTOMATIC_MODE,
+    LASER_MODE,
+    TRIPLE_SHOT,
+    MISILE_MODE,
+    CHARGED_EXPLOSION,
+    AIR_DASH,
+    DOBLE_JUMP,
+    SHIELD
 }
 
 public class PowerUp : MonoBehaviour

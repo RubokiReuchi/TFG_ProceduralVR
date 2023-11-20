@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class PlayerProjectile : Projectile
 {
-    public GUN_TYPE selectedGunType;
     [SerializeField] float damage;
     [SerializeField] GameObject decal;
     [SerializeField] GameObject hitMark;

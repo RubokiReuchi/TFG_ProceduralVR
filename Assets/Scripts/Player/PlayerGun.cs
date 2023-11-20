@@ -20,7 +20,8 @@ public enum PROJECTILE_TYPE
     NORMAL,
     AUTOMATIC,
     LASER,
-    TRIPLE
+    TRIPLE,
+    MISILE
 }
 
 public enum TRIGGER_STATE
@@ -69,14 +70,12 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] float automaticCadence;
     float automaticCd = 0;
     [Header("Laser")]
-    [SerializeField] GameObject yellowLaserPrefab;
-    [SerializeField] GameObject blueLaserPrefab;
-    [SerializeField] GameObject redLaserPrefab;
-    [SerializeField] GameObject purpleLaserPrefab;
-    [SerializeField] GameObject greenLaserPrefab;
-    [SerializeField] float laserCadence;
-    [SerializeField] float laserStartDelay;
-    float laserCd = 0;
+    ParticleSystem selectedLaserPs;
+    [SerializeField] ParticleSystem yellowLaserPs;
+    [SerializeField] ParticleSystem blueLaserPs;
+    [SerializeField] ParticleSystem redLaserPs;
+    [SerializeField] ParticleSystem purpleLaserPs;
+    [SerializeField] ParticleSystem greenLaserPs;
     [Header("Triple")]
     [SerializeField] Transform projectileOrigin2Start;
     [SerializeField] Transform projectileOrigin2Current;
@@ -147,18 +146,13 @@ public class PlayerGun : MonoBehaviour
                 }
                 break;
             case PROJECTILE_TYPE.LASER:
-                laserCd -= Time.deltaTime;
                 if (triggerState == TRIGGER_STATE.DOWN)
                 {
-                    laserCd = laserStartDelay;
+                    selectedLaserPs.Play();
                 }
-                else if (triggerState == TRIGGER_STATE.REPEAT)
+                else if (triggerState == TRIGGER_STATE.DOWN)
                 {
-                    if (laserCd <= 0)
-                    {
-                        GameObject.Instantiate(selectedProjectilePrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
-                        laserCd = 1 / laserCadence;
-                    }
+                    selectedLaserPs.Stop(true, ParticleSystemStopBehavior.StopEmitting);
                 }
                 break;
             case PROJECTILE_TYPE.TRIPLE:
@@ -215,6 +209,8 @@ public class PlayerGun : MonoBehaviour
                     repeatTime = 0;
                 }
                 break;
+            case PROJECTILE_TYPE.MISILE:
+                break;
         }
     }
 
@@ -249,17 +245,18 @@ public class PlayerGun : MonoBehaviour
                 }
                 else
                 {
-                    selectedProjectilePrefab = yellowLaserPrefab;
+                    selectedLaserPs = yellowLaserPs;
                 }
                 break;
             case GUN_TYPE.BLUE:
                 if (projectileType != PROJECTILE_TYPE.LASER)
                 {
                     selectedProjectilePrefab = blueProjectilePrefab;
+                    selectedChargedPrefab = blueChargedPrefab;
                 }
                 else
                 {
-                    selectedProjectilePrefab = blueLaserPrefab;
+                    selectedLaserPs = blueLaserPs;
                 } 
                 break;
             case GUN_TYPE.RED:
@@ -270,7 +267,7 @@ public class PlayerGun : MonoBehaviour
                 }
                 else
                 {
-                    selectedProjectilePrefab = redLaserPrefab;
+                    selectedLaserPs = redLaserPs;
                 }
                 break;
             case GUN_TYPE.PURPLE:
@@ -281,7 +278,7 @@ public class PlayerGun : MonoBehaviour
                 }
                 else
                 {
-                    selectedProjectilePrefab = purpleLaserPrefab;
+                    selectedLaserPs = purpleLaserPs;
                 }
                 break;
             case GUN_TYPE.GREEN:
@@ -292,7 +289,7 @@ public class PlayerGun : MonoBehaviour
                 }
                 else
                 {
-                    selectedProjectilePrefab = greenLaserPrefab;
+                    selectedLaserPs = greenLaserPs;
                 }
                 break;
         }
