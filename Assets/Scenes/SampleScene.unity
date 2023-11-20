@@ -356,7 +356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6275698644058724443, guid: bb2c66e0c6346fc41b073bc58d7cd6a4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.92
+      value: -1.6400001
       objectReference: {fileID: 0}
     - target: {fileID: 6275698644058724443, guid: bb2c66e0c6346fc41b073bc58d7cd6a4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -364,7 +364,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6275698644058724443, guid: bb2c66e0c6346fc41b073bc58d7cd6a4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.99
+      value: 10.98
       objectReference: {fileID: 0}
     - target: {fileID: 6275698644058724443, guid: bb2c66e0c6346fc41b073bc58d7cd6a4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -637,7 +637,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3991369998970110765, guid: 996b949f035e06e48a62a29bf2df714d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.64
+      value: -2.3600001
       objectReference: {fileID: 0}
     - target: {fileID: 3991369998970110765, guid: 996b949f035e06e48a62a29bf2df714d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -645,7 +645,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3991369998970110765, guid: 996b949f035e06e48a62a29bf2df714d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.939
+      value: 11.929
       objectReference: {fileID: 0}
     - target: {fileID: 3991369998970110765, guid: 996b949f035e06e48a62a29bf2df714d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -728,6 +728,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.23
       objectReference: {fileID: 0}
+    - target: {fileID: 3134534066817998649, guid: 4d40619687de10d4fac7e21686de0d19, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3810833091767588687, guid: 4d40619687de10d4fac7e21686de0d19, type: 3}
       propertyPath: m_Name
       value: SphereRobot
@@ -738,15 +742,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6620376488467600383, guid: 4d40619687de10d4fac7e21686de0d19, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.45
+      value: -2.17
       objectReference: {fileID: 0}
     - target: {fileID: 6620376488467600383, guid: 4d40619687de10d4fac7e21686de0d19, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.572
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6620376488467600383, guid: 4d40619687de10d4fac7e21686de0d19, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.27
+      value: 13.26
       objectReference: {fileID: 0}
     - target: {fileID: 6620376488467600383, guid: 4d40619687de10d4fac7e21686de0d19, type: 3}
       propertyPath: m_LocalRotation.w
@@ -776,29 +780,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7408445098388188636, guid: 4d40619687de10d4fac7e21686de0d19, type: 3}
-      propertyPath: m_Drag
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7408445098388188636, guid: 4d40619687de10d4fac7e21686de0d19, type: 3}
-      propertyPath: m_Mass
-      value: 10000
-      objectReference: {fileID: 0}
-    - target: {fileID: 7408445098388188636, guid: 4d40619687de10d4fac7e21686de0d19, type: 3}
-      propertyPath: m_AngularDrag
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 7408445098388188636, guid: 4d40619687de10d4fac7e21686de0d19, type: 3}
-      propertyPath: m_Constraints
-      value: 112
-      objectReference: {fileID: 0}
     - target: {fileID: 8527958410363451332, guid: 4d40619687de10d4fac7e21686de0d19, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8950940979905319342, guid: 4d40619687de10d4fac7e21686de0d19, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

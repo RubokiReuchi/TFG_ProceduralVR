@@ -18,7 +18,6 @@ public class PlayerPunch : MonoBehaviour
         {
             Enemy script = other.GetComponent<Enemy>();
             float finalForce = !giantPunch ? punchForce : giantPunchForce;
-
             if (Mathf.Abs(leftHandVelocity.y) > new Vector2(leftHandVelocity.x, leftHandVelocity.z).magnitude)
             {
                 if (leftHandVelocity.y > 0)

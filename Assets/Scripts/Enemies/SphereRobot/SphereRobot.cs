@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 public class SphereRobot : Enemy
 {
-    public enum STATE
+    enum STATE
     {
         REST,
         ROLL,
@@ -40,9 +40,14 @@ public class SphereRobot : Enemy
     bool exploting;
     [SerializeField] GameObject explosionPrefab;
     [SerializeField] GameObject corpsPrefab;
+    bool firstEnable = true;
+    Vector3 sideRollingDestination;
 
     private void OnEnable()
     {
+        if (!firstEnable) return;
+        firstEnable = false;
+
         animator = transform.GetChild(0).GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -62,11 +67,11 @@ public class SphereRobot : Enemy
         if (exploting) return;
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        //if (distanceToPlayer < explosionDistance && !Physics.Raycast(transform.position, player.position, distanceToPlayer, foundationsLayers))
-        //{
-        //    StartCoroutine(Exploting());
-        //    return;
-        //}
+        if (distanceToPlayer < explosionDistance && !Physics.Raycast(transform.position, player.position, distanceToPlayer, foundationsLayers))
+        {
+            StartCoroutine(Exploting());
+            return;
+        }
 
         switch (state)
         {
@@ -83,6 +88,7 @@ public class SphereRobot : Enemy
                 }
                 break;
             case STATE.SIDE_ROLLING:
+                agent.destination = sideRollingDestination;
                 if (agent.hasPath && agent.remainingDistance <= 0.1f)
                 {
                     animator.SetTrigger("Stop Roll");
@@ -174,7 +180,7 @@ public class SphereRobot : Enemy
                 Vector3 finalPos = directionVector * distance;
                 float lenght = Vector3.Distance(finalPos, transform.position);
                 NavMesh.SamplePosition(finalPos, out hit, lenght, 1);
-                error = Physics.Raycast(transform.position, finalPos, lenght, foundationsLayers);
+                error = Physics.Raycast(transform.position, finalPos, lenght - 0.1f, foundationsLayers);
                 loops++;
             }
 
@@ -183,8 +189,8 @@ public class SphereRobot : Enemy
                 StartCoroutine(Exploting());
                 return;
             }
-            
-            agent.destination = hit.position;
+
+            sideRollingDestination = hit.position;
             lastCanShoot = 2;
         }
         else

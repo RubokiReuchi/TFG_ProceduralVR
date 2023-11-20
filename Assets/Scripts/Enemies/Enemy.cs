@@ -56,11 +56,11 @@ public class Enemy : MonoBehaviour
         agent.enabled = false;
         rb.velocity = Vector3.zero;
         rb.AddForce(Vector3.up * force, ForceMode.VelocityChange);
-        yield return null; // wait 1 frame
+        yield return new WaitForSeconds(0.1f); // wait 0.1 secs
         bool onGround = false;
         while (!onGround)
         {
-            onGround = Physics.Raycast(transform.position, Vector3.down, 0.01f, foundationsLayers);
+            onGround = Physics.Raycast(transform.position + Vector3.up * 0.001f, Vector3.down, 0.005f, foundationsLayers);
             yield return null;
         }
         if (giant) onCC = false;
@@ -109,7 +109,7 @@ public class Enemy : MonoBehaviour
         bool onGround = false;
         while (!onGround)
         {
-            onGround = Physics.Raycast(transform.position, Vector3.down, 0.001f, foundationsLayers);
+            onGround = Physics.Raycast(transform.position + Vector3.up * 0.001f, Vector3.down, 0.005f, foundationsLayers);
             yield return null;
         }
         onCC = false;

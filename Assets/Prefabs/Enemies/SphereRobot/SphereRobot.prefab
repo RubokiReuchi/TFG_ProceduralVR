@@ -1593,7 +1593,7 @@ GameObject:
   - component: {fileID: 7448977935876576358}
   - component: {fileID: 8950940979905319342}
   - component: {fileID: 8527958410363451332}
-  - component: {fileID: 3134534066817998649}
+  - component: {fileID: 988475276147469785}
   - component: {fileID: 7408445098388188636}
   m_Layer: 11
   m_Name: SphereRobot
@@ -1616,7 +1616,7 @@ Transform:
   m_Children:
   - {fileID: 282068180601103798}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7448977935876576358
 MonoBehaviour:
@@ -1647,6 +1647,10 @@ MonoBehaviour:
   foundationsLayers:
     serializedVersion: 2
     m_Bits: 192
+  horizontalPushed: 0
+  verticalPushed: 0
+  bouncyPushed: 0
+  onCC: 0
   state: 0
   walkDistance: 10
   shootDistance: 5
@@ -1683,8 +1687,8 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!135 &3134534066817998649
-SphereCollider:
+--- !u!136 &988475276147469785
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1701,9 +1705,11 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.235
-  m_Center: {x: 0, y: 0.23, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.23
+  m_Height: 0.56
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.28, z: 0}
 --- !u!54 &7408445098388188636
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1714,7 +1720,7 @@ Rigidbody:
   serializedVersion: 4
   m_Mass: 10000
   m_Drag: 5
-  m_AngularDrag: 1
+  m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1729,7 +1735,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &4123783841097881134
 GameObject:
