@@ -51,6 +51,7 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] float increaseSpeed;
     [SerializeField] float maxIncrease;
     PlayerCharged chargedProjectile = null;
+    [NonEditable] public bool shockwaveObtained = false;
 
     [Header("Projectiles Prefabs")]
     [SerializeField] GameObject yellowProjectilePrefab;
@@ -132,7 +133,7 @@ public class PlayerGun : MonoBehaviour
                     if (repeatTime >= 0.5f && chargedProjectile)
                     {
                         chargedProjectile.SetDamage((repeatTime - 0.5f) * increaseSpeed, 0, maxIncrease);
-                        chargedProjectile.Launch(projectileOriginCurrent.rotation);
+                        chargedProjectile.Launch(projectileOriginCurrent.rotation, shockwaveObtained);
                         chargedProjectile = null;
                         projectileOriginCurrent.position = projectileOriginStart.position;
                     }
@@ -181,7 +182,7 @@ public class PlayerGun : MonoBehaviour
                     if (repeatTime >= 0.5f && chargedProjectile)
                     {
                         chargedProjectile.SetDamage((repeatTime - 0.5f) * increaseSpeed, 0, maxIncrease);
-                        chargedProjectile.Launch(projectileOriginCurrent.rotation);
+                        chargedProjectile.Launch(projectileOriginCurrent.rotation, shockwaveObtained);
                         chargedProjectile = null;
                         projectileOriginCurrent.position = projectileOriginStart.position;
                     }
@@ -211,7 +212,8 @@ public class PlayerGun : MonoBehaviour
                     if (superMisileChargingPs.isPlaying) superMisileChargingPs.Stop();
                     if (repeatTime >= superMisileTime)
                     {
-                        GameObject.Instantiate(selectedChargedPrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
+                        GameObject superMisile = GameObject.Instantiate(selectedChargedPrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
+                        if (shockwaveObtained) superMisile.GetComponent<PlayerSuperMisile>().AddShockwave();
                         superMisileCharged = false;
                     }
                     else if (repeatTime >= 0.5f)

@@ -163,7 +163,7 @@ Transform:
   m_Children:
   - {fileID: 9096502830901053004}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &187525010693542263
 MeshFilter:
@@ -277,8 +277,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 50
   lifeTime: 4
-  selectedGunType: 2
   minDamage: 20
   maxDamage: 60
   decal: {fileID: 8860044147275984740, guid: b912e1a34b48e9d40929a2501ceb2d36, type: 3}
   hitMark: {fileID: 286907324385993817, guid: 94bcce0b84e65d34ba593513f6e5372c, type: 3}
+  shockwavePrefab: {fileID: 7300164327946203293, guid: 747dcbd4c665b174d9cdfa2e419eac3e, type: 3}

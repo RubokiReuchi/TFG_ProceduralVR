@@ -17,6 +17,8 @@ public class PlayerCharged : Projectile
     Vector3 initialScale;
     [SerializeField] GameObject decal;
     [SerializeField] GameObject hitMark;
+    bool shockwave = false;
+    [SerializeField] GameObject shockwavePrefab;
 
     public void SetUp()
     {
@@ -41,11 +43,24 @@ public class PlayerCharged : Projectile
             Physics.Raycast(transform.position, transform.forward, out RaycastHit hit);
             GameObject decalGo = GameObject.Instantiate(decal, hit.point + hit.normal * 0.01f, Quaternion.LookRotation(hit.normal) * Quaternion.AngleAxis(90, Vector3.right));
             decalGo.transform.localScale = transform.localScale * 0.2f;
+            if (shockwave)
+            {
+                PlayerShockwave shockwave = GameObject.Instantiate(shockwavePrefab, collision.contacts[0].point, Quaternion.identity).GetComponent<PlayerShockwave>();
+                shockwave.SetDamage(damage / 2.0f);
+                shockwave.SetSize(transform.localScale.x * 8.0f);
+            }
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
-            GameObject hit = GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
-            collision.gameObject.GetComponent<Enemy>().TakeDamage(damage);
+            GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
+            Enemy script = collision.gameObject.GetComponent<Enemy>();
+            if (script.enabled) script.TakeDamage(damage);
+            if (shockwave)
+            {
+                PlayerShockwave shockwave = GameObject.Instantiate(shockwavePrefab, collision.contacts[0].point, Quaternion.identity).GetComponent<PlayerShockwave>();
+                shockwave.SetDamage(damage / 2.0f);
+                shockwave.SetSize(transform.localScale.x * 8.0f);
+            }
         }
         Destroy(this.gameObject);
     }
@@ -56,11 +71,12 @@ public class PlayerCharged : Projectile
         transform.localScale = initialScale + newScl;
     }
 
-    public void Launch(Quaternion rotation)
+    public void Launch(Quaternion rotation, bool shockwaveObtained)
     {
         transform.rotation = rotation;
         col.enabled = true;
         launch = true;
+        shockwave = shockwaveObtained;
     }
 
     public void SetDamage(float current, float min, float max)

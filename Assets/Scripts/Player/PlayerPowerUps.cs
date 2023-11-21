@@ -9,6 +9,7 @@ public class PlayerPowerUps : MonoBehaviour
     [SerializeField] Transform leftHand;
     [SerializeField] PlayerPunch playerPunch;
     [SerializeField] PlayerGun playerGun;
+    [SerializeField] PlayerMovement playerMovement;
 
     private void Awake()
     {
@@ -34,11 +35,14 @@ public class PlayerPowerUps : MonoBehaviour
                 playerGun.projectileType = PROJECTILE_TYPE.MISILE;
                 playerGun.SwapGunType(GUN_TYPE.NULL);
                 break;
-            case POWER_UP_TYPE.CHARGED_EXPLOSION:
+            case POWER_UP_TYPE.SHOCKWAVE:
+                playerGun.shockwaveObtained = true;
                 break;
             case POWER_UP_TYPE.AIR_DASH:
+                playerMovement.airDashObtained = true;
                 break;
             case POWER_UP_TYPE.DOBLE_JUMP:
+                playerMovement.dobleJumpObtained = true;
                 break;
             case POWER_UP_TYPE.SHIELD:
                 break;

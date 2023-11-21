@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &3996879533317102148
 MeshFilter:
@@ -156,3 +156,4 @@ MonoBehaviour:
   decal: {fileID: 5891760166965504573, guid: f04cf18c33f56df4fbfa7da6e62cbfba, type: 3}
   smokeHitMark: {fileID: 6724875291339397952, guid: 7c55b0973c3ee57499cd9b9df55ba666, type: 3}
   hitMark: {fileID: 286907324385993817, guid: 928edfeea471b8f478e270f053c93aac, type: 3}
+  shockwavePrefab: {fileID: 7300164327946203293, guid: 747dcbd4c665b174d9cdfa2e419eac3e, type: 3}

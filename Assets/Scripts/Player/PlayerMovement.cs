@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     bool groundJump;
     bool airJump;
     Vector3 movement;
+    [NonEditable] public bool dobleJumpObtained = false;
 
     [Header("Dash")]
     [SerializeField] Transform head;
@@ -28,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dashDuration;
     [SerializeField] ParticleSystem dashPs;
     [SerializeField] Material tunnelingMaterial;
+    [NonEditable] public bool airDashObtained = false;
 
 
     // Start is called before the first frame update
@@ -35,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         groundJump = true;
-        airJump = true;
+        airJump = false;
         expectedGravity = 0;
         dashCd = 0;
 
@@ -49,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         if (IsGrounded())
         {
             groundJump = true;
-            airJump = true;
+            if (dobleJumpObtained) airJump = true;
             movement.y = 0;
         }
         else groundJump = false;
@@ -78,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
             if (dashCd <= 0) dashPs.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         }
 
-        if (IsGrounded() && dashCd <= 0 && dashAction.action.WasPressedThisFrame())
+        if ((IsGrounded() || airDashObtained) && dashCd <= 0 && dashAction.action.WasPressedThisFrame())
         {
             float stickX = stickAction.action.ReadValue<Vector2>().x;
             float stickY = stickAction.action.ReadValue<Vector2>().y;

@@ -11,6 +11,8 @@ public class PlayerSuperMisile : Projectile
     [SerializeField] GameObject hitMark;
     bool playVFXs = false;
     float cdVFX = 0;
+    bool shockwave = false;
+    [SerializeField] GameObject shockwavePrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +53,11 @@ public class PlayerSuperMisile : Projectile
             Physics.Raycast(transform.position, transform.forward, out RaycastHit hit);
             GameObject.Instantiate(decal, hit.point + hit.normal * 0.01f, Quaternion.LookRotation(hit.normal) * Quaternion.AngleAxis(90, Vector3.right));
             GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
+            if (shockwave)
+            {
+                PlayerShockwave shockwave = GameObject.Instantiate(shockwavePrefab, collision.contacts[0].point, Quaternion.identity).GetComponent<PlayerShockwave>();
+                shockwave.SetDamage(damage / 2.0f);
+            }
         }
         else if (collision.gameObject.CompareTag("Enemy"))
         {
@@ -58,7 +65,17 @@ public class PlayerSuperMisile : Projectile
             GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
             Enemy script = collision.gameObject.GetComponent<Enemy>();
             if (script.enabled) script.TakeDamage(damage);
+            if (shockwave)
+            {
+                PlayerShockwave shockwave = GameObject.Instantiate(shockwavePrefab, collision.contacts[0].point, Quaternion.identity).GetComponent<PlayerShockwave>();
+                shockwave.SetDamage(damage / 2.0f);
+            }
         }
         Destroy(this.gameObject);
+    }
+
+    public void AddShockwave()
+    {
+        shockwave = true;
     }
 }
