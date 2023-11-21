@@ -13,11 +13,11 @@ public class PlayerProjectile : Projectile
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.velocity = transform.forward * speed;
     }
 
     void Update()
     {
-        rb.velocity = transform.forward * speed;
         lifeTime -= Time.deltaTime;
         if (lifeTime < 0) Destroy(this.gameObject);
     }

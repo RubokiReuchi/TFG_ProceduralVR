@@ -4,10 +4,12 @@ using System.Diagnostics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public enum GUN_TYPE
 {
+    NULL,
     YELLOW,
     BLUE,
     RED,
@@ -37,7 +39,7 @@ public class PlayerGun : MonoBehaviour
     TRIGGER_STATE triggerState;
     float repeatTime;
 
-    [NonEditable][SerializeField] GUN_TYPE selectedGun;
+    GUN_TYPE selectedGun = GUN_TYPE.YELLOW;
     [SerializeField] Transform projectileOriginStart;
     [SerializeField] Transform projectileOriginCurrent;
     GameObject selectedProjectilePrefab;
@@ -71,6 +73,21 @@ public class PlayerGun : MonoBehaviour
     [Header("Triple")]
     [SerializeField] Transform projectileOrigin2Start;
     [SerializeField] Transform projectileOrigin3Start;
+    [Header("Misile")]
+    [SerializeField] GameObject yellowMisilePrefab;
+    [SerializeField] GameObject blueMisilePrefab;
+    [SerializeField] GameObject redMisilePrefab;
+    [SerializeField] GameObject purpleMisilePrefab;
+    [SerializeField] GameObject greenMisilePrefab;
+    [SerializeField] GameObject yellowSuperMisilePrefab;
+    [SerializeField] GameObject blueSuperMisilePrefab;
+    [SerializeField] GameObject redSuperMisilePrefab;
+    [SerializeField] GameObject purpleSuperMisilePrefab;
+    [SerializeField] GameObject greenSuperMisilePrefab;
+    [SerializeField] float superMisileTime;
+    [SerializeField] ParticleSystem superMisileChargingPs;
+    [SerializeField] VisualEffect superMisileReady;
+    bool superMisileCharged = false;
 
     // Start is called before the first frame update
     void Start()
@@ -172,6 +189,37 @@ public class PlayerGun : MonoBehaviour
                 }
                 break;
             case PROJECTILE_TYPE.MISILE:
+                if (triggerState == TRIGGER_STATE.DOWN)
+                {
+                    GameObject.Instantiate(selectedProjectilePrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
+                }
+                else if (triggerState == TRIGGER_STATE.REPEAT)
+                {
+                    repeatTime += Time.deltaTime;
+                    if (superMisileCharged) return;
+                    if (!superMisileChargingPs.isPlaying && repeatTime >= 0.5f) superMisileChargingPs.Play();
+                    if (repeatTime >= superMisileTime)
+                    {
+                        superMisileChargingPs.Stop();
+                        if (!superMisileReady.enabled) superMisileReady.enabled = true;
+                        else superMisileReady.Play();
+                        superMisileCharged = true;
+                    }
+                }
+                else if (triggerState == TRIGGER_STATE.UP)
+                {
+                    if (superMisileChargingPs.isPlaying) superMisileChargingPs.Stop();
+                    if (repeatTime >= superMisileTime)
+                    {
+                        GameObject.Instantiate(selectedChargedPrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
+                        superMisileCharged = false;
+                    }
+                    else if (repeatTime >= 0.5f)
+                    {
+                        GameObject.Instantiate(selectedProjectilePrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
+                    }
+                    repeatTime = 0;
+                }
                 break;
         }
     }
@@ -197,29 +245,86 @@ public class PlayerGun : MonoBehaviour
 
     public void SwapGunType(GUN_TYPE newType)
     {
+        if (newType == GUN_TYPE.NULL) newType = selectedGun;
         switch (newType)
         {
             case GUN_TYPE.YELLOW:
-                selectedProjectilePrefab = yellowProjectilePrefab;
-                selectedChargedPrefab = yellowChargedPrefab;
+                switch (projectileType)
+                {
+                    case PROJECTILE_TYPE.NORMAL:
+                    case PROJECTILE_TYPE.AUTOMATIC:
+                    case PROJECTILE_TYPE.TRIPLE:
+                        selectedProjectilePrefab = yellowProjectilePrefab;
+                        selectedChargedPrefab = yellowChargedPrefab;
+                        break;
+                    case PROJECTILE_TYPE.MISILE:
+                        selectedProjectilePrefab = yellowMisilePrefab;
+                        selectedChargedPrefab = yellowSuperMisilePrefab;
+                        break;
+                }
                 break;
             case GUN_TYPE.BLUE:
-                selectedProjectilePrefab = blueProjectilePrefab;
-                selectedChargedPrefab = blueChargedPrefab;
+                switch (projectileType)
+                {
+                    case PROJECTILE_TYPE.NORMAL:
+                    case PROJECTILE_TYPE.AUTOMATIC:
+                    case PROJECTILE_TYPE.TRIPLE:
+                        selectedProjectilePrefab = blueProjectilePrefab;
+                        selectedChargedPrefab = blueChargedPrefab;
+                        break;
+                    case PROJECTILE_TYPE.MISILE:
+                        selectedProjectilePrefab = blueMisilePrefab;
+                        selectedChargedPrefab = blueSuperMisilePrefab;
+                        break;
+                }
                 break;
             case GUN_TYPE.RED:
-                selectedProjectilePrefab = redProjectilePrefab;
-                selectedChargedPrefab = redChargedPrefab;
+                switch (projectileType)
+                {
+                    case PROJECTILE_TYPE.NORMAL:
+                    case PROJECTILE_TYPE.AUTOMATIC:
+                    case PROJECTILE_TYPE.TRIPLE:
+                        selectedProjectilePrefab = redProjectilePrefab;
+                        selectedChargedPrefab = redChargedPrefab;
+                        break;
+                    case PROJECTILE_TYPE.MISILE:
+                        selectedProjectilePrefab = redMisilePrefab;
+                        selectedChargedPrefab = redSuperMisilePrefab;
+                        break;
+                }
                 break;
             case GUN_TYPE.PURPLE:
-                selectedProjectilePrefab = purpleProjectilePrefab;
-                selectedChargedPrefab = purpleChargedPrefab;
+                switch (projectileType)
+                {
+                    case PROJECTILE_TYPE.NORMAL:
+                    case PROJECTILE_TYPE.AUTOMATIC:
+                    case PROJECTILE_TYPE.TRIPLE:
+                        selectedProjectilePrefab = purpleProjectilePrefab;
+                        selectedChargedPrefab = purpleChargedPrefab;
+                        break;
+                    case PROJECTILE_TYPE.MISILE:
+                        selectedProjectilePrefab = purpleMisilePrefab;
+                        selectedChargedPrefab = purpleSuperMisilePrefab;
+                        break;
+                }
                 break;
             case GUN_TYPE.GREEN:
-                selectedProjectilePrefab = greenProjectilePrefab;
-                selectedChargedPrefab = greenChargedPrefab;
+                switch (projectileType)
+                {
+                    case PROJECTILE_TYPE.NORMAL:
+                    case PROJECTILE_TYPE.AUTOMATIC:
+                    case PROJECTILE_TYPE.TRIPLE:
+                        selectedProjectilePrefab = greenProjectilePrefab;
+                        selectedChargedPrefab = greenChargedPrefab;
+                        break;
+                    case PROJECTILE_TYPE.MISILE:
+                        selectedProjectilePrefab = greenMisilePrefab;
+                        selectedChargedPrefab = greenSuperMisilePrefab;
+                        break;
+                }
                 break;
         }
+        selectedGun = newType;
         screen.SetScreen(newType);
     }
 }
