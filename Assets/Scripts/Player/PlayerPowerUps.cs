@@ -10,6 +10,7 @@ public class PlayerPowerUps : MonoBehaviour
     [SerializeField] PlayerPunch playerPunch;
     [SerializeField] PlayerGun playerGun;
     [SerializeField] PlayerMovement playerMovement;
+    [SerializeField] GameObject xRayBattery;
 
     private void Awake()
     {
@@ -24,6 +25,8 @@ public class PlayerPowerUps : MonoBehaviour
                 StartCoroutine(GetHandOfTheGiant());
                 break;
             case POWER_UP_TYPE.XRAY_VISION:
+                PlayerState.instance.xRayVisionObtained = true;
+                xRayBattery.SetActive(true);
                 break;
             case POWER_UP_TYPE.AUTOMATIC_MODE:
                 playerGun.projectileType = PROJECTILE_TYPE.AUTOMATIC;
@@ -45,6 +48,7 @@ public class PlayerPowerUps : MonoBehaviour
                 playerMovement.dobleJumpObtained = true;
                 break;
             case POWER_UP_TYPE.SHIELD:
+                PlayerState.instance.shieldObtained = true;
                 break;
             default:
                 break;

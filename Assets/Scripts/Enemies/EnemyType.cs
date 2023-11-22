@@ -13,11 +13,15 @@ public class EnemyType : MonoBehaviour
     public ENEMY_TYPE type;
     Enemy enemyScript;
     Animator animator;
+    PlayerState playerState;
+    bool xRayLayer = false;
+    [SerializeField] GameObject[] xRayedGO;
 
     void Start()
     {
         enemyScript = GetComponent<Enemy>();
         animator = transform.GetChild(0).GetComponent<Animator>();
+        playerState = PlayerState.instance;
     }
 
     private void Update()
@@ -35,6 +39,17 @@ public class EnemyType : MonoBehaviour
                 enemyScript.enabled = true;
                 animator.speed = 1.0f;
             }
+        }
+
+        if (!xRayLayer && playerState.xRayVisionActive)
+        {
+            foreach (var go in xRayedGO) go.layer = LayerMask.NameToLayer("XRayEnemy");
+            xRayLayer = true;
+        }
+        else if (xRayLayer && !playerState.xRayVisionActive)
+        {
+            foreach (var go in xRayedGO) go.layer = LayerMask.NameToLayer("Enemy");
+            xRayLayer = false;
         }
     }
 }

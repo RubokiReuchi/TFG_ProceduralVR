@@ -31,7 +31,12 @@ public class PlayerShockwave : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (entityDamaged.Contains(other.transform.root)) return;
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Player") || other.CompareTag("PlayerHead"))
+        {
+            other.transform.root.GetComponent<PlayerState>().TakeDamage(damage / 5.0f);
+            entityDamaged.Add(other.transform.root);
+        }
+        else if (other.CompareTag("Enemy"))
         {
             Enemy script = other.transform.root.GetComponent<Enemy>();
             if (script.enabled) script.TakeDamage(damage);
