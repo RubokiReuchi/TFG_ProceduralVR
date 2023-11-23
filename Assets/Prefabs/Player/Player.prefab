@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4941092675593092336}
   - component: {fileID: 4030730331878470422}
   - component: {fileID: 1510888555901694510}
+  - component: {fileID: 8375650843087822129}
   - component: {fileID: 8741194346510480646}
   - component: {fileID: 5913942507032696258}
   - component: {fileID: 8112115781203124047}
@@ -102,11 +103,45 @@ MonoBehaviour:
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
-    m_Reference: {fileID: -2740566974648202840, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    m_Reference: {fileID: -6799714425238574799, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   xRayVisionObtained: 0
   xRayVisionActive: 0
   xRayMaterial: {fileID: 2100000, guid: 84fbf24531266c24e935229f80330d25, type: 2}
   xRayBatteryMaterial: {fileID: 2100000, guid: 1abc8369f43002849a91052dbd5bb3fe, type: 2}
+  temporalySaveGame:
+    m_UseReference: 1
+    m_Action:
+      m_Name: Temporaly Save Game
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 756afbaf-b9c7-4bc5-8ea3-8fb46b33ab00
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -2740566974648202840, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+--- !u!114 &8375650843087822129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42734825603055422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b008c0f035c2244fbaddf813817bf5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashUnlocked: 0
+  blueUnlocked: 0
+  redUnlocked: 0
+  blockingFistUnlocked: 0
+  purpleUnlocked: 0
+  superJumpUnlocked: 0
+  greenUnlocked: 0
+  leftHandCollision: {fileID: 7342156884352874754}
+  playerGun: {fileID: 1298732408277432296}
+  playerMovement: {fileID: 5913942507032696258}
 --- !u!114 &8741194346510480646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +184,7 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: -4471157679156305079, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   moveProvider: {fileID: 6335047456280406958}
+  superJumpUnlocked: 0
   jumpHeight: 3
   superJumpHeight: 5
   dobleJumpObtained: 0
@@ -177,6 +213,7 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 187161793506945269, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  dashUnlocked: 0
   dashCooldown: 2
   dashSpeed: 10
   dashDuration: 0.2
@@ -6746,14 +6783,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3701271457480987011}
-  m_LocalRotation: {x: 0.11722504, y: -0.015898345, z: 0.9896311, w: 0.08146014}
-  m_LocalPosition: {x: -0.03242612, y: 0.004365933, z: 0.023899717}
-  m_LocalScale: {x: 0.003140001, y: 0.011380004, z: 0.036799997}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.0364, z: -0.1045}
+  m_LocalScale: {x: 0.003140001, y: 0.011380003, z: 0.0368}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 2549715819654379087}
+  m_Father: {fileID: 1645026028528013279}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 2.254, y: -13.403, z: 12.39}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!33 &5072329544250173406
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -12208,6 +12245,7 @@ Transform:
   - {fileID: 8578534032407679308}
   - {fileID: 1182047895205949035}
   - {fileID: 2274036648295181030}
+  - {fileID: 6386039158180152971}
   m_Father: {fileID: 5114987901501657669}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15099,9 +15137,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3287168362613723580, guid: 65420e78dcd71cf47afb92df38723316, type: 3}
       insertIndex: -1
       addedObject: {fileID: 703467901293279197}
-    - targetCorrespondingSourceObject: {fileID: 3287168362613723580, guid: 65420e78dcd71cf47afb92df38723316, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6386039158180152971}
     - targetCorrespondingSourceObject: {fileID: 6401918274109834049, guid: 65420e78dcd71cf47afb92df38723316, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2622415009525845614}
@@ -15972,6 +16007,10 @@ MonoBehaviour:
   controller: {fileID: 1272249208588442641}
   projectileOriginStart: {fileID: 5423521305535551117}
   projectileOriginCurrent: {fileID: 1530479621129123535}
+  blueUnlocked: 0
+  redUnlocked: 0
+  purpleUnlocked: 0
+  greenUnlocked: 0
   increaseSpeed: 0.12
   maxIncrease: 0.2
   shockwaveObtained: 0

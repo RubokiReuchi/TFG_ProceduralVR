@@ -20,7 +20,7 @@ public class PlayerState : MonoBehaviour
 
     [NonEditable] public LEFT_HAND_POSE leftHandPose;
 
-    [Header("Health")]
+    [Header("Health & Shield")]
     float maxHealth = 250;
     [NonEditable][SerializeField] float currentHealth;
     [NonEditable][SerializeField] float shieldCooldown = 5.0f;
@@ -28,6 +28,8 @@ public class PlayerState : MonoBehaviour
     [SerializeField] Material shieldMaterial;
     [SerializeField] HandHealth displayHealth;
     [SerializeField] Material takeDamageMaterial;
+
+    [Header("XRay")]
     [SerializeField] InputActionProperty xRayAction;
     [HideInInspector] public bool xRayVisionObtained = false;
     [HideInInspector] public bool xRayVisionActive = false;
@@ -35,6 +37,9 @@ public class PlayerState : MonoBehaviour
     IEnumerator xRayCoroutine = null;
     float xRayBattery = 50;
     [SerializeField] Material xRayBatteryMaterial;
+
+
+    [SerializeField] InputActionProperty temporalySaveGame;
 
     private void Awake()
     {
@@ -55,6 +60,13 @@ public class PlayerState : MonoBehaviour
 
     void Update()
     {
+        // temp
+        if (temporalySaveGame.action.WasPressedThisFrame())
+        {
+            DataPersistenceManager.instance.SaveGame();
+        }
+        //
+
         if (xRayVisionObtained && xRayAction.action.WasPressedThisFrame())
         {
             if (xRayBattery >= 5)

@@ -44,6 +44,10 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] Transform projectileOriginCurrent;
     GameObject selectedProjectilePrefab;
     GameObject selectedChargedPrefab;
+    [HideInInspector] public bool blueUnlocked = false;
+    [HideInInspector] public bool redUnlocked = false;
+    [HideInInspector] public bool purpleUnlocked = false;
+    [HideInInspector] public bool greenUnlocked = false;
 
     HandScreen screen;
 
@@ -93,6 +97,13 @@ public class PlayerGun : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Skills Unlocked
+        blueUnlocked = PlayerSkills.instance.blueUnlocked;
+        redUnlocked = PlayerSkills.instance.redUnlocked;
+        purpleUnlocked = PlayerSkills.instance.purpleUnlocked;
+        greenUnlocked = PlayerSkills.instance.greenUnlocked;
+        SwapGunType(GUN_TYPE.NULL);
+
         triggerState = TRIGGER_STATE.IDLE;
         selectedProjectilePrefab = yellowProjectilePrefab;
         selectedChargedPrefab = yellowChargedPrefab;
@@ -248,6 +259,12 @@ public class PlayerGun : MonoBehaviour
     public void SwapGunType(GUN_TYPE newType)
     {
         if (newType == GUN_TYPE.NULL) newType = selectedGun;
+
+        if (newType == GUN_TYPE.BLUE && !blueUnlocked) return;
+        else if (newType == GUN_TYPE.RED && !redUnlocked) return;
+        else if (newType == GUN_TYPE.PURPLE && !purpleUnlocked) return;
+        else if (newType == GUN_TYPE.YELLOW && greenUnlocked) newType = GUN_TYPE.GREEN;
+
         switch (newType)
         {
             case GUN_TYPE.YELLOW:

@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump")]
     [SerializeField] InputActionProperty jumpAction;
     [SerializeField] ActionBasedContinuousMoveProvider moveProvider;
+    [HideInInspector] public bool superJumpUnlocked = false;
     [SerializeField] float jumpHeight;
     [SerializeField] float superJumpHeight;
     float expectedGravity;
@@ -23,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform head;
     [SerializeField] InputActionProperty stickAction;
     [SerializeField] InputActionProperty dashAction;
+    [HideInInspector] public bool dashUnlocked = false;
     [SerializeField] float dashCooldown;
     float dashCd;
     [SerializeField] float dashSpeed;
@@ -35,6 +37,10 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Skills Unlocked
+        dashUnlocked = PlayerSkills.instance.dashUnlocked;
+        superJumpUnlocked = PlayerSkills.instance.superJumpUnlocked;
+
         controller = GetComponent<CharacterController>();
         groundJump = true;
         airJump = false;
@@ -66,27 +72,30 @@ public class PlayerMovement : MonoBehaviour
         {
             if (groundJump) groundJump = false;
             else airJump = false;
-            //if (PlayerState.instance.superJump) movement.y = superJumpHeight;
-            /*else*/ movement.y = jumpHeight;
+            if (superJumpUnlocked) movement.y = superJumpHeight;
+            else movement.y = jumpHeight;
             expectedGravity = jumpHeight;
             moveProvider.m_VerticalVelocity = Vector3.zero; // m_VerticalVelocity wasn't public, I change it
         }
         if (movement.y > 0) controller.Move(movement * Time.deltaTime);
 
         // dash
-        if (dashCd > 0)
+        if (dashUnlocked)
         {
-            dashCd -= Time.deltaTime;
-            if (dashCd <= 0) dashPs.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        }
+            if (dashCd > 0)
+            {
+                dashCd -= Time.deltaTime;
+                if (dashCd <= 0) dashPs.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            }
 
-        if ((IsGrounded() || airDashObtained) && dashCd <= 0 && dashAction.action.WasPressedThisFrame())
-        {
-            float stickX = stickAction.action.ReadValue<Vector2>().x;
-            float stickY = stickAction.action.ReadValue<Vector2>().y;
-            Quaternion headRotationY = new Quaternion(0, head.rotation.y, 0, head.rotation.w);
-            Vector3 direction = (stickX == 0 && stickY == 0) ? headRotationY * (-transform.forward) : headRotationY * new Vector3(stickX, 0, stickY).normalized;
-            StartCoroutine(DashCo(direction));
+            if ((IsGrounded() || airDashObtained) && dashCd <= 0 && dashAction.action.WasPressedThisFrame())
+            {
+                float stickX = stickAction.action.ReadValue<Vector2>().x;
+                float stickY = stickAction.action.ReadValue<Vector2>().y;
+                Quaternion headRotationY = new Quaternion(0, head.rotation.y, 0, head.rotation.w);
+                Vector3 direction = (stickX == 0 && stickY == 0) ? headRotationY * (-transform.forward) : headRotationY * new Vector3(stickX, 0, stickY).normalized;
+                StartCoroutine(DashCo(direction));
+            }
         }
     }
 
