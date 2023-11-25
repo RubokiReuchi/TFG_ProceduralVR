@@ -58,6 +58,16 @@ public class PlayerMisile : Projectile
             Enemy script = collision.gameObject.GetComponent<Enemy>();
             if (script.enabled) script.TakeDamage(damage);
         }
+        else if (collision.gameObject.CompareTag("EnemyShield"))
+        {
+            GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
+            GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
+            if (gameObject.CompareTag("RedProjectile"))
+            {
+                EnemyShield script = collision.gameObject.GetComponent<EnemyShield>();
+                if (script.enabled) script.TakeDamage(damage);
+            }
+        }
         smokeTrail.transform.SetParent(null);
         smokeTrail.GetComponent<ParticleSystem>().Stop();
         Destroy(this.gameObject);

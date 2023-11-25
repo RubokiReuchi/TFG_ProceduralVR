@@ -71,6 +71,21 @@ public class PlayerSuperMisile : Projectile
                 shockwave.SetDamage(damage / 2.0f);
             }
         }
+        else if (collision.gameObject.CompareTag("EnemyShield"))
+        {
+            GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
+            GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
+            if (gameObject.CompareTag("RedProjectile"))
+            {
+                EnemyShield script = collision.gameObject.GetComponent<EnemyShield>();
+                if (script.enabled) script.TakeDamage(damage);
+            }
+            if (shockwave)
+            {
+                PlayerShockwave shockwave = GameObject.Instantiate(shockwavePrefab, collision.contacts[0].point, Quaternion.identity).GetComponent<PlayerShockwave>();
+                shockwave.SetDamage(damage / 2.0f);
+            }
+        }
         Destroy(this.gameObject);
     }
 

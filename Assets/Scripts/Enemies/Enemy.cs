@@ -20,6 +20,9 @@ public class Enemy : MonoBehaviour
     bool giantPushed = false;
     [HideInInspector] public bool onCC = false;
 
+    [NonEditable] public bool hasShield = false;
+    [HideInInspector] public EnemyShield shield = null;
+
     private void OnCollisionEnter(Collision collision)
     {
         if (!bouncyPushed && giantPushed && collision.gameObject.CompareTag("FoundationsW"))

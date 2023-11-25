@@ -27,9 +27,17 @@ public class PlayerPunch : MonoBehaviour
                         script.Airbourne(finalForce, giantPunch);
                         script.verticalPushed = true;
                     }
-                    // shield damage
+                    if (script.hasShield)
+                    {
+                        float finalShieldDamage = !giantPunch ? 50 : 200;
+                        script.shield.TakeDamage(finalShieldDamage);
+                    }
                 }
-                //else shield damage
+                else if (script.hasShield)
+                {
+                    float finalShieldDamage = !giantPunch ? 50 : 200;
+                    script.shield.TakeDamage(finalShieldDamage);
+                }
             }
             else
             {
@@ -38,8 +46,18 @@ public class PlayerPunch : MonoBehaviour
                     script.Pushed(new Vector3(leftHandVelocity.x, 0, leftHandVelocity.z).normalized * finalForce, giantPunch);
                     script.horizontalPushed = true;
                 }
-                // shield damage
+                if (script.hasShield)
+                {
+                    float finalShieldDamage = !giantPunch ? 50 : 200;
+                    script.shield.TakeDamage(finalShieldDamage);
+                }
             }
+        }
+        else if (other.CompareTag("EnemyShield"))
+        {
+            EnemyShield script = other.GetComponent<EnemyShield>();
+            float finalShieldDamage = !giantPunch ? 50 : 200;
+            script.TakeDamage(finalShieldDamage);
         }
     }
 }

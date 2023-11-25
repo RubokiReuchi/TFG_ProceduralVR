@@ -35,6 +35,15 @@ public class PlayerProjectile : Projectile
             Enemy script = collision.gameObject.GetComponent<Enemy>();
             if (script.enabled) script.TakeDamage(damage);
         }
+        else if (collision.gameObject.CompareTag("EnemyShield"))
+        {
+            GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
+            if (gameObject.CompareTag("RedProjectile"))
+            {
+                EnemyShield script = collision.gameObject.GetComponent<EnemyShield>();
+                if (script.enabled) script.TakeDamage(damage);
+            }
+        }
         Destroy(this.gameObject);
     }
 }
