@@ -62,11 +62,9 @@ public class PlayerMisile : Projectile
         {
             GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
             GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
-            if (gameObject.CompareTag("RedProjectile"))
-            {
-                EnemyShield script = collision.gameObject.GetComponent<EnemyShield>();
-                if (script.enabled) script.TakeDamage(damage);
-            }
+            float finalDamage = !gameObject.CompareTag("RedProjectile") ? damage / 10.0f : damage;
+            EnemyShield script = collision.gameObject.GetComponent<EnemyShield>();
+            if (script.enabled) script.TakeDamage(finalDamage);
         }
         smokeTrail.transform.SetParent(null);
         smokeTrail.GetComponent<ParticleSystem>().Stop();

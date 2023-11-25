@@ -42,10 +42,11 @@ public class PlayerShockwave : MonoBehaviour
             if (script.enabled) script.TakeDamage(damage);
             entityDamaged.Add(other.transform.root);
         }
-        else if (other.CompareTag("EnemyShield") && gameObject.CompareTag("RedProjectile"))
+        else if (other.CompareTag("EnemyShield"))
         {
+            float finalDamage = !gameObject.CompareTag("RedProjectile") ? damage / 10.0f : damage;
             EnemyShield script = other.GetComponent<EnemyShield>();
-            if (script.enabled) script.TakeDamage(damage);
+            if (script.enabled) script.TakeDamage(finalDamage);
             entityDamaged.Add(other.transform);
         }
     }

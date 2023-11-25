@@ -65,11 +65,9 @@ public class PlayerCharged : Projectile
         else if (collision.gameObject.CompareTag("EnemyShield"))
         {
             GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
-            if (gameObject.CompareTag("RedProjectile"))
-            {
-                EnemyShield script = collision.gameObject.GetComponent<EnemyShield>();
-                if (script.enabled) script.TakeDamage(damage);
-            }
+            float finalDamage = !gameObject.CompareTag("RedProjectile") ? damage / 10.0f : damage;
+            EnemyShield script = collision.gameObject.GetComponent<EnemyShield>();
+            if (script.enabled) script.TakeDamage(finalDamage);
             if (shockwave)
             {
                 PlayerShockwave shockwave = GameObject.Instantiate(shockwavePrefab, collision.contacts[0].point, Quaternion.identity).GetComponent<PlayerShockwave>();

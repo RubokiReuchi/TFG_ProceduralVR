@@ -61,6 +61,6 @@ public class EnemyShield : MonoBehaviour
             yield return null;
         }
         enemyScript.hasShield = false;
-        gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
     }
 }

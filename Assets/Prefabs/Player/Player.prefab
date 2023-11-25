@@ -40,7 +40,7 @@ Transform:
   - {fileID: 4739775080170653054}
   - {fileID: 8766056400472875458}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4941092675593092336
 MonoBehaviour:
@@ -154,8 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a10efe06b346ea4a9c6c0429780ecec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftHand: {fileID: 2549715819654379087}
-  playerPunch: {fileID: 976921765286045999}
+  leftHand: {fileID: 0}
   playerGun: {fileID: 1298732408277432296}
   playerMovement: {fileID: 5913942507032696258}
   xRayBattery: {fileID: 3701271457480987011}
@@ -13274,76 +13273,6 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_SortAtRoot: 0
---- !u!1 &6103159198064510528
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 703467901293279197}
-  - component: {fileID: 9024742653404066625}
-  - component: {fileID: 976921765286045999}
-  m_Layer: 9
-  m_Name: PunchCollision
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &703467901293279197
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6103159198064510528}
-  m_LocalRotation: {x: -0.0009367616, y: 0.043619372, z: -0.00004089857, w: 0.9990478}
-  m_LocalPosition: {x: 0, y: 0.0058, z: 0.0898}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2549715819654379087}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: -0.107, y: 5, z: -0.009}
---- !u!65 &9024742653404066625
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6103159198064510528}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.05746942, y: 0.10683209, z: 0.12093994}
-  m_Center: {x: 0.00081297604, y: -0.009896063, z: -0.037269697}
---- !u!114 &976921765286045999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6103159198064510528}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9300446232f8c641ac563b4031eb427, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rigidBody: {fileID: 360982825579465151}
-  punchForce: 5
-  giantPunchForce: 20
-  giantPunch: 0
 --- !u!1 &6111147047466053808
 GameObject:
   m_ObjectHideFlags: 0
@@ -13512,7 +13441,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7490349662937428188}
-  - component: {fileID: 8053483211424040047}
+  - component: {fileID: 3089392894240342195}
   m_Layer: 8
   m_Name: RightHandCollision
   m_TagString: NormalHand
@@ -13535,8 +13464,8 @@ Transform:
   m_Father: {fileID: 5114987901501657669}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: -5, z: 0}
---- !u!65 &8053483211424040047
-BoxCollider:
+--- !u!136 &3089392894240342195
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -13553,9 +13482,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.04000279, y: 0.07957087, z: 0.10893166}
-  m_Center: {x: -0.0036395302, y: -0.0023327805, z: -0.049385715}
+  serializedVersion: 2
+  m_Radius: 0.037659477
+  m_Height: 0.16329408
+  m_Direction: 2
+  m_Center: {x: -0.006131609, y: -0.0023578936, z: -0.058837}
 --- !u!1 &6570653208652150941
 GameObject:
   m_ObjectHideFlags: 0
@@ -14025,7 +13956,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 357286350153344813}
-  - component: {fileID: 2233753288725600947}
+  - component: {fileID: 1538956558227638317}
   m_Layer: 8
   m_Name: LeftHandCollision
   m_TagString: NormalHand
@@ -14048,8 +13979,8 @@ Transform:
   m_Father: {fileID: 2549715819654379087}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: -0.107, y: 5, z: -0.009}
---- !u!65 &2233753288725600947
-BoxCollider:
+--- !u!136 &1538956558227638317
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -14066,9 +13997,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.04000279, y: 0.07957087, z: 0.10893166}
-  m_Center: {x: -0.0036395302, y: -0.0023327805, z: -0.049385715}
+  serializedVersion: 2
+  m_Radius: 0.037659477
+  m_Height: 0.16329408
+  m_Direction: 2
+  m_Center: {x: 0.0061316085, y: -0.0023578936, z: -0.058837}
 --- !u!1 &7522067083044299136
 GameObject:
   m_ObjectHideFlags: 0
@@ -15134,9 +15067,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3287168362613723580, guid: 65420e78dcd71cf47afb92df38723316, type: 3}
       insertIndex: -1
       addedObject: {fileID: 357286350153344813}
-    - targetCorrespondingSourceObject: {fileID: 3287168362613723580, guid: 65420e78dcd71cf47afb92df38723316, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 703467901293279197}
     - targetCorrespondingSourceObject: {fileID: 6401918274109834049, guid: 65420e78dcd71cf47afb92df38723316, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2622415009525845614}
