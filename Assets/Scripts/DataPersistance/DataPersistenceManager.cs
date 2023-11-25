@@ -20,7 +20,7 @@ public class DataPersistenceManager : MonoBehaviour
         instance = this;
     }
 
-    void Start()
+    void OnEnable()
     {
         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
         dataPersistanceObjects = FindAllDataPersistanceObjects();

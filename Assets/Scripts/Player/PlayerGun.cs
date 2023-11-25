@@ -97,18 +97,18 @@ public class PlayerGun : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        triggerState = TRIGGER_STATE.IDLE;
+        selectedProjectilePrefab = yellowProjectilePrefab;
+        selectedChargedPrefab = yellowChargedPrefab;
+
+        screen = GetComponent<HandScreen>();
+
         // Skills Unlocked
         blueUnlocked = PlayerSkills.instance.blueUnlocked;
         redUnlocked = PlayerSkills.instance.redUnlocked;
         purpleUnlocked = PlayerSkills.instance.purpleUnlocked;
         greenUnlocked = PlayerSkills.instance.greenUnlocked;
         SwapGunType(GUN_TYPE.NULL);
-
-        triggerState = TRIGGER_STATE.IDLE;
-        selectedProjectilePrefab = yellowProjectilePrefab;
-        selectedChargedPrefab = yellowChargedPrefab;
-
-        screen = GetComponent<HandScreen>();
     }
 
     // Update is called once per frame

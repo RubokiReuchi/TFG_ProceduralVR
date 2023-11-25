@@ -27,17 +27,17 @@ public class PlayerPunch : MonoBehaviour
                         script.Airbourne(finalForce, giantPunch);
                         script.verticalPushed = true;
                     }
-                    if (script.hasShield)
-                    {
-                        float finalShieldDamage = !giantPunch ? 50 : 200;
-                        script.shield.TakeDamage(finalShieldDamage);
-                    }
+                    //if (script.hasShield)
+                    //{
+                    //    float finalShieldDamage = !giantPunch ? 50 : 200;
+                    //    script.shield.TakeDamage(finalShieldDamage);
+                    //}
                 }
-                else if (script.hasShield)
-                {
-                    float finalShieldDamage = !giantPunch ? 50 : 200;
-                    script.shield.TakeDamage(finalShieldDamage);
-                }
+                //else if (script.hasShield)
+                //{
+                //    float finalShieldDamage = !giantPunch ? 50 : 200;
+                //    script.shield.TakeDamage(finalShieldDamage);
+                //}
             }
             else
             {

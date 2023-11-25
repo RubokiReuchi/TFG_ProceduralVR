@@ -20,6 +20,8 @@ public class EnemyShield : MonoBehaviour
         material = new Material(GetComponent<Renderer>().material);
         GetComponent<Renderer>().material = material;
         playerState = PlayerState.instance;
+
+        currentHealth = maxHealth;
     }
 
     private void Update()
@@ -40,7 +42,7 @@ public class EnemyShield : MonoBehaviour
     {
         if (!enabled) return;
         currentHealth -= amount;
-        Debug.Log("Shiled damaged");
+        Debug.Log("hit");
         if (currentHealth <= 0)
         {
             currentHealth = 0;
