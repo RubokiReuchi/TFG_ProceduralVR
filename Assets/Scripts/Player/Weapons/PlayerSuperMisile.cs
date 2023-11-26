@@ -64,7 +64,11 @@ public class PlayerSuperMisile : Projectile
             GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
             GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
             Enemy script = collision.gameObject.GetComponent<Enemy>();
-            if (script.enabled) script.TakeDamage(damage);
+            if (script.enabled)
+            {
+                script.TakeDamage(damage);
+                if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze(damage);
+            }
             if (shockwave)
             {
                 PlayerShockwave shockwave = GameObject.Instantiate(shockwavePrefab, collision.contacts[0].point, Quaternion.identity).GetComponent<PlayerShockwave>();

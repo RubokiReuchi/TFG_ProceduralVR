@@ -12,7 +12,6 @@ public class EnemyType : MonoBehaviour
 {
     public ENEMY_TYPE type;
     Enemy enemyScript;
-    Animator animator;
     PlayerState playerState;
     bool xRayLayer = false;
     [SerializeField] GameObject[] xRayedGO;
@@ -20,26 +19,12 @@ public class EnemyType : MonoBehaviour
     void Start()
     {
         enemyScript = GetComponent<Enemy>();
-        animator = transform.GetChild(0).GetComponent<Animator>();
         playerState = PlayerState.instance;
     }
 
     private void Update()
     {
         if (enemyScript.firstEnable) return;
-        if (enemyScript.enabled == enemyScript.onCC)
-        {
-            if (enemyScript.onCC)
-            {
-                enemyScript.enabled = false;
-                animator.speed = 0.0f;
-            }
-            else
-            {
-                enemyScript.enabled = true;
-                animator.speed = 1.0f;
-            }
-        }
 
         if (!xRayLayer && playerState.xRayVisionActive)
         {

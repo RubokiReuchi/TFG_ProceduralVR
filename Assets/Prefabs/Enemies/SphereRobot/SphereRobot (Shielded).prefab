@@ -7113,9 +7113,11 @@ GameObject:
   - component: {fileID: 5475688886836907035}
   - component: {fileID: 2379846308239533387}
   - component: {fileID: 2273901708919297363}
+  - component: {fileID: 6837422996566816902}
+  - component: {fileID: 1380035373856250580}
   m_Layer: 10
   m_Name: Shield
-  m_TagString: Untagged
+  m_TagString: EnemyShield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7207,6 +7209,47 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1042801323994665371, guid: 7e21bee99cb5f704cbfdbf0c5ff119f5, type: 3}
+--- !u!54 &6837422996566816902
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4326654462928846677}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 2
+--- !u!114 &1380035373856250580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4326654462928846677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74ab0363382e5aa47b415715645cdf90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  dissolveSpeed: 1
 --- !u!1 &4452503027477029836
 GameObject:
   m_ObjectHideFlags: 0
@@ -7314,6 +7357,8 @@ MonoBehaviour:
   verticalPushed: 0
   bouncyPushed: 0
   onCC: 0
+  hasShield: 0
+  shield: {fileID: 0}
   state: 0
   walkDistance: 10
   shootDistance: 5
@@ -7691,6 +7736,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4808516988360234331}
+  - component: {fileID: 5191610690554313519}
   m_Layer: 10
   m_Name: ShieldCenter
   m_TagString: Untagged
@@ -7714,6 +7760,18 @@ Transform:
   m_Father: {fileID: 3921463664130308957}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5191610690554313519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4939800994147192601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24da1c9b333953a40b01bdfbd883386b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5160647137076380761
 GameObject:
   m_ObjectHideFlags: 0

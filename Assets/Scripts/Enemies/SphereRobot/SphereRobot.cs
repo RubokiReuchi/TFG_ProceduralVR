@@ -35,8 +35,6 @@ public class SphereRobot : Enemy
     int lastCanShoot; // 0 --> side roll, 1 --> shoot
     [SerializeField] Transform rayOrigin;
     [SerializeField] GameObject rayPrefab;
-    [SerializeField] GameObject materialGO;
-    Material material;
     bool exploting;
     [SerializeField] GameObject explosionPrefab;
     [SerializeField] GameObject corpsPrefab;
@@ -51,8 +49,8 @@ public class SphereRobot : Enemy
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerHead = GameObject.FindGameObjectWithTag("PlayerHead").transform;
-        material = new Material(materialGO.GetComponent<Renderer>().material);
-        materialGO.GetComponent<Renderer>().material = material;
+        material = new Material(originalMaterial);
+        foreach (var materialGO in materialGameObjects) materialGO.GetComponent<Renderer>().material = material;
         exploting = false;
         state = STATE.REST;
         lastCanShoot = 0;
@@ -63,6 +61,15 @@ public class SphereRobot : Enemy
     // Update is called once per frame
     void Update()
     {
+        // freeze
+        freezeSlow = 1.0f - (freezePercentage / 100.0f);
+        animator.speed = freezeSlow;
+        if (!freezeApplied)
+        {
+            agent.speed = defaultSpeed * freezeSlow;
+            freezeApplied = true;
+        }
+
         if (exploting) return;
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
@@ -148,6 +155,8 @@ public class SphereRobot : Enemy
             animator.SetTrigger("Walk");
             state = STATE.WALK;
             agent.speed = walkSpeed;
+            defaultSpeed = walkSpeed;
+            freezeApplied = false;
         }
         else
         {
@@ -213,18 +222,45 @@ public class SphereRobot : Enemy
     public void RollSpeed()
     {
         agent.speed = rollSpeed;
+        defaultSpeed = rollSpeed;
+        freezeApplied = false;
     }
 
     public override void TakeDamage(float amount)
     {
         if (!enabled) return;
-        currentHealth -= amount;
-        // change color???
+
+        if (freezePercentage == 100)
+        {
+            currentHealth -= amount * 5.0f;
+            freezePercentage = 0;
+            material.SetFloat("_FreezeInterpolation", 0);
+            if (currentHealth < 0)
+            {
+                Debug.Log("explote");
+                return;
+            }
+        }
+        else currentHealth -= amount;
+        
         if (currentHealth <= 0)
         {
             currentHealth = 0;
             Die();
         }
+    }
+
+    public override void TakeFreeze(float amount)
+    {
+        freezePercentage += amount - freezeResistance;
+        if (freezePercentage >= 100) // freeze
+        {
+            freezePercentage = 100;
+            freezedTime = freezeDuration;
+        }
+        material.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);
+        recoverTime = recoverDelay;
+        freezeApplied = false;
     }
 
     public override void Die()

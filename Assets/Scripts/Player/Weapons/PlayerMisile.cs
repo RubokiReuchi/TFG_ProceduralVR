@@ -56,7 +56,11 @@ public class PlayerMisile : Projectile
             GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
             GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
             Enemy script = collision.gameObject.GetComponent<Enemy>();
-            if (script.enabled) script.TakeDamage(damage);
+            if (script.enabled)
+            {
+                script.TakeDamage(damage);
+                if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze(damage);
+            }
         }
         else if (collision.gameObject.CompareTag("EnemyShield"))
         {

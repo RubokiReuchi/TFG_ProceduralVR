@@ -3,7 +3,9 @@ guid: b678b6c02c691ab48bed010882fc11f0
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - shield: {instanceID: 0}
+  - iceMaterial: {fileID: 2100000, guid: 6ee17c1565c60b74d95230fe0a5c8173, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

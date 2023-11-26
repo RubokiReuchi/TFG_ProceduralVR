@@ -39,7 +39,11 @@ public class PlayerShockwave : MonoBehaviour
         else if (other.CompareTag("Enemy"))
         {
             Enemy script = other.transform.root.GetComponent<Enemy>();
-            if (script.enabled) script.TakeDamage(damage);
+            if (script.enabled)
+            {
+                script.TakeDamage(damage);
+                if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze(damage);
+            }
             entityDamaged.Add(other.transform.root);
         }
         else if (other.CompareTag("EnemyShield"))
