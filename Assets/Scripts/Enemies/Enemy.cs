@@ -23,11 +23,11 @@ public class Enemy : MonoBehaviour
     [Header("Freeze")]
     [SerializeField] protected float freezeResistance;
     protected float freezePercentage = 0;
-    [SerializeField] protected Material iceMaterial;
     protected float freezeDuration = 10; // secs
     protected float freezedTime; // secs
     protected float recoverDelay = 2; // secs
     protected float recoverTime; // secs
+    protected float invulneravilityTime = 0; // secs
     protected float freezeSlow = 0;
     protected float defaultSpeed = 0;
     protected bool freezeApplied = false;
@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour
     {
         if (freezePercentage == 100)
         {
+            invulneravilityTime -= Time.deltaTime;
             freezedTime -= Time.deltaTime + Time.deltaTime * freezeResistance / 25.0f;
             if (freezedTime < 0)
             {

@@ -53,6 +53,16 @@ public class PlayerShockwave : MonoBehaviour
             if (script.enabled) script.TakeDamage(finalDamage);
             entityDamaged.Add(other.transform);
         }
+        else if (other.CompareTag("PowerChecker"))
+        {
+            PowerChecker script = other.GetComponent<PowerChecker>();
+            if (script.enabled)
+            {
+                script.TakeDamage(damage);
+                if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze(damage);
+            }
+            entityDamaged.Add(other.transform);
+        }
     }
 
     public void SetDamage(float damage)

@@ -79,6 +79,27 @@ public class PlayerCharged : Projectile
                 shockwave.SetSize(transform.localScale.x * 8.0f);
             }
         }
+        else if (collision.gameObject.CompareTag("PowerChecker"))
+        {
+            GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
+            PowerChecker script = collision.gameObject.GetComponent<PowerChecker>();
+            if (script.enabled)
+            {
+                script.TakeDamage(damage);
+                if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze(damage);
+            }
+            if (shockwave)
+            {
+                PlayerShockwave shockwave = GameObject.Instantiate(shockwavePrefab, collision.contacts[0].point, Quaternion.identity).GetComponent<PlayerShockwave>();
+                shockwave.SetDamage(damage / 2.0f);
+            }
+        }
+        else if (collision.gameObject.CompareTag("DeflectProjectile"))
+        {
+            Vector3 deflectDirection = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
+            transform.forward = deflectDirection;
+            return;
+        }
         Destroy(this.gameObject);
     }
 

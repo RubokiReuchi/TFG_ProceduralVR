@@ -28,12 +28,6 @@
             "m_Id": "26892f224cea41de9a1b8ab3b7e2496a"
         },
         {
-            "m_Id": "c447993a1bba45a1854e2e3dea279504"
-        },
-        {
-            "m_Id": "0c2ebc27a86348f487eda99ccb60613f"
-        },
-        {
             "m_Id": "bc6d9baaec5f4423ac7b31c0a74bf3cf"
         },
         {
@@ -760,34 +754,6 @@
     "m_PreviewMode": 0,
     "m_CustomColors": {
         "m_SerializableColors": []
-    }
-}
-
-{
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
-    "m_ObjectId": "0c2ebc27a86348f487eda99ccb60613f",
-    "m_Guid": {
-        "m_GuidSerialized": "0a0af7e4-e7aa-410f-9ae9-c14367dbeba9"
-    },
-    "m_Name": "IntersectionWidth",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "IntersectionWidth",
-    "m_DefaultReferenceName": "_IntersectionWidth",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": 0.5,
-    "m_FloatType": 0,
-    "m_RangeValues": {
-        "x": 0.0,
-        "y": 1.0
     }
 }
 
@@ -2965,9 +2931,6 @@
             "m_Id": "26892f224cea41de9a1b8ab3b7e2496a"
         },
         {
-            "m_Id": "c447993a1bba45a1854e2e3dea279504"
-        },
-        {
             "m_Id": "5d5b741f802f4efa972c937b57d12991"
         },
         {
@@ -2984,9 +2947,6 @@
         },
         {
             "m_Id": "1477d2806d2745e3baac8d6de9b052b0"
-        },
-        {
-            "m_Id": "0c2ebc27a86348f487eda99ccb60613f"
         },
         {
             "m_Id": "0f014abe4e874295b45fb8d859aebaf7"
@@ -3568,36 +3528,6 @@
     "m_NormalMapSpace": 0,
     "m_EnableGlobalMipBias": true,
     "m_MipSamplingMode": 0
-}
-
-{
-    "m_SGVersion": 3,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
-    "m_ObjectId": "c447993a1bba45a1854e2e3dea279504",
-    "m_Guid": {
-        "m_GuidSerialized": "91fcb2f5-196c-484e-b1cb-b77bc45e11af"
-    },
-    "m_Name": "IntersectionColor",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "IntersectionColor",
-    "m_DefaultReferenceName": "_IntersectionColor",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": {
-        "r": 8.569999694824219,
-        "g": 3.6600000858306886,
-        "b": 0.0,
-        "a": 1.0
-    },
-    "isMainColor": false,
-    "m_ColorMode": 1
 }
 
 {

@@ -46,6 +46,22 @@ public class PlayerProjectile : Projectile
             EnemyShield script = collision.gameObject.GetComponent<EnemyShield>();
             if (script.enabled) script.TakeDamage(finalDamage);
         }
+        else if (collision.gameObject.CompareTag("PowerChecker"))
+        {
+            GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
+            PowerChecker script = collision.gameObject.GetComponent<PowerChecker>();
+            if (script.enabled)
+            {
+                script.TakeDamage(damage);
+                if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze(damage);
+            }
+        }
+        else if (collision.gameObject.CompareTag("DeflectProjectile"))
+        {
+            Vector3 deflectDirection = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
+            transform.forward = deflectDirection;
+            return;
+        }
         Destroy(this.gameObject);
     }
 }

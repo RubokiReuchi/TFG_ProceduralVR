@@ -228,7 +228,7 @@ public class SphereRobot : Enemy
 
     public override void TakeDamage(float amount)
     {
-        if (!enabled) return;
+        if (!enabled || invulneravilityTime > 0) return;
 
         if (freezePercentage == 100)
         {
@@ -258,6 +258,7 @@ public class SphereRobot : Enemy
         {
             freezePercentage = 100;
             freezedTime = freezeDuration;
+            invulneravilityTime = 1.0f;
         }
         material.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);
         recoverTime = recoverDelay;
