@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
     protected float freezeSlow = 0;
     protected float defaultSpeed = 0;
     protected bool freezeApplied = false;
+    [SerializeField] protected GameObject iceBlocksParticlesPrefab;
 
     private void LateUpdate()
     {

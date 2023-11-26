@@ -237,7 +237,8 @@ public class SphereRobot : Enemy
             material.SetFloat("_FreezeInterpolation", 0);
             if (currentHealth < 0)
             {
-                Debug.Log("explote");
+                GameObject.Instantiate(iceBlocksParticlesPrefab, transform.position, Quaternion.identity);
+                Destroy(gameObject);
                 return;
             }
         }
@@ -273,7 +274,7 @@ public class SphereRobot : Enemy
     public void Destroyed()
     {
         GameObject.Instantiate(corpsPrefab, transform.position, transform.rotation);
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 
     IEnumerator Exploting()
@@ -336,6 +337,6 @@ public class SphereRobot : Enemy
             yield return new WaitForSeconds(0.007f);
         }
         GameObject.Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 }
