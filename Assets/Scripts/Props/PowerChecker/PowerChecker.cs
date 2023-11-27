@@ -38,6 +38,12 @@ public class PowerChecker : MonoBehaviour
         supportGO.GetComponent<Renderer>().material = supportMaterial;
         pilarMaterial = new Material(pilarOriginalMaterial);
         pilarGO.GetComponent<Renderer>().material = pilarMaterial;
+
+        if (isPartOfPuzzle)
+        {
+            displayedText.text = "";
+            enabled = false;
+        }
     }
 
     private void Update()
@@ -111,5 +117,11 @@ public class PowerChecker : MonoBehaviour
         supportMaterial.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);
         pilarMaterial.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);
         recoverTime = recoverDelay;
+    }
+
+    public void StartPuzzle()
+    {
+        displayedText.text = "0";
+        enabled = true;
     }
 }

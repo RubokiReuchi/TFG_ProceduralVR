@@ -87,6 +87,17 @@ public class PlayerMisile : Projectile
             transform.forward = deflectDirection;
             return;
         }
+        else if (collision.gameObject.CompareTag("IceSpike"))
+        {
+            GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
+            GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
+            IceSpike script = collision.gameObject.GetComponent<IceSpike>();
+            if (script.enabled && gameObject.CompareTag("RedProjectile"))
+            {
+                foreach (IceSpike spike in script.allSpikes) spike.Melt(damage);
+                script.meltPs.Play();
+            }
+        }
         smokeTrail.transform.SetParent(null);
         smokeTrail.GetComponent<ParticleSystem>().Stop();
         Destroy(this.gameObject);

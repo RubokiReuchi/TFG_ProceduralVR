@@ -110,6 +110,22 @@ public class PlayerSuperMisile : Projectile
             transform.forward = deflectDirection;
             return;
         }
+        else if (collision.gameObject.CompareTag("IceSpike"))
+        {
+            GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
+            GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
+            IceSpike script = collision.gameObject.GetComponent<IceSpike>();
+            if (script.enabled && gameObject.CompareTag("RedProjectile"))
+            {
+                foreach (IceSpike spike in script.allSpikes) spike.Melt(damage);
+                script.meltPs.Play();
+            }
+            if (shockwave)
+            {
+                PlayerShockwave shockwave = GameObject.Instantiate(shockwavePrefab, collision.contacts[0].point, Quaternion.identity).GetComponent<PlayerShockwave>();
+                shockwave.SetDamage(damage / 2.0f);
+            }
+        }
         Destroy(this.gameObject);
     }
 

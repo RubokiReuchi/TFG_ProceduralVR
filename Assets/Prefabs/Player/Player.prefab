@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a10efe06b346ea4a9c6c0429780ecec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftHand: {fileID: 0}
+  leftHand: {fileID: 2549715819654379087}
   playerGun: {fileID: 1298732408277432296}
   playerMovement: {fileID: 5913942507032696258}
   xRayBattery: {fileID: 3701271457480987011}
@@ -310,7 +310,7 @@ GameObject:
   - component: {fileID: 7345154401625575830}
   - component: {fileID: 1135172649917022669}
   - component: {fileID: 2386910331716202847}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GunClip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -551,7 +551,7 @@ GameObject:
   - component: {fileID: 8782471796182973141}
   - component: {fileID: 7743982476098371718}
   - component: {fileID: 3456975964777937834}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GunTriggerCover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1200,7 +1200,7 @@ GameObject:
   - component: {fileID: 8578534032407679308}
   - component: {fileID: 8835737542098629951}
   - component: {fileID: 745261933985422320}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SuperMisileChargingParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6166,7 +6166,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9167591100657879468}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ProjectileOrigin2Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6197,7 +6197,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4445053782705207128}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ProjectileOrigin3Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6478,7 +6478,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5423521305535551117}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ProjectileOriginStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6768,7 +6768,7 @@ GameObject:
   - component: {fileID: 6386039158180152971}
   - component: {fileID: 5072329544250173406}
   - component: {fileID: 4206205361413299427}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: XRayBattery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6961,7 +6961,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1530479621129123535}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ProjectileOriginCurrent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12213,7 +12213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1645026028528013279}
   - component: {fileID: 8470525435787128155}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: SciFiHandGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12279,7 +12279,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1182047895205949035}
   - component: {fileID: 1629247720643135663}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: SuperMisileChargingForceField
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13068,7 +13068,7 @@ GameObject:
   - component: {fileID: 2274036648295181030}
   - component: {fileID: 4741595025013737859}
   - component: {fileID: 8781693118639886106}
-  m_Layer: 1
+  m_Layer: 9
   m_Name: SuperMisileReady
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13442,7 +13442,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7490349662937428188}
   - component: {fileID: 3089392894240342195}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: RightHandCollision
   m_TagString: NormalHand
   m_Icon: {fileID: 0}
@@ -13645,7 +13645,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2198174138387102457}
   - component: {fileID: 1070517589896114689}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TriggerFix
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13957,7 +13957,7 @@ GameObject:
   m_Component:
   - component: {fileID: 357286350153344813}
   - component: {fileID: 1538956558227638317}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: LeftHandCollision
   m_TagString: NormalHand
   m_Icon: {fileID: 0}
@@ -14013,7 +14013,7 @@ GameObject:
   - component: {fileID: 3175284160908902730}
   - component: {fileID: 140382475249353473}
   - component: {fileID: 4203689356084341539}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GunCylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14219,7 +14219,7 @@ GameObject:
   - component: {fileID: 2840568898004255754}
   - component: {fileID: 9079058151594978684}
   - component: {fileID: 5633168497607042172}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GunTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14302,7 +14302,7 @@ GameObject:
   - component: {fileID: 1776683829575703234}
   - component: {fileID: 9080786370957607476}
   - component: {fileID: 8842798915534546717}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GunMain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
