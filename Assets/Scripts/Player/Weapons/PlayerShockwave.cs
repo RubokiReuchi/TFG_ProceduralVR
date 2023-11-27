@@ -63,6 +63,15 @@ public class PlayerShockwave : MonoBehaviour
             }
             entityDamaged.Add(other.transform);
         }
+        else if (other.CompareTag("Thorns"))
+        {
+            Thorns script = other.GetComponent<Thorns>();
+            if (script.enabled && gameObject.CompareTag("GreenProjectile"))
+            {
+                script.Disintegrate();
+            }
+            entityDamaged.Add(other.transform);
+        }
     }
 
     public void SetDamage(float damage)

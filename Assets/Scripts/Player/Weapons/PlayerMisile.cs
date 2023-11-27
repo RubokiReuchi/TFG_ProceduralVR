@@ -98,6 +98,16 @@ public class PlayerMisile : Projectile
                 script.meltPs.Play();
             }
         }
+        else if (collision.gameObject.CompareTag("Thorns"))
+        {
+            GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
+            GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
+            Thorns script = collision.gameObject.GetComponent<Thorns>();
+            if (script.enabled && gameObject.CompareTag("GreenProjectile"))
+            {
+                script.Disintegrate();
+            }
+        }
         smokeTrail.transform.SetParent(null);
         smokeTrail.GetComponent<ParticleSystem>().Stop();
         Destroy(this.gameObject);

@@ -50,7 +50,7 @@ public class SphereRobot : Enemy
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerHead = GameObject.FindGameObjectWithTag("PlayerHead").transform;
         material = new Material(originalMaterial);
-        foreach (var materialGO in materialGameObjects) materialGO.GetComponent<Renderer>().material = material;
+        foreach (var materialGO in materialGameObjects) materialGO.GetComponent<MeshRenderer>().material = material;
         exploting = false;
         state = STATE.REST;
         lastCanShoot = 0;

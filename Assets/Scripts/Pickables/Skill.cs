@@ -24,6 +24,7 @@ public class Skill : MonoBehaviour
     // map barriers
     [SerializeField] PowerChecker powerCheckerPuzzle;
     [SerializeField] IceSpikesPuzzle IceSpikesPuzzle;
+    [SerializeField] Thorns thornsPuzzle;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -42,6 +43,7 @@ public class Skill : MonoBehaviour
             case SKILL_TYPE.SUPER_JUMP:
                 break;
             case SKILL_TYPE.GREEN:
+                thornsPuzzle.StartPuzzle();
                 break;
             default:
                 break;
