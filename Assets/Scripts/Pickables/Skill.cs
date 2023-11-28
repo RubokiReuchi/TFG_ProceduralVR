@@ -23,12 +23,13 @@ public class Skill : MonoBehaviour
 
     // map barriers
     [SerializeField] PowerChecker powerCheckerPuzzle;
-    [SerializeField] IceSpikesPuzzle IceSpikesPuzzle;
+    [SerializeField] IceSpikesPuzzle iceSpikesPuzzle;
+    [SerializeField] Interruptor interruptorPuzzle;
     [SerializeField] Thorns thornsPuzzle;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
+        if (!other.transform.root.CompareTag("Player")) return;
 
         switch (type)
         {
@@ -36,9 +37,10 @@ public class Skill : MonoBehaviour
                 powerCheckerPuzzle.StartPuzzle();
                 break;
             case SKILL_TYPE.RED:
-                IceSpikesPuzzle.StartPuzzle();
+                iceSpikesPuzzle.StartPuzzle();
                 break;
             case SKILL_TYPE.PURPLE:
+                interruptorPuzzle.StartPuzzle();
                 break;
             case SKILL_TYPE.SUPER_JUMP:
                 break;

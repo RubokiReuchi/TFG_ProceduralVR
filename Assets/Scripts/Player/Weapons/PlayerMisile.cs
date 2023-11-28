@@ -108,6 +108,16 @@ public class PlayerMisile : Projectile
                 script.Disintegrate();
             }
         }
+        else if (collision.gameObject.CompareTag("Interruptor"))
+        {
+            GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
+            GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
+            Interruptor script = collision.gameObject.GetComponent<Interruptor>();
+            if (script.enabled)
+            {
+                script.PuzzleCompleted();
+            }
+        }
         smokeTrail.transform.SetParent(null);
         smokeTrail.GetComponent<ParticleSystem>().Stop();
         Destroy(this.gameObject);

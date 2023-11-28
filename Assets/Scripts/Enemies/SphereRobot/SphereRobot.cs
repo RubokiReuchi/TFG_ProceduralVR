@@ -1,10 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.AI.Navigation;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 public class SphereRobot : Enemy
 {
@@ -290,50 +287,50 @@ public class SphereRobot : Enemy
         {
             value -= Time.deltaTime * 2.0f;
             if (value < 0) value = 0;
-            material.color = new Color(1, value, value);
+            material.SetColor("_Color", new Color(1, value, value));
             yield return null;
         }
         for (int i = 0; i < 50; i++)
         {
             if (i % 10 == 0) // i --> 0, 10, 20, 30...
             {
-                material.color = new Color(1, 0.0f, 0);
+                material.SetColor("_Color", new Color(1, 0.0f, 0));
             }
             else if (i % 10 == 1)
             {
-                material.color = new Color(1, 0.145f, 0);
+                material.SetColor("_Color", new Color(1, 0.145f, 0));
             }
             else if (i % 10 == 2)
             {
-                material.color = new Color(1, 0.29f, 0);
+                material.SetColor("_Color", new Color(1, 0.29f, 0));
             }
             else if (i % 10 == 3)
             {
-                material.color = new Color(1, 0.435f, 0);
+                material.SetColor("_Color", new Color(1, 0.435f, 0));
             }
             else if (i % 10 == 4)
             {
-                material.color = new Color(1, 0.58f, 0);
+                material.SetColor("_Color", new Color(1, 0.58f, 0));
             }
             else if (i % 10 == 5)
             {
-                material.color = new Color(1, 0.725f, 0);
+                material.SetColor("_Color", new Color(1, 0.725f, 0));
             }
             else if (i % 10 == 6)
             {
-                material.color = new Color(1, 0.58f, 0);
+                material.SetColor("_Color", new Color(1, 0.58f, 0));
             }
             else if (i % 10 == 7)
             {
-                material.color = new Color(1, 0.435f, 0);
+                material.SetColor("_Color", new Color(1, 0.435f, 0));
             }
             else if (i % 10 == 8)
             {
-                material.color = new Color(1, 0.29f, 0);
+                material.SetColor("_Color", new Color(1, 0.29f, 0));
             }
             else
             {
-                material.color = new Color(1, 0.145f, 0);
+                material.SetColor("_Color", new Color(1, 0.145f, 0));
             }
             yield return new WaitForSeconds(0.007f);
         }

@@ -72,6 +72,14 @@ public class PlayerShockwave : MonoBehaviour
             }
             entityDamaged.Add(other.transform);
         }
+        else if (other.CompareTag("Interruptor"))
+        {
+            Interruptor script = other.GetComponent<Interruptor>();
+            if (script.enabled)
+            {
+                script.PuzzleCompleted();
+            }
+        }
     }
 
     public void SetDamage(float damage)

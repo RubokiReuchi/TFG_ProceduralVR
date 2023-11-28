@@ -60,6 +60,7 @@ public class PlayerProjectile : Projectile
         {
             Vector3 deflectDirection = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
             transform.forward = deflectDirection;
+            rb.velocity = transform.forward * speed;
             return;
         }
         else if (collision.gameObject.CompareTag("IceSpike"))
@@ -79,6 +80,15 @@ public class PlayerProjectile : Projectile
             if (script.enabled && gameObject.CompareTag("GreenProjectile"))
             {
                 script.Disintegrate();
+            }
+        }
+        else if (collision.gameObject.CompareTag("Interruptor"))
+        {
+            GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
+            Interruptor script = collision.gameObject.GetComponent<Interruptor>();
+            if (script.enabled)
+            {
+                script.PuzzleCompleted();
             }
         }
         Destroy(this.gameObject);

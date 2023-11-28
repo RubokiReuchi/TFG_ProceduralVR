@@ -11,7 +11,7 @@ public class PowerChecker : MonoBehaviour
     [SerializeField] bool isPartOfPuzzle;
     [SerializeField] float damageObjective;
     [SerializeField] ParticleSystem completePs;
-    [SerializeField] PowerCheckerPuzzle puzzle;
+    [SerializeField] EnergyBarrier barrier;
 
     [Header("Freeze")]
     [SerializeField] protected GameObject[] caseGameObjects;
@@ -98,7 +98,7 @@ public class PowerChecker : MonoBehaviour
 
         if (isPartOfPuzzle && finalDamage >= damageObjective)
         {
-            puzzle.PuzzleCompleted();
+            barrier.PuzzleCompleted();
             completePs.Play();
             enabled = false;
         }
@@ -122,6 +122,6 @@ public class PowerChecker : MonoBehaviour
     public void StartPuzzle()
     {
         displayedText.text = "0";
-        enabled = true;
+        barrier.PuzzleStarted();
     }
 }
