@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 6064690670274851733}
   m_Layer: 0
   m_Name: ThornsPuzzle
-  m_TagString: Thorns
+  m_TagString: Puzzle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,7 +118,7 @@ Transform:
   - {fileID: 57180289455719330}
   - {fileID: 7143580243919782800}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8068122287087681399
 Animator:

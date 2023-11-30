@@ -53,32 +53,11 @@ public class PlayerShockwave : MonoBehaviour
             if (script.enabled) script.TakeDamage(finalDamage);
             entityDamaged.Add(other.transform);
         }
-        else if (other.CompareTag("PowerChecker"))
+        else if (other.CompareTag("Puzzle"))
         {
-            PowerChecker script = other.GetComponent<PowerChecker>();
-            if (script.enabled)
-            {
-                script.TakeDamage(damage);
-                if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze(damage);
-            }
+            Puzzle script = other.GetComponent<Puzzle>();
+            if (script.enabled) script.HitPuzzle(damage, gameObject.tag);
             entityDamaged.Add(other.transform);
-        }
-        else if (other.CompareTag("Thorns"))
-        {
-            Thorns script = other.GetComponent<Thorns>();
-            if (script.enabled && gameObject.CompareTag("GreenProjectile"))
-            {
-                script.Disintegrate();
-            }
-            entityDamaged.Add(other.transform);
-        }
-        else if (other.CompareTag("Interruptor"))
-        {
-            Interruptor script = other.GetComponent<Interruptor>();
-            if (script.enabled)
-            {
-                script.PuzzleCompleted();
-            }
         }
     }
 

@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class IceSpike : MonoBehaviour
 {
-    public IceSpike[] allSpikes;
-    public Transform invisibleWall;
-    public ParticleSystem meltPs;
-
     Vector3 targetScale;
 
     void Start()
@@ -20,12 +16,10 @@ public class IceSpike : MonoBehaviour
         if (targetScale.x < transform.localScale.x)
         {
             transform.localScale -= Vector3.one * Time.deltaTime * 0.2f;
-            if (invisibleWall) invisibleWall.localScale -= Vector3.up * Time.deltaTime * 0.2f;
         }
         if (transform.localScale.x <= 0)
         {
             gameObject.SetActive(false);
-            if (invisibleWall) invisibleWall.gameObject.SetActive(false);
         }
     }
 

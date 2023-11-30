@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PowerChecker : MonoBehaviour
+public class PowerChecker : Puzzle
 {
     [SerializeField] Text displayedText;
 
@@ -79,6 +79,18 @@ public class PowerChecker : MonoBehaviour
         }
     }
 
+    public override void StartPuzzle()
+    {
+        displayedText.text = "0";
+        barrier.PuzzleStarted();
+    }
+
+    public override void HitPuzzle(float damage, string projectileTag)
+    {
+        TakeDamage(damage);
+        if (projectileTag == "BlueProjectile") TakeFreeze(damage);
+    }
+
     public void TakeDamage(float amount)
     {
         if (!enabled || invulneravilityTime > 0) return;
@@ -117,11 +129,5 @@ public class PowerChecker : MonoBehaviour
         supportMaterial.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);
         pilarMaterial.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);
         recoverTime = recoverDelay;
-    }
-
-    public void StartPuzzle()
-    {
-        displayedText.text = "0";
-        barrier.PuzzleStarted();
     }
 }

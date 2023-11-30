@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TreeEditor;
 using UnityEngine;
 
-public class Thorns : MonoBehaviour
+public class Thorns : Puzzle
 {
     [SerializeField] bool isPartOfPuzzle;
     Animator animator;
@@ -14,6 +14,7 @@ public class Thorns : MonoBehaviour
     [SerializeField] Material originalRedMaterial;
     Material greenMaterial;
     Material redMaterial;
+    bool destroying = false;
 
     void Start()
     {
@@ -28,18 +29,19 @@ public class Thorns : MonoBehaviour
         if (isPartOfPuzzle) animator = GetComponent<Animator>();
     }
 
-    public void StartPuzzle()
+    public override void StartPuzzle()
     {
         animator.enabled = true;
     }
 
-    public void Disintegrate()
+    public override void HitPuzzle(float damage, string projectileTag)
     {
-        StartCoroutine(DisintegrateCo());
+        if (!destroying && projectileTag == "GreenProjectile") StartCoroutine(Disintegrate());
     }
 
-    IEnumerator DisintegrateCo()
+    IEnumerator Disintegrate()
     {
+        destroying = true;
         float dissolvePercentage = 0;
         while (dissolvePercentage < 1)
         {

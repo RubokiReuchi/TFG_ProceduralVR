@@ -70,53 +70,23 @@ public class PlayerMisile : Projectile
             EnemyShield script = collision.gameObject.GetComponent<EnemyShield>();
             if (script.enabled) script.TakeDamage(finalDamage);
         }
-        else if (collision.gameObject.CompareTag("PowerChecker"))
-        {
-            GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
-            GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
-            PowerChecker script = collision.gameObject.GetComponent<PowerChecker>();
-            if (script.enabled)
-            {
-                script.TakeDamage(damage);
-                if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze(damage);
-            }
-        }
         else if (collision.gameObject.CompareTag("DeflectProjectile"))
         {
             Vector3 deflectDirection = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
             transform.forward = deflectDirection;
             return;
         }
-        else if (collision.gameObject.CompareTag("IceSpike"))
+        else if (collision.gameObject.CompareTag("Puzzle"))
         {
             GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
             GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
-            IceSpike script = collision.gameObject.GetComponent<IceSpike>();
-            if (script.enabled && gameObject.CompareTag("RedProjectile"))
-            {
-                foreach (IceSpike spike in script.allSpikes) spike.Melt(damage);
-                script.meltPs.Play();
-            }
+            Puzzle script = collision.gameObject.GetComponent<Puzzle>();
+            if (script.enabled) script.HitPuzzle(damage, gameObject.tag);
         }
-        else if (collision.gameObject.CompareTag("Thorns"))
+        else if (collision.gameObject.CompareTag("OtherNonFoundations"))
         {
             GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
             GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
-            Thorns script = collision.gameObject.GetComponent<Thorns>();
-            if (script.enabled && gameObject.CompareTag("GreenProjectile"))
-            {
-                script.Disintegrate();
-            }
-        }
-        else if (collision.gameObject.CompareTag("Interruptor"))
-        {
-            GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
-            GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
-            Interruptor script = collision.gameObject.GetComponent<Interruptor>();
-            if (script.enabled)
-            {
-                script.PuzzleCompleted();
-            }
         }
         smokeTrail.transform.SetParent(null);
         smokeTrail.GetComponent<ParticleSystem>().Stop();

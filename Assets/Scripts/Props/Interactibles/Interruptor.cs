@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Interruptor : MonoBehaviour
+public class Interruptor : Puzzle
 {
     [SerializeField] EnergyBarrier barrier;
     Material material;
@@ -13,12 +13,12 @@ public class Interruptor : MonoBehaviour
         GetComponent<Renderer>().material = material;
     }
 
-    public void StartPuzzle()
+    public override void StartPuzzle()
     {
         barrier.PuzzleStarted();
     }
 
-    public void PuzzleCompleted()
+    public override void HitPuzzle(float damage, string projectileTag)
     {
         material.color = Color.green;
         barrier.PuzzleCompleted();

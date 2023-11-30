@@ -37,7 +37,7 @@ Transform:
   - {fileID: 2202370249968813092}
   - {fileID: 8551523751457817184}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3349495651477737053
 Animator:
@@ -72,6 +72,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91730c85c54be3845b76889d9e0ecf8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allSpikes:
+  - {fileID: 6770328661881412303}
+  - {fileID: 5299425240317837923}
+  - {fileID: 4315655170389312997}
+  - {fileID: 890269293382236688}
+  invisibleWall: {fileID: 2202370249968813092}
+  meltPs: {fileID: 6914164320960430621}
 --- !u!1 &2662573153593435096
 GameObject:
   m_ObjectHideFlags: 0
@@ -4915,7 +4922,7 @@ GameObject:
   - component: {fileID: 4315655170389312997}
   m_Layer: 0
   m_Name: Spike (2)
-  m_TagString: IceSpike
+  m_TagString: Puzzle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5019,13 +5026,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17974da7afab6af4788d87772c4069df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allSpikes:
-  - {fileID: 6770328661881412303}
-  - {fileID: 5299425240317837923}
-  - {fileID: 4315655170389312997}
-  - {fileID: 890269293382236688}
-  invisibleWall: {fileID: 0}
-  meltPs: {fileID: 6914164320960430621}
 --- !u!1 &4782983738283132322
 GameObject:
   m_ObjectHideFlags: 0
@@ -5041,7 +5041,7 @@ GameObject:
   - component: {fileID: 6770328661881412303}
   m_Layer: 0
   m_Name: Spike
-  m_TagString: IceSpike
+  m_TagString: Puzzle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5145,13 +5145,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17974da7afab6af4788d87772c4069df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allSpikes:
-  - {fileID: 6770328661881412303}
-  - {fileID: 5299425240317837923}
-  - {fileID: 4315655170389312997}
-  - {fileID: 890269293382236688}
-  invisibleWall: {fileID: 2202370249968813092}
-  meltPs: {fileID: 6914164320960430621}
 --- !u!1 &4960714321979060877
 GameObject:
   m_ObjectHideFlags: 0
@@ -5167,7 +5160,7 @@ GameObject:
   - component: {fileID: 890269293382236688}
   m_Layer: 0
   m_Name: Spike (3)
-  m_TagString: IceSpike
+  m_TagString: Puzzle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5271,13 +5264,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17974da7afab6af4788d87772c4069df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allSpikes:
-  - {fileID: 6770328661881412303}
-  - {fileID: 5299425240317837923}
-  - {fileID: 4315655170389312997}
-  - {fileID: 890269293382236688}
-  invisibleWall: {fileID: 0}
-  meltPs: {fileID: 6914164320960430621}
 --- !u!1 &7302831052221639544
 GameObject:
   m_ObjectHideFlags: 0
@@ -5346,7 +5332,7 @@ GameObject:
   - component: {fileID: 5299425240317837923}
   m_Layer: 0
   m_Name: Spike (1)
-  m_TagString: IceSpike
+  m_TagString: Puzzle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5450,10 +5436,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17974da7afab6af4788d87772c4069df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allSpikes:
-  - {fileID: 6770328661881412303}
-  - {fileID: 5299425240317837923}
-  - {fileID: 4315655170389312997}
-  - {fileID: 890269293382236688}
-  invisibleWall: {fileID: 0}
-  meltPs: {fileID: 6914164320960430621}
