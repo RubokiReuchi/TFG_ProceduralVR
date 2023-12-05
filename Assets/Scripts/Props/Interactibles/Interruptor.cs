@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Interruptor : Puzzle
 {
-    [SerializeField] EnergyBarrier barrier;
+    [SerializeField] Barrier barrier;
+    [SerializeField] GameObject orb;
     Material material;
 
     void Start()
     {
-        material = new Material(GetComponent<Renderer>().material);
-        GetComponent<Renderer>().material = material;
+        material = new Material(orb.GetComponent<Renderer>().material);
+        orb.GetComponent<Renderer>().material = material;
     }
 
     public override void StartPuzzle()

@@ -88,7 +88,7 @@ public class PlayerCharged : Projectile
         else if (collision.gameObject.CompareTag("Puzzle"))
         {
             GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
-            Puzzle script = collision.gameObject.GetComponent<Puzzle>();
+            Puzzle script = collision.transform.root.GetComponent<Puzzle>();
             if (script.enabled) script.HitPuzzle(damage, gameObject.tag);
             if (shockwave)
             {

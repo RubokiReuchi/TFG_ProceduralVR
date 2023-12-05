@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7026736567447928559
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4996,7 +4996,6 @@ GameObject:
   - component: {fileID: 4186460950974304935}
   - component: {fileID: 187742938152762110}
   - component: {fileID: 3522612043016419465}
-  - component: {fileID: 6247882854718887076}
   m_Layer: 0
   m_Name: Orb
   m_TagString: Puzzle
@@ -5090,31 +5089,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6247882854718887076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 176569585403036764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca8f186554e554e4692168dfa01e7b63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  displayedText: {fileID: 8645944029345631191}
-  isPartOfPuzzle: 0
-  damageObjective: 0
-  completePs: {fileID: 1602701742117165157}
-  barrier: {fileID: 0}
-  caseGameObjects:
-  - {fileID: 3624701530436730921}
-  - {fileID: 6156157791584759021}
-  supportGO: {fileID: 753020050479194699}
-  pilarGO: {fileID: 7846142463155966033}
-  caseOriginalMaterial: {fileID: 2100000, guid: 2b0977634930a1a4dbbab9995f2388f0, type: 2}
-  supportOriginalMaterial: {fileID: 2100000, guid: 60d23ddd0ba08be42ab2b1321d4b3863, type: 2}
-  pilarOriginalMaterial: {fileID: 2100000, guid: 5a060688ebd65c943bfdea9f42c50b07, type: 2}
 --- !u!1 &730098688171294634
 GameObject:
   m_ObjectHideFlags: 0
@@ -5580,6 +5554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1352884080311397966}
+  - component: {fileID: 2521793366907724784}
   m_Layer: 6
   m_Name: PowerChecker
   m_TagString: FoundationsW
@@ -5605,8 +5580,33 @@ Transform:
   - {fileID: 3727134922708485757}
   - {fileID: 5548916629910409965}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2521793366907724784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3351090478015845582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca8f186554e554e4692168dfa01e7b63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayedText: {fileID: 8645944029345631191}
+  isPartOfPuzzle: 1
+  damageObjective: 50
+  completePs: {fileID: 1602701742117165157}
+  barrier: {fileID: 0}
+  caseGameObjects:
+  - {fileID: 3624701530436730921}
+  - {fileID: 6156157791584759021}
+  supportGO: {fileID: 753020050479194699}
+  pilarGO: {fileID: 7846142463155966033}
+  caseOriginalMaterial: {fileID: 2100000, guid: 2b0977634930a1a4dbbab9995f2388f0, type: 2}
+  supportOriginalMaterial: {fileID: 2100000, guid: 60d23ddd0ba08be42ab2b1321d4b3863, type: 2}
+  pilarOriginalMaterial: {fileID: 2100000, guid: 5a060688ebd65c943bfdea9f42c50b07, type: 2}
 --- !u!1 &3624701530436730921
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
-public class HandScanner : MonoBehaviour
+public class HandScanner : Puzzle
 {
+    [SerializeField] BoxCollider detectorCollider;
     Bounds colliderBounds;
     [SerializeField] CapsuleCollider leftHandCollider;
     float handInTime;
@@ -13,10 +16,11 @@ public class HandScanner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        colliderBounds = GetComponent<BoxCollider>().bounds;
-        material = new Material(GetComponent<Renderer>().material);
-        GetComponent<Renderer>().material = material;
-        material.SetColor("_Color", Color.red);
+        colliderBounds = detectorCollider.GetComponent<BoxCollider>().bounds;
+        material = new Material(GetComponent<Renderer>().materials[2]);
+        Material[] auxArray = { GetComponent<Renderer>().materials[0], GetComponent<Renderer>().materials[1], material };
+        GetComponent<Renderer>().materials = auxArray;
+        material.SetColor("_GridColor", new Color(0.35f, 1, 0.54f, 1));
     }
 
     // Update is called once per frame
@@ -25,20 +29,24 @@ public class HandScanner : MonoBehaviour
         if (colliderBounds.Contains(leftHandCollider.bounds.center))
         {
             handInTime += Time.deltaTime;
-            handInTime += Time.deltaTime;
 
-            if (handInTime >= 2)
+            if (handInTime >= 1)
             {
-                handInTime = 2;
+                handInTime = 1;
                 barrier.PuzzleCompleted();
                 enabled = false;
             }
-            material.SetColor("_Color", new Color(1, handInTime / 2.0f, 0, 1));
+            material.SetColor("_GridColor", new Color(0.35f , 1, 0.54f + 0.46f * handInTime, 1));
         }
-        else handInTime = 0;
+        else if (handInTime > 0)
+        {
+            handInTime -= Time.deltaTime;
+            if (handInTime < 0) handInTime = 0;
+            material.SetColor("_GridColor", new Color(0.35f, 1, 0.54f + 0.23f * handInTime, 1));
+        }
     }
 
-    public void StartPuzzle()
+    public override void StartPuzzle()
     {
         enabled = true;
         barrier.PuzzleStarted();

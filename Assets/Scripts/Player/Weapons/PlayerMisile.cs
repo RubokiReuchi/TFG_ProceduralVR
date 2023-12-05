@@ -55,7 +55,7 @@ public class PlayerMisile : Projectile
         {
             GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
             GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
-            Enemy script = collision.gameObject.GetComponent<Enemy>();
+            Enemy script = collision.transform.root.GetComponent<Enemy>();
             if (script.enabled)
             {
                 script.TakeDamage(damage);

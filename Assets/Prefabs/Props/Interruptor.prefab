@@ -114,6 +114,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3247092917582182334}
+  - component: {fileID: 6147834565309567437}
   m_Layer: 0
   m_Name: Interruptor
   m_TagString: Untagged
@@ -138,6 +139,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6147834565309567437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3726289336412304410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 665678f71009a2a4b926f8b986e2122f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barrier: {fileID: 0}
+  orb: {fileID: 7575996920714813498}
 --- !u!1 &7575996920714813498
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,7 +165,6 @@ GameObject:
   - component: {fileID: 6862685637864723808}
   - component: {fileID: 7364802711504806477}
   - component: {fileID: 3499534791158909180}
-  - component: {fileID: 3769751483735954730}
   m_Layer: 0
   m_Name: Orb
   m_TagString: Puzzle
@@ -244,16 +258,3 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3769751483735954730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7575996920714813498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 665678f71009a2a4b926f8b986e2122f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  barrier: {fileID: 0}
