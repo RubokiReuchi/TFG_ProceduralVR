@@ -8,7 +8,7 @@ public class HandScanner : Puzzle
 {
     [SerializeField] BoxCollider detectorCollider;
     Bounds colliderBounds;
-    [SerializeField] CapsuleCollider leftHandCollider;
+    CapsuleCollider leftHandCollider;
     float handInTime;
     [SerializeField] EnergyBarrier barrier;
     Material material;
@@ -21,6 +21,8 @@ public class HandScanner : Puzzle
         Material[] auxArray = { GetComponent<Renderer>().materials[0], GetComponent<Renderer>().materials[1], material };
         GetComponent<Renderer>().materials = auxArray;
         material.SetColor("_GridColor", new Color(0.35f, 1, 0.54f, 1));
+
+        leftHandCollider = GameObject.Find("LeftHandCollision").GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame
