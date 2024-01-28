@@ -267,6 +267,7 @@ public class SphereRobot : Enemy
         animator.SetTrigger("Destroy");
         transform.GetComponentInChildren<AnimSphereRobot>().StopRing();
         state = STATE.DESTROYING;
+        alive = false;
     }
 
     public void Destroyed()

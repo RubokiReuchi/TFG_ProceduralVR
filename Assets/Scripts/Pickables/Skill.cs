@@ -22,9 +22,28 @@ public class Skill : MonoBehaviour
     public SKILL_TYPE type;
 
     [SerializeField] Puzzle puzzle;
+    [SerializeField] Enemy[] enemies;
+
+    bool ready = false;
+
+    void Update()
+    {
+        if (ready) return;
+        foreach (Enemy enemy in enemies)
+        {
+            if (enemy.alive)
+            {
+                return;
+            }
+        }
+
+        ready = true;
+        // set object visible
+    }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!ready) return;
         if (!other.transform.root.CompareTag("Player")) return;
 
         puzzle.StartPuzzle();

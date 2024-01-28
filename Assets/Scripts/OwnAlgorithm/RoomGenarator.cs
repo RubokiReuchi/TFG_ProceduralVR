@@ -30,6 +30,7 @@ public class RoomGenarator : MonoBehaviour
     [SerializeField] GameObject[] powerUpPathRoomsPrefabs; // power up room with 2 doors at least
     [SerializeField] GameObject[] powerUpEndingRoomsPrefabs; // power up room with only one door
     GameObject[] powerUpRoomsPrefabs; // powerUpPathRoomsPrefabs + powerUpEndingRoomsPrefabs
+    [SerializeField] GameObject[] upgradeRoomsPrefabs; //upgrade room always one door only
     [SerializeField] GameObject[] bossRoomsPrefabs;
     [SerializeField] GameObject[] jointsPrefabs;
     [SerializeField] GameObject hallwayPrefab;
@@ -75,6 +76,7 @@ public class RoomGenarator : MonoBehaviour
     [SerializeField] GameObject[] mapPowerUpPathRoomsPrefabs;
     [SerializeField] GameObject[] mapPowerUpEndingRoomsPrefabs;
     GameObject[] mapPowerUpRoomsPrefabs; // mapPowerUpPathRoomsPrefabs + mapPowerUpEndingRoomsPrefabs
+    [SerializeField] GameObject[] mapUpgradeRoomsPrefabs; //upgrade room always one door only
     [SerializeField] GameObject[] mapBossRoomsPrefabs;
     [SerializeField] GameObject[] mapJointsPrefabs;
     [SerializeField] GameObject mapHallwayPrefab;
@@ -1217,31 +1219,52 @@ public class RoomGenarator : MonoBehaviour
                 continue;
             }
 
-            bool powerUpRoom = !(Random.Range(0, 100) < 80) && powerUpRoomsLeft > 0;
-            if (powerUpRoom)
+            bool upgradeSuccesfullyPlacedThisLoop = false;
+            if (!upgradePlaced)
             {
-                auxScript = CreateNextPowerUpRoom(randomDoor, GetTreeIndex(randomDoor.script), powerUpRoomsPrefabs, mapPowerUpRoomsPrefabs); // power up room
-                if (auxScript != null)
+                bool upgradeRoom = !(Random.Range(0, 100) < 60);
+                if (upgradeRoom)
                 {
-                    lastRoomCreated = auxScript.roomTypeID;
-                    randomDoor.state = GetDoorColor();
-                    forFillDoors.Clear();
-                    powerUpRoomsLeft--;
+                    auxScript = CreateNextRoom(randomDoor, GetTreeIndex(randomDoor.script), upgradeRoomsPrefabs, mapUpgradeRoomsPrefabs); // upgrade room
+                    if (auxScript != null)
+                    {
+                        lastRoomCreated = auxScript.roomTypeID;
+                        randomDoor.state = GetDoorColor();
+                        forFillDoors.Clear();
+                        upgradePlaced = true;
+                        upgradeSuccesfullyPlacedThisLoop = true;
+                    }
                 }
-                else powerUpRoom = false;
             }
-            if (!powerUpRoom)
+
+            if (!upgradeSuccesfullyPlacedThisLoop)
             {
-                auxScript = CreateNextRoom(randomDoor, GetTreeIndex(randomDoor.script), roomsPrefabs, mapRoomsPrefabs); // no power up room
-                if (auxScript != null)
+                bool powerUpRoom = !(Random.Range(0, 100) < 80) && powerUpRoomsLeft > 0;
+                if (powerUpRoom)
                 {
-                    lastRoomCreated = auxScript.roomTypeID;
-                    randomDoor.state = GetDoorColor();
-                    forFillDoors.Clear();
+                    auxScript = CreateNextPowerUpRoom(randomDoor, GetTreeIndex(randomDoor.script), powerUpRoomsPrefabs, mapPowerUpRoomsPrefabs); // power up room
+                    if (auxScript != null)
+                    {
+                        lastRoomCreated = auxScript.roomTypeID;
+                        randomDoor.state = GetDoorColor();
+                        forFillDoors.Clear();
+                        powerUpRoomsLeft--;
+                    }
+                    else powerUpRoom = false;
                 }
-                else // door imposible to fill
+                if (!powerUpRoom)
                 {
-                    forFillDoors.Remove(randomDoor);
+                    auxScript = CreateNextRoom(randomDoor, GetTreeIndex(randomDoor.script), roomsPrefabs, mapRoomsPrefabs); // no power up room && no upgrade room
+                    if (auxScript != null)
+                    {
+                        lastRoomCreated = auxScript.roomTypeID;
+                        randomDoor.state = GetDoorColor();
+                        forFillDoors.Clear();
+                    }
+                    else // door imposible to fill
+                    {
+                        forFillDoors.Remove(randomDoor);
+                    }
                 }
             }
         }
