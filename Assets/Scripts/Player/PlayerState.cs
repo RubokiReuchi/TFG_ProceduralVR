@@ -38,7 +38,7 @@ public class PlayerState : MonoBehaviour
     float xRayBattery = 50;
     [SerializeField] Material xRayBatteryMaterial;
 
-
+    [SerializeField] Material fadeMaterial;
     [SerializeField] InputActionProperty temporalySaveGame;
 
     private void Awake()
@@ -56,6 +56,7 @@ public class PlayerState : MonoBehaviour
         takeDamageMaterial.SetFloat("_Opacity", 0);
         xRayMaterial.SetFloat("_ApertureSize", 1);
         xRayBatteryMaterial.SetFloat("_FillPercentage", 50.0f);
+        fadeMaterial.SetFloat("_Opacity", 0);
     }
 
     void Update()

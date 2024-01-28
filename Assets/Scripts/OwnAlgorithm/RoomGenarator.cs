@@ -63,6 +63,8 @@ public class RoomGenarator : MonoBehaviour
     [Header("PowerUps & Upgrades")]
     [SerializeField] GameObject[] powerUpPrefabs;
     List<PowerUp> currentPowerUps = new();
+    bool upgradePlaced = false;
+    int upgradeLevel = 0;
 
     [Header("Map Rooms")]
     [SerializeField] Transform createMap;
@@ -1847,6 +1849,14 @@ public class RoomGenarator : MonoBehaviour
             }
         }
         return true;
+    }
+
+    void CheckIfUpgradesRemaining()
+    {
+        int level = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerSkills>().GetUpgradeLevel();
+
+        if (level == -1) upgradePlaced = true;
+        else upgradeLevel = level;
     }
 
     // Map

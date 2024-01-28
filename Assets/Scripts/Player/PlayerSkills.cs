@@ -89,4 +89,20 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
                 break;
         }
     }
+
+    public int GetUpgradeLevel()
+    {
+        int level = 0;
+
+        if (dashUnlocked) level++;
+        else return 0;
+        if (redUnlocked && blueUnlocked && blockingFistUnlocked) level++;
+        else return 1;
+        if (purpleUnlocked && superJumpUnlocked) level++;
+        else return 2;
+        if (greenUnlocked) level++;
+        else return 3;
+
+        return -1;
+    }
 }
