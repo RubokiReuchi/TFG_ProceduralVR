@@ -130,6 +130,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  puzzle: {fileID: 0}
+  meshes:
+  - {fileID: 7062946451244689291}
+  enemies: []
 --- !u!65 &6471796310624488192
 BoxCollider:
   m_ObjectHideFlags: 0

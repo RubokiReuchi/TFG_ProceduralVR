@@ -22,9 +22,18 @@ public class Skill : MonoBehaviour
     public SKILL_TYPE type;
 
     [SerializeField] Puzzle puzzle;
+    [SerializeField] GameObject[] meshes;
     [SerializeField] Enemy[] enemies;
 
     bool ready = false;
+
+    void Start()
+    {
+        foreach (GameObject mesh in meshes)
+        {
+            mesh.SetActive(false);
+        }
+    }
 
     void Update()
     {
@@ -38,7 +47,10 @@ public class Skill : MonoBehaviour
         }
 
         ready = true;
-        // set object visible
+        foreach (GameObject mesh in meshes)
+        {
+            mesh.SetActive(true);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

@@ -115,7 +115,7 @@ Transform:
   m_Children:
   - {fileID: 3043806405206297811}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5180997580992539576
 MonoBehaviour:
@@ -130,6 +130,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
+  puzzle: {fileID: 0}
+  meshes:
+  - {fileID: 7407741479020707601}
+  enemies: []
 --- !u!65 &4114267832336497460
 BoxCollider:
   m_ObjectHideFlags: 0
