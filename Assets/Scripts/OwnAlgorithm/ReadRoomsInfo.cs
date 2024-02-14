@@ -72,10 +72,12 @@ public class ReadRoomsInfo : MonoBehaviour
     [SerializeField] TextAsset endingRoomsInfoCSV;
     [SerializeField] TextAsset powerUpPathRoomsInfoCSV;
     [SerializeField] TextAsset powerUpEndingRoomsInfoCSV;
+    [SerializeField] TextAsset upgradeRoomsInfoCSV;
     [SerializeField] TextAsset jointsInfoCSV;
 
     public Dictionary<int, RoomInfo> roomInfoList = new();
     public Dictionary<int, RoomInfo> powerUpRoomInfoList = new();
+    public Dictionary<int, RoomInfo> upgradeRoomInfoList = new();
     public Dictionary<int, JointInfo> jointInfoList = new();
 
     // Start is called before the first frame update
@@ -83,6 +85,7 @@ public class ReadRoomsInfo : MonoBehaviour
     {
         ReadRoomsCSV();
         ReadPowerUpRoomsCSV();
+        ReadUpgradeRoomsCSV();
         ReadJointsCSV();
     }
 
@@ -180,6 +183,32 @@ public class ReadRoomsInfo : MonoBehaviour
                 int.Parse(data[i + 9]));
 
             powerUpRoomInfoList.Add(int.Parse(data[i]) + roomsCount, roomInfo);
+            i += numOfColumns;
+        }
+    }
+
+    void ReadUpgradeRoomsCSV()
+    {
+        // power up ending rooms
+        string[] data = upgradeRoomsInfoCSV.text.Split(new string[] { ";", "\r\n" }, System.StringSplitOptions.None);
+
+        int numOfColumns = 10;
+
+        int i = numOfColumns;
+        while (data[i] != "")
+        {
+            RoomInfo roomInfo = new RoomInfo(
+                int.Parse(data[i + 1]),
+                int.Parse(data[i + 2]),
+                int.Parse(data[i + 3]),
+                int.Parse(data[i + 4]),
+                int.Parse(data[i + 5]),
+                int.Parse(data[i + 6]),
+                int.Parse(data[i + 7]),
+                int.Parse(data[i + 8]),
+                int.Parse(data[i + 9]));
+
+            upgradeRoomInfoList.Add(int.Parse(data[i]), roomInfo);
             i += numOfColumns;
         }
     }

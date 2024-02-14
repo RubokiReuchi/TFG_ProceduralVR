@@ -515,6 +515,14 @@ MonoBehaviour:
   - {fileID: 4927600078426804326, guid: c0b63a091990a7242843daa304083b4c, type: 3}
   powerUpEndingRoomsPrefabs:
   - {fileID: 6331366710229583462, guid: 79ca7d64ebf730940a23b9f409f5d35a, type: 3}
+  upgradeRoomsPrefabs:
+  - {fileID: 5286243595068156985, guid: 290f020e7fcb4b64ca7d99a5de805464, type: 3}
+  - {fileID: 2269105639132854317, guid: 2c428e9d53166484499dae5d6bf6b6ea, type: 3}
+  - {fileID: 196661293599550840, guid: 715277b27b4efe14883aa6361026fca1, type: 3}
+  - {fileID: 8798630346131947301, guid: 93ab450baa604474f9d17025d78d2bc3, type: 3}
+  - {fileID: 1483983435061327030, guid: 733258bec4013114590c3a6d80112421, type: 3}
+  - {fileID: 5908187870012001478, guid: fac5b66c8a3b6df45950a5018824cf5d, type: 3}
+  - {fileID: 8392808127848088723, guid: 176aa787e1b414f4dbc35e9daf4102e1, type: 3}
   bossRoomsPrefabs:
   - {fileID: 578699312927519967, guid: 2f5ef6a99a7a51b47b9bc23598032e5f, type: 3}
   jointsPrefabs:
@@ -551,6 +559,14 @@ MonoBehaviour:
   - {fileID: 4360573084842403018, guid: 39830ace777860c4f87d613622dca6cb, type: 3}
   mapPowerUpEndingRoomsPrefabs:
   - {fileID: 221150327330874798, guid: ae9cb2c5c57cb654f9517ae5f9453f96, type: 3}
+  mapUpgradeRoomsPrefabs:
+  - {fileID: 6518824292154678824, guid: d9be1b9658651ea4e92491af21d15ebc, type: 3}
+  - {fileID: 2402225669010455273, guid: 339615330f7964d458a67dc90a6fd794, type: 3}
+  - {fileID: 6518824292154678824, guid: 303b46e28401b7b4b80af1708460f89c, type: 3}
+  - {fileID: 3187152519247558728, guid: d456daf6bbd3f8f42813d31ab913bb78, type: 3}
+  - {fileID: 8233548387822017142, guid: 59c066a9be743f54a93ba72beef9b5aa, type: 3}
+  - {fileID: 3187152519247558728, guid: 49ced8d532ffbb341bad847704b72cf4, type: 3}
+  - {fileID: 2402225669010455273, guid: 348db49739dc1d2478da9aace4e17c02, type: 3}
   mapBossRoomsPrefabs:
   - {fileID: 8181379179684344601, guid: fb8677394ac2f4042a7b3f17bc1ff846, type: 3}
   mapJointsPrefabs:
@@ -576,6 +592,7 @@ MonoBehaviour:
   endingRoomsInfoCSV: {fileID: 4900000, guid: 2ee9988916f443542a585215b1ef5610, type: 3}
   powerUpPathRoomsInfoCSV: {fileID: 4900000, guid: f52551aa45a18bf4aa5e9e10da3a0d2c, type: 3}
   powerUpEndingRoomsInfoCSV: {fileID: 4900000, guid: 30044cf5d86365b4cb4c3f131b1764d4, type: 3}
+  upgradeRoomsInfoCSV: {fileID: 4900000, guid: da070cf1d28f6454f8b26000748ec335, type: 3}
   jointsInfoCSV: {fileID: 4900000, guid: cc9ab84028487db4fa61d9a8fcd96bab, type: 3}
 --- !u!114 &1892248153
 MonoBehaviour:

@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1435213995342857288
 Transform:
   m_ObjectHideFlags: 0
@@ -239,7 +239,7 @@ Transform:
   - {fileID: 4195481751915799292}
   - {fileID: 4727624925557450717}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6962619004075273898
 MonoBehaviour:
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomTypeID: -1
-  roomType: 0
+  roomType: 2
   doorsTransform:
   - {fileID: 1964261662164555227}
   doorsDirections: 02000000
@@ -7586,7 +7586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1865729862114615622, guid: c747822659ab6d245ad175d49e4b04ec, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.5066524
+      value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 1865729862114615622, guid: c747822659ab6d245ad175d49e4b04ec, type: 3}
       propertyPath: m_LocalRotation.w

@@ -32,6 +32,7 @@ public class Thorns : Puzzle
     public override void StartPuzzle()
     {
         animator.enabled = true;
+        GetComponent<BoxCollider>().enabled = true;
     }
 
     public override void HitPuzzle(float damage, string projectileTag)
