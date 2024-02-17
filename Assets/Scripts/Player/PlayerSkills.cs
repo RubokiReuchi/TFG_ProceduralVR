@@ -100,9 +100,7 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
         else return 1;
         if (purpleUnlocked && superJumpUnlocked) level++;
         else return 2;
-        if (greenUnlocked) level++;
+        if (greenUnlocked) return -1; // -1 mean all skills unlocked
         else return 3;
-
-        return -1;
     }
 }

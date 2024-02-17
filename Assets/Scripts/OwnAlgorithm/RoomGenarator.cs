@@ -64,7 +64,7 @@ public class RoomGenarator : MonoBehaviour
     [Header("PowerUps & Upgrades")]
     [SerializeField] GameObject[] powerUpPrefabs;
     List<PowerUp> currentPowerUps = new();
-    bool upgradePlaced = false;
+    bool upgradeRoomPlaced = false;
     int upgradeLevel = 0;
 
     [Header("Map Rooms")]
@@ -1206,6 +1206,9 @@ public class RoomGenarator : MonoBehaviour
         RoomBehaviour auxScript;
         List<Door> forFillDoors = new();
 
+        // Upgrades
+        CheckIfUpgradesRemaining();
+        
         while (currentRooms < maxRooms)
         {
             FindForFillDoors(roomsTree[1], ref forFillDoors); // 1 --> ignore start room
@@ -1220,9 +1223,9 @@ public class RoomGenarator : MonoBehaviour
             }
 
             bool upgradeSuccesfullyPlacedThisLoop = false;
-            if (!upgradePlaced)
+            if (!upgradeRoomPlaced)
             {
-                bool upgradeRoom = !(Random.Range(0, 100) < 60);
+                bool upgradeRoom = (Random.Range(0, 100) < 100);
                 if (upgradeRoom)
                 {
                     auxScript = CreateNextUpgradeRoom(randomDoor, GetTreeIndex(randomDoor.script), upgradeRoomsPrefabs, mapUpgradeRoomsPrefabs); // upgrade room
@@ -1231,7 +1234,7 @@ public class RoomGenarator : MonoBehaviour
                         lastRoomCreated = auxScript.roomTypeID;
                         randomDoor.state = GetDoorColor();
                         forFillDoors.Clear();
-                        upgradePlaced = true;
+                        upgradeRoomPlaced = true;
                         upgradeSuccesfullyPlacedThisLoop = true;
                     }
                 }
@@ -1877,6 +1880,28 @@ public class RoomGenarator : MonoBehaviour
     RoomBehaviour CreateNextUpgradeRoom(Door door, int roomTreeIndex, GameObject[] roomsPool, GameObject[] mapRoomsPool)
     {
         List<GameObject> posibleRooms = new(roomsPool.ToList());
+        List<int> posibleUpgradeRoomsCount = new();
+        switch (upgradeLevel)
+        {
+            case 0:
+                posibleUpgradeRoomsCount.Add(0);
+                break;
+            case 1:
+                posibleUpgradeRoomsCount.Add(1);
+                posibleUpgradeRoomsCount.Add(2);
+                posibleUpgradeRoomsCount.Add(3);
+                break;
+            case 2:
+                posibleUpgradeRoomsCount.Add(4);
+                posibleUpgradeRoomsCount.Add(5);
+                break;
+            case 3:
+                posibleUpgradeRoomsCount.Add(6);
+                break;
+            default:
+                Debug.LogError("Logic Error");
+                break;
+        }
         List<int> imposibleRooms = new();
         if (lastRoomCreated != -1) imposibleRooms.Add(lastRoomCreated);
         int newRoomTypeID = -1;
@@ -1886,11 +1911,11 @@ public class RoomGenarator : MonoBehaviour
             case FOUR_DIRECTIONS.TOP:
                 while (newRoomTypeID == -1)
                 {
-                    if (posibleRooms.Count == imposibleRooms.Count) return null;
+                    if (posibleRooms.Count == imposibleRooms.Count || posibleUpgradeRoomsCount.Count == imposibleRooms.Count) return null;
                     do
                     {
                         newRoomTypeID = Random.Range(0, posibleRooms.Count);
-                    } while (imposibleRooms.Contains(newRoomTypeID));
+                    } while (imposibleRooms.Contains(newRoomTypeID) || !posibleUpgradeRoomsCount.Contains(newRoomTypeID));
                     RoomInfo roomInfo = roomsInfo.upgradeRoomInfoList[newRoomTypeID];
 
                     Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z + tileSize/*HallwaySize*/ + roomsNormalHeight / 2 * tileSize);
@@ -1930,11 +1955,11 @@ public class RoomGenarator : MonoBehaviour
             case FOUR_DIRECTIONS.DOWN:
                 while (newRoomTypeID == -1)
                 {
-                    if (posibleRooms.Count == imposibleRooms.Count) return null;
+                    if (posibleRooms.Count == imposibleRooms.Count || posibleUpgradeRoomsCount.Count == imposibleRooms.Count) return null;
                     do
                     {
                         newRoomTypeID = Random.Range(0, posibleRooms.Count);
-                    } while (imposibleRooms.Contains(newRoomTypeID));
+                    } while (imposibleRooms.Contains(newRoomTypeID) || !posibleUpgradeRoomsCount.Contains(newRoomTypeID));
                     RoomInfo roomInfo = roomsInfo.upgradeRoomInfoList[newRoomTypeID];
 
                     Vector3 roomCenter = new Vector3(door.position.x, door.position.y/*0*/, door.position.z - tileSize/*HallwaySize*/ - roomsNormalHeight / 2 * tileSize);
@@ -1974,11 +1999,11 @@ public class RoomGenarator : MonoBehaviour
             case FOUR_DIRECTIONS.RIGHT:
                 while (newRoomTypeID == -1)
                 {
-                    if (posibleRooms.Count == imposibleRooms.Count) return null;
+                    if (posibleRooms.Count == imposibleRooms.Count || posibleUpgradeRoomsCount.Count == imposibleRooms.Count) return null;
                     do
                     {
                         newRoomTypeID = Random.Range(0, posibleRooms.Count);
-                    } while (imposibleRooms.Contains(newRoomTypeID));
+                    } while (imposibleRooms.Contains(newRoomTypeID) || !posibleUpgradeRoomsCount.Contains(newRoomTypeID));
                     RoomInfo roomInfo = roomsInfo.upgradeRoomInfoList[newRoomTypeID];
 
                     Vector3 roomCenter = new Vector3(door.position.x + tileSize/*HallwaySize*/ + roomsNormalWidth / 2 * tileSize, door.position.y/*0*/, door.position.z);
@@ -2018,11 +2043,11 @@ public class RoomGenarator : MonoBehaviour
             case FOUR_DIRECTIONS.LEFT:
                 while (newRoomTypeID == -1)
                 {
-                    if (posibleRooms.Count == imposibleRooms.Count) return null;
+                    if (posibleRooms.Count == imposibleRooms.Count || posibleUpgradeRoomsCount.Count == imposibleRooms.Count) return null;
                     do
                     {
                         newRoomTypeID = Random.Range(0, posibleRooms.Count);
-                    } while (imposibleRooms.Contains(newRoomTypeID));
+                    } while (imposibleRooms.Contains(newRoomTypeID) || !posibleUpgradeRoomsCount.Contains(newRoomTypeID));
                     RoomInfo roomInfo = roomsInfo.upgradeRoomInfoList[newRoomTypeID];
 
                     Vector3 roomCenter = new Vector3(door.position.x - 2/*HallwaySize*/ - roomsNormalWidth / 2 * tileSize, door.position.y/*0*/, door.position.z);
@@ -2067,7 +2092,7 @@ public class RoomGenarator : MonoBehaviour
     {
         int level = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerSkills>().GetUpgradeLevel();
 
-        if (level == -1) upgradePlaced = true;
+        if (level == -1) upgradeRoomPlaced = true;
         else upgradeLevel = level;
     }
 

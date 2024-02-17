@@ -258,6 +258,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 42734825603055422, guid: bb2c66e0c6346fc41b073bc58d7cd6a4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6275698644058724443, guid: bb2c66e0c6346fc41b073bc58d7cd6a4, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -541,6 +545,12 @@ MonoBehaviour:
   - {fileID: 418554562881714168, guid: 996b949f035e06e48a62a29bf2df714d, type: 3}
   - {fileID: 4734988606657967624, guid: 0192bb8071f01494e9ee3cb71679b967, type: 3}
   - {fileID: 5879438222777538407, guid: f95b99dae795f9a499125d15f637c5a8, type: 3}
+  - {fileID: 2200071849115252227, guid: 721b41adb88b09b47a331811d51e3f3c, type: 3}
+  - {fileID: 2036545963824869195, guid: fd0e27f174e797541b96032cbe5d465d, type: 3}
+  - {fileID: 1770691677960453972, guid: d8879f087c390af4796d89c3af11d8d4, type: 3}
+  - {fileID: 829047990641732667, guid: 44ee750892a767442b4ad3a0a7ead4ad, type: 3}
+  - {fileID: 8440478586694532561, guid: 4c6d1e7bd144ea54e83ac6da961224ad, type: 3}
+  - {fileID: 5334818106710149487, guid: 501b784b2fdbdeb42b4feba2862eb785, type: 3}
   createMap: {fileID: 262585425}
   mapStartRoomPrefab: {fileID: 978247062494792624, guid: 721952ab78a20a84eac276137047e4c7, type: 3}
   mapPathRoomsPrefabs:
