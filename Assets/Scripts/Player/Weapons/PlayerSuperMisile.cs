@@ -98,7 +98,7 @@ public class PlayerSuperMisile : Projectile
         {
             GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
             GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
-            Puzzle script = collision.transform.root.GetComponent<Puzzle>();
+            Puzzle script = collision.gameObject.GetComponent<PuzzleParent>().puzzle;
             if (script.enabled) script.HitPuzzle(damage, gameObject.tag);
             if (shockwave)
             {

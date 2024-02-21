@@ -346,4 +346,11 @@ public class PlayerGun : MonoBehaviour
         selectedGun = newType;
         screen.SetScreen(newType);
     }
+
+    public void UpgradeToGreen()
+    {
+        if (selectedGun != GUN_TYPE.YELLOW) return;
+
+        SwapGunType(GUN_TYPE.GREEN);
+    }
 }

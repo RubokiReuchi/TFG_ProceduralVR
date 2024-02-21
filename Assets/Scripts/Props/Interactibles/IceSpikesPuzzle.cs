@@ -14,15 +14,16 @@ public class IceSpikesPuzzle : Puzzle
     void Start()
     {
         animator = GetComponent<Animator>();
+        targetScale = transform.localScale;
     }
 
     void Update()
     {
-        if (targetScale.x < invisibleWall.localScale.x)
+        if (targetScale.y < invisibleWall.localScale.y)
         {
             invisibleWall.localScale -= Vector3.up * Time.deltaTime * 0.2f;
         }
-        if (invisibleWall.localScale.x <= 0)
+        if (invisibleWall.localScale.y <= 0)
         {
             invisibleWall.gameObject.SetActive(false);
         }
@@ -39,6 +40,8 @@ public class IceSpikesPuzzle : Puzzle
         {
             foreach (IceSpike spike in allSpikes) spike.Melt(damage);
             meltPs.Play();
+            targetScale -= Vector3.up * damage / 100.0f;
+            if (targetScale.y < 0.4f) targetScale = Vector3.zero;
         }
     }
 }

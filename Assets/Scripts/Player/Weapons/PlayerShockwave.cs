@@ -55,7 +55,7 @@ public class PlayerShockwave : MonoBehaviour
         }
         else if (other.CompareTag("Puzzle"))
         {
-            Puzzle script = other.transform.root.GetComponent<Puzzle>();
+            Puzzle script = other.GetComponent<PuzzleParent>().puzzle;
             if (script.enabled) script.HitPuzzle(damage, gameObject.tag);
             entityDamaged.Add(other.transform);
         }

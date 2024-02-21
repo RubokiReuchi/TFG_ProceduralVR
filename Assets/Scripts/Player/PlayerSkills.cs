@@ -84,6 +84,7 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
             case SKILL_TYPE.GREEN:
                 greenUnlocked = true;
                 playerGun.greenUnlocked = true;
+                playerGun.UpgradeToGreen();
                 break;
             default:
                 break;

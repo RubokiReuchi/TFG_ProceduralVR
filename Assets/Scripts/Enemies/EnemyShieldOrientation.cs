@@ -5,13 +5,12 @@ using UnityEngine;
 public class EnemyShieldOrientation : MonoBehaviour
 {
     Transform player;
-    Enemy enemyScript;
+    [SerializeField] Enemy enemyScript;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        enemyScript = transform.root.GetComponent<Enemy>();
     }
 
     // Update is called once per frame

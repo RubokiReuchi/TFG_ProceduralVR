@@ -4996,6 +4996,7 @@ GameObject:
   - component: {fileID: 4186460950974304935}
   - component: {fileID: 187742938152762110}
   - component: {fileID: 3522612043016419465}
+  - component: {fileID: 862822592391139524}
   m_Layer: 0
   m_Name: Orb
   m_TagString: Puzzle
@@ -5089,6 +5090,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &862822592391139524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176569585403036764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33e2bc4ff96ddaa44a0e970ebfa73d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puzzle: {fileID: 2521793366907724784}
 --- !u!1 &730098688171294634
 GameObject:
   m_ObjectHideFlags: 0

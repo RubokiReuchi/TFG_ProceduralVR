@@ -56,7 +56,7 @@ public class PlayerProjectile : Projectile
         else if (collision.gameObject.CompareTag("Puzzle"))
         {
             GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
-            Puzzle script = collision.transform.root.GetComponent<Puzzle>();
+            Puzzle script = collision.gameObject.GetComponent<PuzzleParent>().puzzle;
             if (script.enabled) script.HitPuzzle(damage, gameObject.tag);
         }
         else if (collision.gameObject.CompareTag("OtherNonFoundations"))

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyShield : MonoBehaviour
 {
-    Enemy enemyScript;
+    [SerializeField] Enemy enemyScript;
     [SerializeField] float maxHealth;
     float currentHealth;
     PlayerState playerState;
@@ -14,7 +14,6 @@ public class EnemyShield : MonoBehaviour
 
     void Start()
     {
-        enemyScript = transform.root.GetComponent<Enemy>();
         enemyScript.hasShield = true;
         enemyScript.shield = this;
         material = new Material(GetComponent<Renderer>().material);
@@ -42,7 +41,7 @@ public class EnemyShield : MonoBehaviour
     {
         if (!enabled) return;
         currentHealth -= amount;
-        Debug.Log("hit");
+        
         if (currentHealth <= 0)
         {
             currentHealth = 0;
