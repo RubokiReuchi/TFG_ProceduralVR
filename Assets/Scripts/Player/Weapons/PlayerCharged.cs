@@ -105,6 +105,13 @@ public class PlayerCharged : Projectile
                 shockwave.SetDamage(damage / 2.0f);
             }
         }
+        else if (collision.gameObject.CompareTag("MenuButton"))
+        {
+            Physics.Raycast(transform.position, transform.forward, out RaycastHit hit);
+            GameObject.Instantiate(decal, hit.point + hit.normal * 0.01f, Quaternion.LookRotation(hit.normal) * Quaternion.AngleAxis(90, Vector3.right));
+            MenuButton script = collision.gameObject.GetComponent<MenuButton>();
+            if (script.enabled) script.ButtonHitted();
+        }
         Destroy(this.gameObject);
     }
 

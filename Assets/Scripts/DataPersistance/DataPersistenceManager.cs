@@ -8,7 +8,7 @@ public class DataPersistenceManager : MonoBehaviour
     public static DataPersistenceManager instance { get; private set; }
 
     [Header("File Storage Config")]
-    [SerializeField] string fileName;
+    public string fileName;
     [SerializeField] bool useEncryption;
 
     GameData gameData;
@@ -17,6 +17,15 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void Awake()
     {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("DataPersistenceManager");
+
+        if (objs.Length > 1)
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+
         instance = this;
     }
 

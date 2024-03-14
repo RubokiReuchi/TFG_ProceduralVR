@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.IO;
-using UnityEngine.Profiling;
-using Unity.VisualScripting;
 
 public class FileDataHandler
 {

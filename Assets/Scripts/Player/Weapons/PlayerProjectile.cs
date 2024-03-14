@@ -63,6 +63,13 @@ public class PlayerProjectile : Projectile
         {
             GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
         }
+        else if (collision.gameObject.CompareTag("MenuButton"))
+        {
+            Physics.Raycast(transform.position, transform.forward, out RaycastHit hit);
+            GameObject.Instantiate(decal, hit.point + hit.normal * 0.01f, Quaternion.LookRotation(hit.normal) * Quaternion.AngleAxis(90, Vector3.right));
+            MenuButton script = collision.gameObject.GetComponent<MenuButton>();
+            if (script.enabled) script.ButtonHitted();
+        }
         Destroy(this.gameObject);
     }
 }
