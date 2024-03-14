@@ -104,4 +104,34 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
         if (greenUnlocked) return -1; // -1 mean all skills unlocked
         else return 3;
     }
+
+    public bool CheckIfSkillIsOwned(SKILL_TYPE type)
+    {
+        switch (type)
+        {
+            case SKILL_TYPE.DASH:
+                if (dashUnlocked) return true;
+                else return false;
+            case SKILL_TYPE.BLUE:
+                if (blueUnlocked) return true;
+                else return false;
+            case SKILL_TYPE.RED:
+                if (redUnlocked) return true;
+                else return false;
+            case SKILL_TYPE.BLOCKING_FIST:
+                if (blockingFistUnlocked) return true;
+                else return false;
+            case SKILL_TYPE.PURPLE:
+                if (purpleUnlocked) return true;
+                else return false;
+            case SKILL_TYPE.SUPER_JUMP:
+                if (superJumpUnlocked) return true;
+                else return false;
+            case SKILL_TYPE.GREEN:
+                if (greenUnlocked) return true;
+                else return false;
+            default:
+                return false;
+        }
+    }
 }

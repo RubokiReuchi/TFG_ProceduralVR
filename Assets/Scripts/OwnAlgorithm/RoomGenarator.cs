@@ -1881,22 +1881,23 @@ public class RoomGenarator : MonoBehaviour
     {
         List<GameObject> posibleRooms = new(roomsPool.ToList());
         List<int> posibleUpgradeRoomsCount = new();
+        PlayerSkills playerSkills = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerSkills>();
         switch (upgradeLevel)
         {
             case 0:
-                posibleUpgradeRoomsCount.Add(0);
+                if (!playerSkills.CheckIfSkillIsOwned(SKILL_TYPE.DASH)) posibleUpgradeRoomsCount.Add(0);
                 break;
             case 1:
-                posibleUpgradeRoomsCount.Add(1);
-                posibleUpgradeRoomsCount.Add(2);
-                posibleUpgradeRoomsCount.Add(3);
+                if (!playerSkills.CheckIfSkillIsOwned(SKILL_TYPE.BLUE)) posibleUpgradeRoomsCount.Add(1);
+                if (!playerSkills.CheckIfSkillIsOwned(SKILL_TYPE.RED)) posibleUpgradeRoomsCount.Add(2);
+                if (!playerSkills.CheckIfSkillIsOwned(SKILL_TYPE.BLOCKING_FIST)) posibleUpgradeRoomsCount.Add(3);
                 break;
             case 2:
-                posibleUpgradeRoomsCount.Add(4);
-                posibleUpgradeRoomsCount.Add(5);
+                if (!playerSkills.CheckIfSkillIsOwned(SKILL_TYPE.PURPLE)) posibleUpgradeRoomsCount.Add(4);
+                if (!playerSkills.CheckIfSkillIsOwned(SKILL_TYPE.SUPER_JUMP)) posibleUpgradeRoomsCount.Add(5);
                 break;
             case 3:
-                posibleUpgradeRoomsCount.Add(6);
+                if (!playerSkills.CheckIfSkillIsOwned(SKILL_TYPE.GREEN)) posibleUpgradeRoomsCount.Add(6);
                 break;
             default:
                 Debug.LogError("Logic Error");

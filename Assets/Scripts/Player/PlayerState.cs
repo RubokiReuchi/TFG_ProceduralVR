@@ -62,7 +62,7 @@ public class PlayerState : MonoBehaviour
     void Update()
     {
         // temp
-        if (temporalySaveGame.action.WasPressedThisFrame())
+        if (temporalySaveGame.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.Space))
         {
             DataPersistenceManager.instance.SaveGame();
         }
