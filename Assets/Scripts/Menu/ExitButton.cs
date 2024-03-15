@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using TMPro;
 using UnityEngine;
@@ -16,12 +17,13 @@ public class ExitButton : MenuButton
         if (!sure)
         {
             paused = true;
-            text.text = "Are you SURE to exit?";
+            text.text = "Are you SURE\n to exit?";
             Invoke("AreYouSure", 1.0f);
         }
         else
         {
             Application.Quit();
+            Debug.Log("Exit");
         }
     }
 

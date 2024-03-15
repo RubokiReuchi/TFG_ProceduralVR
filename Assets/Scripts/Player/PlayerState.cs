@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
+using static UnityEditor.Experimental.GraphView.Port;
 
 public enum LEFT_HAND_POSE
 {
@@ -56,7 +57,8 @@ public class PlayerState : MonoBehaviour
         takeDamageMaterial.SetFloat("_Opacity", 0);
         xRayMaterial.SetFloat("_ApertureSize", 1);
         xRayBatteryMaterial.SetFloat("_FillPercentage", 50.0f);
-        fadeMaterial.SetFloat("_Opacity", 0);
+        fadeMaterial.SetFloat("_Opacity", 1);
+        StartCoroutine(FadeOut());
     }
 
     void Update()
@@ -202,6 +204,18 @@ public class PlayerState : MonoBehaviour
             apertureSize += Time.deltaTime * 2;
             if (apertureSize > 1) apertureSize = 1;
             xRayMaterial.SetFloat("_ApertureSize", apertureSize);
+            yield return null;
+        }
+    }
+
+    IEnumerator FadeOut()
+    {
+        float opacity = 1.0f;
+        while (opacity > 0)
+        {
+            opacity -= Time.deltaTime * 1;
+            if (opacity < 0) opacity = 0;
+            fadeMaterial.SetFloat("_Opacity", opacity);
             yield return null;
         }
     }
