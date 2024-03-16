@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class FaceCamera : MonoBehaviour
 {
-    GameObject camera;
+    GameObject cam;
 
     // Start is called before the first frame update
     void Start()
     {
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        cam = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(camera.transform.position);
+        transform.LookAt(cam.transform.position);
     }
 }
