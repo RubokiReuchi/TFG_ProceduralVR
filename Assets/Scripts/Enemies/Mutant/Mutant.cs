@@ -12,7 +12,9 @@ public class Mutant : Enemy
         WALK_SHOOTING_LEFT,
         WALK_SHOOTING_RIGHT,
         RUNNING,
-        ATTACKING,
+        ROARING,
+        LEFT_ATTACKING,
+        RIGHT_ATTACKING,
         BACKFLIPPNG,
         DIYING,
         WAITING
@@ -24,13 +26,13 @@ public class Mutant : Enemy
     Animator animator;
     Rigidbody rb;
     [SerializeField] float slashDistance;
+    [SerializeField] float backflipSpeed;
     [SerializeField] Transform rayOriginLeft;
     [SerializeField] Transform rayOriginRight;
     [SerializeField] GameObject rayPrefab;
     [SerializeField] GameObject orbPrefab;
     [SerializeField] ParticleSystem roarPs;
     bool touchFloorOnSpawn;
-    bool lastActionWasRoar;
 
     private void OnEnable()
     {
@@ -47,7 +49,6 @@ public class Mutant : Enemy
         //foreach (var materialGO in materialGameObjects) materialGO.GetComponent<MeshRenderer>().material = material;
         state = STATE.REST;
         touchFloorOnSpawn = false;
-        lastActionWasRoar = false;
 
         currentHealth = maxHealth;
     }
@@ -85,7 +86,9 @@ public class Mutant : Enemy
                 break;
             case STATE.RUNNING:
                 break;
-            case STATE.ATTACKING:
+            case STATE.LEFT_ATTACKING:
+                break;
+            case STATE.RIGHT_ATTACKING:
                 break;
             case STATE.BACKFLIPPNG:
                 break;
@@ -115,55 +118,68 @@ public class Mutant : Enemy
 
     public IEnumerator CheckOptions(bool landed)
     {
-        if (landed)
-        {
-            int rand = Random.Range(0, 100);
-            if (rand < 80)
-            {
-                // Roar
-                animator.SetTrigger("Roar");
-                state = STATE.WAITING;
-                lastActionWasRoar = true;
-                yield break;
-            }
-        }
-        else if (!lastActionWasRoar)
-        {
-            int rand = Random.Range(0, 100);
-            if (rand < 20)
-            {
-                // Roar
-                animator.SetTrigger("Roar");
-                state = STATE.WAITING;
-                lastActionWasRoar = true;
-                yield break;
-            }
-        }
+        //if (landed)
+        //{
+        //    int rand = Random.Range(0, 100);
+        //    if (rand < 80)
+        //    {
+        //        // Roar
+        //        animator.SetTrigger("Roar");
+        //        state = STATE.ROARING;
+        //        yield break;
+        //    }
+        //}
+        //else if (state != STATE.ROARING)
+        //{
+        //    int rand = Random.Range(0, 100);
+        //    if (rand < 20)
+        //    {
+        //        // Roar
+        //        animator.SetTrigger("Roar");
+        //        state = STATE.ROARING;
+        //        yield break;
+        //    }
+        //}
 
         agent.destination = player.position;
         yield return null;
-        if (agent.hasPath && agent.remainingDistance <= slashDistance)
+        /*if (agent.hasPath && agent.remainingDistance <= slashDistance)
         {
             MeleeOptions();
         }
         else
         {
             //RangeOptions();
+        }*/
+        //Test///////////////////////////
+        /*if (state != STATE.BACKFLIPPNG) // slash
+        {
+            animator.SetTrigger("Backflip");
+            state = STATE.BACKFLIPPNG;
+            agent.speed = 0;
         }
+        else
+        {
+            animator.SetTrigger("Roar");
+            state = STATE.ROARING;
+        }*/
     }
 
     void MeleeOptions()
     {
         int rand = Random.Range(0, 1);
 
-        if (rand == 0) // slash
+        if (rand == 0 && state != STATE.RIGHT_ATTACKING) // slash
         {
             animator.SetTrigger("Slash");
-            state = STATE.ATTACKING;
+            if (state == STATE.LEFT_ATTACKING) state = STATE.RIGHT_ATTACKING;
+            else state = STATE.LEFT_ATTACKING;
         }
         else // backflip
         {
-
+            animator.SetTrigger("Backflip");
+            state = STATE.BACKFLIPPNG;
+            agent.speed = 0;
         }
     }
 
@@ -209,9 +225,38 @@ public class Mutant : Enemy
             state = STATE.AIMING;
             lastCanShoot = 1;
         }
+    }*/
+
+    public void StartBackflipMovement()
+    {
+        //bool error = true;
+        //NavMeshHit hit = new();
+        //float distance = 10.0f;
+        //while (error && distance > 2.0f)
+        //{
+        //    Vector3 directionVector = -transform.forward;
+        //    Vector3 finalPos = directionVector * distance;
+        //    float lenght = Vector3.Distance(finalPos, transform.position);
+        //    NavMesh.SamplePosition(finalPos, out hit, lenght, 1);
+        //    error = Physics.Raycast(transform.position, finalPos, lenght - 0.1f, foundationsLayers);
+        //    if (error) distance -= 1.0f;
+        //}
+
+        agent.updateRotation = false;
+        agent.velocity = - transform.forward * 10;
     }
-    
-    public void SpawnRay()
+
+    public void StopBackflipMovement()
+    {
+        agent.velocity = Vector3.zero;
+    }
+
+    public void AllowRotation()
+    {
+        agent.updateRotation = true;
+    }
+
+    /*public void SpawnRay()
     {
         GameObject.Instantiate(rayPrefab, rayOrigin.position, Quaternion.LookRotation((playerHead.position - rayOrigin.position).normalized));
     }
