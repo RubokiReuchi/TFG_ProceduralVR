@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected Material originalMaterial;
     protected Material material;
 
-    [Header("Shiled")]
+    [Header("Shield")]
     [NonEditable] public bool hasShield = false;
     [HideInInspector] public EnemyShield shield = null;
 

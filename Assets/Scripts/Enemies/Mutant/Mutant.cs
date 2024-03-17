@@ -90,27 +90,39 @@ public class Mutant : Enemy
             case STATE.WALK_SHOOTING_LEFT:
                 if (agent.hasPath && agent.remainingDistance <= 0.1f)
                 {
+                    agent.updateRotation = true;
                     StartCheckOptions();
                 }
                 break;
             case STATE.WALK_SHOOTING_RIGHT:
                 if (agent.hasPath && agent.remainingDistance <= 0.1f)
                 {
+                    agent.updateRotation = true;
                     StartCheckOptions();
                 }
                 break;
             case STATE.RUNNING:
+                agent.destination = player.position;
+                if (agent.hasPath && agent.remainingDistance <= slashDistance - 0.5f)
+                {
+                    animator.SetTrigger("Slash");
+                    state = STATE.LEFT_ATTACKING;
+                    agent.velocity = Vector3.zero;
+                }
                 break;
             case STATE.ROARING:
                 agent.speed = 0;
                 break;
             case STATE.LEFT_ATTACKING:
+                agent.speed = 0;
                 break;
             case STATE.RIGHT_ATTACKING:
+                agent.speed = 0;
                 break;
             case STATE.BACKFLIPPNG:
                 break;
             case STATE.DIYING:
+                agent.speed = 0;
                 break;
             case STATE.WAITING:
                 break;
@@ -136,29 +148,29 @@ public class Mutant : Enemy
 
     public IEnumerator CheckOptions(bool landed)
     {
-        //if (landed)
-        //{
-        //    int rand = Random.Range(0, 100);
-        //    if (rand < 80)
-        //    {
-        //        // Roar
-        //        animator.SetTrigger("Roar");
-        //        state = STATE.ROARING;
-        //        yield break;
-        //    }
-        //}
-        //else if (state != STATE.ROARING)
-        //{
-        //    int rand = Random.Range(0, 100);
-        //    if (rand < 20)
-        //    {
-        //        // Roar
-        //        animator.SetTrigger("Roar");
-        //        state = STATE.ROARING;
-        //        yield break;
-        //    }
-        //}
-        /*else */if (usedAuxiliarRoar)
+        if (landed)
+        {
+            int rand = Random.Range(0, 100);
+            if (rand < 80)
+            {
+                // Roar
+                animator.SetTrigger("Roar");
+                state = STATE.ROARING;
+                yield break;
+            }
+        }
+        else if (state != STATE.ROARING)
+        {
+            int rand = Random.Range(0, 100);
+            if (rand < 10)
+            {
+                // Roar
+                animator.SetTrigger("Roar");
+                state = STATE.ROARING;
+                yield break;
+            }
+        }
+        else if (usedAuxiliarRoar)
         {
             RangeOptions();
             usedAuxiliarRoar = false;
@@ -167,34 +179,22 @@ public class Mutant : Enemy
 
         agent.destination = player.position;
         yield return null;
-        /*if (agent.hasPath && agent.remainingDistance <= slashDistance)
+        if (agent.hasPath && agent.remainingDistance <= slashDistance)
         {
             MeleeOptions();
+            Debug.Log("Melee");
         }
         else if (state == STATE.LEFT_ATTACKING || state == STATE.RIGHT_ATTACKING) // never do range options after slash
         {
             // Roar
-        //        animator.SetTrigger("Roar");
-        //        state = STATE.ROARING;
-        //        yield break;
+            animator.SetTrigger("Roar");
+            state = STATE.ROARING;
         }
         else
         {
             RangeOptions();
-        }*/
-        //Test///////////////////////////
-        /*if (state != STATE.BACKFLIPPNG) // slash
-        {
-            animator.SetTrigger("Backflip");
-            state = STATE.BACKFLIPPNG;
-            agent.speed = 0;
+            Debug.Log("Range");
         }
-        else
-        {
-            animator.SetTrigger("Roar");
-            state = STATE.ROARING;
-        }*/
-        RangeOptions();
     }
 
     void MeleeOptions()
@@ -223,7 +223,11 @@ public class Mutant : Enemy
 
         if (rand == 0 && state != STATE.RUNNING) // run
         {
-            
+            animator.SetTrigger("Run");
+            state = STATE.RUNNING;
+            agent.speed = runSpeed;
+            defaultSpeed = runSpeed;
+            freezeApplied = false;
         }
         else
         {
@@ -255,7 +259,11 @@ public class Mutant : Enemy
 
                 if (error) // run
                 {
-
+                    animator.SetTrigger("Run");
+                    state = STATE.RUNNING;
+                    agent.speed = runSpeed;
+                    defaultSpeed = runSpeed;
+                    freezeApplied = false;
                 }
                 else
                 {
