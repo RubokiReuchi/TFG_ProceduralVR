@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -27,12 +28,17 @@ public class Mutant : Enemy
     Rigidbody rb;
     [SerializeField] float slashDistance;
     [SerializeField] float backflipSpeed;
+    [SerializeField] float minDistanceToShot;
+    [SerializeField] float walkShootingSpeed;
+    [SerializeField] float runSpeed;
     [SerializeField] Transform rayOriginLeft;
     [SerializeField] Transform rayOriginRight;
     [SerializeField] GameObject rayPrefab;
+    [SerializeField] Transform orbOrigin;
     [SerializeField] GameObject orbPrefab;
     [SerializeField] ParticleSystem roarPs;
     bool touchFloorOnSpawn;
+    bool usedAuxiliarRoar;
 
     private void OnEnable()
     {
@@ -49,6 +55,7 @@ public class Mutant : Enemy
         //foreach (var materialGO in materialGameObjects) materialGO.GetComponent<MeshRenderer>().material = material;
         state = STATE.REST;
         touchFloorOnSpawn = false;
+        usedAuxiliarRoar = false;
 
         currentHealth = maxHealth;
     }
@@ -81,10 +88,21 @@ public class Mutant : Enemy
                 }
                 break;
             case STATE.WALK_SHOOTING_LEFT:
+                if (agent.hasPath && agent.remainingDistance <= 0.1f)
+                {
+                    StartCheckOptions();
+                }
                 break;
             case STATE.WALK_SHOOTING_RIGHT:
+                if (agent.hasPath && agent.remainingDistance <= 0.1f)
+                {
+                    StartCheckOptions();
+                }
                 break;
             case STATE.RUNNING:
+                break;
+            case STATE.ROARING:
+                agent.speed = 0;
                 break;
             case STATE.LEFT_ATTACKING:
                 break;
@@ -140,6 +158,12 @@ public class Mutant : Enemy
         //        yield break;
         //    }
         //}
+        /*else */if (usedAuxiliarRoar)
+        {
+            RangeOptions();
+            usedAuxiliarRoar = false;
+            yield break;
+        }
 
         agent.destination = player.position;
         yield return null;
@@ -147,9 +171,16 @@ public class Mutant : Enemy
         {
             MeleeOptions();
         }
+        else if (state == STATE.LEFT_ATTACKING || state == STATE.RIGHT_ATTACKING) // never do range options after slash
+        {
+            // Roar
+        //        animator.SetTrigger("Roar");
+        //        state = STATE.ROARING;
+        //        yield break;
+        }
         else
         {
-            //RangeOptions();
+            RangeOptions();
         }*/
         //Test///////////////////////////
         /*if (state != STATE.BACKFLIPPNG) // slash
@@ -163,11 +194,12 @@ public class Mutant : Enemy
             animator.SetTrigger("Roar");
             state = STATE.ROARING;
         }*/
+        RangeOptions();
     }
 
     void MeleeOptions()
     {
-        int rand = Random.Range(0, 1);
+        int rand = Random.Range(0, 2);
 
         if (rand == 0 && state != STATE.RIGHT_ATTACKING) // slash
         {
@@ -183,67 +215,75 @@ public class Mutant : Enemy
         }
     }
 
-    /*void RangeOptions()
+    void RangeOptions()
     {
-        if (lastCanShoot == 1)
+        int rand = Random.Range(0, 2);
+
+        if (usedAuxiliarRoar) rand = 1; // after auxiliar roar always walk shooting
+
+        if (rand == 0 && state != STATE.RUNNING) // run
         {
-            animator.SetTrigger("Start Side Roll");
-            state = STATE.SIDE_ROLLING;
-            // set end roll location
-            int min = Mathf.RoundToInt(minSideRollDistance * 10.0f);
-            int max = Mathf.RoundToInt(maxSideRollDistance * 10.0f);
-            bool error = true;
-            int loops = 0;
-            NavMeshHit hit = new();
-            while (loops < 10 && error) // if in 10 loops didn't find a good path explote
-            {
-                float distance = Random.Range(min, max) / 10.0f;
-                int direction = Random.Range(0, 2);
-                Quaternion q;
-                if (direction == 0) q = Quaternion.AngleAxis(90, Vector3.up);
-                else q = Quaternion.AngleAxis(270, Vector3.up);
-                Vector3 directionVector = transform.position + q * (player.position - transform.position).normalized;
-                Vector3 finalPos = directionVector * distance;
-                float lenght = Vector3.Distance(finalPos, transform.position);
-                NavMesh.SamplePosition(finalPos, out hit, lenght, 1);
-                error = Physics.Raycast(transform.position, finalPos, lenght - 0.1f, foundationsLayers);
-                loops++;
-            }
-
-            if (error) // explote
-            {
-                StartCoroutine(Exploting());
-                return;
-            }
-
-            sideRollingDestination = hit.position;
-            lastCanShoot = 2;
+            
         }
         else
         {
-            animator.SetTrigger("Aiming");
-            state = STATE.AIMING;
-            lastCanShoot = 1;
+            if (state == STATE.WALK_SHOOTING_LEFT || state == STATE.WALK_SHOOTING_RIGHT) // auxiliar roar
+            {
+                usedAuxiliarRoar = true;
+                animator.SetTrigger("AuxiliarRoar");
+                state = STATE.ROARING;
+            }
+            else // shooting
+            {
+                // set end walk location
+                bool error = true;
+                NavMeshHit hit = new();
+                float distance = 7.0f;
+                int direction = Random.Range(0, 2);
+                while (error && distance > minDistanceToShot) // if no enougth distance run
+                {
+                    Vector3 directionVector = (direction == 0) ? -transform.right : transform.right; // 0 --> left, 1 --> right
+                    Vector3 finalPos = transform.position + directionVector * distance;
+                    NavMesh.SamplePosition(finalPos, out hit, distance, 1);
+                    error = Physics.Raycast(hit.position, -directionVector, Vector3.Distance(hit.position, transform.position) - 0.1f, foundationsLayers);
+                    if (error)
+                    {
+                        distance -= 1.0f;
+                        direction = 1 - direction; // invert
+                    }
+                }
+
+                if (error) // run
+                {
+
+                }
+                else
+                {
+                    if (direction == 0) // walk left
+                    {
+                        animator.SetTrigger("WalkShootingLeft");
+                        state = STATE.WALK_SHOOTING_LEFT;
+                    }
+                    else // walk right
+                    {
+                        animator.SetTrigger("WalkShootingRight");
+                        state = STATE.WALK_SHOOTING_RIGHT;
+                    }
+                    agent.destination = hit.position;
+                    agent.updateRotation = false;
+                    agent.speed = walkShootingSpeed;
+                    defaultSpeed = walkShootingSpeed;
+                    freezeApplied = false;
+                }
+            }
         }
-    }*/
+    }
 
     public void StartBackflipMovement()
     {
-        //bool error = true;
-        //NavMeshHit hit = new();
-        //float distance = 10.0f;
-        //while (error && distance > 2.0f)
-        //{
-        //    Vector3 directionVector = -transform.forward;
-        //    Vector3 finalPos = directionVector * distance;
-        //    float lenght = Vector3.Distance(finalPos, transform.position);
-        //    NavMesh.SamplePosition(finalPos, out hit, lenght, 1);
-        //    error = Physics.Raycast(transform.position, finalPos, lenght - 0.1f, foundationsLayers);
-        //    if (error) distance -= 1.0f;
-        //}
-
         agent.updateRotation = false;
-        agent.velocity = - transform.forward * 10;
+        agent.velocity = -transform.forward * 10;
+        // APPLY SLOW////////////////////////////////////////////////////////////////////////////////
     }
 
     public void StopBackflipMovement()

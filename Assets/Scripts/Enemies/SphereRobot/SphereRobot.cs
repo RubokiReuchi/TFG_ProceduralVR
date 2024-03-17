@@ -186,6 +186,7 @@ public class SphereRobot : Enemy
                 float lenght = Vector3.Distance(finalPos, transform.position);
                 NavMesh.SamplePosition(finalPos, out hit, lenght, 1);
                 error = Physics.Raycast(transform.position, finalPos, lenght - 0.1f, foundationsLayers);
+                //error = Physics.Raycast(hit.position, -directionVector, lenght - 0.1f, foundationsLayers);
                 loops++;
             }
 
