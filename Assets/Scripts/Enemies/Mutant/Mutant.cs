@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -39,6 +40,12 @@ public class Mutant : Enemy
     [SerializeField] ParticleSystem roarPs;
     bool touchFloorOnSpawn;
     bool usedAuxiliarRoar;
+    int lastRangeChoise = -1; // -1 --> melee, 0 --> run, 1 --> shoot
+    int sameRangeChoise = 0;
+
+    [SerializeField] GameObject[] leftClaws;
+    [SerializeField] GameObject[] rightClaws;
+    [SerializeField] float grownClawsSpeed; 
 
     private void OnEnable()
     {
@@ -182,7 +189,7 @@ public class Mutant : Enemy
         if (agent.hasPath && agent.remainingDistance <= slashDistance)
         {
             MeleeOptions();
-            Debug.Log("Melee");
+            lastRangeChoise = -1;
         }
         else if (state == STATE.LEFT_ATTACKING || state == STATE.RIGHT_ATTACKING) // never do range options after slash
         {
@@ -193,7 +200,6 @@ public class Mutant : Enemy
         else
         {
             RangeOptions();
-            Debug.Log("Range");
         }
     }
 
@@ -217,9 +223,21 @@ public class Mutant : Enemy
 
     void RangeOptions()
     {
-        int rand = Random.Range(0, 2);
+        int rand = 1;// Random.Range(0, 2);
 
         if (usedAuxiliarRoar) rand = 1; // after auxiliar roar always walk shooting
+
+        // to be sure enemy dont repeat same movement more that 2 times
+        if (lastRangeChoise == rand)
+        {
+            sameRangeChoise++;
+            if (sameRangeChoise >= 2)
+            {
+                rand = 1 - rand; // invert
+                sameRangeChoise = 0;
+            }
+        }
+        else sameRangeChoise = 0;
 
         if (rand == 0 && state != STATE.RUNNING) // run
         {
@@ -228,6 +246,7 @@ public class Mutant : Enemy
             agent.speed = runSpeed;
             defaultSpeed = runSpeed;
             freezeApplied = false;
+            lastRangeChoise = 0;
         }
         else
         {
@@ -249,7 +268,8 @@ public class Mutant : Enemy
                     Vector3 directionVector = (direction == 0) ? -transform.right : transform.right; // 0 --> left, 1 --> right
                     Vector3 finalPos = transform.position + directionVector * distance;
                     NavMesh.SamplePosition(finalPos, out hit, distance, 1);
-                    error = Physics.Raycast(hit.position, -directionVector, Vector3.Distance(hit.position, transform.position) - 0.1f, foundationsLayers);
+                    float sampledDistance = Vector3.Distance(hit.position, transform.position);
+                    error = (sampledDistance > minDistanceToShot && Physics.Raycast(hit.position, -directionVector, sampledDistance - 0.1f, foundationsLayers));
                     if (error)
                     {
                         distance -= 1.0f;
@@ -264,6 +284,7 @@ public class Mutant : Enemy
                     agent.speed = runSpeed;
                     defaultSpeed = runSpeed;
                     freezeApplied = false;
+                    lastRangeChoise = 0;
                 }
                 else
                 {
@@ -282,6 +303,7 @@ public class Mutant : Enemy
                     agent.speed = walkShootingSpeed;
                     defaultSpeed = walkShootingSpeed;
                     freezeApplied = false;
+                    lastRangeChoise = 1;
                 }
             }
         }
@@ -302,6 +324,26 @@ public class Mutant : Enemy
     public void AllowRotation()
     {
         agent.updateRotation = true;
+    }
+
+    public IEnumerator CreateLeftClaws()
+    {
+        yield return null;
+    }
+
+    public IEnumerator CreateRightClaws()
+    {
+        yield return null;
+    }
+
+    public IEnumerator DestroyLeftClaws()
+    {
+        yield return null;
+    }
+
+    public IEnumerator DestroyRightClaws()
+    {
+        yield return null;
     }
 
     /*public void SpawnRay()
