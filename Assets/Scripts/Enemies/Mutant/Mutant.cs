@@ -43,6 +43,7 @@ public class Mutant : Enemy
     int lastRangeChoise = -1; // -1 --> melee, 0 --> run, 1 --> shoot
     int sameRangeChoise = 0;
 
+    [Header("Claws")]
     [SerializeField] GameObject[] leftClaws;
     [SerializeField] GameObject[] rightClaws;
     [SerializeField] float grownClawsSpeed; 
@@ -223,7 +224,7 @@ public class Mutant : Enemy
 
     void RangeOptions()
     {
-        int rand = 1;// Random.Range(0, 2);
+        int rand = Random.Range(0, 2);
 
         if (usedAuxiliarRoar) rand = 1; // after auxiliar roar always walk shooting
 
@@ -328,22 +329,54 @@ public class Mutant : Enemy
 
     public IEnumerator CreateLeftClaws()
     {
-        yield return null;
+        float size = 0.0f;
+        foreach (var claw in leftClaws) claw.SetActive(true);
+        while (size < 1.0f)
+        {
+            size += Time.deltaTime * grownClawsSpeed;
+            if (size > 1.0f) size = 1.0f;
+            foreach (var claw in leftClaws) claw.transform.localScale = new Vector3(size, size, size);
+            yield return null;
+        }
     }
 
     public IEnumerator CreateRightClaws()
     {
-        yield return null;
+        float size = 0.0f;
+        foreach (var claw in rightClaws) claw.SetActive(true);
+        while (size < 1.0f)
+        {
+            size += Time.deltaTime * grownClawsSpeed;
+            if (size > 1.0f) size = 1.0f;
+            foreach (var claw in rightClaws) claw.transform.localScale = new Vector3(size, size, size);
+            yield return null;
+        }
     }
 
     public IEnumerator DestroyLeftClaws()
     {
-        yield return null;
+        float size = 1.0f;
+        while (size > 0.0f)
+        {
+            size -= Time.deltaTime * grownClawsSpeed;
+            if (size < 0.0f) size = 0.0f;
+            foreach (var claw in leftClaws) claw.transform.localScale = new Vector3(size, size, size);
+            yield return null;
+        }
+        foreach (var claw in leftClaws) claw.SetActive(false);
     }
 
     public IEnumerator DestroyRightClaws()
     {
-        yield return null;
+        float size = 1.0f;
+        while (size > 0.0f)
+        {
+            size -= Time.deltaTime * grownClawsSpeed;
+            if (size < 0.0f) size = 0.0f;
+            foreach (var claw in rightClaws) claw.transform.localScale = new Vector3(size, size, size);
+            yield return null;
+        }
+        foreach (var claw in rightClaws) claw.SetActive(false);
     }
 
     /*public void SpawnRay()
