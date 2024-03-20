@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public bool firstEnable = true;
     protected NavMeshAgent agent;
     [SerializeField] protected float maxHealth;
-    [SerializeField] protected float currentHealth;
+    [NonEditable][SerializeField] protected float currentHealth;
     [SerializeField] protected LayerMask foundationsLayers;
     [SerializeField] protected GameObject[] materialGameObjects;
     [SerializeField] protected Material originalMaterial;
@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
     protected float freezedTime; // secs
     protected float recoverDelay = 2; // secs
     protected float recoverTime; // secs
-    protected float invulneravilityTime = 0; // secs
+    protected float invulneravilityTime = 0; // secs, Used to prevent the instant unfreeze when hitting the enemy
     protected float freezeSlow = 0;
     protected float defaultSpeed = 0;
     protected bool freezeApplied = false;
@@ -74,6 +74,11 @@ public class Enemy : MonoBehaviour
     }
 
     public virtual void TakeFreeze(float amount)
+    {
+
+    }
+
+    public virtual void TakeHeal(float amount)
     {
 
     }

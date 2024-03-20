@@ -12,6 +12,7 @@ public class MutantOrbRing : MonoBehaviour
     float currentScale;
     float alpha;
     Color ringColor;
+    [SerializeField] ParticleSystem ps;
 
     void Start()
     {
@@ -25,6 +26,8 @@ public class MutantOrbRing : MonoBehaviour
     
     void Update()
     {
+        if (ps && currentScale == 0.0f) ps.Play();
+
         if (currentScale < 0.1f)
         {
             currentScale += Time.deltaTime * ringGrowSpeed;

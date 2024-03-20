@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -44,7 +45,11 @@ public class Mutant : Enemy
     [Header("Claws")]
     [SerializeField] GameObject[] leftClaws;
     [SerializeField] GameObject[] rightClaws;
-    [SerializeField] float grownClawsSpeed; 
+    [SerializeField] float grownClawsSpeed;
+
+    [Header("Orbs")]
+    [SerializeField] int maxOrbs;
+    [HideInInspector] public List<MutantOrb> activeOrbs = new();
 
     private void OnEnable()
     {
@@ -168,7 +173,7 @@ public class Mutant : Enemy
         else if (state != STATE.ROARING)
         {
             int rand = Random.Range(0, 100);
-            if (rand < 10)
+            if (rand < 15)
             {
                 // Roar
                 animator.SetTrigger("Roar");
@@ -385,6 +390,13 @@ public class Mutant : Enemy
         roarCollider.enabled = false;
     }
 
+    public void SpawnRoarOrb()
+    {
+        if (activeOrbs.Count == maxOrbs) return;
+        GameObject newOrb = GameObject.Instantiate(orbPrefab, orbOrigin.position, orbOrigin.rotation);
+        newOrb.GetComponent<MutantOrb>().owner = this;
+    }
+
     /*public void SpawnRay()
     {
         GameObject.Instantiate(rayPrefab, rayOrigin.position, Quaternion.LookRotation((playerHead.position - rayOrigin.position).normalized));
@@ -439,6 +451,11 @@ public class Mutant : Enemy
         material.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);
         recoverTime = recoverDelay;
         freezeApplied = false;
+    }
+
+    public override void TakeHeal(float amount)
+    {
+        
     }
 
     public override void Die()

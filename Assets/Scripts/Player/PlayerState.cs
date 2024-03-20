@@ -22,8 +22,8 @@ public class PlayerState : MonoBehaviour
     [NonEditable] public LEFT_HAND_POSE leftHandPose;
 
     [Header("Health & Shield")]
-    float maxHealth = 250;
     [NonEditable][SerializeField] float currentHealth;
+    float maxHealth = 250;
     [NonEditable][SerializeField] float shieldCooldown = 5.0f;
     [HideInInspector] public bool shieldObtained = false;
     [SerializeField] Material shieldMaterial;

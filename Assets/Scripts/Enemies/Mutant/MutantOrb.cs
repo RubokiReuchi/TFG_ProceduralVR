@@ -5,20 +5,55 @@ using UnityEngine.AI;
 
 public class MutantOrb : Enemy
 {
-    Transform playerHead;
+    [HideInInspector] public Mutant owner;
     [Header("Orb")]
-    [SerializeField] float fireRate;
-    [SerializeField] GameObject rayPrefab;
-    [SerializeField] Material growingRingMat;
+    [SerializeField] GameObject ps;
+    bool growed = false;
+    [SerializeField] float growSpeed;
+    [SerializeField] ParticleSystem destroyPs;
 
     void Start()
     {
-        playerHead = GameObject.FindGameObjectWithTag("PlayerHead").transform;
-        //material = new Material(originalMaterial);
-        //foreach (var materialGO in materialGameObjects) materialGO.GetComponent<MeshRenderer>().material = material;
-        Color ringColor = growingRingMat.GetColor("_TintColor");
-        growingRingMat.SetColor("_TintColor", new Color(ringColor.r, ringColor.g, ringColor.b, 0.45f));
+        owner.activeOrbs.Add(this);
 
         currentHealth = maxHealth;
+
+        transform.localScale = Vector3.zero;
+    }
+
+    void Update()
+    {
+        if (!growed)
+        {
+            float newSize = transform.localScale.x;
+            newSize += Time.deltaTime * growSpeed;
+            if (newSize > 0.5f)
+            {
+                newSize = 0.5f;
+                growed = true;
+                ps.SetActive(true);
+            }
+            transform.localScale = new Vector3(newSize, newSize, newSize);
+        }
+
+        destroyPs.transform.rotation = Quaternion.identity;
+    }
+
+    public override void TakeDamage(float amount)
+    {
+        currentHealth -= amount;
+
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            owner.activeOrbs.Remove(this);
+            Die();
+        }
+    }
+    public override void Die()
+    {
+        destroyPs.Play();
+        Destroy(gameObject);
+        alive = false;
     }
 }
