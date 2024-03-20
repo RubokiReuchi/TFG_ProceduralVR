@@ -1,7 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -37,6 +34,7 @@ public class Mutant : Enemy
     [SerializeField] GameObject rayPrefab;
     [SerializeField] Transform orbOrigin;
     [SerializeField] GameObject orbPrefab;
+    [SerializeField] SphereCollider roarCollider;
     [SerializeField] ParticleSystem roarPs;
     bool touchFloorOnSpawn;
     bool usedAuxiliarRoar;
@@ -377,6 +375,14 @@ public class Mutant : Enemy
             yield return null;
         }
         foreach (var claw in rightClaws) claw.SetActive(false);
+    }
+
+    public IEnumerator PlayRoar()
+    {
+        roarPs.Play();
+        roarCollider.enabled = true;
+        yield return new WaitForSeconds(1.5f);
+        roarCollider.enabled = false;
     }
 
     /*public void SpawnRay()

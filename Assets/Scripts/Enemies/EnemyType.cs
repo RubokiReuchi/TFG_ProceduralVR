@@ -6,7 +6,8 @@ using UnityEngine.AI;
 public enum ENEMY_TYPE
 {
     SPHERE_ROBOT,
-    MUTANT
+    MUTANT,
+    MUTANT_ORB
 }
 
 public class EnemyType : MonoBehaviour
