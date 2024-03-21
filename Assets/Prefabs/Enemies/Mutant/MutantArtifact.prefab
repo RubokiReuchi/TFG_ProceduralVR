@@ -33,7 +33,7 @@ Transform:
   - {fileID: 1504219000224581058}
   - {fileID: 6618960570681360361}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7275993138739097974
 MonoBehaviour:
@@ -54,6 +54,8 @@ MonoBehaviour:
   ring2: {fileID: 6618960570681360361}
   ring2Speed: 1
   spawnSpeed: 2
+  rayPrefab: {fileID: 5956470451200178497, guid: 6664d7ba87216bf48a7db074d89a4446, type: 3}
+  cadence: 1.5
 --- !u!1001 &1399131069545636393
 PrefabInstance:
   m_ObjectHideFlags: 0

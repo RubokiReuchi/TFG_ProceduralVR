@@ -9698,7 +9698,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8954656950496647967}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 10, z: 6.97}
+  m_LocalPosition: {x: 3, y: 0, z: 6.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11012,9 +11012,6 @@ MonoBehaviour:
   minDistanceToShot: 2.3
   walkShootingSpeed: 3
   runSpeed: 7
-  rayOriginLeft: {fileID: 0}
-  rayOriginRight: {fileID: 0}
-  rayPrefab: {fileID: 0}
   orbOrigin: {fileID: 820267074}
   orbPrefab: {fileID: 7999891329248594371, guid: 4890cf318576566498354f956f3c3fd9, type: 3}
   roarCollider: {fileID: 1557167072}

@@ -21,7 +21,6 @@ public class Mutant : Enemy
     }
 
     Transform player;
-    Transform playerHead;
     [NonEditable][SerializeField] STATE state;
     Animator animator;
     Rigidbody rb;
@@ -30,9 +29,6 @@ public class Mutant : Enemy
     [SerializeField] float minDistanceToShot;
     [SerializeField] float walkShootingSpeed;
     [SerializeField] float runSpeed;
-    [SerializeField] Transform rayOriginLeft;
-    [SerializeField] Transform rayOriginRight;
-    [SerializeField] GameObject rayPrefab;
     [SerializeField] Transform orbOrigin;
     [SerializeField] GameObject orbPrefab;
     [SerializeField] SphereCollider roarCollider;
@@ -65,7 +61,6 @@ public class Mutant : Enemy
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        playerHead = GameObject.FindGameObjectWithTag("PlayerHead").transform;
         //material = new Material(originalMaterial);
         //foreach (var materialGO in materialGameObjects) materialGO.GetComponent<MeshRenderer>().material = material;
         state = STATE.REST;
