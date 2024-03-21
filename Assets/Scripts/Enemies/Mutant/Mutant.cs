@@ -51,6 +51,10 @@ public class Mutant : Enemy
     [SerializeField] int maxOrbs;
     [HideInInspector] public List<MutantOrb> activeOrbs = new();
 
+    [Header("Artifacts")]
+    [SerializeField] MutantArtifact leftArtifact;
+    [SerializeField] MutantArtifact rightArtifact;
+
     private void OnEnable()
     {
         if (!firstEnable) return;
@@ -89,6 +93,7 @@ public class Mutant : Enemy
                 animator.SetTrigger("Activate");
                 rb.useGravity = true;
                 state = STATE.FALLING;
+                transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
                 break;
             case STATE.FALLING:
                 if (touchFloorOnSpawn)
@@ -103,6 +108,7 @@ public class Mutant : Enemy
                 {
                     agent.updateRotation = true;
                     StartCheckOptions();
+                    rightArtifact.Despawn();
                 }
                 break;
             case STATE.WALK_SHOOTING_RIGHT:
@@ -110,6 +116,7 @@ public class Mutant : Enemy
                 {
                     agent.updateRotation = true;
                     StartCheckOptions();
+                    leftArtifact.Despawn();
                 }
                 break;
             case STATE.RUNNING:
@@ -167,8 +174,9 @@ public class Mutant : Enemy
                 // Roar
                 animator.SetTrigger("Roar");
                 state = STATE.ROARING;
+                lastRangeChoise = -1;
                 yield break;
-            }
+            }  
         }
         else if (state != STATE.ROARING)
         {
@@ -178,6 +186,7 @@ public class Mutant : Enemy
                 // Roar
                 animator.SetTrigger("Roar");
                 state = STATE.ROARING;
+                lastRangeChoise = -1;
                 yield break;
             }
         }
@@ -185,6 +194,7 @@ public class Mutant : Enemy
         {
             RangeOptions();
             usedAuxiliarRoar = false;
+            lastRangeChoise = -1;
             yield break;
         }
 
@@ -227,9 +237,10 @@ public class Mutant : Enemy
 
     void RangeOptions()
     {
-        int rand = Random.Range(0, 2);
-
-        if (usedAuxiliarRoar) rand = 1; // after auxiliar roar always walk shooting
+        int rand = Random.Range(0, 3);
+        
+        if (rand == 2) rand = 1;
+        else if (usedAuxiliarRoar) rand = 1; // after auxiliar roar always walk shooting
 
         // to be sure enemy dont repeat same movement more that 2 times
         if (lastRangeChoise == rand)
@@ -296,11 +307,13 @@ public class Mutant : Enemy
                     {
                         animator.SetTrigger("WalkShootingLeft");
                         state = STATE.WALK_SHOOTING_LEFT;
+                        SpawnArtifact(false);
                     }
                     else // walk right
                     {
                         animator.SetTrigger("WalkShootingRight");
                         state = STATE.WALK_SHOOTING_RIGHT;
+                        SpawnArtifact(true);
                     }
                     agent.destination = hit.position;
                     agent.updateRotation = false;
@@ -395,6 +408,20 @@ public class Mutant : Enemy
         if (activeOrbs.Count == maxOrbs) return;
         GameObject newOrb = GameObject.Instantiate(orbPrefab, orbOrigin.position, orbOrigin.rotation);
         newOrb.GetComponent<MutantOrb>().owner = this;
+    }
+
+    void SpawnArtifact(bool left)
+    {
+        if (left)
+        {
+            leftArtifact.gameObject.SetActive(true);
+            leftArtifact.Spawn();
+        }
+        else
+        {
+            rightArtifact.gameObject.SetActive(true);
+            rightArtifact.Spawn();
+        }
     }
 
     /*public void SpawnRay()

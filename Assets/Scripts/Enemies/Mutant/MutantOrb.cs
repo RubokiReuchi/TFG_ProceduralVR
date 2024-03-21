@@ -27,7 +27,7 @@ public class MutantOrb : Enemy
         {
             float newSize = transform.localScale.x;
             newSize += Time.deltaTime * growSpeed;
-            if (newSize > 0.5f)
+            if (newSize >= 0.5f)
             {
                 newSize = 0.5f;
                 growed = true;

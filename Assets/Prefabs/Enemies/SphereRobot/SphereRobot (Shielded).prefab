@@ -7115,7 +7115,7 @@ GameObject:
   - component: {fileID: 2273901708919297363}
   - component: {fileID: 6837422996566816902}
   - component: {fileID: 1380035373856250580}
-  m_Layer: 10
+  m_Layer: 18
   m_Name: Shield
   m_TagString: EnemyShield
   m_Icon: {fileID: 0}
@@ -7320,7 +7320,7 @@ Transform:
   - {fileID: 6312374546868591992}
   - {fileID: 4808516988360234331}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3529741811446671636
 MonoBehaviour:
