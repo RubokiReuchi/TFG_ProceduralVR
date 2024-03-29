@@ -419,24 +419,7 @@ public class Mutant : Enemy
         }
     }
 
-    /*public void SpawnRay()
-    {
-        GameObject.Instantiate(rayPrefab, rayOrigin.position, Quaternion.LookRotation((playerHead.position - rayOrigin.position).normalized));
-    }
-
-    public void Stop()
-    {
-        agent.speed = 0;
-    }
-
-    public void RollSpeed()
-    {
-        agent.speed = rollSpeed;
-        defaultSpeed = rollSpeed;
-        freezeApplied = false;
-    }
-
-    public override void TakeDamage(float amount)
+    /*public override void TakeDamage(float amount)
     {
         if (!enabled || invulneravilityTime > 0) return;
 
@@ -460,7 +443,7 @@ public class Mutant : Enemy
             Die();
         }
     }
-
+    
     public override void TakeFreeze(float amount)
     {
         freezePercentage += amount - freezeResistance;

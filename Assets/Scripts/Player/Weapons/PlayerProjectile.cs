@@ -32,7 +32,7 @@ public class PlayerProjectile : Projectile
         else if (collision.gameObject.CompareTag("Enemy"))
         {
             GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
-            Enemy script = collision.gameObject.GetComponent<Enemy>();
+            Enemy script = collision.gameObject.GetComponent<EnemyHitBox>().enemyScript;
             if (script.enabled)
             {
                 script.TakeDamage(damage);

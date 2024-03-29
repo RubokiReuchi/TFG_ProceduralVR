@@ -8,10 +8,12 @@ public class PlayerShockwave : MonoBehaviour
     List<Transform> entityDamaged = new();
     bool increase = true;
     [HideInInspector] public float maxSize = 2.0f;
+    string UUID;
 
     private void OnEnable()
     {
         transform.localScale = Vector3.zero;
+        UUID = System.Guid.NewGuid().ToString();
     }
 
     void Update()
@@ -30,7 +32,6 @@ public class PlayerShockwave : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (entityDamaged.Contains(other.transform.root)) return;
         if (other.CompareTag("Player") || other.CompareTag("PlayerHead"))
         {
             other.transform.root.GetComponent<PlayerState>().TakeDamage(damage / 5.0f);
@@ -38,13 +39,12 @@ public class PlayerShockwave : MonoBehaviour
         }
         else if (other.CompareTag("Enemy"))
         {
-            Enemy script = other.transform.root.GetComponent<Enemy>();
+            Enemy script = other.GetComponent<EnemyHitBox>().enemyScript;
             if (script.enabled)
             {
-                script.TakeDamage(damage);
-                if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze(damage);
+                script.TakeAreaDamage(damage, UUID);
+                if (gameObject.CompareTag("BlueProjectile")) script.TakeAreaFreeze(damage, UUID);
             }
-            entityDamaged.Add(other.transform.root);
         }
         else if (other.CompareTag("EnemyShield"))
         {

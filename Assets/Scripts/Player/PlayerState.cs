@@ -2,10 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.XR;
-using UnityEngine.XR;
-using UnityEngine.XR.Interaction.Toolkit;
-using static UnityEditor.Experimental.GraphView.Port;
 
 public enum LEFT_HAND_POSE
 {
@@ -42,6 +38,10 @@ public class PlayerState : MonoBehaviour
     [SerializeField] Material fadeMaterial;
     [SerializeField] InputActionProperty temporalySaveGame;
 
+    [Header("AreaDamage")]
+    List<string> activeUUIDs = new();
+    float cdUUID = 0;
+
     private void Awake()
     {
         instance = this;
@@ -69,6 +69,16 @@ public class PlayerState : MonoBehaviour
             DataPersistenceManager.instance.SaveGame();
         }
         //
+
+        if (cdUUID > 0)
+        {
+            cdUUID -= Time.deltaTime;
+            if (cdUUID <= 0)
+            {
+                cdUUID = 0;
+                activeUUIDs.Clear();
+            }
+        }
 
         if (xRayVisionObtained && xRayAction.action.WasPressedThisFrame())
         {
@@ -133,6 +143,17 @@ public class PlayerState : MonoBehaviour
 
         StopCoroutine("TakeDamegeCo");
         StartCoroutine(TakeDamegeCo());
+    }
+
+    public void TakeAreaDamage(float amount, string UUID)
+    {
+        if (activeUUIDs.Contains(UUID)) return;
+        else
+        {
+            activeUUIDs.Add(UUID);
+            cdUUID = 1;
+            TakeDamage(amount);
+        }
     }
 
     public void Heal(float amount)

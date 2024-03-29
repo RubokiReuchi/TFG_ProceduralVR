@@ -34,6 +34,9 @@ public class Enemy : MonoBehaviour
     protected bool freezeApplied = false;
     [SerializeField] protected GameObject iceBlocksParticlesPrefab;
 
+    [Header("AreaDamage")]
+    List<string> activeUUIDs = new();
+
     private void LateUpdate()
     {
         if (freezePercentage == 100)
@@ -73,9 +76,29 @@ public class Enemy : MonoBehaviour
 
     }
 
+    public void TakeAreaDamage(float amount, string UUID)
+    {
+        if (activeUUIDs.Contains(UUID)) return;
+        else
+        {
+            activeUUIDs.Add(UUID);
+            TakeDamage(amount);
+        }
+    }
+
     public virtual void TakeFreeze(float amount)
     {
 
+    }
+
+    public void TakeAreaFreeze(float amount, string UUID)
+    {
+        if (activeUUIDs.Contains(UUID)) return;
+        else
+        {
+            activeUUIDs.Add(UUID);
+            TakeFreeze(amount);
+        }
     }
 
     public virtual void TakeHeal(float amount)
