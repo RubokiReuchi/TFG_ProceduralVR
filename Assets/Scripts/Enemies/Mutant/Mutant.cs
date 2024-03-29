@@ -40,7 +40,9 @@ public class Mutant : Enemy
 
     [Header("Claws")]
     [SerializeField] GameObject[] leftClaws;
+    [SerializeField] GameObject leftClawsCollider;
     [SerializeField] GameObject[] rightClaws;
+    [SerializeField] GameObject rightClawsCollider;
     [SerializeField] float grownClawsSpeed;
 
     [Header("Orbs")]
@@ -50,6 +52,10 @@ public class Mutant : Enemy
     [Header("Artifacts")]
     [SerializeField] MutantArtifact leftArtifact;
     [SerializeField] MutantArtifact rightArtifact;
+
+    [Header("ExtraMaterials")]
+    [SerializeField] Material secondOriginalMaterial;
+    Material secondMaterial;
 
     private void OnEnable()
     {
@@ -61,8 +67,10 @@ public class Mutant : Enemy
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        //material = new Material(originalMaterial);
-        //foreach (var materialGO in materialGameObjects) materialGO.GetComponent<MeshRenderer>().material = material;
+        material = new Material(originalMaterial);
+        materialGameObjects[0].GetComponent<SkinnedMeshRenderer>().materials[0] = material;
+        secondMaterial = new Material(secondOriginalMaterial);
+        materialGameObjects[0].GetComponent<SkinnedMeshRenderer>().materials[1] = secondMaterial;
         state = STATE.REST;
         touchFloorOnSpawn = false;
         usedAuxiliarRoar = false;
@@ -136,6 +144,8 @@ public class Mutant : Enemy
                 break;
             case STATE.DIYING:
                 agent.speed = 0;
+                agent.updateRotation = false;
+                agent.velocity = Vector3.zero;
                 break;
             case STATE.WAITING:
                 break;
@@ -349,6 +359,7 @@ public class Mutant : Enemy
             foreach (var claw in leftClaws) claw.transform.localScale = new Vector3(size, size, size);
             yield return null;
         }
+        leftClawsCollider.SetActive(true);
     }
 
     public IEnumerator CreateRightClaws()
@@ -362,6 +373,7 @@ public class Mutant : Enemy
             foreach (var claw in rightClaws) claw.transform.localScale = new Vector3(size, size, size);
             yield return null;
         }
+        rightClawsCollider.SetActive(true);
     }
 
     public IEnumerator DestroyLeftClaws()
@@ -375,6 +387,7 @@ public class Mutant : Enemy
             yield return null;
         }
         foreach (var claw in leftClaws) claw.SetActive(false);
+        leftClawsCollider.SetActive(false);
     }
 
     public IEnumerator DestroyRightClaws()
@@ -388,6 +401,7 @@ public class Mutant : Enemy
             yield return null;
         }
         foreach (var claw in rightClaws) claw.SetActive(false);
+        rightClawsCollider.SetActive(false);
     }
 
     public IEnumerator PlayRoar()
@@ -419,7 +433,7 @@ public class Mutant : Enemy
         }
     }
 
-    /*public override void TakeDamage(float amount)
+    public override void TakeDamage(float amount)
     {
         if (!enabled || invulneravilityTime > 0) return;
 
@@ -428,6 +442,7 @@ public class Mutant : Enemy
             currentHealth -= amount * 5.0f;
             freezePercentage = 0;
             material.SetFloat("_FreezeInterpolation", 0);
+            secondMaterial.SetFloat("_FreezeInterpolation", 0);
             if (currentHealth < 0)
             {
                 GameObject.Instantiate(iceBlocksParticlesPrefab, transform.position, Quaternion.identity);
@@ -454,89 +469,28 @@ public class Mutant : Enemy
             invulneravilityTime = 1.0f;
         }
         material.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);
+        secondMaterial.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);
         recoverTime = recoverDelay;
         freezeApplied = false;
     }
 
     public override void TakeHeal(float amount)
     {
-        
+        currentHealth += amount;
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
     }
 
     public override void Die()
     {
-        animator.SetTrigger("Destroy");
-        transform.GetComponentInChildren<AnimSphereRobot>().StopRing();
-        state = STATE.DESTROYING;
+        animator.SetTrigger("Die");
+
+        roarPs.Stop();
+        DestroyLeftClaws();
+        DestroyRightClaws();
+        leftArtifact.Despawn();
+        rightArtifact.Despawn();
+
+        state = STATE.DIYING;
         alive = false;
     }
-
-    public void Destroyed()
-    {
-        GameObject.Instantiate(corpsPrefab, transform.position, transform.rotation);
-        Destroy(gameObject);
-    }
-
-    IEnumerator Exploting()
-    {
-        exploting = true;
-        agent.speed = 0;
-        animator.SetTrigger("Explote");
-        transform.GetComponentInChildren<AnimSphereRobot>().StopRing();
-        state = STATE.WAITING;
-        float value = 1;
-        while (value > 0)
-        {
-            value -= Time.deltaTime * 2.0f;
-            if (value < 0) value = 0;
-            material.SetColor("_Color", new Color(1, value, value));
-            yield return null;
-        }
-        for (int i = 0; i < 50; i++)
-        {
-            if (i % 10 == 0) // i --> 0, 10, 20, 30...
-            {
-                material.SetColor("_Color", new Color(1, 0.0f, 0));
-            }
-            else if (i % 10 == 1)
-            {
-                material.SetColor("_Color", new Color(1, 0.145f, 0));
-            }
-            else if (i % 10 == 2)
-            {
-                material.SetColor("_Color", new Color(1, 0.29f, 0));
-            }
-            else if (i % 10 == 3)
-            {
-                material.SetColor("_Color", new Color(1, 0.435f, 0));
-            }
-            else if (i % 10 == 4)
-            {
-                material.SetColor("_Color", new Color(1, 0.58f, 0));
-            }
-            else if (i % 10 == 5)
-            {
-                material.SetColor("_Color", new Color(1, 0.725f, 0));
-            }
-            else if (i % 10 == 6)
-            {
-                material.SetColor("_Color", new Color(1, 0.58f, 0));
-            }
-            else if (i % 10 == 7)
-            {
-                material.SetColor("_Color", new Color(1, 0.435f, 0));
-            }
-            else if (i % 10 == 8)
-            {
-                material.SetColor("_Color", new Color(1, 0.29f, 0));
-            }
-            else
-            {
-                material.SetColor("_Color", new Color(1, 0.145f, 0));
-            }
-            yield return new WaitForSeconds(0.007f);
-        }
-        GameObject.Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-        Destroy(gameObject);
-    }*/
 }
