@@ -8,9 +8,9 @@ public class MutantClaws : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("PlayerMeleeCollision"))
         {
-            other.GetComponent<PlayerState>().TakeDamage(damage);
+            other.transform.root.GetComponent<PlayerState>().TakeDamage(damage);
         }
     }
 }

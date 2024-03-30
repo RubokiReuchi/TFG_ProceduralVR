@@ -5285,7 +5285,7 @@ GameObject:
   - component: {fileID: 8736426132844547060}
   - component: {fileID: 8617632145209974260}
   - component: {fileID: 4033307688956078015}
-  m_Layer: 10
+  m_Layer: 19
   m_Name: MutantRoarOrb
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -5311,7 +5311,7 @@ Transform:
   - {fileID: 7204178630516167948}
   - {fileID: 7184699165585056322}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &8751186615503670497
 SphereCollider:
@@ -9265,9 +9265,7 @@ ParticleSystem:
     exit: 0
     colliderQueryMode: 1
     radiusScale: 1.5
-    primitives:
-    - {fileID: 0}
-    - {fileID: 0}
+    primitives: []
   SubModule:
     serializedVersion: 2
     enabled: 0
@@ -10299,5 +10297,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 175b5bd99a6e2da418b251ed956520bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveDamage: 3
-  waveHeal: 6
+  waveDamage: 1.5
+  waveHeal: 0.6
+  parent: {fileID: 8617632145209974260}

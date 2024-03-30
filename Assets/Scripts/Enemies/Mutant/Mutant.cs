@@ -55,7 +55,6 @@ public class Mutant : Enemy
 
     [Header("ExtraMaterials")]
     [SerializeField] Material secondOriginalMaterial;
-    Material secondMaterial;
 
     private void OnEnable()
     {
@@ -67,10 +66,10 @@ public class Mutant : Enemy
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        material = new Material(originalMaterial);
-        materialGameObjects[0].GetComponent<SkinnedMeshRenderer>().materials[0] = material;
-        secondMaterial = new Material(secondOriginalMaterial);
-        materialGameObjects[0].GetComponent<SkinnedMeshRenderer>().materials[1] = secondMaterial;
+        materialGameObjects[0].GetComponent<SkinnedMeshRenderer>().materials[0] = originalMaterial;
+        material = materialGameObjects[0].GetComponent<SkinnedMeshRenderer>().materials[0];
+        materialGameObjects[0].GetComponent<SkinnedMeshRenderer>().materials[1] = secondOriginalMaterial;
+        material2 = materialGameObjects[0].GetComponent<SkinnedMeshRenderer>().materials[1];
         state = STATE.REST;
         touchFloorOnSpawn = false;
         usedAuxiliarRoar = false;
@@ -442,10 +441,10 @@ public class Mutant : Enemy
             currentHealth -= amount * 5.0f;
             freezePercentage = 0;
             material.SetFloat("_FreezeInterpolation", 0);
-            secondMaterial.SetFloat("_FreezeInterpolation", 0);
+            material2.SetFloat("_FreezeInterpolation", 0);
             if (currentHealth < 0)
             {
-                GameObject.Instantiate(iceBlocksParticlesPrefab, transform.position, Quaternion.identity);
+                GameObject.Instantiate(iceBlocksParticlesPrefab, iceBlocksParticlesSpawn.position, Quaternion.identity);
                 Destroy(gameObject);
                 return;
             }
@@ -469,7 +468,7 @@ public class Mutant : Enemy
             invulneravilityTime = 1.0f;
         }
         material.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);
-        secondMaterial.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);
+        material2.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);
         recoverTime = recoverDelay;
         freezeApplied = false;
     }

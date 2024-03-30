@@ -6,7 +6,6 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
 {
     public static PlayerSkills instance;
 
-
     [NonEditable] public bool dashUnlocked;
     [NonEditable] public bool blueUnlocked;
     [NonEditable] public bool redUnlocked;

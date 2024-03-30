@@ -23,17 +23,24 @@ public class MutantOrb : Enemy
 
     void Update()
     {
-        if (!growed)
+        if (alive)
         {
-            float newSize = transform.localScale.x;
-            newSize += Time.deltaTime * growSpeed;
-            if (newSize >= 0.5f)
+            if (!growed)
             {
-                newSize = 0.5f;
-                growed = true;
-                ps.SetActive(true);
+                float newSize = transform.localScale.x;
+                newSize += Time.deltaTime * growSpeed;
+                if (newSize >= 0.5f)
+                {
+                    newSize = 0.5f;
+                    growed = true;
+                    ps.SetActive(true);
+                }
+                transform.localScale = new Vector3(newSize, newSize, newSize);
             }
-            transform.localScale = new Vector3(newSize, newSize, newSize);
+        }
+        else if (!destroyPs.isPlaying)
+        {
+            Destroy(gameObject);
         }
 
         destroyPs.transform.rotation = Quaternion.identity;
@@ -53,7 +60,8 @@ public class MutantOrb : Enemy
     public override void Die()
     {
         destroyPs.Play();
-        Destroy(gameObject);
         alive = false;
+        transform.localScale = Vector3.zero;
+        ps.SetActive(false);
     }
 }

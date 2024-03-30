@@ -7,10 +7,13 @@ public class MutantOrbWave : MonoBehaviour
     ParticleSystem ps;
     [SerializeField] float waveDamage;
     [SerializeField] float waveHeal;
+    [SerializeField] MutantOrb parent;
 
     void Start()
     {
         ps = GetComponent<ParticleSystem>();
+        ps.trigger.AddCollider(parent.owner);
+        ps.trigger.AddCollider(GameObject.FindGameObjectWithTag("Player").transform);
     }
 
     void Update()

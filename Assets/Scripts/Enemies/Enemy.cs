@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected GameObject[] materialGameObjects;
     [SerializeField] protected Material originalMaterial;
     protected Material material;
+    protected Material material2;
 
     [Header("Shield")]
     [NonEditable] public bool hasShield = false;
@@ -33,6 +34,7 @@ public class Enemy : MonoBehaviour
     protected float defaultSpeed = 0;
     protected bool freezeApplied = false;
     [SerializeField] protected GameObject iceBlocksParticlesPrefab;
+    [SerializeField] protected Transform iceBlocksParticlesSpawn;
 
     [Header("AreaDamage")]
     List<string> activeUUIDs = new();
@@ -48,6 +50,7 @@ public class Enemy : MonoBehaviour
                 freezedTime = 0;
                 freezePercentage = 0;
                 material.SetFloat("_FreezeInterpolation", 0);
+                if (material2 != null) material2.SetFloat("_FreezeInterpolation", 0);
             }
         }
         else if (freezePercentage > 0)
@@ -62,6 +65,7 @@ public class Enemy : MonoBehaviour
                 freezePercentage -= (Time.deltaTime + Time.deltaTime * freezeResistance / 25.0f) * 20.0f;
                 if (freezePercentage < 0) freezePercentage = 0;
                 material.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);
+                if (material2 != null) material2.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);
             }
         }
     }

@@ -235,7 +235,7 @@ public class SphereRobot : Enemy
             material.SetFloat("_FreezeInterpolation", 0);
             if (currentHealth < 0)
             {
-                GameObject.Instantiate(iceBlocksParticlesPrefab, transform.position, Quaternion.identity);
+                GameObject.Instantiate(iceBlocksParticlesPrefab, iceBlocksParticlesSpawn.position, Quaternion.identity);
                 Destroy(gameObject);
                 return;
             }

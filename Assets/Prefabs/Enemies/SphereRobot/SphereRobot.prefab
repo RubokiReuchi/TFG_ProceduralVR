@@ -35,7 +35,7 @@ Transform:
   - {fileID: 4316631786008495504}
   m_Father: {fileID: 282068180601103798}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 57.622852}
+  m_LocalEulerAnglesHint: {x: -0, y: -90, z: 57.622852}
 --- !u!1 &35272553439315310
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +182,7 @@ Transform:
   - {fileID: 5281139545538536138}
   m_Father: {fileID: 8410385355469127811}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: -6.414769e-15, y: -180, z: 85.2742}
+  m_LocalEulerAnglesHint: {x: 6.2506474e-15, y: -180, z: 5.9567256}
 --- !u!1 &309388135477608678
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,7 +553,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6464498372063393129}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0, y: -0, z: -0}
 --- !u!33 &7010229164432781446
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -636,7 +636,7 @@ Transform:
   - {fileID: 1567448017849310131}
   m_Father: {fileID: 1095149342482138191}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: -7.0669456, y: 2.4370239, z: -74.626915}
+  m_LocalEulerAnglesHint: {x: -1.2122802e-14, y: -7.069264e-15, z: -125.31778}
 --- !u!1 &1374565859775895489
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,7 +669,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7097280267360840637}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0}
+  m_LocalEulerAnglesHint: {x: -0, y: -0, z: -0}
 --- !u!33 &7217193158574181070
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1615,8 +1615,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 282068180601103798}
+  - {fileID: 4474222075241118641}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7448977935876576358
 MonoBehaviour:
@@ -1645,6 +1646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f67a1aa9f7bd5e845b6f270114e47f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  alive: 1
   firstEnable: 1
   maxHealth: 100
   currentHealth: 0
@@ -1698,8 +1700,8 @@ MonoBehaviour:
   hasShield: 0
   shield: {fileID: 0}
   freezeResistance: 0
-  iceMaterial: {fileID: 2100000, guid: 6ee17c1565c60b74d95230fe0a5c8173, type: 2}
   iceBlocksParticlesPrefab: {fileID: 1955825772615386086, guid: 744498853c516314a93dade2f3f83d77, type: 3}
+  iceBlocksParticlesSpawn: {fileID: 0}
   state: 0
   walkDistance: 10
   shootDistance: 5
@@ -1900,7 +1902,7 @@ Transform:
   - {fileID: 6922987855878713522}
   m_Father: {fileID: 4316631786008495504}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: -6.69492e-15, y: -180, z: 87.4292}
+  m_LocalEulerAnglesHint: {x: 6.250581e-15, y: -180, z: 5.957214}
 --- !u!1 &4924750587360074467
 GameObject:
   m_ObjectHideFlags: 0
@@ -2354,7 +2356,7 @@ Transform:
   - {fileID: 7647817174083861696}
   m_Father: {fileID: 1095149342482138191}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: -42.986794, y: -179.0617, z: 51.408398}
+  m_LocalEulerAnglesHint: {x: -47.003437, y: -137.1542, z: -29.434856}
 --- !u!1 &6657413131765689823
 GameObject:
   m_ObjectHideFlags: 0
@@ -2838,7 +2840,7 @@ Transform:
   - {fileID: 8092815381453483841}
   m_Father: {fileID: 2049198918287832960}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: -6.831106e-15, y: -180, z: 88.5038}
+  m_LocalEulerAnglesHint: {x: 6.2506474e-15, y: -180, z: 5.9567256}
 --- !u!1 &7578242805518284813
 GameObject:
   m_ObjectHideFlags: 0
@@ -3208,7 +3210,7 @@ Transform:
   - {fileID: 5539890008346528104}
   m_Father: {fileID: 1095149342482138191}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 45.501713, y: 179.59319, z: 53.31052}
+  m_LocalEulerAnglesHint: {x: 47.003418, y: 137.15419, z: -29.436697}
 --- !u!1 &7845101798891603529
 GameObject:
   m_ObjectHideFlags: 0
@@ -3324,7 +3326,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5238419885833156580}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 29.551655}
+  m_LocalEulerAnglesHint: {x: -0, y: -0, z: -0}
 --- !u!33 &3302074867918378927
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3717,6 +3719,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &8210110578768344332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4474222075241118641}
+  m_Layer: 10
+  m_Name: IceParticlesSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4474222075241118641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8210110578768344332}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.122, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6620376488467600383}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8343578670938465194
 GameObject:
   m_ObjectHideFlags: 0
@@ -9000,7 +9033,7 @@ Transform:
   - {fileID: 4869894309208864341}
   m_Father: {fileID: 6620376488467600383}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -0, y: -0, z: -0}
 --- !u!95 &5657224176402267015
 Animator:
   serializedVersion: 5

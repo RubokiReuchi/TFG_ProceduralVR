@@ -39,7 +39,7 @@ public class PlayerShockwave : MonoBehaviour
         }
         else if (other.CompareTag("Enemy"))
         {
-            Enemy script = other.GetComponent<EnemyHitBox>().enemyScript;
+            Enemy script = other.GetComponent<Enemy>();
             if (script.enabled)
             {
                 script.TakeAreaDamage(damage, UUID);

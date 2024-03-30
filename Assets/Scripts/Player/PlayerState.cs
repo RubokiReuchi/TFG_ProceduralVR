@@ -25,6 +25,7 @@ public class PlayerState : MonoBehaviour
     [SerializeField] Material shieldMaterial;
     [SerializeField] HandHealth displayHealth;
     [SerializeField] Material takeDamageMaterial;
+    Coroutine takeDamage;
 
     [Header("XRay")]
     [SerializeField] InputActionProperty xRayAction;
@@ -141,8 +142,8 @@ public class PlayerState : MonoBehaviour
         }
         displayHealth.UpdateHealthDisplay(currentHealth);
 
-        StopCoroutine("TakeDamegeCo");
-        StartCoroutine(TakeDamegeCo());
+        if (takeDamage != null) StopCoroutine(takeDamage);
+        takeDamage = StartCoroutine(TakeDamageCo());
     }
 
     public void TakeAreaDamage(float amount, string UUID)
@@ -184,7 +185,7 @@ public class PlayerState : MonoBehaviour
         }
     }
 
-    IEnumerator TakeDamegeCo()
+    IEnumerator TakeDamageCo()
     {
         float opacity = 0.0f;
         while (opacity < 1)
@@ -203,6 +204,7 @@ public class PlayerState : MonoBehaviour
             takeDamageMaterial.SetFloat("_Opacity", opacity);
             yield return null;
         }
+        takeDamage = null;
     }
 
     IEnumerator XRayOn()
