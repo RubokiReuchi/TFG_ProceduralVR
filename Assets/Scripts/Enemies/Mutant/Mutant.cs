@@ -50,10 +50,8 @@ public class Mutant : Enemy
     [HideInInspector] public List<MutantOrb> activeOrbs = new();
 
     [Header("Artifacts")]
-    [SerializeField] MutantArtifact artifact;
-    [SerializeField] Transform artifactLeftPosition;
-    [SerializeField] Transform artifactRightPosition;
-    GameObject artifactTrial;
+    [SerializeField] MutantArtifact leftArtifact;
+    [SerializeField] MutantArtifact rightArtifact;
 
     [Header("ExtraMaterials")]
     [SerializeField] Material secondOriginalMaterial;
@@ -77,10 +75,6 @@ public class Mutant : Enemy
         usedAuxiliarRoar = false;
 
         currentHealth = maxHealth;
-
-        artifactTrial = artifact.trial;
-        artifactTrial.transform.parent = null;
-        artifactTrial.transform.position = Vector3.zero;
     }
 
     // Update is called once per frame
@@ -116,7 +110,7 @@ public class Mutant : Enemy
                 {
                     agent.updateRotation = true;
                     StartCheckOptions();
-                    artifact.Despawn();
+                    rightArtifact.Despawn();
                 }
                 break;
             case STATE.WALK_SHOOTING_RIGHT:
@@ -124,7 +118,7 @@ public class Mutant : Enemy
                 {
                     agent.updateRotation = true;
                     StartCheckOptions();
-                    artifact.Despawn();
+                    leftArtifact.Despawn();
                 }
                 break;
             case STATE.RUNNING:
@@ -426,11 +420,16 @@ public class Mutant : Enemy
 
     void SpawnArtifact(bool left)
     {
-        artifact.gameObject.SetActive(true);
-        artifact.Spawn();
-        if (left) artifact.transform.parent = artifactLeftPosition;
-        else artifact.transform.parent = artifactRightPosition;
-        artifact.transform.localPosition = Vector3.zero;
+        if (left)
+        {
+            leftArtifact.gameObject.SetActive(true);
+            leftArtifact.Spawn();
+        }
+        else
+        {
+            rightArtifact.gameObject.SetActive(true);
+            rightArtifact.Spawn();
+        }
     }
 
     public override void TakeDamage(float amount)
@@ -487,8 +486,8 @@ public class Mutant : Enemy
         roarPs.Stop();
         DestroyLeftClaws();
         DestroyRightClaws();
-        artifact.Despawn();
-        Destroy(artifactTrial);
+        leftArtifact.Despawn();
+        rightArtifact.Despawn();
 
         state = STATE.DIYING;
         alive = false;

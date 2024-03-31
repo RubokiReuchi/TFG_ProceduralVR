@@ -4,26 +4,33 @@ using UnityEngine;
 
 public class MutantArtifact : MonoBehaviour
 {
+    [SerializeField] Transform ring0;
+    [SerializeField] float ring0Speed;
+    [SerializeField] Transform ring1;
+    [SerializeField] float ring1Speed;
+    [SerializeField] Transform ring2;
+    [SerializeField] float ring2Speed;
     bool spawning = false;
     bool despawning = false;
     [SerializeField] float spawnSpeed;
-    [SerializeField] float desiredScale;
     float newScale;
     [SerializeField] GameObject rayPrefab;
     [SerializeField] float cadence; // projectiles/sec
     float projectileCd;
-    public GameObject trial;
 
     void Update()
     {
         transform.rotation = Quaternion.identity;
+        ring0.Rotate(Vector3.right * ring0Speed);
+        ring1.Rotate(Vector3.up * ring1Speed);
+        ring2.Rotate(Vector3.forward * ring2Speed);
 
         if (spawning)
         {
-            newScale += Time.deltaTime * spawnSpeed * desiredScale;
-            if (newScale >= desiredScale)
+            newScale += Time.deltaTime * spawnSpeed;
+            if (newScale >= 1.0f)
             {
-                newScale = desiredScale;
+                newScale = 1.0f;
                 spawning = false;
                 projectileCd = 0;
             }
@@ -31,13 +38,12 @@ public class MutantArtifact : MonoBehaviour
         }
         else if (despawning)
         {
-            newScale -= Time.deltaTime * spawnSpeed * desiredScale;
+            newScale -= Time.deltaTime * spawnSpeed;
             if (newScale <= 0.0f)
             {
                 newScale = 0.0f;
                 despawning = false;
                 gameObject.SetActive(false);
-                trial.SetActive(false);
             }
             transform.localScale = Vector3.one * newScale;
         }
@@ -55,14 +61,12 @@ public class MutantArtifact : MonoBehaviour
     public void Spawn()
     {
         newScale = 0.0f;
-        transform.localScale = Vector3.zero;
         spawning = true;
-        trial.SetActive(true);
     }
 
     public void Despawn()
     {
-        newScale = desiredScale;
+        newScale = 1.0f;
         despawning = true;
     }
 }
