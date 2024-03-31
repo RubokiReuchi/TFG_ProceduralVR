@@ -32,6 +32,7 @@ public class Mutant : Enemy
     [SerializeField] Transform orbOrigin;
     [SerializeField] GameObject orbPrefab;
     [SerializeField] SphereCollider roarCollider;
+    [SerializeField] GameObject roarXRay;
     [SerializeField] ParticleSystem roarPs;
     bool touchFloorOnSpawn;
     bool usedAuxiliarRoar;
@@ -406,8 +407,10 @@ public class Mutant : Enemy
     {
         roarPs.Play();
         roarCollider.enabled = true;
+        roarXRay.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         roarCollider.enabled = false;
+        roarXRay.SetActive(false);
     }
 
     public void SpawnRoarOrb()

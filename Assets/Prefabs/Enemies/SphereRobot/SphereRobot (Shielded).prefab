@@ -5395,6 +5395,37 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &1007650340260440204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5694609662166342657}
+  m_Layer: 10
+  m_Name: IceParticlesSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5694609662166342657
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1007650340260440204}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.122, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3921463664130308957}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1131439560641758111
 GameObject:
   m_ObjectHideFlags: 0
@@ -7318,9 +7349,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6312374546868591992}
+  - {fileID: 5694609662166342657}
   - {fileID: 4808516988360234331}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3529741811446671636
 MonoBehaviour:
@@ -7344,7 +7376,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4522893146670467524}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f67a1aa9f7bd5e845b6f270114e47f71, type: 3}
   m_Name: 
@@ -7357,11 +7389,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   materialGameObjects: []
-  originalMaterial: {fileID: 0}
+  originalMaterial: {fileID: 2100000, guid: fa85fc7f03e6cb841b1684923aab699b, type: 2}
   hasShield: 0
   shield: {fileID: 0}
   freezeResistance: 0
-  iceBlocksParticlesPrefab: {fileID: 0}
+  iceBlocksParticlesPrefab: {fileID: 1955825772615386086, guid: 744498853c516314a93dade2f3f83d77, type: 3}
+  iceBlocksParticlesSpawn: {fileID: 5694609662166342657}
   state: 0
   walkDistance: 10
   shootDistance: 5

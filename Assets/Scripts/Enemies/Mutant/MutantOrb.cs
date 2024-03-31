@@ -14,7 +14,7 @@ public class MutantOrb : Enemy
 
     void Start()
     {
-        owner.activeOrbs.Add(this);
+        if (owner) owner.activeOrbs.Add(this);
 
         currentHealth = maxHealth;
 

@@ -32,7 +32,7 @@ public class EnemyShield : MonoBehaviour
         }
         else if (xRayLayer && !playerState.xRayVisionActive)
         {
-            gameObject.layer = LayerMask.NameToLayer("Enemy");
+            gameObject.layer = LayerMask.NameToLayer("EnemyBarrier");
             xRayLayer = false;
         }
     }
