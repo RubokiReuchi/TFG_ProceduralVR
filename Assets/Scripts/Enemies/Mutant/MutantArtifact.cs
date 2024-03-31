@@ -45,7 +45,7 @@ public class MutantArtifact : MonoBehaviour
             projectileCd -= Time.deltaTime;
             if (projectileCd <= 0.0f)
             {
-                GameObject.Instantiate(rayPrefab, transform.position, Quaternion.Euler(-Vector3.right * 90));
+                GameObject.Instantiate(rayPrefab, transform.position, Quaternion.identity);//Quaternion.Euler(-Vector3.right * 90));
                 projectileCd = 1 / cadence;
             }
         }

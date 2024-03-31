@@ -7,6 +7,7 @@ public class MutantArtifactProjectile : Projectile
     Transform playerHead;
     [SerializeField] float damage;
     [SerializeField] float homingStrenght;
+    [SerializeField] GameObject trailPrefab;
 
     // Start is called before the first frame update
     void Start()
