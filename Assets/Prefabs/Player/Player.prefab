@@ -39,6 +39,7 @@ Transform:
   - {fileID: 438994455729905373}
   - {fileID: 4739775080170653054}
   - {fileID: 8766056400472875458}
+  - {fileID: 2499483029453410809}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -140,7 +141,7 @@ MonoBehaviour:
   purpleUnlocked: 0
   superJumpUnlocked: 0
   greenUnlocked: 0
-  leftHandCollision: {fileID: 7342156884352874754}
+  leftHandCollision: {fileID: 6860419320942492783}
   playerGun: {fileID: 1298732408277432296}
   playerMovement: {fileID: 5913942507032696258}
 --- !u!114 &8741194346510480646
@@ -12287,6 +12288,61 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &5320311827600794670
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2499483029453410809}
+  - component: {fileID: 8547140782789705722}
+  m_Layer: 8
+  m_Name: _CollisionMelee
+  m_TagString: PlayerMeleeCollision
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2499483029453410809
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5320311827600794670}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6275698644058724443}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &8547140782789705722
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5320311827600794670}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.8
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!1 &5393538204586246931
 GameObject:
   m_ObjectHideFlags: 0
@@ -13582,9 +13638,9 @@ GameObject:
   - component: {fileID: 3160814603202771048}
   - component: {fileID: 5270670740961911863}
   - component: {fileID: 4081681672862483069}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RightHandOffset
-  m_TagString: Untagged
+  m_TagString: NormalHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13656,9 +13712,9 @@ GameObject:
   - component: {fileID: 1454020539925929085}
   - component: {fileID: 360982825579465151}
   - component: {fileID: 2909745855354263236}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LeftHandOffset
-  m_TagString: Untagged
+  m_TagString: NormalHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
