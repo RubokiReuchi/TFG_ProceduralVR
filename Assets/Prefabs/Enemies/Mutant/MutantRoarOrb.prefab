@@ -5362,7 +5362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alive: 1
   firstEnable: 1
-  maxHealth: 40
+  maxHealth: 60
   currentHealth: 0
   foundationsLayers:
     serializedVersion: 2
@@ -5373,6 +5373,7 @@ MonoBehaviour:
   shield: {fileID: 0}
   freezeResistance: 0
   iceBlocksParticlesPrefab: {fileID: 0}
+  iceBlocksParticlesSpawn: {fileID: 0}
   owner: {fileID: 0}
   ps: {fileID: 9222217097416787962}
   growSpeed: 0.5

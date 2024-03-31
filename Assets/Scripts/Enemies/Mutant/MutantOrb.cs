@@ -62,6 +62,5 @@ public class MutantOrb : Enemy
         destroyPs.Play();
         alive = false;
         transform.localScale = Vector3.zero;
-        ps.SetActive(false);
     }
 }

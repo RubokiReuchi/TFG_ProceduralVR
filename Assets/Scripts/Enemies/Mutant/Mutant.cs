@@ -106,6 +106,7 @@ public class Mutant : Enemy
                 }
                 break;
             case STATE.WALK_SHOOTING_LEFT:
+                transform.LookAt(player);
                 if (agent.hasPath && agent.remainingDistance <= 0.1f)
                 {
                     agent.updateRotation = true;
@@ -114,6 +115,7 @@ public class Mutant : Enemy
                 }
                 break;
             case STATE.WALK_SHOOTING_RIGHT:
+                transform.LookAt(player);
                 if (agent.hasPath && agent.remainingDistance <= 0.1f)
                 {
                     agent.updateRotation = true;
@@ -329,8 +331,7 @@ public class Mutant : Enemy
     public void StartBackflipMovement()
     {
         agent.updateRotation = false;
-        agent.velocity = -transform.forward * 10;
-        // APPLY SLOW////////////////////////////////////////////////////////////////////////////////
+        agent.velocity = -transform.forward * 10 * freezeSlow;
     }
 
     public void StopBackflipMovement()
