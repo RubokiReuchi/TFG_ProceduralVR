@@ -178,7 +178,6 @@ public class Mutant : Enemy
                 // Roar
                 animator.SetTrigger("Roar");
                 state = STATE.ROARING;
-                lastRangeChoise = -1;
                 yield break;
             }  
         }
@@ -190,7 +189,6 @@ public class Mutant : Enemy
                 // Roar
                 animator.SetTrigger("Roar");
                 state = STATE.ROARING;
-                lastRangeChoise = -1;
                 yield break;
             }
         }
@@ -198,7 +196,6 @@ public class Mutant : Enemy
         {
             RangeOptions();
             usedAuxiliarRoar = false;
-            lastRangeChoise = -1;
             yield break;
         }
 
@@ -207,7 +204,6 @@ public class Mutant : Enemy
         if (agent.hasPath && agent.remainingDistance <= slashDistance)
         {
             MeleeOptions();
-            lastRangeChoise = -1;
         }
         else if (state == STATE.LEFT_ATTACKING || state == STATE.RIGHT_ATTACKING) // never do range options after slash
         {
@@ -249,7 +245,7 @@ public class Mutant : Enemy
         // to be sure enemy dont repeat same movement more that 2 times
         if (lastRangeChoise == rand)
         {
-            sameRangeChoise++;
+            if (!usedAuxiliarRoar) sameRangeChoise++;
             if (sameRangeChoise >= 2)
             {
                 rand = 1 - rand; // invert
