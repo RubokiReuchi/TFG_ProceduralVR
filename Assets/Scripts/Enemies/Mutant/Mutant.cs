@@ -68,8 +68,10 @@ public class Mutant : Enemy
         player = GameObject.FindGameObjectWithTag("Player").transform;
         materialGameObjects[0].GetComponent<SkinnedMeshRenderer>().materials[0] = originalMaterial;
         material = materialGameObjects[0].GetComponent<SkinnedMeshRenderer>().materials[0];
+        material.SetFloat("_DissolveAmount", 0.0f);
         materialGameObjects[0].GetComponent<SkinnedMeshRenderer>().materials[1] = secondOriginalMaterial;
         material2 = materialGameObjects[0].GetComponent<SkinnedMeshRenderer>().materials[1];
+        material2.SetFloat("_DissolveAmount", 0.0f);
         state = STATE.REST;
         touchFloorOnSpawn = false;
         usedAuxiliarRoar = false;
@@ -488,5 +490,19 @@ public class Mutant : Enemy
 
         state = STATE.DIYING;
         alive = false;
+    }
+
+    public IEnumerator Dissolve()
+    {
+        float dissolveAmount = 0.0f;
+        while (dissolveAmount < 1.0f)
+        {
+            dissolveAmount += Time.deltaTime * 2;
+            if (dissolveAmount > 1.0f) dissolveAmount = 1.0f;
+            material.SetFloat("_DissolveAmount", dissolveAmount);
+            material2.SetFloat("_DissolveAmount", dissolveAmount);
+            yield return null;
+        }
+        Destroy(gameObject);
     }
 }
