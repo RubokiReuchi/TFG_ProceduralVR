@@ -1617,7 +1617,7 @@ Transform:
   - {fileID: 282068180601103798}
   - {fileID: 4474222075241118641}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7448977935876576358
 MonoBehaviour:
@@ -1648,7 +1648,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alive: 1
   firstEnable: 1
-  maxHealth: 100
+  maxHealth: 300
   currentHealth: 0
   foundationsLayers:
     serializedVersion: 2
