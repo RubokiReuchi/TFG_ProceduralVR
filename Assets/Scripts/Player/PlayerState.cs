@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.XR.CoreUtils;
 
 public enum LEFT_HAND_POSE
 {
@@ -236,7 +237,7 @@ public class PlayerState : MonoBehaviour
         float opacity = 1.0f;
         while (opacity > 0)
         {
-            opacity -= Time.deltaTime * 1;
+            opacity -= Time.deltaTime * 0.5f;
             if (opacity < 0) opacity = 0;
             fadeMaterial.SetFloat("_Opacity", opacity);
             yield return null;

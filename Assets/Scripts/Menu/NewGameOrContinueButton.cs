@@ -37,7 +37,7 @@ public class NewGameOrContinueButton : MenuButton
         float opacity = 0.0f;
         while (opacity < 1)
         {
-            opacity += Time.deltaTime * 1;
+            opacity += Time.deltaTime * 0.5f;
             if (opacity > 1) opacity = 1;
             fadeMat.SetFloat("_Opacity", opacity);
             yield return null;
@@ -45,11 +45,11 @@ public class NewGameOrContinueButton : MenuButton
 
         if (newGame)
         {
-            // to tutorial
+            SceneManager.LoadScene(1);
         }
         else
         {
-            // to lobby
+            SceneManager.LoadScene(2);
         }
     }
 }
