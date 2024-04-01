@@ -87,6 +87,9 @@ public class RoomGenarator : MonoBehaviour
     [HideInInspector] public List<RoomBehaviour> activeRooms = new();
     [HideInInspector] public List<HallwayBehaviour> activeHallways = new();
 
+    [Header("Nav Mesh")]
+    [SerializeField] NavMeshSurface[] navMeshSurfaces;
+
     private void Awake()
     {
         instance = this;
@@ -111,7 +114,7 @@ public class RoomGenarator : MonoBehaviour
 
         PlacePowerUps();
 
-        GetComponent<NavMeshSurface>().BuildNavMesh();
+        foreach (var navMeshSurface in navMeshSurfaces) navMeshSurface.BuildNavMesh();
 
         SetMapSize(); // map
 

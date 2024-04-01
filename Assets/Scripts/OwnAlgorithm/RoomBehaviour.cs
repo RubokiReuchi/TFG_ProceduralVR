@@ -178,6 +178,9 @@ public class RoomBehaviour : MonoBehaviour
                 case ENEMY_TYPE.SPHERE_ROBOT:
                     enemies[i].GetComponent<SphereRobot>().enabled = true;
                     break;
+                case ENEMY_TYPE.MUTANT:
+                    enemies[i].GetComponent<Mutant>().enabled = true;
+                    break;
                 default:
                     break;
             }
