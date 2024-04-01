@@ -57,7 +57,7 @@ public class PlayerCharged : Projectile
             if (script.enabled)
             {
                 script.TakeDamage(damage);
-                if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze(damage);
+                if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze(damage / 2.0f);
             }
             if (shockwave)
             {
