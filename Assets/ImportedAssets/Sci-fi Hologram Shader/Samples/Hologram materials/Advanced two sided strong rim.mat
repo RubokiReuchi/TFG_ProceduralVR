@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3743903705170001513
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 7
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,26 +7,23 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: OpenMenuMat
-  m_Shader: {fileID: -6465566751694194690, guid: 46476e2a74fc3e44fac54bcb25a48d89, type: 3}
+  m_Name: Advanced two sided strong rim
+  m_Shader: {fileID: 4800000, guid: 002f6eab9ba9b994d8eec7af12c232ac, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - SCAN2_ON
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _BaseMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -68,6 +52,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Noise:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -76,82 +64,70 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_5d876fb98d1e4dff94eed6fed9f7b860_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: f3db3d0236998064cacbbc7bf051c1b3, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SpecGlossMap:
+    - _PrimaryFlicker:
+        m_Texture: {fileID: 2800000, guid: 271b03d57c528f349a661f8ae6c0d919, type: 3}
+        m_Scale: {x: 0.01, y: 0.5}
+        m_Offset: {x: 0, y: -1}
+    - _Rim:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Texture:
+    - _RimFalloff:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _test:
+    - _RimFalloffTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - unity_Lightmaps:
+    - _RimTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - unity_LightmapsInd:
-        m_Texture: {fileID: 0}
+    - _Scan2:
+        m_Texture: {fileID: 2800000, guid: d6717a765e8c7c44ab4227d5d07ecfac, type: 3}
+        m_Scale: {x: 1, y: 10}
+        m_Offset: {x: 0, y: 40}
+    - _Scanlines:
+        m_Texture: {fileID: 2800000, guid: d6717a765e8c7c44ab4227d5d07ecfac, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_ShadowMasks:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Offset: {x: 0, y: -10}
+    - _SecondaryFlicker:
+        m_Texture: {fileID: 2800000, guid: ac782bf64bc0d4447bfd606db3ca6968, type: 3}
+        m_Scale: {x: 0.1, y: 0.1}
+        m_Offset: {x: 10, y: 10}
     m_Ints: []
     m_Floats:
-    - _AlphaClip: 0
-    - _AlphaToMask: 0
-    - _Blend: 0
-    - _BlendModePreserveSpecular: 1
+    - _0: 135
+    - _1: 0
+    - _2: 185
+    - _3: 0
+    - _4: 100
+    - _Advanced: 0
+    - _Brightness: 1.5
     - _BumpScale: 1
-    - _CastShadows: 1
-    - _ClearCoatMask: 0
-    - _ClearCoatSmoothness: 0
-    - _Cull: 2
     - _Cutoff: 0.5
-    - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DisplayHeight: 0
-    - _DisplayWidth: 1
     - _DstBlend: 0
-    - _DstBlendAlpha: 0
-    - _EnvironmentReflections: 1
-    - _GlitchStrenght: 0.1
-    - _GlossMapScale: 0
-    - _Glossiness: 0
-    - _GlossyReflections: 0
+    - _Fade: 0
+    - _Fresnel: 2
+    - _Glossiness: 0.5
     - _Metallic: 0
+    - _Mode: 0
     - _OcclusionStrength: 1
-    - _Parallax: 0.005
-    - _Pressed: 0
-    - _QueueControl: 0
-    - _QueueOffset: 0
-    - _RECIEVE_SHADOWS_OFF: 0
-    - _ReceiveShadows: 1
-    - _ScrollSpeed: 2.66
-    - _Smoothness: 0.5
-    - _SmoothnessTextureChannel: 0
-    - _SpecularHighlights: 1
+    - _Parallax: 0.02
+    - _RimFalloff: 0.5
+    - _RimStrenght: 2
+    - _ScanStr: 0.5
+    - _ScanStr2: 1
+    - _Shading: 0.25
     - _SrcBlend: 1
-    - _SrcBlendAlpha: 1
-    - _Surface: 0
-    - _WorkflowMode: 1
-    - _ZTest: 4
+    - _UVSec: 0
     - _ZWrite: 1
-    - _ZWriteControl: 0
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.33708617, g: 0.4059805, b: 0.9528302, a: 1}
+    - _Color: {r: 0, g: 0.4780826, b: 0.6415094, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FresnelColor: {r: 1, g: 1, b: 1, a: 0}
-    - _NormalColor: {r: 0.3647059, g: 0.34117648, b: 0.99215686, a: 0}
-    - _PressedColor: {r: 0, g: 0, b: 0, a: 0}
-    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _FlickerColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RimColor: {r: 0.9622642, g: 0.4392775, b: 0, a: 1}
+    - _ScanlineColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_BuildTextureStacks: []
