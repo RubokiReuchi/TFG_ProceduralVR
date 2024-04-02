@@ -17,6 +17,7 @@ public class LobbyPanel : MonoBehaviour
     void Start()
     {
         animators = GetComponentsInChildren<Animator>();
+        Shuffle(animators);
     }
 
     // Update is called once per frame
@@ -40,13 +41,25 @@ public class LobbyPanel : MonoBehaviour
     public IEnumerator Swap(bool show)
     {
         showing = show;
-        mark.SetBool("Shown", !showing);
+        if (mark) mark.SetBool("Shown", !showing);
         yield return new WaitForSeconds(delay);
         foreach (var animator in animators)
         {
             animator.SetInteger("Value", Random.Range(0, numOfFadeAnimations));
             animator.SetBool("Shown", showing);
             yield return new WaitForSeconds(delay);
+        }
+    }
+
+    void Shuffle(Animator[] elements)
+    {
+        // Knuth shuffle algorithm :: courtesy of Wikipedia :)
+        for (int t = 0; t < elements.Length; t++)
+        {
+            Animator tmp = elements[t];
+            int r = Random.Range(t, elements.Length);
+            elements[t] = elements[r];
+            elements[r] = tmp;
         }
     }
 }

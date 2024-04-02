@@ -6,6 +6,7 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
 {
     public static PlayerSkills instance;
 
+    [Header("Skills")]
     [NonEditable] public bool dashUnlocked;
     [NonEditable] public bool blueUnlocked;
     [NonEditable] public bool redUnlocked;
@@ -17,6 +18,15 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
     [SerializeField] GameObject leftHandCollision;
     [SerializeField] PlayerGun playerGun;
     [SerializeField] PlayerMovement playerMovement;
+
+    [Header("Powers")]
+    [NonEditable] public int attackLevel;
+    [NonEditable] public int defenseLevel;
+    [NonEditable] public int chargeSpeedLevel;
+    [NonEditable] public int dashCdLevel;
+    [NonEditable] public int proyectileSpeedLevel;
+    [NonEditable] public int lifeRegenLevel;
+    [NonEditable] public int lifeChargeLevel;
 
     private void Awake()
     {
@@ -33,6 +43,14 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
         superJumpUnlocked = data.superJumpUnlocked;
         greenUnlocked = data.greenUnlocked;
 
+        attackLevel = data.attackLevel;
+        defenseLevel = data.defenseLevel;
+        chargeSpeedLevel = data.chargeSpeedLevel;
+        dashCdLevel = data.dashCdLevel;
+        proyectileSpeedLevel = data.proyectileSpeedLevel;
+        lifeRegenLevel = data.lifeRegenLevel;
+        lifeChargeLevel = data.lifeChargeLevel;
+
         LateStart();
     }
 
@@ -45,6 +63,14 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
         data.purpleUnlocked = purpleUnlocked;
         data.superJumpUnlocked = superJumpUnlocked;
         data.greenUnlocked = greenUnlocked;
+
+        data.attackLevel = attackLevel;
+        data.defenseLevel = defenseLevel;
+        data.chargeSpeedLevel = chargeSpeedLevel;
+        data.dashCdLevel = dashCdLevel;
+        data.proyectileSpeedLevel = proyectileSpeedLevel;
+        data.lifeRegenLevel = lifeRegenLevel;
+        data.lifeChargeLevel = lifeChargeLevel;
     }
 
     void LateStart()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum LEVEL_UP
 {
@@ -15,10 +16,20 @@ public enum LEVEL_UP
 
 public class PowerIncrease : MonoBehaviour
 {
+    GameObject selectedButton;
+    public Color unselectedColor;
+    public Color blockedColor;
+    public Color obtainedColor;
+    public Color selectedColor;
+
+    IncreaseButton[] buttons;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        buttons = GetComponentsInChildren<IncreaseButton>();
+        PlayerSkills playerSkills = PlayerSkills.instance;
+        foreach (IncreaseButton button in buttons) button.CalculateColor(playerSkills);
     }
 
     // Update is called once per frame
@@ -27,8 +38,21 @@ public class PowerIncrease : MonoBehaviour
         
     }
 
-    public void SelectAttack()
+    public void SelectButton(GameObject go)
     {
-        Debug.Log("Success");
+        if (selectedButton)
+        {
+            if (selectedButton.GetInstanceID() != go.GetInstanceID())
+            {
+                selectedButton.GetComponent<Image>().color = unselectedColor;
+                go.GetComponent<Image>().color = selectedColor;
+                selectedButton = go;
+            }
+        }
+        else
+        {
+            go.GetComponent<Image>().color = selectedColor;
+            selectedButton = go;
+        }
     }
 }

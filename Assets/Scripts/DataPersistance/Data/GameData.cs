@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
+    // Skills
     // tier 0
     public bool dashUnlocked;
 
@@ -20,6 +21,15 @@ public class GameData
     // tier 3
     public bool greenUnlocked;
 
+    // Powers
+    public int attackLevel;
+    public int defenseLevel;
+    public int chargeSpeedLevel;
+    public int dashCdLevel;
+    public int proyectileSpeedLevel;
+    public int lifeRegenLevel;
+    public int lifeChargeLevel;
+
     // new game values
     public GameData()
     {
@@ -30,5 +40,13 @@ public class GameData
         purpleUnlocked = false;
         superJumpUnlocked = false;
         greenUnlocked = false;
+
+        attackLevel = 0;
+        defenseLevel = 0;
+        chargeSpeedLevel = 0;
+        dashCdLevel = 0;
+        proyectileSpeedLevel = 0;
+        lifeRegenLevel = 0;
+        lifeChargeLevel = 0;
     }
 }
