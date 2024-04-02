@@ -18,7 +18,7 @@ public class ExitButton : MenuButton
         {
             paused = true;
             text.text = "Are you SURE\n to exit?";
-            Invoke("AreYouSure", 1.0f);
+            Invoke("AreYouSure", 0.5f);
         }
         else
         {
