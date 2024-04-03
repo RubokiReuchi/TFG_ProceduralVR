@@ -45,15 +45,17 @@ public class PowerIncrease : MonoBehaviour
         {
             if (selectedButton.GetInstanceID() != go.GetInstanceID())
             {
-                selectedButton.GetComponent<Image>().color = unselectedColor;
-                go.GetComponent<Image>().color = selectedColor;
+                Image image = selectedButton.GetComponent<Image>();
+                image.color = unselectedColor;
+                image.raycastTarget = true;
                 selectedButton = go;
             }
         }
         else
         {
-            go.GetComponent<Image>().color = selectedColor;
             selectedButton = go;
         }
+
+        selectedButton.GetComponent<IncreaseButton>().SelectButton();
     }
 }

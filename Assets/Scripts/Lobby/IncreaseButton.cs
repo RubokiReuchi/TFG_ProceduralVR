@@ -9,6 +9,7 @@ public class IncreaseButton : MonoBehaviour
     [SerializeField] int level;
     Image image;
     PowerIncrease powerIncrease;
+    [SerializeField] IncreaseDescription description;
 
     public void CalculateColor(PlayerSkills skills)
     {
@@ -31,7 +32,7 @@ public class IncreaseButton : MonoBehaviour
         if (level <= skillLevel)
         {
             image.color = powerIncrease.obtainedColor;
-            image.raycastTarget = true;
+            image.raycastTarget = false;
         }
         else if (level == skillLevel + 1)
         {
@@ -43,5 +44,12 @@ public class IncreaseButton : MonoBehaviour
             image.color = powerIncrease.blockedColor;
             image.raycastTarget = false;
         }
+    }
+
+    public void SelectButton()
+    {
+        image.color = powerIncrease.selectedColor;
+        image.raycastTarget = false;
+        description.ButtonSelected(type, level);
     }
 }

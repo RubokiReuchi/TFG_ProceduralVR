@@ -6,6 +6,7 @@ using UnityEditor.Animations;
 public class LobbyPanel : MonoBehaviour
 {
     [SerializeField] Animator mark;
+    [SerializeField] IncreaseDescription description;
     [SerializeField] int numOfFadeAnimations;
     [SerializeField] float triggerDistance;
     [SerializeField] float delay;
@@ -41,13 +42,32 @@ public class LobbyPanel : MonoBehaviour
     public IEnumerator Swap(bool show)
     {
         showing = show;
-        if (mark) mark.SetBool("Shown", !showing);
+        if (mark && showing) mark.SetBool("Shown", false);
+        description.HidePanel();
         yield return new WaitForSeconds(delay);
         foreach (var animator in animators)
         {
             animator.SetInteger("Value", Random.Range(0, numOfFadeAnimations));
             animator.SetBool("Shown", showing);
+            animator.SetBool("Backed", false);
             yield return new WaitForSeconds(delay);
+        }
+        if (mark && !showing) mark.SetBool("Shown", true);
+    }
+
+    public void MoveBack()
+    {
+        foreach (var animator in animators)
+        {
+            animator.SetBool("Backed", true);
+        }
+    }
+
+    public void MoveFront()
+    {
+        foreach (var animator in animators)
+        {
+            animator.SetTrigger("MoveFront");
         }
     }
 
