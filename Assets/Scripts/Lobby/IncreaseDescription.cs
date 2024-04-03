@@ -16,8 +16,6 @@ public class IncreaseDescription : MonoBehaviour
     [SerializeField] TextMeshProUGUI description;
     [SerializeField] TextMeshProUGUI price;
     [SerializeField] Animator priceAnimator;
-    [SerializeField] Image purchaseImage;
-    [SerializeField] Image closeImage;
     GameObject currentIcon;
     [SerializeField] Transform iconContainer;
     [SerializeField] GameObject[] icons;
@@ -62,8 +60,6 @@ public class IncreaseDescription : MonoBehaviour
         otherLobbyPanel.MoveBack();
 
         selectedType = type;
-        purchaseImage.raycastTarget = true;
-        closeImage.raycastTarget = true;
     }
 
     void SetInfo(LEVEL_UP type, int level)
@@ -85,6 +81,7 @@ public class IncreaseDescription : MonoBehaviour
     public void HidePanel()
     {
         if (!shown) return;
+        shown = false;
         animator.SetBool("Shown", false);
     }
 
@@ -105,8 +102,9 @@ public class IncreaseDescription : MonoBehaviour
                 case LEVEL_UP.LIFE_CHARGE: inventory.lifeChargeLevel++; break;
             }
             inventory.biomatter -= priceAmount;
+            //money spend
 
-            Invoke("CloseAfterPurchase", 0.5f);
+            CloseAfterPurchase();
         }
         else
         {
@@ -119,8 +117,6 @@ public class IncreaseDescription : MonoBehaviour
     {
         shown = false;
         animator.SetBool("Shown", false);
-        purchaseImage.raycastTarget = false;
-        closeImage.raycastTarget = false;
         increasePanel.Deselect(false);
         otherLobbyPanel.MoveFront();
     }
@@ -129,8 +125,6 @@ public class IncreaseDescription : MonoBehaviour
     {
         shown = false;
         animator.SetBool("Shown", false);
-        purchaseImage.raycastTarget = false;
-        closeImage.raycastTarget = false;
         increasePanel.Deselect(true);
         otherLobbyPanel.MoveFront();
     }

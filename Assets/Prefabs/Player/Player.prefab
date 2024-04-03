@@ -134,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b008c0f035c2244fbaddf813817bf5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  biomatter: 0
   dashUnlocked: 0
   blueUnlocked: 0
   redUnlocked: 0
@@ -144,6 +145,14 @@ MonoBehaviour:
   leftHandCollision: {fileID: 6860419320942492783}
   playerGun: {fileID: 1298732408277432296}
   playerMovement: {fileID: 5913942507032696258}
+  attackLevel: 0
+  defenseLevel: 0
+  chargeSpeedLevel: 0
+  dashCdLevel: 0
+  proyectileSpeedLevel: 0
+  maxHealthLevel: 0
+  lifeRegenLevel: 0
+  lifeChargeLevel: 0
 --- !u!114 &8741194346510480646
 MonoBehaviour:
   m_ObjectHideFlags: 0

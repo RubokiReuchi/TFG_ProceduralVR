@@ -8,7 +8,6 @@ public class LobbyPanel : MonoBehaviour
     [SerializeField] Animator mark;
     [SerializeField] IncreaseDescription description;
     [SerializeField] int numOfFadeAnimations;
-    [SerializeField] float triggerDistance;
     [SerializeField] float delay;
     Animator[] animators;
     bool showing = false;
@@ -22,21 +21,10 @@ public class LobbyPanel : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Display(bool open)
     {
-        Vector3 distance = Camera.main.transform.position - transform.position;
-        if (distance.magnitude < triggerDistance)
-        {
-            if (showing) return;
-            if (coroutine != null) StopCoroutine(coroutine);
-            coroutine = StartCoroutine(Swap(true));
-        }
-        else
-        {
-            if (!showing) return;
-            if (coroutine != null) StopCoroutine(coroutine);
-            coroutine = StartCoroutine(Swap(false));
-        }
+        if (coroutine != null) StopCoroutine(coroutine);
+        coroutine = StartCoroutine(Swap(open));
     }
 
     public IEnumerator Swap(bool show)

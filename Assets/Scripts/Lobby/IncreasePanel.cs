@@ -17,6 +17,10 @@ public enum LEVEL_UP
 
 public class IncreasePanel : MonoBehaviour
 {
+    LobbyPanel[] panels;
+    [SerializeField] float triggerDistance;
+    bool showing = false;
+
     GameObject selectedButton;
     public Color unselectedColor;
     public Color blockedColor;
@@ -30,6 +34,7 @@ public class IncreasePanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        panels = GetComponentsInChildren<LobbyPanel>();
         buttons = GetComponentsInChildren<IncreaseButton>();
         playerSkills = PlayerSkills.instance;
         foreach (IncreaseButton button in buttons) button.CalculateColor(playerSkills);
@@ -38,7 +43,24 @@ public class IncreasePanel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Vector3 distance = Camera.main.transform.position - transform.position;
+        if (distance.magnitude < triggerDistance)
+        {
+            if (showing) return;
+            foreach (LobbyPanel panel in panels) panel.Display(true);
+            showing = true;
+        }
+        else
+        {
+            if (!showing) return;
+            foreach (LobbyPanel panel in panels) panel.Display(false);
+            showing = false;
+            if (!selectedButton) return;
+            Image image = selectedButton.GetComponent<Image>();
+            image.color = unselectedColor;
+            image.raycastTarget = true;
+            selectedButton = null;
+        }
     }
 
     public void SelectButton(GameObject go)
@@ -71,7 +93,7 @@ public class IncreasePanel : MonoBehaviour
         else
         {
             image.color = unselectedColor;
-            image.raycastTarget = false;
+            image.raycastTarget = true;
         }
         selectedButton = null;
     }
