@@ -5,6 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class GameData
 {
+    // Coins
+    public int biomatter;
+
     // Skills
     // tier 0
     public bool dashUnlocked;
@@ -27,12 +30,15 @@ public class GameData
     public int chargeSpeedLevel;
     public int dashCdLevel;
     public int proyectileSpeedLevel;
+    public int maxHealthLevel;
     public int lifeRegenLevel;
     public int lifeChargeLevel;
 
     // new game values
     public GameData()
     {
+        biomatter = 0;
+
         dashUnlocked = false;
         blueUnlocked = false;
         redUnlocked = false;
@@ -46,6 +52,7 @@ public class GameData
         chargeSpeedLevel = 0;
         dashCdLevel = 0;
         proyectileSpeedLevel = 0;
+        maxHealthLevel = 0;
         lifeRegenLevel = 0;
         lifeChargeLevel = 0;
     }

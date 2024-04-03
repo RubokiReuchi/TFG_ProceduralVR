@@ -8,13 +8,13 @@ public class IncreaseButton : MonoBehaviour
     [SerializeField] LEVEL_UP type;
     [SerializeField] int level;
     Image image;
-    PowerIncrease powerIncrease;
+    IncreasePanel powerIncrease;
     [SerializeField] IncreaseDescription description;
 
     public void CalculateColor(PlayerSkills skills)
     {
         if (image == null) image = GetComponent<Image>();
-        if (powerIncrease == null) powerIncrease = GetComponentInParent<PowerIncrease>();
+        if (powerIncrease == null) powerIncrease = GetComponentInParent<IncreasePanel>();
 
         int skillLevel;
         switch (type)

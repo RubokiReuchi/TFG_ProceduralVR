@@ -6,6 +6,9 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
 {
     public static PlayerSkills instance;
 
+    [Header("Coins")]
+    [NonEditable]public int biomatter;
+
     [Header("Skills")]
     [NonEditable] public bool dashUnlocked;
     [NonEditable] public bool blueUnlocked;
@@ -25,6 +28,7 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
     [NonEditable] public int chargeSpeedLevel;
     [NonEditable] public int dashCdLevel;
     [NonEditable] public int proyectileSpeedLevel;
+    [NonEditable] public int maxHealthLevel;
     [NonEditable] public int lifeRegenLevel;
     [NonEditable] public int lifeChargeLevel;
 
@@ -35,6 +39,8 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
+        biomatter = data.biomatter;
+
         dashUnlocked = data.dashUnlocked;
         blueUnlocked = data.blueUnlocked;
         redUnlocked = data.redUnlocked;
@@ -48,6 +54,7 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
         chargeSpeedLevel = data.chargeSpeedLevel;
         dashCdLevel = data.dashCdLevel;
         proyectileSpeedLevel = data.proyectileSpeedLevel;
+        maxHealthLevel = data.maxHealthLevel;
         lifeRegenLevel = data.lifeRegenLevel;
         lifeChargeLevel = data.lifeChargeLevel;
 
@@ -56,6 +63,8 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
 
     public void SaveData(ref GameData data)
     {
+        data.biomatter = biomatter;
+
         data.dashUnlocked = dashUnlocked;
         data.blueUnlocked = blueUnlocked;
         data.redUnlocked = redUnlocked;
@@ -69,6 +78,7 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
         data.chargeSpeedLevel = chargeSpeedLevel;
         data.dashCdLevel = dashCdLevel;
         data.proyectileSpeedLevel = proyectileSpeedLevel;
+        data.maxHealthLevel = maxHealthLevel;
         data.lifeRegenLevel = lifeRegenLevel;
         data.lifeChargeLevel = lifeChargeLevel;
     }

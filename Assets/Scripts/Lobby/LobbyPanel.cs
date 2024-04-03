@@ -59,6 +59,7 @@ public class LobbyPanel : MonoBehaviour
     {
         foreach (var animator in animators)
         {
+            animator.SetInteger("Value", -1);
             animator.SetBool("Backed", true);
         }
     }
@@ -68,6 +69,7 @@ public class LobbyPanel : MonoBehaviour
         foreach (var animator in animators)
         {
             animator.SetTrigger("MoveFront");
+            animator.SetBool("Backed", false);
         }
     }
 
