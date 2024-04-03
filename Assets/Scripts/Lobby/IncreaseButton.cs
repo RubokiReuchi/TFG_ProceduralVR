@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class IncreaseButton : MonoBehaviour
 {
-    [SerializeField] Image panel;
     [SerializeField] LEVEL_UP type;
     [SerializeField] int level;
     Image image;
@@ -31,17 +30,17 @@ public class IncreaseButton : MonoBehaviour
 
         if (level <= skillLevel)
         {
-            panel.color = powerIncrease.obtainedColor;
+            image.color = powerIncrease.obtainedColor;
             image.raycastTarget = true;
         }
         else if (level == skillLevel + 1)
         {
-            panel.color = powerIncrease.unselectedColor;
+            image.color = powerIncrease.unselectedColor;
             image.raycastTarget = true;
         }
         else
         {
-            panel.color = powerIncrease.blockedColor;
+            image.color = powerIncrease.blockedColor;
             image.raycastTarget = false;
         }
     }

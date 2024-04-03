@@ -10,6 +10,7 @@ public enum LEVEL_UP
     CHARGE_SPEED,
     DASH_CD,
     PROYECTILE_SPEED,
+    MAX_HEALTH,
     LIFE_REGEN,
     LIFE_CHARGE
 }
