@@ -22,7 +22,7 @@ public class IncreaseDescription : MonoBehaviour
     [SerializeField] Transform iconContainer;
     [SerializeField] GameObject[] icons;
     [SerializeField] TextAsset increasePowerDescriptionsCSV;
-    static int numOfColumns = 14;
+    static int numOfColumns = 16;
     static int numOfRows = 5;
     string[] titles = new string[numOfColumns];
     string[,] descriptions = new string[numOfColumns, numOfRows];
@@ -47,25 +47,24 @@ public class IncreaseDescription : MonoBehaviour
         }
     }
 
-    public void ButtonSelected(LEVEL_UP type, int level, bool obtained)
+    public void ButtonSelected(LEVEL_UP type, int level, bool displayPrice, bool displayPurchase)
     {
         if (!shown)
         {
             shown = true;
             SetInfo(type, level);
+            priceImage.SetActive(displayPrice);
+            purchaseImage.SetActive(displayPurchase);
             animator.SetBool("Shown", true);
         }
         else
         {
-            StartCoroutine(ChangeInfo(type, level));
+            StartCoroutine(ChangeInfo(type, level, displayPrice, displayPurchase));
             animator.SetTrigger("ChangeInfoShown");
         }
         otherLobbyPanel.MoveBack();
 
         selectedType = type;
-
-        purchaseImage.SetActive(!obtained);
-        priceImage.SetActive(!obtained);
     }
 
     void SetInfo(LEVEL_UP type, int level)
@@ -97,12 +96,19 @@ public class IncreaseDescription : MonoBehaviour
                 iconIndex = 11;
                 break;
             case LEVEL_UP.MISSILE_MODE:
-                iconIndex = 0;
+                if (level == 1 || level == 3 || level == 5) iconIndex = 12;
+                else iconIndex = 13;
                 break;
             case LEVEL_UP.SHIELD:
+                iconIndex = 14;
+                break;
+            case LEVEL_UP.BLUE_BEAM:
                 iconIndex = 0;
                 break;
-            case LEVEL_UP.BEAM:
+            case LEVEL_UP.RED_BEAM:
+                iconIndex = 0;
+                break;
+            case LEVEL_UP.GREEN_BEAM:
                 iconIndex = 0;
                 break;
             default:
@@ -113,7 +119,7 @@ public class IncreaseDescription : MonoBehaviour
         currentIcon = GameObject.Instantiate(icons[iconIndex], iconContainer);
     }
 
-    IEnumerator ChangeInfo(LEVEL_UP type, int level)
+    IEnumerator ChangeInfo(LEVEL_UP type, int level, bool displayPrice, bool displayPurchase)
     {
         yield return new WaitForSeconds(0.5f);
         title.text = titles[(int)type].ToString() + " " + level;
@@ -144,12 +150,19 @@ public class IncreaseDescription : MonoBehaviour
                 iconIndex = 11;
                 break;
             case LEVEL_UP.MISSILE_MODE:
-                iconIndex = 0;
+                if (level == 1 || level == 3 || level == 5) iconIndex = 12;
+                else iconIndex = 13;
                 break;
             case LEVEL_UP.SHIELD:
+                iconIndex = 14;
+                break;
+            case LEVEL_UP.BLUE_BEAM:
                 iconIndex = 0;
                 break;
-            case LEVEL_UP.BEAM:
+            case LEVEL_UP.RED_BEAM:
+                iconIndex = 0;
+                break;
+            case LEVEL_UP.GREEN_BEAM:
                 iconIndex = 0;
                 break;
             default:
@@ -158,6 +171,8 @@ public class IncreaseDescription : MonoBehaviour
                 break;
         }
         currentIcon = GameObject.Instantiate(icons[iconIndex], iconContainer);
+        priceImage.SetActive(displayPrice);
+        purchaseImage.SetActive(displayPurchase);
     }
 
     public void HidePanel()
@@ -181,12 +196,15 @@ public class IncreaseDescription : MonoBehaviour
                 case LEVEL_UP.PROYECTILE_SPEED: inventory.proyectileSpeedLevel++; break;
                 case LEVEL_UP.MAX_HEALTH: inventory.maxHealthLevel++; break;
                 case LEVEL_UP.LIFE_REGEN: inventory.lifeRegenLevel++; break;
+                case LEVEL_UP.LIFE_CHARGE: inventory.lifeChargeLevel++; break;
                 case LEVEL_UP.XRAY_VISION: inventory.xRayVisionLevel++; break;
                 case LEVEL_UP.AUTOMATIC_MODE: inventory.automaticModeLevel++; break;
                 case LEVEL_UP.TRIPLE_SHOT_MODE: inventory.tripleShotModeLevel++; break;
                 case LEVEL_UP.MISSILE_MODE: inventory.missileModeLevel++; break;
                 case LEVEL_UP.SHIELD: inventory.shieldLevel++; break;
-                case LEVEL_UP.BEAM: inventory.beamLevel++; break;
+                case LEVEL_UP.BLUE_BEAM: inventory.blueBeamLevel++; break;
+                case LEVEL_UP.RED_BEAM: inventory.redBeamLevel++; break;
+                case LEVEL_UP.GREEN_BEAM: inventory.greenBeamLevel++; break;
             }
             inventory.biomatter -= priceAmount;
             //money spend

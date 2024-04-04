@@ -5,12 +5,19 @@ using UnityEngine.UI;
 
 public class IncreaseButton : MonoBehaviour
 {
+    enum BUTTON_TYPE
+    {
+        OBTAINED,
+        AVAILABLE,
+        BLOCKED
+    }
+
     [SerializeField] LEVEL_UP type;
     [SerializeField] int level;
     Image image;
     IncreasePanel powerIncrease;
     [SerializeField] IncreaseDescription description;
-    [HideInInspector] public bool obtained;
+    BUTTON_TYPE buttonType;
 
     public void CalculateColor(PlayerSkills skills)
     {
@@ -25,6 +32,7 @@ public class IncreaseButton : MonoBehaviour
             case LEVEL_UP.CHARGE_SPEED: skillLevel = skills.chargeSpeedLevel; break;
             case LEVEL_UP.DASH_CD: skillLevel = skills.dashCdLevel; break;
             case LEVEL_UP.PROYECTILE_SPEED: skillLevel = skills.proyectileSpeedLevel; break;
+            case LEVEL_UP.MAX_HEALTH: skillLevel = skills.maxHealthLevel; break;
             case LEVEL_UP.LIFE_REGEN: skillLevel = skills.lifeRegenLevel; break;
             case LEVEL_UP.LIFE_CHARGE: skillLevel = skills.lifeChargeLevel; break;
             case LEVEL_UP.XRAY_VISION: skillLevel = skills.xRayVisionLevel; break;
@@ -32,34 +40,32 @@ public class IncreaseButton : MonoBehaviour
             case LEVEL_UP.TRIPLE_SHOT_MODE: skillLevel = skills.tripleShotModeLevel; break;
             case LEVEL_UP.MISSILE_MODE: skillLevel = skills.missileModeLevel; break;
             case LEVEL_UP.SHIELD: skillLevel = skills.shieldLevel; break;
-            case LEVEL_UP.BEAM: skillLevel = skills.beamLevel; break;
+            case LEVEL_UP.BLUE_BEAM: skillLevel = skills.blueBeamLevel; break;
+            case LEVEL_UP.RED_BEAM: skillLevel = skills.redBeamLevel; break;
+            case LEVEL_UP.GREEN_BEAM: skillLevel = skills.greenBeamLevel; break;
             default: skillLevel = 0; break;
         }
 
         if (level <= skillLevel)
         {
             image.color = powerIncrease.obtainedColor;
-            image.raycastTarget = true;
-            obtained = true;
+            buttonType = BUTTON_TYPE.OBTAINED;
         }
         else if (level == skillLevel + 1)
         {
-            image.color = powerIncrease.unselectedColor;
-            image.raycastTarget = true;
-            obtained = false;
+            image.color = powerIncrease.availableColor;
+            buttonType = BUTTON_TYPE.AVAILABLE;
         }
         else
         {
             image.color = powerIncrease.blockedColor;
-            image.raycastTarget = false;
-            obtained = false;
+            buttonType = BUTTON_TYPE.BLOCKED;
         }
     }
 
     public void SelectButton()
     {
-        image.color = obtained ? powerIncrease.obtainedSelectedColor : powerIncrease.selectedColor;
         image.raycastTarget = false;
-        description.ButtonSelected(type, level, obtained);
+        description.ButtonSelected(type, level, buttonType != BUTTON_TYPE.OBTAINED, buttonType == BUTTON_TYPE.AVAILABLE);
     }
 }

@@ -21,21 +21,22 @@ public enum LEVEL_UP
     TRIPLE_SHOT_MODE,
     MISSILE_MODE,
     SHIELD,
-    BEAM
+    BLUE_BEAM,
+    RED_BEAM,
+    GREEN_BEAM
 }
 
 public class IncreasePanel : MonoBehaviour
 {
     LobbyPanel[] panels;
     [SerializeField] float triggerDistance;
+    [SerializeField] GameObject selectIcon;
     bool showing = false;
 
     GameObject selectedButton;
-    public Color unselectedColor;
+    public Color availableColor;
     public Color blockedColor;
     public Color obtainedColor;
-    public Color selectedColor;
-    public Color obtainedSelectedColor;
 
     IncreaseButton[] buttons;
 
@@ -66,11 +67,10 @@ public class IncreasePanel : MonoBehaviour
             foreach (LobbyPanel panel in panels) panel.Display(false);
             showing = false;
             if (!selectedButton) return;
-            Image image = selectedButton.GetComponent<Image>();
-            bool obtained = selectedButton.GetComponent<IncreaseButton>().obtained;
-            image.color = obtained ? obtainedColor : unselectedColor;
-            image.raycastTarget = true;
+            selectedButton.GetComponent<Image>().raycastTarget = true;
+            selectedButton.GetComponent<IncreaseButton>().CalculateColor(playerSkills);
             selectedButton = null;
+            selectIcon.SetActive(false);
         }
     }
 
@@ -80,19 +80,19 @@ public class IncreasePanel : MonoBehaviour
         {
             if (selectedButton.GetInstanceID() != go.GetInstanceID())
             {
-                Image image = selectedButton.GetComponent<Image>();
-                bool obtained = selectedButton.GetComponent<IncreaseButton>().obtained;
-                image.color = obtained ? obtainedColor : unselectedColor;
-                image.raycastTarget = true;
+                selectedButton.GetComponent<Image>().raycastTarget = true;
+                selectedButton.GetComponent<IncreaseButton>().CalculateColor(playerSkills);
                 selectedButton = go;
             }
         }
         else
         {
             selectedButton = go;
+            selectIcon.SetActive(true);
         }
 
         selectedButton.GetComponent<IncreaseButton>().SelectButton();
+        selectIcon.transform.position = selectedButton.transform.position;
     }
 
     public void Deselect(bool purchased)
@@ -103,11 +103,10 @@ public class IncreasePanel : MonoBehaviour
         }
         else
         {
-            Image image = selectedButton.GetComponent<Image>();
-            bool obtained = selectedButton.GetComponent<IncreaseButton>().obtained;
-            image.color = obtained ? obtainedColor : unselectedColor;
-            image.raycastTarget = true;
+            selectedButton.GetComponent<IncreaseButton>().CalculateColor(playerSkills);
         }
+        selectedButton.GetComponent<Image>().raycastTarget = true;
         selectedButton = null;
+        selectIcon.SetActive(false);
     }
 }

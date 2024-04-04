@@ -38,7 +38,9 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
     [NonEditable] public int tripleShotModeLevel;
     [NonEditable] public int missileModeLevel;
     [NonEditable] public int shieldLevel;
-    [NonEditable] public int beamLevel;
+    [NonEditable] public int blueBeamLevel;
+    [NonEditable] public int redBeamLevel;
+    [NonEditable] public int greenBeamLevel;
 
     private void Awake()
     {
@@ -71,7 +73,9 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
         tripleShotModeLevel = data.tripleShotModeLevel;
         missileModeLevel = data.missileModeLevel;
         shieldLevel = data.shieldLevel;
-        beamLevel = data.beamLevel;
+        blueBeamLevel = data.blueBeamLevel;
+        redBeamLevel = data.redBeamLevel;
+        greenBeamLevel = data.greenBeamLevel;
 
         LateStart();
     }
@@ -102,7 +106,9 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
         data.tripleShotModeLevel = tripleShotModeLevel;
         data.missileModeLevel = missileModeLevel;
         data.shieldLevel = shieldLevel;
-        data.beamLevel = beamLevel;
+        data.blueBeamLevel = blueBeamLevel;
+        data.redBeamLevel = redBeamLevel;
+        data.greenBeamLevel = greenBeamLevel;
     }
 
     void LateStart()

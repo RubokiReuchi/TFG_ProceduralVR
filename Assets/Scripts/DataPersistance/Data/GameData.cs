@@ -40,7 +40,9 @@ public class GameData
     public int tripleShotModeLevel;
     public int missileModeLevel;
     public int shieldLevel;
-    public int beamLevel;
+    public int blueBeamLevel;
+    public int redBeamLevel;
+    public int greenBeamLevel;
 
     // new game values
     public GameData()
@@ -69,6 +71,8 @@ public class GameData
         tripleShotModeLevel = 0;
         missileModeLevel = 0;
         shieldLevel = 0;
-        beamLevel = 0;
+        blueBeamLevel = 0;
+        redBeamLevel = 0;
+        greenBeamLevel = 0;
     }
 }
