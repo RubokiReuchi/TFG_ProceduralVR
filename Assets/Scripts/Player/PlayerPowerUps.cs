@@ -33,8 +33,8 @@ public class PlayerPowerUps : MonoBehaviour
             case POWER_UP_TYPE.TRIPLE_SHOT:
                 playerGun.projectileType = PROJECTILE_TYPE.TRIPLE;
                 break;
-            case POWER_UP_TYPE.MISILE_MODE:
-                playerGun.projectileType = PROJECTILE_TYPE.MISILE;
+            case POWER_UP_TYPE.missile_MODE:
+                playerGun.projectileType = PROJECTILE_TYPE.missile;
                 playerGun.SwapGunType(GUN_TYPE.NULL);
                 break;
             case POWER_UP_TYPE.SHOCKWAVE:

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MisileHitMark : MonoBehaviour
+public class missileHitMark : MonoBehaviour
 {
     float lifeTime = 2.0f;
     bool stopped = false;

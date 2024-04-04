@@ -22,7 +22,7 @@ public enum PROJECTILE_TYPE
     NORMAL,
     AUTOMATIC,
     TRIPLE,
-    MISILE
+    missile
 }
 
 public enum TRIGGER_STATE
@@ -78,21 +78,21 @@ public class PlayerGun : MonoBehaviour
     [Header("Triple")]
     [SerializeField] Transform projectileOrigin2Start;
     [SerializeField] Transform projectileOrigin3Start;
-    [Header("Misile")]
-    [SerializeField] GameObject yellowMisilePrefab;
-    [SerializeField] GameObject blueMisilePrefab;
-    [SerializeField] GameObject redMisilePrefab;
-    [SerializeField] GameObject purpleMisilePrefab;
-    [SerializeField] GameObject greenMisilePrefab;
-    [SerializeField] GameObject yellowSuperMisilePrefab;
-    [SerializeField] GameObject blueSuperMisilePrefab;
-    [SerializeField] GameObject redSuperMisilePrefab;
-    [SerializeField] GameObject purpleSuperMisilePrefab;
-    [SerializeField] GameObject greenSuperMisilePrefab;
-    [SerializeField] float superMisileTime;
-    [SerializeField] ParticleSystem superMisileChargingPs;
-    [SerializeField] VisualEffect superMisileReady;
-    bool superMisileCharged = false;
+    [Header("missile")]
+    [SerializeField] GameObject yellowmissilePrefab;
+    [SerializeField] GameObject bluemissilePrefab;
+    [SerializeField] GameObject redmissilePrefab;
+    [SerializeField] GameObject purplemissilePrefab;
+    [SerializeField] GameObject greenmissilePrefab;
+    [SerializeField] GameObject yellowSupermissilePrefab;
+    [SerializeField] GameObject blueSupermissilePrefab;
+    [SerializeField] GameObject redSupermissilePrefab;
+    [SerializeField] GameObject purpleSupermissilePrefab;
+    [SerializeField] GameObject greenSupermissilePrefab;
+    [SerializeField] float supermissileTime;
+    [SerializeField] ParticleSystem supermissileChargingPs;
+    [SerializeField] VisualEffect supermissileReady;
+    bool supermissileCharged = false;
 
     // Start is called before the first frame update
     void Start()
@@ -200,7 +200,7 @@ public class PlayerGun : MonoBehaviour
                     repeatTime = 0;
                 }
                 break;
-            case PROJECTILE_TYPE.MISILE:
+            case PROJECTILE_TYPE.missile:
                 if (triggerState == TRIGGER_STATE.DOWN)
                 {
                     GameObject.Instantiate(selectedProjectilePrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
@@ -208,24 +208,24 @@ public class PlayerGun : MonoBehaviour
                 else if (triggerState == TRIGGER_STATE.REPEAT)
                 {
                     repeatTime += Time.deltaTime;
-                    if (superMisileCharged) return;
-                    if (!superMisileChargingPs.isPlaying && repeatTime >= 0.5f) superMisileChargingPs.Play();
-                    if (repeatTime >= superMisileTime)
+                    if (supermissileCharged) return;
+                    if (!supermissileChargingPs.isPlaying && repeatTime >= 0.5f) supermissileChargingPs.Play();
+                    if (repeatTime >= supermissileTime)
                     {
-                        superMisileChargingPs.Stop();
-                        if (!superMisileReady.enabled) superMisileReady.enabled = true;
-                        else superMisileReady.Play();
-                        superMisileCharged = true;
+                        supermissileChargingPs.Stop();
+                        if (!supermissileReady.enabled) supermissileReady.enabled = true;
+                        else supermissileReady.Play();
+                        supermissileCharged = true;
                     }
                 }
                 else if (triggerState == TRIGGER_STATE.UP)
                 {
-                    if (superMisileChargingPs.isPlaying) superMisileChargingPs.Stop();
-                    if (repeatTime >= superMisileTime)
+                    if (supermissileChargingPs.isPlaying) supermissileChargingPs.Stop();
+                    if (repeatTime >= supermissileTime)
                     {
-                        GameObject superMisile = GameObject.Instantiate(selectedChargedPrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
-                        if (shockwaveObtained) superMisile.GetComponent<PlayerSuperMisile>().AddShockwave();
-                        superMisileCharged = false;
+                        GameObject supermissile = GameObject.Instantiate(selectedChargedPrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
+                        if (shockwaveObtained) supermissile.GetComponent<PlayerSupermissile>().AddShockwave();
+                        supermissileCharged = false;
                     }
                     else if (repeatTime >= 0.5f)
                     {
@@ -276,9 +276,9 @@ public class PlayerGun : MonoBehaviour
                         selectedProjectilePrefab = yellowProjectilePrefab;
                         selectedChargedPrefab = yellowChargedPrefab;
                         break;
-                    case PROJECTILE_TYPE.MISILE:
-                        selectedProjectilePrefab = yellowMisilePrefab;
-                        selectedChargedPrefab = yellowSuperMisilePrefab;
+                    case PROJECTILE_TYPE.missile:
+                        selectedProjectilePrefab = yellowmissilePrefab;
+                        selectedChargedPrefab = yellowSupermissilePrefab;
                         break;
                 }
                 break;
@@ -291,9 +291,9 @@ public class PlayerGun : MonoBehaviour
                         selectedProjectilePrefab = blueProjectilePrefab;
                         selectedChargedPrefab = blueChargedPrefab;
                         break;
-                    case PROJECTILE_TYPE.MISILE:
-                        selectedProjectilePrefab = blueMisilePrefab;
-                        selectedChargedPrefab = blueSuperMisilePrefab;
+                    case PROJECTILE_TYPE.missile:
+                        selectedProjectilePrefab = bluemissilePrefab;
+                        selectedChargedPrefab = blueSupermissilePrefab;
                         break;
                 }
                 break;
@@ -306,9 +306,9 @@ public class PlayerGun : MonoBehaviour
                         selectedProjectilePrefab = redProjectilePrefab;
                         selectedChargedPrefab = redChargedPrefab;
                         break;
-                    case PROJECTILE_TYPE.MISILE:
-                        selectedProjectilePrefab = redMisilePrefab;
-                        selectedChargedPrefab = redSuperMisilePrefab;
+                    case PROJECTILE_TYPE.missile:
+                        selectedProjectilePrefab = redmissilePrefab;
+                        selectedChargedPrefab = redSupermissilePrefab;
                         break;
                 }
                 break;
@@ -321,9 +321,9 @@ public class PlayerGun : MonoBehaviour
                         selectedProjectilePrefab = purpleProjectilePrefab;
                         selectedChargedPrefab = purpleChargedPrefab;
                         break;
-                    case PROJECTILE_TYPE.MISILE:
-                        selectedProjectilePrefab = purpleMisilePrefab;
-                        selectedChargedPrefab = purpleSuperMisilePrefab;
+                    case PROJECTILE_TYPE.missile:
+                        selectedProjectilePrefab = purplemissilePrefab;
+                        selectedChargedPrefab = purpleSupermissilePrefab;
                         break;
                 }
                 break;
@@ -336,9 +336,9 @@ public class PlayerGun : MonoBehaviour
                         selectedProjectilePrefab = greenProjectilePrefab;
                         selectedChargedPrefab = greenChargedPrefab;
                         break;
-                    case PROJECTILE_TYPE.MISILE:
-                        selectedProjectilePrefab = greenMisilePrefab;
-                        selectedChargedPrefab = greenSuperMisilePrefab;
+                    case PROJECTILE_TYPE.missile:
+                        selectedProjectilePrefab = greenmissilePrefab;
+                        selectedChargedPrefab = greenSupermissilePrefab;
                         break;
                 }
                 break;

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public enum LEVEL_UP
 {
+    // Power
     ATTACK,
     DEFENSE,
     CHARGE_SPEED,
@@ -12,7 +13,15 @@ public enum LEVEL_UP
     PROYECTILE_SPEED,
     MAX_HEALTH,
     LIFE_REGEN,
-    LIFE_CHARGE
+    LIFE_CHARGE,
+
+    // Mechanic
+    XRAY_VISION,
+    AUTOMATIC_MODE,
+    TRIPLE_SHOT_MODE,
+    MISSILE_MODE,
+    SHIELD,
+    BEAM
 }
 
 public class IncreasePanel : MonoBehaviour
@@ -26,6 +35,7 @@ public class IncreasePanel : MonoBehaviour
     public Color blockedColor;
     public Color obtainedColor;
     public Color selectedColor;
+    public Color obtainedSelectedColor;
 
     IncreaseButton[] buttons;
 
@@ -57,7 +67,8 @@ public class IncreasePanel : MonoBehaviour
             showing = false;
             if (!selectedButton) return;
             Image image = selectedButton.GetComponent<Image>();
-            image.color = unselectedColor;
+            bool obtained = selectedButton.GetComponent<IncreaseButton>().obtained;
+            image.color = obtained ? obtainedColor : unselectedColor;
             image.raycastTarget = true;
             selectedButton = null;
         }
@@ -70,7 +81,8 @@ public class IncreasePanel : MonoBehaviour
             if (selectedButton.GetInstanceID() != go.GetInstanceID())
             {
                 Image image = selectedButton.GetComponent<Image>();
-                image.color = unselectedColor;
+                bool obtained = selectedButton.GetComponent<IncreaseButton>().obtained;
+                image.color = obtained ? obtainedColor : unselectedColor;
                 image.raycastTarget = true;
                 selectedButton = go;
             }
@@ -83,16 +95,17 @@ public class IncreasePanel : MonoBehaviour
         selectedButton.GetComponent<IncreaseButton>().SelectButton();
     }
 
-    public void Deselect(bool obtained)
+    public void Deselect(bool purchased)
     {
-        Image image = selectedButton.GetComponent<Image>();
-        if (obtained)
+        if (purchased)
         {
             foreach (IncreaseButton button in buttons) button.CalculateColor(playerSkills);
         }
         else
         {
-            image.color = unselectedColor;
+            Image image = selectedButton.GetComponent<Image>();
+            bool obtained = selectedButton.GetComponent<IncreaseButton>().obtained;
+            image.color = obtained ? obtainedColor : unselectedColor;
             image.raycastTarget = true;
         }
         selectedButton = null;

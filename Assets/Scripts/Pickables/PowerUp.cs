@@ -8,7 +8,7 @@ public enum POWER_UP_TYPE
     XRAY_VISION,
     AUTOMATIC_MODE,
     TRIPLE_SHOT,
-    MISILE_MODE,
+    missile_MODE,
     SHOCKWAVE,
     AIR_DASH,
     DOBLE_JUMP,

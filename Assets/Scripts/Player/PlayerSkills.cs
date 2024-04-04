@@ -32,6 +32,14 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
     [NonEditable] public int lifeRegenLevel;
     [NonEditable] public int lifeChargeLevel;
 
+    [Header("Mechanics")]
+    [NonEditable] public int xRayVisionLevel;
+    [NonEditable] public int automaticModeLevel;
+    [NonEditable] public int tripleShotModeLevel;
+    [NonEditable] public int missileModeLevel;
+    [NonEditable] public int shieldLevel;
+    [NonEditable] public int beamLevel;
+
     private void Awake()
     {
         instance = this;
@@ -58,6 +66,13 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
         lifeRegenLevel = data.lifeRegenLevel;
         lifeChargeLevel = data.lifeChargeLevel;
 
+        xRayVisionLevel = data.xRayVisionLevel;
+        automaticModeLevel = data.automaticModeLevel;
+        tripleShotModeLevel = data.tripleShotModeLevel;
+        missileModeLevel = data.missileModeLevel;
+        shieldLevel = data.shieldLevel;
+        beamLevel = data.beamLevel;
+
         LateStart();
     }
 
@@ -81,6 +96,13 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
         data.maxHealthLevel = maxHealthLevel;
         data.lifeRegenLevel = lifeRegenLevel;
         data.lifeChargeLevel = lifeChargeLevel;
+
+        data.xRayVisionLevel = xRayVisionLevel;
+        data.automaticModeLevel = automaticModeLevel;
+        data.tripleShotModeLevel = tripleShotModeLevel;
+        data.missileModeLevel = missileModeLevel;
+        data.shieldLevel = shieldLevel;
+        data.beamLevel = beamLevel;
     }
 
     void LateStart()

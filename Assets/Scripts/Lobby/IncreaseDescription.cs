@@ -15,15 +15,18 @@ public class IncreaseDescription : MonoBehaviour
     [SerializeField] TextMeshProUGUI title;
     [SerializeField] TextMeshProUGUI description;
     [SerializeField] TextMeshProUGUI price;
+    [SerializeField] GameObject purchaseImage;
+    [SerializeField] GameObject priceImage;
     [SerializeField] Animator priceAnimator;
     GameObject currentIcon;
     [SerializeField] Transform iconContainer;
     [SerializeField] GameObject[] icons;
     [SerializeField] TextAsset increasePowerDescriptionsCSV;
-    static int numOfColumns = 8;
+    static int numOfColumns = 14;
     static int numOfRows = 5;
     string[] titles = new string[numOfColumns];
     string[,] descriptions = new string[numOfColumns, numOfRows];
+    int[] prices = { 300, 700, 1400, 3000, 7000 };
     PlayerSkills inventory;
     LEVEL_UP selectedType;
 
@@ -44,7 +47,7 @@ public class IncreaseDescription : MonoBehaviour
         }
     }
 
-    public void ButtonSelected(LEVEL_UP type, int level)
+    public void ButtonSelected(LEVEL_UP type, int level, bool obtained)
     {
         if (!shown)
         {
@@ -60,13 +63,54 @@ public class IncreaseDescription : MonoBehaviour
         otherLobbyPanel.MoveBack();
 
         selectedType = type;
+
+        purchaseImage.SetActive(!obtained);
+        priceImage.SetActive(!obtained);
     }
 
     void SetInfo(LEVEL_UP type, int level)
     {
         title.text = titles[(int)type].ToString() + " " + level;
         description.text = descriptions[(int)type, level - 1].ToString();
-        currentIcon = GameObject.Instantiate(icons[(int)type], iconContainer);
+        price.text = prices[level - 1].ToString();
+        int iconIndex;
+        switch (type)
+        {
+            case LEVEL_UP.ATTACK:
+            case LEVEL_UP.DEFENSE:
+            case LEVEL_UP.CHARGE_SPEED:
+            case LEVEL_UP.DASH_CD:
+            case LEVEL_UP.PROYECTILE_SPEED:
+            case LEVEL_UP.MAX_HEALTH:
+            case LEVEL_UP.LIFE_REGEN:
+            case LEVEL_UP.LIFE_CHARGE:
+                iconIndex = (int)type;
+                break;
+            case LEVEL_UP.XRAY_VISION:
+                if (level == 1 || level == 3 || level == 5) iconIndex = 8;
+                else iconIndex = 9;
+                break;
+            case LEVEL_UP.AUTOMATIC_MODE:
+                iconIndex = 10;
+                break;
+            case LEVEL_UP.TRIPLE_SHOT_MODE:
+                iconIndex = 11;
+                break;
+            case LEVEL_UP.MISSILE_MODE:
+                iconIndex = 0;
+                break;
+            case LEVEL_UP.SHIELD:
+                iconIndex = 0;
+                break;
+            case LEVEL_UP.BEAM:
+                iconIndex = 0;
+                break;
+            default:
+                Debug.LogError("Level wrong asigned");
+                iconIndex = 0;
+                break;
+        }
+        currentIcon = GameObject.Instantiate(icons[iconIndex], iconContainer);
     }
 
     IEnumerator ChangeInfo(LEVEL_UP type, int level)
@@ -74,8 +118,46 @@ public class IncreaseDescription : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         title.text = titles[(int)type].ToString() + " " + level;
         description.text = descriptions[(int)type, level - 1].ToString();
+        price.text = prices[level - 1].ToString();
         Destroy(currentIcon);
-        currentIcon = GameObject.Instantiate(icons[(int)type], iconContainer);
+        int iconIndex;
+        switch (type)
+        {
+            case LEVEL_UP.ATTACK:
+            case LEVEL_UP.DEFENSE:
+            case LEVEL_UP.CHARGE_SPEED:
+            case LEVEL_UP.DASH_CD:
+            case LEVEL_UP.PROYECTILE_SPEED:
+            case LEVEL_UP.MAX_HEALTH:
+            case LEVEL_UP.LIFE_REGEN:
+            case LEVEL_UP.LIFE_CHARGE:
+                iconIndex = (int)type;
+                break;
+            case LEVEL_UP.XRAY_VISION:
+                if (level == 1 || level == 3 || level == 5) iconIndex = 8;
+                else iconIndex = 9;
+                break;
+            case LEVEL_UP.AUTOMATIC_MODE:
+                iconIndex = 10;
+                break;
+            case LEVEL_UP.TRIPLE_SHOT_MODE:
+                iconIndex = 11;
+                break;
+            case LEVEL_UP.MISSILE_MODE:
+                iconIndex = 0;
+                break;
+            case LEVEL_UP.SHIELD:
+                iconIndex = 0;
+                break;
+            case LEVEL_UP.BEAM:
+                iconIndex = 0;
+                break;
+            default:
+                Debug.LogError("Level wrong asigned");
+                iconIndex = 0;
+                break;
+        }
+        currentIcon = GameObject.Instantiate(icons[iconIndex], iconContainer);
     }
 
     public void HidePanel()
@@ -99,7 +181,12 @@ public class IncreaseDescription : MonoBehaviour
                 case LEVEL_UP.PROYECTILE_SPEED: inventory.proyectileSpeedLevel++; break;
                 case LEVEL_UP.MAX_HEALTH: inventory.maxHealthLevel++; break;
                 case LEVEL_UP.LIFE_REGEN: inventory.lifeRegenLevel++; break;
-                case LEVEL_UP.LIFE_CHARGE: inventory.lifeChargeLevel++; break;
+                case LEVEL_UP.XRAY_VISION: inventory.xRayVisionLevel++; break;
+                case LEVEL_UP.AUTOMATIC_MODE: inventory.automaticModeLevel++; break;
+                case LEVEL_UP.TRIPLE_SHOT_MODE: inventory.tripleShotModeLevel++; break;
+                case LEVEL_UP.MISSILE_MODE: inventory.missileModeLevel++; break;
+                case LEVEL_UP.SHIELD: inventory.shieldLevel++; break;
+                case LEVEL_UP.BEAM: inventory.beamLevel++; break;
             }
             inventory.biomatter -= priceAmount;
             //money spend

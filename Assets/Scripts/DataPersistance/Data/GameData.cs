@@ -34,6 +34,14 @@ public class GameData
     public int lifeRegenLevel;
     public int lifeChargeLevel;
 
+    // Mechanics
+    public int xRayVisionLevel;
+    public int automaticModeLevel;
+    public int tripleShotModeLevel;
+    public int missileModeLevel;
+    public int shieldLevel;
+    public int beamLevel;
+
     // new game values
     public GameData()
     {
@@ -55,5 +63,12 @@ public class GameData
         maxHealthLevel = 0;
         lifeRegenLevel = 0;
         lifeChargeLevel = 0;
+
+        xRayVisionLevel = 0;
+        automaticModeLevel = 0;
+        tripleShotModeLevel = 0;
+        missileModeLevel = 0;
+        shieldLevel = 0;
+        beamLevel = 0;
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMisile : Projectile
+public class Playermissile : Projectile
 {
     [SerializeField] float delay;
     [SerializeField] float damage;
