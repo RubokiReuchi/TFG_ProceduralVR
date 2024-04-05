@@ -4,8 +4,11 @@ using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+
 public class Enemy : MonoBehaviour
 {
+    public COIN type;
     [HideInInspector] public bool alive = true;
     [HideInInspector] public bool firstEnable = true;
     protected NavMeshAgent agent;

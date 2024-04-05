@@ -7,6 +7,7 @@ public class GameData
 {
     // Coins
     public int biomatter;
+    public int gear;
 
     // Skills
     // tier 0
@@ -48,6 +49,7 @@ public class GameData
     public GameData()
     {
         biomatter = 0;
+        gear = 0;
 
         dashUnlocked = false;
         blueUnlocked = false;

@@ -27,6 +27,7 @@ public class PlayerState : MonoBehaviour
     [SerializeField] HandHealth displayHealth;
     [SerializeField] Material takeDamageMaterial;
     Coroutine takeDamage;
+    float defense = 0.0f;
 
     [Header("XRay")]
     [SerializeField] InputActionProperty xRayAction;
@@ -52,6 +53,10 @@ public class PlayerState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Power Increase
+        maxHealth += PlayerSkills.instance.maxHealthLevel * 50.0f;
+        defense = PlayerSkills.instance.defenseLevel * 0.05f;
+
         currentHealth = maxHealth;
         displayHealth.SetCells(maxHealth);
         displayHealth.UpdateHealthDisplay(currentHealth);
@@ -135,7 +140,7 @@ public class PlayerState : MonoBehaviour
         }
         else shieldCooldown = 5.0f;
 
-        currentHealth -= amount;
+        currentHealth -= amount * (1 - defense);
         if (currentHealth <= 0)
         {
             currentHealth = 0;
@@ -242,5 +247,11 @@ public class PlayerState : MonoBehaviour
             fadeMaterial.SetFloat("_Opacity", opacity);
             yield return null;
         }
+    }
+
+    public void RecalculateHealth()
+    {
+
+        displayHealth.RecalculateCells();
     }
 }

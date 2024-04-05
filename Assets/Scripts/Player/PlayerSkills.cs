@@ -2,12 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum COIN
+{
+    BIOMATTER,
+    GEAR
+}
+
 public class PlayerSkills : MonoBehaviour, IDataPersistence
 {
     public static PlayerSkills instance;
 
     [Header("Coins")]
-    [NonEditable]public int biomatter;
+    [NonEditable] public int biomatter;
+    [NonEditable] public int gear;
 
     [Header("Skills")]
     [NonEditable] public bool dashUnlocked;
@@ -50,6 +57,7 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
     public void LoadData(GameData data)
     {
         biomatter = data.biomatter;
+        gear = data.gear;
 
         dashUnlocked = data.dashUnlocked;
         blueUnlocked = data.blueUnlocked;
@@ -83,6 +91,7 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
     public void SaveData(ref GameData data)
     {
         data.biomatter = biomatter;
+        data.gear = gear;
 
         data.dashUnlocked = dashUnlocked;
         data.blueUnlocked = blueUnlocked;

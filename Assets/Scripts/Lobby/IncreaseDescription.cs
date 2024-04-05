@@ -1,15 +1,12 @@
-using Pico.Platform.Models;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using static Cinemachine.DocumentationSortingAttribute;
 
 public class IncreaseDescription : MonoBehaviour
 {
     [SerializeField] IncreasePanel increasePanel;
     [SerializeField] LobbyPanel otherLobbyPanel;
+    [SerializeField] COIN usedCoin;
     Animator animator;
     bool shown = false;
     [SerializeField] TextMeshProUGUI title;
@@ -103,13 +100,13 @@ public class IncreaseDescription : MonoBehaviour
                 iconIndex = 14;
                 break;
             case LEVEL_UP.BLUE_BEAM:
-                iconIndex = 0;
+                iconIndex = 15;
                 break;
             case LEVEL_UP.RED_BEAM:
-                iconIndex = 0;
+                iconIndex = 16;
                 break;
             case LEVEL_UP.GREEN_BEAM:
-                iconIndex = 0;
+                iconIndex = 17;
                 break;
             default:
                 Debug.LogError("Level wrong asigned");
@@ -184,8 +181,14 @@ public class IncreaseDescription : MonoBehaviour
 
     public void Purchase()
     {
+        int currency = 0;
+        switch (usedCoin)
+        {
+            case COIN.BIOMATTER: currency = inventory.biomatter; break;
+            case COIN.GEAR: currency = inventory.gear; break;
+        }
         int priceAmount = int.Parse(price.text);
-        if (inventory.biomatter >= priceAmount)
+        if (currency >= priceAmount)
         {
             switch (selectedType)
             {
@@ -194,7 +197,10 @@ public class IncreaseDescription : MonoBehaviour
                 case LEVEL_UP.CHARGE_SPEED: inventory.chargeSpeedLevel++; break;
                 case LEVEL_UP.DASH_CD: inventory.dashCdLevel++; break;
                 case LEVEL_UP.PROYECTILE_SPEED: inventory.proyectileSpeedLevel++; break;
-                case LEVEL_UP.MAX_HEALTH: inventory.maxHealthLevel++; break;
+                case LEVEL_UP.MAX_HEALTH:
+                    inventory.maxHealthLevel++;
+                    PlayerState.instance.RecalculateHealth();
+                    break;
                 case LEVEL_UP.LIFE_REGEN: inventory.lifeRegenLevel++; break;
                 case LEVEL_UP.LIFE_CHARGE: inventory.lifeChargeLevel++; break;
                 case LEVEL_UP.XRAY_VISION: inventory.xRayVisionLevel++; break;
@@ -206,8 +212,13 @@ public class IncreaseDescription : MonoBehaviour
                 case LEVEL_UP.RED_BEAM: inventory.redBeamLevel++; break;
                 case LEVEL_UP.GREEN_BEAM: inventory.greenBeamLevel++; break;
             }
-            inventory.biomatter -= priceAmount;
+
             //money spend
+            switch (usedCoin)
+            {
+                case COIN.BIOMATTER: inventory.biomatter -= priceAmount; break;
+                case COIN.GEAR: inventory.gear -= priceAmount; break;
+            }
 
             CloseAfterPurchase();
         }

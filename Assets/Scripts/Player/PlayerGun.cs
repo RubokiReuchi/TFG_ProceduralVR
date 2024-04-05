@@ -56,6 +56,7 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] float maxIncrease;
     PlayerCharged chargedProjectile = null;
     [NonEditable] public bool shockwaveObtained = false;
+    float chargeSpeedReduction = 0.0f;
 
     [Header("Projectiles Prefabs")]
     [SerializeField] GameObject yellowProjectilePrefab;
@@ -104,11 +105,15 @@ public class PlayerGun : MonoBehaviour
         screen = GetComponent<HandScreen>();
 
         // Skills Unlocked
-        blueUnlocked = PlayerSkills.instance.blueUnlocked;
-        redUnlocked = PlayerSkills.instance.redUnlocked;
-        purpleUnlocked = PlayerSkills.instance.purpleUnlocked;
-        greenUnlocked = PlayerSkills.instance.greenUnlocked;
+        PlayerSkills skills = PlayerSkills.instance;
+        blueUnlocked = skills.blueUnlocked;
+        redUnlocked = skills.redUnlocked;
+        purpleUnlocked = skills.purpleUnlocked;
+        greenUnlocked = skills.greenUnlocked;
         SwapGunType(GUN_TYPE.NULL);
+
+        // Power Increase
+        chargeSpeedReduction = skills.chargeSpeedLevel * 0.07f;
     }
 
     // Update is called once per frame
@@ -128,7 +133,7 @@ public class PlayerGun : MonoBehaviour
                     repeatTime += Time.deltaTime;
                     if (repeatTime >= 0.5f)
                     {
-                        float holdTime = (repeatTime - 0.5f) * increaseSpeed;
+                        float holdTime = (repeatTime - 0.5f) * (increaseSpeed  + increaseSpeed * chargeSpeedReduction);
                         if (holdTime < maxIncrease) projectileOriginCurrent.position = projectileOriginStart.position + projectileOriginCurrent.forward * holdTime / 2.0f;
                         if (!chargedProjectile)
                         {
@@ -174,7 +179,7 @@ public class PlayerGun : MonoBehaviour
                     repeatTime += Time.deltaTime;
                     if (repeatTime >= 0.5f)
                     {
-                        float holdTime = (repeatTime - 0.5f) * increaseSpeed;
+                        float holdTime = (repeatTime - 0.5f) * (increaseSpeed + increaseSpeed * chargeSpeedReduction);
                         if (holdTime < maxIncrease)
                         {
                             projectileOriginCurrent.position = projectileOriginStart.position + projectileOriginCurrent.forward * holdTime / 2.0f;
@@ -210,7 +215,7 @@ public class PlayerGun : MonoBehaviour
                     repeatTime += Time.deltaTime;
                     if (supermissileCharged) return;
                     if (!supermissileChargingPs.isPlaying && repeatTime >= 0.5f) supermissileChargingPs.Play();
-                    if (repeatTime >= supermissileTime)
+                    if (repeatTime >= supermissileTime - supermissileTime * chargeSpeedReduction)
                     {
                         supermissileChargingPs.Stop();
                         if (!supermissileReady.enabled) supermissileReady.enabled = true;
@@ -221,7 +226,7 @@ public class PlayerGun : MonoBehaviour
                 else if (triggerState == TRIGGER_STATE.UP)
                 {
                     if (supermissileChargingPs.isPlaying) supermissileChargingPs.Stop();
-                    if (repeatTime >= supermissileTime)
+                    if (repeatTime >= supermissileTime - supermissileTime * chargeSpeedReduction)
                     {
                         GameObject supermissile = GameObject.Instantiate(selectedChargedPrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
                         if (shockwaveObtained) supermissile.GetComponent<PlayerSupermissile>().AddShockwave();

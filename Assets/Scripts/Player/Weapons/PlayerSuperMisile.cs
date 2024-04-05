@@ -17,6 +17,10 @@ public class PlayerSupermissile : Projectile
     // Start is called before the first frame update
     void Start()
     {
+        // Power Increase
+        damage += (PlayerSkills.instance.attackLevel * 0.05f) * damage;
+        speed += (PlayerSkills.instance.proyectileSpeedLevel * 0.1f) * speed;
+
         rb = GetComponent<Rigidbody>();
         rb.velocity = transform.forward * 0.1f;
     }

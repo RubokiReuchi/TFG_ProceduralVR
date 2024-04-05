@@ -22,6 +22,10 @@ public class PlayerCharged : Projectile
 
     public void SetUp()
     {
+        // Power Increase
+        damage += (PlayerSkills.instance.attackLevel * 0.05f) * damage;
+        speed += (PlayerSkills.instance.proyectileSpeedLevel * 0.1f) * speed;
+
         rb = GetComponent<Rigidbody>();
         col = GetComponent<SphereCollider>();
         launch = false;

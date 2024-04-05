@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   biomatter: 0
+  gear: 0
   dashUnlocked: 0
   blueUnlocked: 0
   redUnlocked: 0
@@ -153,6 +154,14 @@ MonoBehaviour:
   maxHealthLevel: 0
   lifeRegenLevel: 0
   lifeChargeLevel: 0
+  xRayVisionLevel: 0
+  automaticModeLevel: 0
+  tripleShotModeLevel: 0
+  missileModeLevel: 0
+  shieldLevel: 0
+  blueBeamLevel: 0
+  redBeamLevel: 0
+  greenBeamLevel: 0
 --- !u!114 &8741194346510480646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16108,19 +16117,19 @@ MonoBehaviour:
   automaticCadence: 8
   projectileOrigin2Start: {fileID: 9167591100657879468}
   projectileOrigin3Start: {fileID: 4445053782705207128}
-  yellowMisilePrefab: {fileID: 9169045820686508109, guid: 7e20e51cce85a0941a69b76308c9ec95, type: 3}
-  blueMisilePrefab: {fileID: 4369495294519572984, guid: da36ffe788d946748a2ef735d461e787, type: 3}
-  redMisilePrefab: {fileID: 6283645659853096895, guid: ed8767e7d7ab50e468b67c7148ba0fdd, type: 3}
-  purpleMisilePrefab: {fileID: 6119749202196159794, guid: f6137dff36064aa459b512e01ae6bac2, type: 3}
-  greenMisilePrefab: {fileID: 4652302908071113025, guid: 379a0aa9ba298d748a18b8daf8caa3b1, type: 3}
-  yellowSuperMisilePrefab: {fileID: 4829501649707657391, guid: 6340685064f7ebb4393a76baff5efaa3, type: 3}
-  blueSuperMisilePrefab: {fileID: 9122183050717672972, guid: 9e5726bbbe76ef0478ccf56bf68e9618, type: 3}
-  redSuperMisilePrefab: {fileID: 1483862665234504151, guid: b2741761513bb3043b4a39887c42c23e, type: 3}
-  purpleSuperMisilePrefab: {fileID: 3574622325750332010, guid: 1977122db2f37494ba3c006741898269, type: 3}
-  greenSuperMisilePrefab: {fileID: 3698377853697754087, guid: 6a7cf35261a6684489ab8190a13ae67a, type: 3}
-  superMisileTime: 2
-  superMisileChargingPs: {fileID: 8835737542098629951}
-  superMisileReady: {fileID: 4741595025013737859}
+  yellowmissilePrefab: {fileID: 0}
+  bluemissilePrefab: {fileID: 0}
+  redmissilePrefab: {fileID: 0}
+  purplemissilePrefab: {fileID: 0}
+  greenmissilePrefab: {fileID: 0}
+  yellowSupermissilePrefab: {fileID: 0}
+  blueSupermissilePrefab: {fileID: 0}
+  redSupermissilePrefab: {fileID: 0}
+  purpleSupermissilePrefab: {fileID: 0}
+  greenSupermissilePrefab: {fileID: 0}
+  supermissileTime: 0
+  supermissileChargingPs: {fileID: 0}
+  supermissileReady: {fileID: 0}
 --- !u!23 &7631245282251171859 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3495243847210584139, guid: 4abd22b34bb3fe94197684e1446e8735, type: 3}
