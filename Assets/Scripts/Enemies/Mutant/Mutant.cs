@@ -57,6 +57,9 @@ public class Mutant : Enemy
     [Header("ExtraMaterials")]
     [SerializeField] Material secondOriginalMaterial;
 
+    [Header("Shield")]
+    [SerializeField] Animator shieldAnimator;
+
     private void OnEnable()
     {
         if (!firstEnable) return;
@@ -106,6 +109,7 @@ public class Mutant : Enemy
                     animator.SetTrigger("Landed");
                     state = STATE.WAITING;
                     agent.enabled = true;
+                    if (hasShield) shieldAnimator.SetBool("Open", true);
                 }
                 break;
             case STATE.WALK_SHOOTING_LEFT:
@@ -183,6 +187,7 @@ public class Mutant : Enemy
                 // Roar
                 animator.SetTrigger("Roar");
                 state = STATE.ROARING;
+                if (hasShield) shieldAnimator.SetBool("Open", false);
                 yield break;
             }  
         }
@@ -194,6 +199,7 @@ public class Mutant : Enemy
                 // Roar
                 animator.SetTrigger("Roar");
                 state = STATE.ROARING;
+                if (hasShield) shieldAnimator.SetBool("Open", false);
                 yield break;
             }
         }
@@ -215,6 +221,7 @@ public class Mutant : Enemy
             // Roar
             animator.SetTrigger("Roar");
             state = STATE.ROARING;
+            if (hasShield) shieldAnimator.SetBool("Open", false);
         }
         else
         {
@@ -236,6 +243,7 @@ public class Mutant : Enemy
         {
             animator.SetTrigger("Backflip");
             state = STATE.BACKFLIPPNG;
+            if (hasShield) shieldAnimator.SetBool("Open", true);
             agent.speed = 0;
         }
     }
@@ -263,6 +271,7 @@ public class Mutant : Enemy
         {
             animator.SetTrigger("Run");
             state = STATE.RUNNING;
+            if (hasShield) shieldAnimator.SetBool("Open", true);
             agent.speed = runSpeed;
             defaultSpeed = runSpeed;
             freezeApplied = false;
@@ -275,6 +284,7 @@ public class Mutant : Enemy
                 usedAuxiliarRoar = true;
                 animator.SetTrigger("AuxiliarRoar");
                 state = STATE.ROARING;
+                if (hasShield) shieldAnimator.SetBool("Open", false);
             }
             else // shooting
             {
@@ -301,6 +311,7 @@ public class Mutant : Enemy
                 {
                     animator.SetTrigger("Run");
                     state = STATE.RUNNING;
+                    if (hasShield) shieldAnimator.SetBool("Open", true);
                     agent.speed = runSpeed;
                     defaultSpeed = runSpeed;
                     freezeApplied = false;
@@ -312,12 +323,14 @@ public class Mutant : Enemy
                     {
                         animator.SetTrigger("WalkShootingLeft");
                         state = STATE.WALK_SHOOTING_LEFT;
+                        if (hasShield) shieldAnimator.SetBool("Open", true);
                         SpawnArtifact(false);
                     }
                     else // walk right
                     {
                         animator.SetTrigger("WalkShootingRight");
                         state = STATE.WALK_SHOOTING_RIGHT;
+                        if (hasShield) shieldAnimator.SetBool("Open", true);
                         SpawnArtifact(true);
                     }
                     agent.destination = hit.position;
@@ -494,6 +507,7 @@ public class Mutant : Enemy
         rightArtifact.Despawn();
 
         state = STATE.DIYING;
+        if (hasShield) shieldAnimator.SetBool("Open", false);
         alive = false;
     }
 
