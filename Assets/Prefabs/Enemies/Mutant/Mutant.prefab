@@ -6827,6 +6827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b19e3dab59964c4abb849c33f5eb223, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   alive: 1
   firstEnable: 1
   maxHealth: 1500
@@ -6839,7 +6840,7 @@ MonoBehaviour:
   originalMaterial: {fileID: 2100000, guid: 474ff1fd6cf20dd40bf5f300e119df70, type: 2}
   hasShield: 0
   shield: {fileID: 0}
-  freezeResistance: 10
+  freezeResistance: 20
   iceBlocksParticlesPrefab: {fileID: 3071684718299860570, guid: ab06922e142d84046a650b3ed0c05b2f, type: 3}
   iceBlocksParticlesSpawn: {fileID: 4091031935667656011}
   state: 0

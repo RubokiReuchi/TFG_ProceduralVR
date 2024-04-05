@@ -199,7 +199,7 @@ public class IncreaseDescription : MonoBehaviour
                 case LEVEL_UP.PROYECTILE_SPEED: inventory.proyectileSpeedLevel++; break;
                 case LEVEL_UP.MAX_HEALTH:
                     inventory.maxHealthLevel++;
-                    PlayerState.instance.RecalculateHealth();
+                    PlayerState.instance.IncreaseMaxHealth();
                     break;
                 case LEVEL_UP.LIFE_REGEN: inventory.lifeRegenLevel++; break;
                 case LEVEL_UP.LIFE_CHARGE: inventory.lifeChargeLevel++; break;

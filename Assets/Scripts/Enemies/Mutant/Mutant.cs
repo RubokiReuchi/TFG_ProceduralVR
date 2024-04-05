@@ -462,6 +462,8 @@ public class Mutant : Enemy
     
     public override void TakeFreeze(float amount)
     {
+        if (freezePercentage == 100) return;
+
         freezePercentage += amount - freezeResistance;
         if (freezePercentage >= 100) // freeze
         {

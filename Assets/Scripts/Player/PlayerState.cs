@@ -21,13 +21,16 @@ public class PlayerState : MonoBehaviour
     [Header("Health & Shield")]
     [NonEditable][SerializeField] float currentHealth;
     float maxHealth = 250;
-    [NonEditable][SerializeField] float shieldCooldown = 5.0f;
+    [NonEditable][SerializeField] float currentShieldCooldown = 0.0f;
+    [SerializeField] float shieldCooldown = 5.0f;
     [HideInInspector] public bool shieldObtained = false;
     [SerializeField] Material shieldMaterial;
     [SerializeField] HandHealth displayHealth;
     [SerializeField] Material takeDamageMaterial;
     Coroutine takeDamage;
     float defense = 0.0f;
+    float lifeRegen = 0.0f;
+    float lifeRegenCd = 0.0f;
 
     [Header("XRay")]
     [SerializeField] InputActionProperty xRayAction;
@@ -35,8 +38,11 @@ public class PlayerState : MonoBehaviour
     [HideInInspector] public bool xRayVisionActive = false;
     [SerializeField] Material xRayMaterial;
     IEnumerator xRayCoroutine = null;
-    float xRayBattery = 50;
+    [NonEditable][SerializeField] float xRayBattery;
+    float maxXRayBattery = 50;
     [SerializeField] Material xRayBatteryMaterial;
+    int maxXRayBatteryIncrease = 0;
+    float xRayBatteryRecoveryIncrease = 0;
 
     [SerializeField] Material fadeMaterial;
     [SerializeField] InputActionProperty temporalySaveGame;
@@ -54,8 +60,14 @@ public class PlayerState : MonoBehaviour
     void Start()
     {
         // Power Increase
-        maxHealth += PlayerSkills.instance.maxHealthLevel * 50.0f;
-        defense = PlayerSkills.instance.defenseLevel * 0.05f;
+        PlayerSkills skills = PlayerSkills.instance;
+        defense = skills.defenseLevel * 0.05f;
+        maxHealth += skills.maxHealthLevel * 50.0f;
+        lifeRegen = skills.lifeRegenLevel * 0.002f;
+        maxXRayBatteryIncrease = Mathf.CeilToInt(skills.xRayVisionLevel / 2.0f);
+        maxXRayBattery += (maxXRayBatteryIncrease * 0.5f) * maxXRayBattery;
+        xRayBatteryRecoveryIncrease = Mathf.FloorToInt(skills.xRayVisionLevel / 2.0f) * 0.15f;
+        shieldCooldown -= skills.shieldLevel * 0.5f;
 
         currentHealth = maxHealth;
         displayHealth.SetCells(maxHealth);
@@ -63,7 +75,8 @@ public class PlayerState : MonoBehaviour
         shieldMaterial.SetFloat("_Opacity", 0);
         takeDamageMaterial.SetFloat("_Opacity", 0);
         xRayMaterial.SetFloat("_ApertureSize", 1);
-        xRayBatteryMaterial.SetFloat("_FillPercentage", 50.0f);
+        xRayBattery = maxXRayBattery;
+        xRayBatteryMaterial.SetFloat("_FillPercentage", maxXRayBattery / (maxXRayBatteryIncrease / 2.0f + 1.0f));
         fadeMaterial.SetFloat("_Opacity", 1);
         StartCoroutine(FadeOut());
     }
@@ -73,7 +86,8 @@ public class PlayerState : MonoBehaviour
         // temp
         if (temporalySaveGame.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.Space))
         {
-            DataPersistenceManager.instance.SaveGame();
+            //DataPersistenceManager.instance.SaveGame();
+            TakeDamage(100);
         }
         //
 
@@ -89,7 +103,7 @@ public class PlayerState : MonoBehaviour
 
         if (xRayVisionObtained && xRayAction.action.WasPressedThisFrame())
         {
-            if (xRayBattery >= 5)
+            if (xRayBattery >= 5) // min amount to active xRay Vision
             {
                 xRayVisionActive = !xRayVisionActive;
                 if (xRayCoroutine != null) StopCoroutine(xRayCoroutine);
@@ -105,7 +119,7 @@ public class PlayerState : MonoBehaviour
         }
         if (xRayVisionActive)
         {
-            xRayBattery -= Time.deltaTime * 10; // 5 secs to empty
+            xRayBattery -= Time.deltaTime * 10; // 5 secs to empty without upgrades
             if (xRayBattery <= 0)
             {
                 xRayVisionActive = false;
@@ -114,31 +128,41 @@ public class PlayerState : MonoBehaviour
                 StartCoroutine(xRayCoroutine);
                 xRayBattery = 0;
             }
-            xRayBatteryMaterial.SetFloat("_FillPercentage", xRayBattery);
+            xRayBatteryMaterial.SetFloat("_FillPercentage", xRayBattery / (maxXRayBatteryIncrease / 2.0f + 1.0f));
         }
-        else if (xRayBattery < 50)
+        else if (xRayBattery < maxXRayBattery)
         {
-            xRayBattery += Time.deltaTime * 2.5f; // 20 secs to fill
-            if (xRayBattery > 50) xRayBattery = 50;
-            xRayBatteryMaterial.SetFloat("_FillPercentage", xRayBattery);
+            xRayBattery += Time.deltaTime * (2.5f + (2.5f * xRayBatteryRecoveryIncrease)); // 20 secs to fill without upgrades
+            if (xRayBattery > maxXRayBattery) xRayBattery = maxXRayBattery;
+            xRayBatteryMaterial.SetFloat("_FillPercentage", xRayBattery / (maxXRayBatteryIncrease / 2.0f + 1.0f));
         }
 
-        if (shieldObtained && shieldCooldown > 0)
+        if (shieldObtained && currentShieldCooldown > 0)
         {
-            shieldCooldown -= Time.deltaTime;
-            if (shieldCooldown < 0) shieldCooldown = 0;
+            currentShieldCooldown -= Time.deltaTime;
+            if (currentShieldCooldown < 0) currentShieldCooldown = 0;
+        }
+
+        if (lifeRegen > 0)
+        {
+            if (lifeRegenCd >= 1.0f)
+            {
+                HealPercentage(lifeRegen);
+                lifeRegenCd -= 1.0f;
+            }
+            lifeRegenCd += Time.deltaTime;
         }
     }
 
     public void TakeDamage(float amount)
     {
-        if (shieldCooldown == 0)
+        if (currentShieldCooldown == 0)
         {
-            shieldCooldown = 5.0f;
+            currentShieldCooldown = shieldCooldown;
             StartCoroutine(ShieldCo());
             return;
         }
-        else shieldCooldown = 5.0f;
+        else currentShieldCooldown = shieldCooldown;
 
         currentHealth -= amount * (1 - defense);
         if (currentHealth <= 0)
@@ -166,6 +190,13 @@ public class PlayerState : MonoBehaviour
     public void Heal(float amount)
     {
         currentHealth += amount;
+        if (currentHealth > maxHealth) currentHealth = maxHealth;
+        displayHealth.UpdateHealthDisplay(currentHealth);
+    }
+
+    public void HealPercentage(float amount)
+    {
+        currentHealth += amount * maxHealth;
         if (currentHealth > maxHealth) currentHealth = maxHealth;
         displayHealth.UpdateHealthDisplay(currentHealth);
     }
@@ -249,9 +280,11 @@ public class PlayerState : MonoBehaviour
         }
     }
 
-    public void RecalculateHealth()
+    public void IncreaseMaxHealth()
     {
-
-        displayHealth.RecalculateCells();
+        maxHealth += 50.0f;
+        currentHealth += 50.0f;
+        displayHealth.SetCells(maxHealth);
+        displayHealth.UpdateHealthDisplay(currentHealth);
     }
 }

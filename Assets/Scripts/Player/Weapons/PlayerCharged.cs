@@ -19,12 +19,15 @@ public class PlayerCharged : Projectile
     [SerializeField] GameObject hitMark;
     bool shockwave = false;
     [SerializeField] GameObject shockwavePrefab;
+    PlayerSkills skills;
+    bool fullyCharged = false;
 
     public void SetUp()
     {
         // Power Increase
-        damage += (PlayerSkills.instance.attackLevel * 0.05f) * damage;
-        speed += (PlayerSkills.instance.proyectileSpeedLevel * 0.1f) * speed;
+        skills = PlayerSkills.instance;
+        damage += (skills.attackLevel * 0.05f) * damage;
+        speed += (skills.proyectileSpeedLevel * 0.1f) * speed;
 
         rb = GetComponent<Rigidbody>();
         col = GetComponent<SphereCollider>();
@@ -60,8 +63,14 @@ public class PlayerCharged : Projectile
             Enemy script = collision.gameObject.GetComponent<Enemy>();
             if (script.enabled)
             {
+                if (gameObject.CompareTag("GreenProjectile") && script.type == COIN.BIOMATTER) damage += (skills.greenBeamLevel * 0.2f) * damage;
                 script.TakeDamage(damage);
-                if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze(damage / 2.0f);
+                if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze((damage / 2.0f) + (skills.blueBeamLevel * 0.05f) * (damage / 2.0f));
+                if (fullyCharged)
+                {
+                    float lifeChargeAmount = skills.lifeChargeLevel * 0.01f;
+                    if (lifeChargeAmount > 0) PlayerState.instance.HealPercentage(lifeChargeAmount);
+                }
             }
             if (shockwave)
             {
@@ -73,7 +82,7 @@ public class PlayerCharged : Projectile
         else if (collision.gameObject.CompareTag("EnemyShield"))
         {
             GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
-            float finalDamage = !gameObject.CompareTag("RedProjectile") ? damage / 10.0f : damage;
+            float finalDamage = !gameObject.CompareTag("RedProjectile") ? damage / 2.0f : damage + (skills.redBeamLevel * 0.1f) * damage;
             EnemyShield script = collision.gameObject.GetComponent<EnemyShield>();
             if (script.enabled) script.TakeDamage(finalDamage);
             if (shockwave)
@@ -137,5 +146,6 @@ public class PlayerCharged : Projectile
     {
         float normal = Mathf.InverseLerp(min, max, current);
         damage = Mathf.Lerp(minDamage, maxDamage, normal);
+        fullyCharged = (current >= max);
     }
 }

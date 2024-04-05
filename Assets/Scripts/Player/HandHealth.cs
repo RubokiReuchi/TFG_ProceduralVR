@@ -55,9 +55,4 @@ public class HandHealth : MonoBehaviour
             auxHealth -= value;
         }
     }
-
-    public void RecalculateCells()
-    {
-
-    }
 }

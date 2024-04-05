@@ -22,7 +22,7 @@ public enum PROJECTILE_TYPE
     NORMAL,
     AUTOMATIC,
     TRIPLE,
-    missile
+    MISSILE
 }
 
 public enum TRIGGER_STATE
@@ -44,6 +44,7 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] Transform projectileOriginCurrent;
     GameObject selectedProjectilePrefab;
     GameObject selectedChargedPrefab;
+    GameObject selectedProjectileSecondaryPrefab;
     [HideInInspector] public bool blueUnlocked = false;
     [HideInInspector] public bool redUnlocked = false;
     [HideInInspector] public bool purpleUnlocked = false;
@@ -76,24 +77,30 @@ public class PlayerGun : MonoBehaviour
     [Header("Automatic")]
     [SerializeField] float automaticCadence;
     float automaticCd = 0;
+    [Header("Secondary Projectiles Prefabs")]
+    [SerializeField] GameObject yellowProjectileSecondaryPrefab;
+    [SerializeField] GameObject blueProjectileSecondaryPrefab;
+    [SerializeField] GameObject redProjectileSecondaryPrefab;
+    [SerializeField] GameObject purpleProjectileSecondaryPrefab;
+    [SerializeField] GameObject greenProjectileSecondaryPrefab;
     [Header("Triple")]
     [SerializeField] Transform projectileOrigin2Start;
     [SerializeField] Transform projectileOrigin3Start;
     [Header("missile")]
-    [SerializeField] GameObject yellowmissilePrefab;
-    [SerializeField] GameObject bluemissilePrefab;
-    [SerializeField] GameObject redmissilePrefab;
-    [SerializeField] GameObject purplemissilePrefab;
-    [SerializeField] GameObject greenmissilePrefab;
-    [SerializeField] GameObject yellowSupermissilePrefab;
-    [SerializeField] GameObject blueSupermissilePrefab;
-    [SerializeField] GameObject redSupermissilePrefab;
-    [SerializeField] GameObject purpleSupermissilePrefab;
-    [SerializeField] GameObject greenSupermissilePrefab;
-    [SerializeField] float supermissileTime;
-    [SerializeField] ParticleSystem supermissileChargingPs;
-    [SerializeField] VisualEffect supermissileReady;
-    bool supermissileCharged = false;
+    [SerializeField] GameObject yellowMissilePrefab;
+    [SerializeField] GameObject blueMissilePrefab;
+    [SerializeField] GameObject redMissilePrefab;
+    [SerializeField] GameObject purpleMissilePrefab;
+    [SerializeField] GameObject greenMissilePrefab;
+    [SerializeField] GameObject yellowSuperMissilePrefab;
+    [SerializeField] GameObject blueSuperMissilePrefab;
+    [SerializeField] GameObject redSuperMissilePrefab;
+    [SerializeField] GameObject purpleSuperMissilePrefab;
+    [SerializeField] GameObject greenSuperMissilePrefab;
+    [SerializeField] float superMissileTime = 2.0f;
+    [SerializeField] ParticleSystem superMissileChargingPs;
+    [SerializeField] VisualEffect superMissileReady;
+    bool superMissileCharged = false;
 
     // Start is called before the first frame update
     void Start()
@@ -114,6 +121,8 @@ public class PlayerGun : MonoBehaviour
 
         // Power Increase
         chargeSpeedReduction = skills.chargeSpeedLevel * 0.07f;
+        automaticCadence += (skills.automaticModeLevel * 0.1f) * automaticCadence;
+
     }
 
     // Update is called once per frame
@@ -171,8 +180,8 @@ public class PlayerGun : MonoBehaviour
                 if (triggerState == TRIGGER_STATE.DOWN)
                 {
                     GameObject.Instantiate(selectedProjectilePrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
-                    GameObject.Instantiate(selectedProjectilePrefab, projectileOrigin2Start.position, projectileOrigin2Start.rotation);
-                    GameObject.Instantiate(selectedProjectilePrefab, projectileOrigin3Start.position, projectileOrigin3Start.rotation);
+                    GameObject.Instantiate(selectedProjectileSecondaryPrefab, projectileOrigin2Start.position, projectileOrigin2Start.rotation);
+                    GameObject.Instantiate(selectedProjectileSecondaryPrefab, projectileOrigin3Start.position, projectileOrigin3Start.rotation);
                 }
                 else if (triggerState == TRIGGER_STATE.REPEAT)
                 {
@@ -205,7 +214,7 @@ public class PlayerGun : MonoBehaviour
                     repeatTime = 0;
                 }
                 break;
-            case PROJECTILE_TYPE.missile:
+            case PROJECTILE_TYPE.MISSILE:
                 if (triggerState == TRIGGER_STATE.DOWN)
                 {
                     GameObject.Instantiate(selectedProjectilePrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
@@ -213,24 +222,24 @@ public class PlayerGun : MonoBehaviour
                 else if (triggerState == TRIGGER_STATE.REPEAT)
                 {
                     repeatTime += Time.deltaTime;
-                    if (supermissileCharged) return;
-                    if (!supermissileChargingPs.isPlaying && repeatTime >= 0.5f) supermissileChargingPs.Play();
-                    if (repeatTime >= supermissileTime - supermissileTime * chargeSpeedReduction)
+                    if (superMissileCharged) return;
+                    if (!superMissileChargingPs.isPlaying && repeatTime >= 0.5f) superMissileChargingPs.Play();
+                    if (repeatTime >= superMissileTime - superMissileTime * chargeSpeedReduction)
                     {
-                        supermissileChargingPs.Stop();
-                        if (!supermissileReady.enabled) supermissileReady.enabled = true;
-                        else supermissileReady.Play();
-                        supermissileCharged = true;
+                        superMissileChargingPs.Stop();
+                        if (!superMissileReady.enabled) superMissileReady.enabled = true;
+                        else superMissileReady.Play();
+                        superMissileCharged = true;
                     }
                 }
                 else if (triggerState == TRIGGER_STATE.UP)
                 {
-                    if (supermissileChargingPs.isPlaying) supermissileChargingPs.Stop();
-                    if (repeatTime >= supermissileTime - supermissileTime * chargeSpeedReduction)
+                    if (superMissileChargingPs.isPlaying) superMissileChargingPs.Stop();
+                    if (repeatTime >= superMissileTime - superMissileTime * chargeSpeedReduction)
                     {
                         GameObject supermissile = GameObject.Instantiate(selectedChargedPrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
-                        if (shockwaveObtained) supermissile.GetComponent<PlayerSupermissile>().AddShockwave();
-                        supermissileCharged = false;
+                        if (shockwaveObtained) supermissile.GetComponent<PlayerSuperMissile>().AddShockwave();
+                        superMissileCharged = false;
                     }
                     else if (repeatTime >= 0.5f)
                     {
@@ -280,10 +289,11 @@ public class PlayerGun : MonoBehaviour
                     case PROJECTILE_TYPE.TRIPLE:
                         selectedProjectilePrefab = yellowProjectilePrefab;
                         selectedChargedPrefab = yellowChargedPrefab;
+                        selectedProjectileSecondaryPrefab = yellowProjectileSecondaryPrefab;
                         break;
-                    case PROJECTILE_TYPE.missile:
-                        selectedProjectilePrefab = yellowmissilePrefab;
-                        selectedChargedPrefab = yellowSupermissilePrefab;
+                    case PROJECTILE_TYPE.MISSILE:
+                        selectedProjectilePrefab = yellowMissilePrefab;
+                        selectedChargedPrefab = yellowSuperMissilePrefab;
                         break;
                 }
                 break;
@@ -295,10 +305,11 @@ public class PlayerGun : MonoBehaviour
                     case PROJECTILE_TYPE.TRIPLE:
                         selectedProjectilePrefab = blueProjectilePrefab;
                         selectedChargedPrefab = blueChargedPrefab;
+                        selectedProjectileSecondaryPrefab = blueProjectileSecondaryPrefab;
                         break;
-                    case PROJECTILE_TYPE.missile:
-                        selectedProjectilePrefab = bluemissilePrefab;
-                        selectedChargedPrefab = blueSupermissilePrefab;
+                    case PROJECTILE_TYPE.MISSILE:
+                        selectedProjectilePrefab = blueMissilePrefab;
+                        selectedChargedPrefab = blueSuperMissilePrefab;
                         break;
                 }
                 break;
@@ -310,10 +321,11 @@ public class PlayerGun : MonoBehaviour
                     case PROJECTILE_TYPE.TRIPLE:
                         selectedProjectilePrefab = redProjectilePrefab;
                         selectedChargedPrefab = redChargedPrefab;
+                        selectedProjectileSecondaryPrefab = redProjectileSecondaryPrefab;
                         break;
-                    case PROJECTILE_TYPE.missile:
-                        selectedProjectilePrefab = redmissilePrefab;
-                        selectedChargedPrefab = redSupermissilePrefab;
+                    case PROJECTILE_TYPE.MISSILE:
+                        selectedProjectilePrefab = redMissilePrefab;
+                        selectedChargedPrefab = redSuperMissilePrefab;
                         break;
                 }
                 break;
@@ -325,10 +337,11 @@ public class PlayerGun : MonoBehaviour
                     case PROJECTILE_TYPE.TRIPLE:
                         selectedProjectilePrefab = purpleProjectilePrefab;
                         selectedChargedPrefab = purpleChargedPrefab;
+                        selectedProjectileSecondaryPrefab = purpleProjectileSecondaryPrefab;
                         break;
-                    case PROJECTILE_TYPE.missile:
-                        selectedProjectilePrefab = purplemissilePrefab;
-                        selectedChargedPrefab = purpleSupermissilePrefab;
+                    case PROJECTILE_TYPE.MISSILE:
+                        selectedProjectilePrefab = purpleMissilePrefab;
+                        selectedChargedPrefab = purpleSuperMissilePrefab;
                         break;
                 }
                 break;
@@ -340,10 +353,11 @@ public class PlayerGun : MonoBehaviour
                     case PROJECTILE_TYPE.TRIPLE:
                         selectedProjectilePrefab = greenProjectilePrefab;
                         selectedChargedPrefab = greenChargedPrefab;
+                        selectedProjectileSecondaryPrefab = greenProjectileSecondaryPrefab;
                         break;
-                    case PROJECTILE_TYPE.missile:
-                        selectedProjectilePrefab = greenmissilePrefab;
-                        selectedChargedPrefab = greenSupermissilePrefab;
+                    case PROJECTILE_TYPE.MISSILE:
+                        selectedProjectilePrefab = greenMissilePrefab;
+                        selectedChargedPrefab = greenSuperMissilePrefab;
                         break;
                 }
                 break;

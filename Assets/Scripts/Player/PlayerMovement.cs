@@ -42,6 +42,9 @@ public class PlayerMovement : MonoBehaviour
         dashUnlocked = skills.dashUnlocked;
         superJumpUnlocked = skills.superJumpUnlocked;
 
+        // Power Increase
+        dashCooldown -= (skills.dashCdLevel * 0.03f) * dashCooldown;
+
         controller = GetComponent<CharacterController>();
         groundJump = true;
         airJump = false;
@@ -49,9 +52,6 @@ public class PlayerMovement : MonoBehaviour
         dashCd = 0;
 
         tunnelingMaterial.SetFloat("_ApertureSize", 1);
-
-        // Power Increase
-        dashCooldown -= (skills.dashCdLevel * 0.03f) * dashCooldown;
     }
 
     // Update is called once per frame
