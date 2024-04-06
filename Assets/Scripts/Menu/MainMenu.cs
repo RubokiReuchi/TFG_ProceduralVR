@@ -13,11 +13,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Animator newGameAnimator;
     [SerializeField] Animator continueAnimator;
     [SerializeField] CanvasGroup continueGroup;
-    [SerializeField] Animator exitAnimator;
     [SerializeField] Animator confirmAnimator;
     [SerializeField] Animator cancelAnimator;
     [SerializeField] Animator deleteAdviceAnimator;
-    [SerializeField] Animator exitAdviceAnimator;
 
     string fullPath;
     
@@ -46,18 +44,15 @@ public class MainMenu : MonoBehaviour
             platformAnimator.SetTrigger("Move");
             newGameAnimator.SetBool("Open", false);
             continueAnimator.SetBool("Open", false);
-            exitAnimator.SetBool("Open", false);
             confirmAnimator.SetBool("Open", false);
             cancelAnimator.SetBool("Open", false);
             deleteAdviceAnimator.SetBool("Open", false);
-            exitAdviceAnimator.SetBool("Open", false);
         }
         else
         {
             newGameAnimator.SetTrigger("Fade");
             newGameAnimator.SetBool("Open", false);
             continueAnimator.SetBool("Open", false);
-            exitAnimator.SetBool("Open", false);
             confirmAnimator.SetBool("Open", true);
             cancelAnimator.SetBool("Open", true);
             deleteAdviceAnimator.SetBool("Open", true);
@@ -71,23 +66,9 @@ public class MainMenu : MonoBehaviour
         platformAnimator.SetTrigger("Move");
         newGameAnimator.SetBool("Open", false);
         continueAnimator.SetBool("Open", false);
-        exitAnimator.SetBool("Open", false);
         confirmAnimator.SetBool("Open", false);
         cancelAnimator.SetBool("Open", false);
         deleteAdviceAnimator.SetBool("Open", false);
-        exitAdviceAnimator.SetBool("Open", false);
-    }
-
-    public void Exit()
-    {
-        newGameAnimator.SetBool("Open", false);
-        continueAnimator.SetBool("Open", false);
-        exitAnimator.SetTrigger("Fade");
-        exitAnimator.SetBool("Open", false);
-        confirmAnimator.SetBool("Open", true);
-        cancelAnimator.SetBool("Open", true);
-        exitAdviceAnimator.SetBool("Open", true);
-        delete = false;
     }
 
     public void Confirm()
@@ -95,15 +76,13 @@ public class MainMenu : MonoBehaviour
         if (delete)
         {
             File.Delete(fullPath);
-            StartCoroutine(FadeOut(1)); // tutorial level
+            StartCoroutine(FadeOut(2/*1*/)); // tutorial level
             platformAnimator.SetTrigger("Move");
             newGameAnimator.SetBool("Open", false);
             continueAnimator.SetBool("Open", false);
-            exitAnimator.SetBool("Open", false);
             confirmAnimator.SetBool("Open", false);
             cancelAnimator.SetBool("Open", false);
             deleteAdviceAnimator.SetBool("Open", false);
-            exitAdviceAnimator.SetBool("Open", false);
         }
         else
         {
@@ -115,11 +94,9 @@ public class MainMenu : MonoBehaviour
     {
         newGameAnimator.SetBool("Open", true);
         continueAnimator.SetBool("Open", true);
-        exitAnimator.SetBool("Open", true);
         confirmAnimator.SetBool("Open", false);
         cancelAnimator.SetBool("Open", false);
         deleteAdviceAnimator.SetBool("Open", false);
-        exitAdviceAnimator.SetBool("Open", false);
     }
 
     IEnumerator FadeOut(int level)
