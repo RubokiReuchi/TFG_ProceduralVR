@@ -31,6 +31,7 @@ public class MainMenu : MonoBehaviour
         if (File.Exists(fullPath)) existingSaveFile = true;
         else
         {
+            continueAnimator.enabled = false;
             continueGroup.alpha = 0.3f;
             continueGroup.interactable = false;
             continueGroup.blocksRaycasts = false;
@@ -41,8 +42,15 @@ public class MainMenu : MonoBehaviour
     {
         if (!existingSaveFile)
         {
-            StartCoroutine(FadeOut(1)); // tutorial level
+            StartCoroutine(FadeOut(2/*1*/)); // tutorial level
             platformAnimator.SetTrigger("Move");
+            newGameAnimator.SetBool("Open", false);
+            continueAnimator.SetBool("Open", false);
+            exitAnimator.SetBool("Open", false);
+            confirmAnimator.SetBool("Open", false);
+            cancelAnimator.SetBool("Open", false);
+            deleteAdviceAnimator.SetBool("Open", false);
+            exitAdviceAnimator.SetBool("Open", false);
         }
         else
         {
@@ -61,6 +69,13 @@ public class MainMenu : MonoBehaviour
     {
         StartCoroutine(FadeOut(2)); // lobby level
         platformAnimator.SetTrigger("Move");
+        newGameAnimator.SetBool("Open", false);
+        continueAnimator.SetBool("Open", false);
+        exitAnimator.SetBool("Open", false);
+        confirmAnimator.SetBool("Open", false);
+        cancelAnimator.SetBool("Open", false);
+        deleteAdviceAnimator.SetBool("Open", false);
+        exitAdviceAnimator.SetBool("Open", false);
     }
 
     public void Exit()
@@ -82,6 +97,13 @@ public class MainMenu : MonoBehaviour
             File.Delete(fullPath);
             StartCoroutine(FadeOut(1)); // tutorial level
             platformAnimator.SetTrigger("Move");
+            newGameAnimator.SetBool("Open", false);
+            continueAnimator.SetBool("Open", false);
+            exitAnimator.SetBool("Open", false);
+            confirmAnimator.SetBool("Open", false);
+            cancelAnimator.SetBool("Open", false);
+            deleteAdviceAnimator.SetBool("Open", false);
+            exitAdviceAnimator.SetBool("Open", false);
         }
         else
         {
