@@ -38,7 +38,7 @@ Transform:
   - {fileID: 7222299303195656065}
   - {fileID: 5011464473698368733}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8894551608352710886
 MonoBehaviour:
@@ -52,10 +52,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5441f118373c8bb4da0eb126a4a00f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomTypeID: 0
+  roomType: 0
+  doorsTransform:
+  - {fileID: 8542321698929249407}
+  - {fileID: 1001849670668292203}
+  doorsDirections: 
+  entered: 0
+  roomInMap: {fileID: 0}
+  gatesInMap: []
+  joinedRooms: []
+  mapJoints: []
+  onCombat: 0
+  enemies: []
+  blockedGates: []
   manager: {fileID: 0}
   width: 13
   height: 13
-  roomInMap: {fileID: 0}
 --- !u!65 &3129191772901327492
 BoxCollider:
   m_ObjectHideFlags: 0

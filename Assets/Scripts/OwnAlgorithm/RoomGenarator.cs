@@ -124,39 +124,6 @@ public class RoomGenarator : MonoBehaviour
         playerMark.localScale = Vector3.one;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //for (int i = 0; i < draw.Count; i++)
-        //{
-        //    Color color;
-        //    switch (draw[i].state)
-        //    {
-        //        case GATE_STATE.YELLOW:
-        //            color = Color.yellow;
-        //            break;
-        //        case GATE_STATE.BOSS:
-        //            color = Color.magenta;
-        //            break;
-        //        case GATE_STATE.DESTROYED:
-        //            color = Color.green;
-        //            break;
-        //        case GATE_STATE.NULL:
-        //            color = Color.white;
-        //            break;
-        //        default:
-        //            color = Color.blue;
-        //            break;
-        //    }
-        //    Debug.DrawLine(draw[i].position, draw[i].position + Vector3.up * 5, color);
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        //}
-    }
-
     int GetTreeIndex(RoomBehaviour script)
     {
         for (int i = 0; i < roomsTree.Count; i++)
@@ -1514,12 +1481,25 @@ public class RoomGenarator : MonoBehaviour
             }
             else if (state == GATE_STATE.BOSS)
             {
-                allDoors[0].otherScript = null;
+                BossRoomBehaviour bossScript = bossRoom.GetComponent<BossRoomBehaviour>(); FOUR_DIRECTIONS bossGateDir;
+                switch (allDoors[0].direction)
+                {
+                    case FOUR_DIRECTIONS.TOP: bossGateDir = FOUR_DIRECTIONS.DOWN; break;
+                    case FOUR_DIRECTIONS.DOWN: bossGateDir = FOUR_DIRECTIONS.TOP; break;
+                    case FOUR_DIRECTIONS.RIGHT: bossGateDir = FOUR_DIRECTIONS.LEFT; break;
+                    case FOUR_DIRECTIONS.LEFT: bossGateDir = FOUR_DIRECTIONS.RIGHT; break;
+                    case FOUR_DIRECTIONS.NONE:
+                    default: bossGateDir = FOUR_DIRECTIONS.NONE; break;
+                }
+                allDoors[0].otherScript = bossScript;
                 Gate gate1 = new Gate(allDoors[0].position, allDoors[0].direction, state, null, allDoors[0].script);
+                Gate bossEnterGate = new Gate(bossScript.doors[0].position, bossGateDir, state, null, bossScript);
+                gate1.SetOther(bossEnterGate);
 
-                PlaceHallway(gate1.position, gate1.direction, allDoors[0].script, null);
+                PlaceHallway(gate1.position, gate1.direction, allDoors[0].script, bossScript);
 
                 gates.Add(gate1);
+                gates.Add(bossEnterGate);
                 allDoors.Remove(allDoors[0]);
             }
             else
