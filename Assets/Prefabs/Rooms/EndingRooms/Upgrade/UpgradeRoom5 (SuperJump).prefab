@@ -206,8 +206,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1041899098621893784}
   - {fileID: 1010980801470215112}
+  - {fileID: 437094682067381785}
   m_Father: {fileID: 7162936467938100715}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -281,7 +281,7 @@ MonoBehaviour:
   mapJoints: []
   onCombat: 0
   enemies:
-  - {fileID: 493931975273967105}
+  - {fileID: 813182129483936535}
   - {fileID: 5739981351841746870}
   blockedGates:
   - {fileID: 2803983820288408699}
@@ -3913,6 +3913,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4471679246093797852, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471679246093797852, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471679246093797852, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471679246093797852, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471679246093797852, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471679246093797852, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471679246093797852, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 4522893146670467524, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
       propertyPath: m_Name
       value: SphereRobot (Shielded)
@@ -3922,22 +3950,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
---- !u!1 &493931975273967105 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4522893146670467524, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
-  m_PrefabInstance: {fileID: 4043748513786292165}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1041899098621893784 stripped
+--- !u!4 &437094682067381785 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 3921463664130308957, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4471679246093797852, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
   m_PrefabInstance: {fileID: 4043748513786292165}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6113942573480234075 stripped
+--- !u!1 &813182129483936535 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3699503751353799890, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+  m_PrefabInstance: {fileID: 4043748513786292165}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7956376852524456519 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7838323534028057502, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6229882698238967170, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
   m_PrefabInstance: {fileID: 4043748513786292165}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 493931975273967105}
+  m_GameObject: {fileID: 813182129483936535}
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f67a1aa9f7bd5e845b6f270114e47f71, type: 3}
@@ -6551,7 +6579,7 @@ PrefabInstance:
     - target: {fileID: 1173207496417146595, guid: 8b5ec8596ced34242a7716ef4c44106f, type: 3}
       propertyPath: enemies.Array.data[0]
       value: 
-      objectReference: {fileID: 6113942573480234075}
+      objectReference: {fileID: 7956376852524456519}
     - target: {fileID: 1173207496417146595, guid: 8b5ec8596ced34242a7716ef4c44106f, type: 3}
       propertyPath: enemies.Array.data[1]
       value: 

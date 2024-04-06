@@ -6830,7 +6830,7 @@ MonoBehaviour:
   type: 0
   alive: 1
   firstEnable: 1
-  maxHealth: 1500
+  maxHealth: 1200
   currentHealth: 0
   foundationsLayers:
     serializedVersion: 2
@@ -6874,6 +6874,7 @@ MonoBehaviour:
   leftArtifact: {fileID: 376206769614957361}
   rightArtifact: {fileID: 6458515929144377388}
   secondOriginalMaterial: {fileID: 2100000, guid: 7944f6736afcc844d9b598d20facc0f9, type: 2}
+  shieldAnimator: {fileID: 0}
 --- !u!1 &4368434067012378447
 GameObject:
   m_ObjectHideFlags: 0

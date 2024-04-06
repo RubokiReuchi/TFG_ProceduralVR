@@ -422,7 +422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyScript: {fileID: 1323593176929800608}
-  maxHealth: 500
+  maxHealth: 400
   dissolveSpeed: 1
 --- !u!1 &853695901750476737
 GameObject:
@@ -7195,7 +7195,7 @@ Transform:
   - {fileID: 4754688293435409555}
   - {fileID: 4868615754408337419}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4222745726642390682
 Animator:
@@ -7320,7 +7320,7 @@ MonoBehaviour:
   type: 0
   alive: 1
   firstEnable: 1
-  maxHealth: 1500
+  maxHealth: 1200
   currentHealth: 0
   foundationsLayers:
     serializedVersion: 2

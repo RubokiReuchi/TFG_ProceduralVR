@@ -300,7 +300,7 @@ MonoBehaviour:
   mapJoints: []
   onCombat: 0
   enemies:
-  - {fileID: 6806712664221752743}
+  - {fileID: 6045380254941020337}
   - {fileID: 6109386076288650173}
   - {fileID: 212295541869856927}
   blockedGates:
@@ -452,9 +452,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6258050941582716734}
   - {fileID: 4308369874315300621}
   - {fileID: 7922034592627067951}
+  - {fileID: 6826435405578558911}
   m_Father: {fileID: 2809246451843056183}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8346,6 +8346,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4471679246093797852, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471679246093797852, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471679246093797852, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471679246093797852, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4471679246093797852, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 4522893146670467524, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
       propertyPath: m_Name
       value: SphereRobot (Shielded)
@@ -8355,14 +8375,14 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
---- !u!4 &6258050941582716734 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3921463664130308957, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+--- !u!1 &6045380254941020337 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3699503751353799890, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
   m_PrefabInstance: {fileID: 6967849552804090979}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &6806712664221752743 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4522893146670467524, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
+--- !u!4 &6826435405578558911 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4471679246093797852, guid: aa8da72e232d1ca4d864caf10a22d511, type: 3}
   m_PrefabInstance: {fileID: 6967849552804090979}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6972121741880324597
