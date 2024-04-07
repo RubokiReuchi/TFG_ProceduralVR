@@ -275,7 +275,7 @@ public class SphereRobot : Enemy
 
     public void Destroyed()
     {
-        GameObject.Instantiate(corpsPrefab, transform.position, transform.rotation);
+        GameObject.Instantiate(corpsPrefab, transform.position, transform.rotation, transform.parent);
         Destroy(gameObject);
     }
 

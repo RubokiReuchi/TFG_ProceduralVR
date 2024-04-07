@@ -50,10 +50,10 @@ public class RoomBehaviour : MonoBehaviour
     public ROOM_TYPE roomType;
 
     [NonEditable] bool doorsFilled = false;
-    [SerializeField] Transform[] doorsTransform;
+    [SerializeField] protected Transform[] doorsTransform;
     [SerializeField] FOUR_DIRECTIONS[] doorsDirections;
     public List<Door> doors = new();
-    [NonEditable][SerializeField] bool entered;
+    [NonEditable][SerializeField] protected bool entered;
 
 
     [Header("Map Room")]
