@@ -1481,8 +1481,7 @@ public class RoomGenarator : MonoBehaviour
             }
             else if (state == GATE_STATE.BOSS)
             {
-                BossRoomBehaviour bossScript = bossRoom.GetComponent<BossRoomBehaviour>();
-                FOUR_DIRECTIONS bossGateDir;
+                BossRoomBehaviour bossScript = bossRoom.GetComponent<BossRoomBehaviour>(); FOUR_DIRECTIONS bossGateDir;
                 switch (allDoors[0].direction)
                 {
                     case FOUR_DIRECTIONS.TOP: bossGateDir = FOUR_DIRECTIONS.DOWN; break;
@@ -1494,7 +1493,7 @@ public class RoomGenarator : MonoBehaviour
                 }
                 allDoors[0].otherScript = bossScript;
                 Gate gate1 = new Gate(allDoors[0].position, allDoors[0].direction, state, null, allDoors[0].script);
-                Gate bossEnterGate = new Gate(bossScript.GetEnterDoorPosition(), bossGateDir, state, gate1, bossScript);
+                Gate bossEnterGate = new Gate(bossScript.doors[0].position, bossGateDir, state, null, bossScript);
                 gate1.SetOther(bossEnterGate);
 
                 PlaceHallway(gate1.position, gate1.direction, allDoors[0].script, bossScript);

@@ -202,27 +202,6 @@ MonoBehaviour:
   company: Unity
   priority: 0
   required: 0
---- !u!114 &-3179426128152140279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48a4218836ed47e2b2fe51c7c56925c7, type: 3}
-  m_Name: PerformanceSettingsFeature Android
-  m_EditorClassIdentifier: 
-  m_enabled: 0
-  nameUi: OpenXR Performance Settings
-  version: 1.0.0
-  featureIdInternal: com.pico.openxr.feature.performancesettings
-  openxrExtensionStrings: XR_EXT_performance_settings
-  company: PICO
-  priority: 0
-  required: 0
-  _isExtensionEnable: 0
 --- !u!114 &-3116897328769375247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,7 +444,6 @@ MonoBehaviour:
   - {fileID: 1170243549018262390}
   - {fileID: 1214174790010638031}
   - {fileID: 5554308625739592527}
-  - {fileID: 7442081328567847777}
   - {fileID: 3046033644652786558}
   - {fileID: 8088358536692687214}
   - {fileID: -6157035186424647689}
@@ -479,10 +457,8 @@ MonoBehaviour:
   - {fileID: 7292823489303861777}
   - {fileID: -7986474288588655016}
   - {fileID: -6930219299466836069}
-  - {fileID: -3179426128152140279}
   - {fileID: -2395801428859732385}
   - {fileID: 6635487050805124030}
-  - {fileID: 8766623327595637072}
   - {fileID: -6950043293707540077}
   - {fileID: 8326754249315344011}
   m_renderMode: 1
@@ -804,7 +780,7 @@ MonoBehaviour:
   nameUi: PICO Support
   version: 1.0.0
   featureIdInternal: com.unity.openxr.feature.pico
-  openxrExtensionStrings: 
+  openxrExtensionStrings: XR_PICO_configuration
   company: PICO
   priority: 0
   required: 0
@@ -825,33 +801,10 @@ MonoBehaviour:
   nameUi: PICO OpenXR Features
   version: 1.0.0
   featureIdInternal: com.unity.openxr.pico.features
-  openxrExtensionStrings: XR_EXT_local_floor XR_FB_triangle_mesh XR_FB_composition_layer_alpha_blend
-    XR_KHR_composition_layer_color_scale_bias XR_KHR_composition_layer_cylinderXR_KHR_composition_layer_equirectXR_KHR_composition_layer_cube
+  openxrExtensionStrings: 'XR_FB_composition_layer_alpha_blend XR_KHR_composition_layer_color_scale_bias '
   company: PICO
   priority: 0
   required: 0
---- !u!114 &7442081328567847777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f636716e11d15b4bbafb76eb9d63555, type: 3}
-  m_Name: FoveationFeature Android
-  m_EditorClassIdentifier: 
-  m_enabled: 0
-  nameUi: OpenXR Foveation
-  version: 1.0.0
-  featureIdInternal: com.pico.openxr.feature.foveation
-  openxrExtensionStrings: 'XR_FB_foveation XR_FB_foveation_configuration XR_FB_foveation_vulkan
-    XR_META_foveation_eye_tracked XR_META_vulkan_swapchain_create_info XR_FB_swapchain_update_state '
-  company: PICO
-  priority: 0
-  required: 0
-  _isExtensionEnable: 0
 --- !u!114 &7442611454335296965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -935,23 +888,3 @@ MonoBehaviour:
   priority: 0
   required: 0
   ignoreValidationErrors: 0
---- !u!114 &8766623327595637072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21ea647c7f744df897be6365cbf559b7, type: 3}
-  m_Name: PICOG3ControllerProfile Android
-  m_EditorClassIdentifier: 
-  m_enabled: 0
-  nameUi: PICOG3 Touch Controller Profile
-  version: 1.0.0
-  featureIdInternal: com.unity.openxr.feature.input.PICOG3touch
-  openxrExtensionStrings: XR_BD_controller_interaction
-  company: PICO
-  priority: 0
-  required: 0
