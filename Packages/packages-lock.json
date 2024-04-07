@@ -134,12 +134,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.pico.livepreview": {
-      "version": "file:../SDKs/PICO Unity Live Preview Plugin-101",
+      "version": "file:../SDKs/PICO Unity Live Preview Plugin (Experiment)",
       "depth": 0,
       "source": "local",
       "dependencies": {
-        "com.unity.xr.management": "4.0.0",
-        "com.unity.xr.interaction.toolkit": "2.0.0"
+        "com.unity.xr.management": "4.0.0"
       }
     },
     "com.unity.postprocessing": {
@@ -302,7 +301,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.xr.management": {
-      "version": "4.4.1",
+      "version": "4.3.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {
