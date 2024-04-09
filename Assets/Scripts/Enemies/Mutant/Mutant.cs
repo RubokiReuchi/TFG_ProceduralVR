@@ -460,6 +460,7 @@ public class Mutant : Enemy
             if (currentHealth < 0)
             {
                 GameObject.Instantiate(iceBlocksParticlesPrefab, iceBlocksParticlesSpawn.position, Quaternion.identity);
+                GiveCoin();
                 Destroy(gameObject);
                 return;
             }
@@ -522,6 +523,7 @@ public class Mutant : Enemy
             material2.SetFloat("_DissolveAmount", dissolveAmount);
             yield return null;
         }
+        GiveCoin();
         Destroy(gameObject);
     }
 }

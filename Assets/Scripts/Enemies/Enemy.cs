@@ -9,6 +9,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     public COIN type;
+    [SerializeField] protected int coinAmount;
     [HideInInspector] public bool alive = true;
     [HideInInspector] public bool firstEnable = true;
     protected NavMeshAgent agent;
@@ -116,5 +117,11 @@ public class Enemy : MonoBehaviour
     public virtual void Die()
     {
 
+    }
+
+    protected void GiveCoin()
+    {
+        if (type == COIN.BIOMATTER) PlayerSkills.instance.biomatter += coinAmount;
+        else PlayerSkills.instance.gear += coinAmount;
     }
 }

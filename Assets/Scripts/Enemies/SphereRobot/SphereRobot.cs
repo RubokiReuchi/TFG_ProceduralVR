@@ -236,6 +236,7 @@ public class SphereRobot : Enemy
             if (currentHealth < 0)
             {
                 GameObject.Instantiate(iceBlocksParticlesPrefab, iceBlocksParticlesSpawn.position, Quaternion.identity);
+                GiveCoin();
                 Destroy(gameObject);
                 return;
             }
@@ -276,6 +277,7 @@ public class SphereRobot : Enemy
     public void Destroyed()
     {
         GameObject.Instantiate(corpsPrefab, transform.position, transform.rotation, transform.parent);
+        GiveCoin();
         Destroy(gameObject);
     }
 
@@ -339,6 +341,7 @@ public class SphereRobot : Enemy
             yield return new WaitForSeconds(0.007f);
         }
         GameObject.Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        GiveCoin();
         Destroy(gameObject);
     }
 }
