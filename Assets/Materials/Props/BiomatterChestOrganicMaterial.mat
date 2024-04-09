@@ -39,7 +39,7 @@ Material:
     m_Floats:
     - _AOAdditive: 1
     - _AOMultiply: 1
-    - _Color1Mult: 1
+    - _Color1Mult: 0.15
     - _EMISSION: 0
     - _Emission1Mult: 1
     - _Extend: 0
@@ -62,8 +62,8 @@ Material:
     - _scaleMultStep: 1.2
     - _uvAnimationSpeed: 3.5
     m_Colors:
-    - _Color1: {r: 0.21568623, g: 0.14509797, b: 0, a: 1}
-    - _Color2: {r: 1, g: 0.972549, b: 0, a: 1}
+    - _Color1: {r: 1, g: 0.90588236, b: 0, a: 1}
+    - _Color2: {r: 0.13333334, g: 0.93333334, b: 0, a: 1}
     - _Emission1: {r: 3.968628, g: 0.6356242, b: 0, a: 0}
     - _Emission2: {r: 0, g: 4, b: 4, a: 0}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
