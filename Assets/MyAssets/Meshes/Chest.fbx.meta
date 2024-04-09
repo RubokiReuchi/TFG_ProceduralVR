@@ -12,10 +12,15 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: PanelMaterial
+    second: {fileID: 2100000, guid: c20aa81c2b912444c93f49f697be2d18, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: ScreenMaterial
     second: {fileID: 2100000, guid: 5fe025bb6c40b18498cc107be2f7fc8d, type: 2}
   materials:
-    materialImportMode: 2
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 1
