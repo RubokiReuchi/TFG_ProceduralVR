@@ -59,7 +59,6 @@ public class RoomGenarator : MonoBehaviour
     [Range(0, 20)] public float breakDoorChance;
     public LayerMask doorLayer;
     List<HallwayBehaviour> hallways = new();
-    List<Gate> draw = new();
 
     [Header("PowerUps & Upgrades")]
     [SerializeField] GameObject[] powerUpPrefabs;
@@ -1512,7 +1511,6 @@ public class RoomGenarator : MonoBehaviour
                 allDoors.Remove(allDoors[0]);
             }
         }
-        draw = gates;
         placeGates.gates = gates;
         placeGates.PlaceAllGates();
     }

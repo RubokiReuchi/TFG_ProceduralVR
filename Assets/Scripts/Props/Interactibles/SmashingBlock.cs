@@ -8,11 +8,12 @@ public class SmashingBlock : Puzzle
     [SerializeField] Transform spawnTransform;
     [SerializeField] Animator animator;
     [SerializeField] Material fadeMat;
+    [SerializeField] bool startActivated;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (startActivated) animator.SetTrigger("Active");
     }
 
     // Update is called once per frame
