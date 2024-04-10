@@ -1926,6 +1926,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7242552882509781249, guid: 0791c54419ccfa846a38eb759df3dc8d, type: 3}
   m_PrefabInstance: {fileID: 97336202}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &97336204 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 224814672711713121, guid: 0791c54419ccfa846a38eb759df3dc8d, type: 3}
+  m_PrefabInstance: {fileID: 97336202}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &114532216
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2643,14 +2648,14 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 97336204}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -28798,14 +28803,14 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 97336204}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
+  m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0

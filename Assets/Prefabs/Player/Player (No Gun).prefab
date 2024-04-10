@@ -7900,7 +7900,6 @@ MonoBehaviour:
   m_UseGravity: 1
   m_GravityApplicationMode: 1
   m_ForwardSource: {fileID: 0}
-  m_VerticalVelocity: {x: 0, y: 0, z: 0}
   m_LeftHandMoveAction:
     m_UseReference: 1
     m_Action:
@@ -11587,6 +11586,7 @@ MonoBehaviour:
   shieldMaterial: {fileID: 2100000, guid: 477a200b5377ed442801c6a7fb3151b1, type: 2}
   displayHealth: {fileID: 8837401984260282036}
   takeDamageMaterial: {fileID: 2100000, guid: 41fa8e24ca54c854db22cd66149fdcbd, type: 2}
+  deathMaterial: {fileID: 0}
   xRayAction:
     m_UseReference: 1
     m_Action:
