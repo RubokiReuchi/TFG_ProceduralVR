@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.XR.CoreUtils;
+using UnityEngine.SceneManagement;
 
 public enum LEFT_HAND_POSE
 {
@@ -31,6 +32,7 @@ public class PlayerState : MonoBehaviour
     float defense = 0.0f;
     float lifeRegen = 0.0f;
     float lifeRegenCd = 0.0f;
+    [SerializeField] Material deathMaterial;
 
     [Header("XRay")]
     [SerializeField] InputActionProperty xRayAction;
@@ -78,6 +80,7 @@ public class PlayerState : MonoBehaviour
         xRayBattery = maxXRayBattery;
         xRayBatteryMaterial.SetFloat("_FillPercentage", maxXRayBattery / (maxXRayBatteryIncrease / 2.0f + 1.0f));
         fadeMaterial.SetFloat("_Opacity", 1);
+        deathMaterial.SetFloat("_Opacity", 0);
         StartCoroutine(FadeOut());
     }
 
@@ -86,7 +89,7 @@ public class PlayerState : MonoBehaviour
         // temp
         if (temporalySaveGame.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.Space))
         {
-            DataPersistenceManager.instance.SaveGame();
+            TakeDamage(1000);
         }
         //
 
@@ -163,13 +166,14 @@ public class PlayerState : MonoBehaviour
         }
         else currentShieldCooldown = shieldCooldown;
 
+        displayHealth.UpdateHealthDisplay(currentHealth);
         currentHealth -= amount * (1 - defense);
         if (currentHealth <= 0)
         {
             currentHealth = 0;
-            // game over
+            StartCoroutine(DeathFadeOut());
+            return;
         }
-        displayHealth.UpdateHealthDisplay(currentHealth);
 
         if (takeDamage != null) StopCoroutine(takeDamage);
         takeDamage = StartCoroutine(TakeDamageCo());
@@ -277,6 +281,28 @@ public class PlayerState : MonoBehaviour
             fadeMaterial.SetFloat("_Opacity", opacity);
             yield return null;
         }
+    }
+
+    IEnumerator DeathFadeOut()
+    {
+        float opacity = 0.0f;
+        while (opacity < 1)
+        {
+            opacity += Time.deltaTime * 0.2f;
+            if (opacity > 1) opacity = 1;
+            deathMaterial.SetFloat("_Opacity", opacity);
+            yield return null;
+        }
+        opacity = 0.0f;
+        while (opacity < 1)
+        {
+            opacity += Time.deltaTime * 0.5f;
+            if (opacity > 1) opacity = 1;
+            fadeMaterial.SetFloat("_Opacity", opacity);
+            yield return null;
+        }
+        DataPersistenceManager.instance.SaveGame();
+        SceneManager.LoadScene(2); // lobby
     }
 
     public void IncreaseMaxHealth()
