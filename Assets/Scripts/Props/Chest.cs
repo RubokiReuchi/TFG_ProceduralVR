@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour
 {
+    [SerializeField] COIN type;
+    [SerializeField] int amount;
     [SerializeField] Renderer handPrintRenderer;
     [SerializeField] BoxCollider detectorCollider;
     Bounds colliderBounds;
@@ -34,7 +36,9 @@ public class Chest : MonoBehaviour
             if (handInTime >= 1)
             {
                 handInTime = 1;
-                // open chest
+                GetComponent<Animator>().enabled = true;
+                if (type == COIN.BIOMATTER) PlayerSkills.instance.biomatter += amount;
+                else PlayerSkills.instance.gear += amount;
                 enabled = false;
             }
             material.SetColor("_GridColor", new Color(0.35f, 1, 0.54f + 0.46f * handInTime, 1));
