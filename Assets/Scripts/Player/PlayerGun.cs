@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.VFX;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -40,6 +37,8 @@ public class PlayerGun : MonoBehaviour
     float repeatTime;
 
     GUN_TYPE selectedGun = GUN_TYPE.YELLOW;
+    [SerializeField] Material[] selectedMat;
+    [SerializeField] MeshRenderer[] selectedTriangle;
     [SerializeField] Transform projectileOriginStart;
     [SerializeField] Transform projectileOriginCurrent;
     GameObject selectedProjectilePrefab;
@@ -118,6 +117,10 @@ public class PlayerGun : MonoBehaviour
         purpleUnlocked = skills.purpleUnlocked;
         greenUnlocked = skills.greenUnlocked;
         SwapGunType(GUN_TYPE.NULL);
+        if (greenUnlocked) selectedTriangle[0].material = selectedMat[0];
+        if (blueUnlocked) selectedTriangle[1].material = selectedMat[1];
+        if (redUnlocked) selectedTriangle[2].material = selectedMat[2];
+        if (purpleUnlocked) selectedTriangle[3].material = selectedMat[3];
 
         // Power Increase
         chargeSpeedReduction = skills.chargeSpeedLevel * 0.07f;
@@ -366,10 +369,23 @@ public class PlayerGun : MonoBehaviour
         screen.SetScreen(newType);
     }
 
-    public void UpgradeToGreen()
+    public void NewBeamUnlocked(GUN_TYPE type)
     {
-        if (selectedGun != GUN_TYPE.YELLOW) return;
-
-        SwapGunType(GUN_TYPE.GREEN);
+        switch (type)
+        {
+            case GUN_TYPE.BLUE:
+                selectedTriangle[11].material = selectedMat[1];
+                break;
+            case GUN_TYPE.RED:
+                selectedTriangle[2].material = selectedMat[2];
+                break;
+            case GUN_TYPE.PURPLE:
+                selectedTriangle[3].material = selectedMat[3];
+                break;
+            case GUN_TYPE.GREEN:
+                selectedTriangle[0].material = selectedMat[0];
+                if (selectedGun == GUN_TYPE.YELLOW) SwapGunType(GUN_TYPE.GREEN);
+                break;
+        }
     }
 }

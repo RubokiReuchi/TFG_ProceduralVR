@@ -135,11 +135,21 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
                 break;
             case SKILL_TYPE.BLUE:
                 blueUnlocked = true;
-                if (playerGun) playerGun.blueUnlocked = true;
+                if (playerGun)
+                {
+                    playerGun.blueUnlocked = true;
+                    playerGun.NewBeamUnlocked(GUN_TYPE.BLUE);
+
+                }
                 break;
             case SKILL_TYPE.RED:
                 redUnlocked = true;
-                if (playerGun) playerGun.redUnlocked = true;
+                if (playerGun)
+                {
+                    playerGun.redUnlocked = true;
+                    playerGun.NewBeamUnlocked(GUN_TYPE.RED);
+
+                }
                 break;
             case SKILL_TYPE.BLOCKING_FIST:
                 blockingFistUnlocked = true;
@@ -147,7 +157,12 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
                 break;
             case SKILL_TYPE.PURPLE:
                 purpleUnlocked = true;
-                if (playerGun) playerGun.purpleUnlocked = true;
+                if (playerGun)
+                {
+                    playerGun.purpleUnlocked = true;
+                    playerGun.NewBeamUnlocked(GUN_TYPE.PURPLE);
+
+                }
                 break;
             case SKILL_TYPE.SUPER_JUMP:
                 superJumpUnlocked = true;
@@ -158,7 +173,8 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
                 if (playerGun)
                 {
                     playerGun.greenUnlocked = true;
-                    playerGun.UpgradeToGreen();
+                    playerGun.NewBeamUnlocked(GUN_TYPE.GREEN);
+
                 }
                 break;
             default:
