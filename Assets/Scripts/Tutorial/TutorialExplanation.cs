@@ -8,10 +8,24 @@ public class TutorialExplanation : MonoBehaviour
     [SerializeField] Animator textAnimator;
     [SerializeField] float triggerDistance;
     bool showing = false;
+    [SerializeField] bool active;
+    [SerializeField] GameObject activeOnDestroy;
+
+    void Start()
+    {
+        if (!active) GetComponent<Canvas>().enabled = false;
+    }
 
     // Update is called once per frame
     void Update()
     {
+        if (!active && activeOnDestroy != null) return;
+        if (!active)
+        {
+            GetComponent<Canvas>().enabled = true;
+            active = true;
+        }
+
         Vector3 distance = Camera.main.transform.position - transform.position;
         if (distance.magnitude < triggerDistance)
         {

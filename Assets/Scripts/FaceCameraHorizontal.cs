@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class FaceCameraHorizontal : MonoBehaviour
 {
-    GameObject cam;
+    [SerializeField] GameObject cam;
 
     // Start is called before the first frame update
     void Start()
     {
-        cam = GameObject.FindGameObjectWithTag("MainCamera");
+        if (cam == null) cam = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     // Update is called once per frame
