@@ -13,7 +13,7 @@ public class TutorialGateQuad : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (gateBehaviour && gateBehaviour.opened) return;
+        if (!gateBehaviour && gateBehaviour.opened) return;
         if (!collision.gameObject.CompareTag("YellowProjectile") && !collision.gameObject.CompareTag("BlueProjectile") && !collision.gameObject.CompareTag("RedProjectile") && !collision.gameObject.CompareTag("PurpleProjectile") && !collision.gameObject.CompareTag("GreenProjectile")) return;
 
         gateBehaviour.OpenTriggered(collision.gameObject);

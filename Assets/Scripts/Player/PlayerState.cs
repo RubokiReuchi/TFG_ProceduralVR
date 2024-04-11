@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.XR.CoreUtils;
 using UnityEngine.SceneManagement;
+using UnityEditor.Recorder;
+using UnityEditor;
 
 public enum LEFT_HAND_POSE
 {
@@ -47,11 +49,14 @@ public class PlayerState : MonoBehaviour
     float xRayBatteryRecoveryIncrease = 0;
 
     [SerializeField] Material fadeMaterial;
+    [SerializeField] float fadeSpeed = 0.5f;
     [SerializeField] InputActionProperty temporalySaveGame;
 
     [Header("AreaDamage")]
     List<string> activeUUIDs = new();
     float cdUUID = 0;
+
+    RecorderWindow recorderWindow;
 
     private void Awake()
     {
@@ -82,6 +87,8 @@ public class PlayerState : MonoBehaviour
         fadeMaterial.SetFloat("_Opacity", 1);
         deathMaterial.SetFloat("_Opacity", 0);
         StartCoroutine(FadeOut());
+
+        recorderWindow = (RecorderWindow)EditorWindow.GetWindow(typeof(RecorderWindow));
     }
 
     void Update()
@@ -89,7 +96,8 @@ public class PlayerState : MonoBehaviour
         // temp
         if (temporalySaveGame.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.Space))
         {
-            TakeDamage(1000);
+            if (!recorderWindow.IsRecording()) recorderWindow.StartRecording();
+            else recorderWindow.StopRecording();
         }
         //
 
@@ -276,7 +284,7 @@ public class PlayerState : MonoBehaviour
         float opacity = 1.0f;
         while (opacity > 0)
         {
-            opacity -= Time.deltaTime * 0.5f;
+            opacity -= Time.deltaTime * fadeSpeed;
             if (opacity < 0) opacity = 0;
             fadeMaterial.SetFloat("_Opacity", opacity);
             yield return null;

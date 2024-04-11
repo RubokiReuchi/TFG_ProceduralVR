@@ -24,6 +24,7 @@ public class TutorialGateBehaviour : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         hallwayBounds = new Bounds(new Vector3(transform.position.x - (transform.position.x - otherGateBehaviour.transform.position.x) / 2.0f, 2.5f, transform.position.z - (transform.position.z - otherGateBehaviour.transform.position.z) / 2.0f), new Vector3(3.001f, 6, 3.001f));
         roomBounds = roomBehaviour.GetComponent<BoxCollider>().bounds;
+        roomBounds.Expand(1.5f);
     }
 
     // Update is called once per frame
