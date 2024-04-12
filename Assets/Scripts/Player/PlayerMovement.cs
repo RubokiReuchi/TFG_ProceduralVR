@@ -33,6 +33,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Material tunnelingMaterial;
     [NonEditable] public bool airDashObtained = false;
 
+    [Header("Slow")]
+    float baseSpeed;
+    float slowPercentage;
+    float slowDuration;
+
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +55,10 @@ public class PlayerMovement : MonoBehaviour
         airJump = false;
         expectedGravity = 0;
         dashCd = 0;
+
+        baseSpeed = moveProvider.moveSpeed;
+        slowPercentage = 0;
+        slowDuration = 0;
 
         tunnelingMaterial.SetFloat("_ApertureSize", 1);
     }
@@ -101,6 +110,21 @@ public class PlayerMovement : MonoBehaviour
                 StartCoroutine(DashCo(direction));
             }
         }
+
+        // slow
+        if (slowDuration > 0)
+        {
+            slowDuration -= Time.deltaTime;
+        }
+        else if (slowPercentage > 0)
+        {
+            slowPercentage -= Time.deltaTime * 100.0f;
+            if (slowPercentage < 0) slowPercentage = 0;
+        }
+        if (moveProvider.moveSpeed != baseSpeed)
+        {
+            moveProvider.moveSpeed = baseSpeed * slowPercentage;
+        }
     }
 
     bool IsGrounded()
@@ -123,5 +147,11 @@ public class PlayerMovement : MonoBehaviour
         }
         dashCd = dashCooldown;
         tunnelingMaterial.SetFloat("_ApertureSize", 1);
+    }
+
+    public void TakeSlow(float slowPercentage, float slowDuration)
+    {
+        if (slowPercentage >= this.slowPercentage) this.slowPercentage = slowPercentage;
+        this.slowDuration = slowDuration;
     }
 }

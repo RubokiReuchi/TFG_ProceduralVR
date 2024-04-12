@@ -11,7 +11,7 @@ public class TutorialRoomBehaviour : MonoBehaviour
 
     [Header("Map Room")]
     [SerializeField] GameObject roomInMap;
-    [HideInInspector] public List<GameObject> gatesInMap = new();
+    [SerializeField] GameObject[] gatesInMap;
 
     [Header("Enemies")]
     [NonEditable][SerializeField] bool onCombat;
@@ -54,7 +54,7 @@ public class TutorialRoomBehaviour : MonoBehaviour
     {
         entered = true;
         if (roomInMap) roomInMap.SetActive(true);
-        for (int i = 0; i < gatesInMap.Count; i++) gatesInMap[i].GetComponent<GateInMap>().ShowGate();
+        for (int i = 0; i < gatesInMap.Length; i++) gatesInMap[i].GetComponent<GateInMap>().ShowGate();
 
         if (enemies.Length == 0) return;
         onCombat = true;

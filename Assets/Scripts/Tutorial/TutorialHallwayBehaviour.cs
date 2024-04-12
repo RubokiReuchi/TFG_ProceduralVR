@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TutorialHallwayBehaviour : MonoBehaviour
 {
-    [HideInInspector] public GameObject hallwayInMap;
+    [SerializeField] GameObject hallwayInMap;
     public TutorialRoomBehaviour headRoom;
     public TutorialRoomBehaviour tailRoom;
     bool entered;
