@@ -13,7 +13,9 @@ public class TutorialExplanation : MonoBehaviour
 
     void Start()
     {
-        if (!active) GetComponent<Canvas>().enabled = false;
+        Canvas canvas = GetComponent<Canvas>();
+        if (!active) canvas.enabled = false;
+        if (canvas.worldCamera == null) canvas.worldCamera = Camera.main;
     }
 
     // Update is called once per frame

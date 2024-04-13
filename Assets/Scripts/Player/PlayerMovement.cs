@@ -37,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
     float baseSpeed;
     float slowPercentage;
     float slowDuration;
+    [SerializeField] Material slowMetterMat;
+    float displayedSlow;
 
 
     // Start is called before the first frame update
@@ -59,6 +61,8 @@ public class PlayerMovement : MonoBehaviour
         baseSpeed = moveProvider.moveSpeed;
         slowPercentage = 0;
         slowDuration = 0;
+        slowMetterMat.SetFloat("_FillPercentage", 0);
+        displayedSlow = 0;
 
         tunnelingMaterial.SetFloat("_ApertureSize", 1);
     }
@@ -120,10 +124,18 @@ public class PlayerMovement : MonoBehaviour
         {
             slowPercentage -= Time.deltaTime * 100.0f;
             if (slowPercentage < 0) slowPercentage = 0;
+            displayedSlow = slowPercentage;
+            slowMetterMat.SetFloat("_FillPercentage", displayedSlow);
         }
         if (moveProvider.moveSpeed != baseSpeed)
         {
             moveProvider.moveSpeed = baseSpeed * slowPercentage;
+        }
+        if (displayedSlow < slowPercentage)
+        {
+            displayedSlow += Time.deltaTime;
+            if (displayedSlow > slowPercentage) displayedSlow = slowPercentage;
+            slowMetterMat.SetFloat("_FillPercentage", displayedSlow);
         }
     }
 
