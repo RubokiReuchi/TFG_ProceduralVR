@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering.LookDev;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class StatusMenuPanel : MonoBehaviour
 {
@@ -9,16 +11,12 @@ public class StatusMenuPanel : MonoBehaviour
     [SerializeField] GameObject[] panel;
     int currentIndex = 0;
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        panel[currentIndex].SetActive(true);
+        panel[currentIndex].GetComponent<Animator>().SetBool("Opened", true);
+        int currentButton = (currentIndex > 8) ? 8 : currentIndex;
+        EventSystem.current.SetSelectedGameObject(buttons[currentButton]);
     }
 
     public void SelectButton(int index)
@@ -34,7 +32,7 @@ public class StatusMenuPanel : MonoBehaviour
                 default: Debug.LogError("Something does wrong!"); break;
             }
         }
-        OpenMenu(index, currentIndex);
+        StartCoroutine(OpenMenu(index, currentIndex));
         currentIndex = index;
     }
 
@@ -42,8 +40,8 @@ public class StatusMenuPanel : MonoBehaviour
     {
         panel[oldIndex].GetComponent<Animator>().SetBool("Opened", false);
         yield return new WaitForSeconds(0.3f);
-        panel[newIndex].GetComponent<Animator>().SetBool("Opened", true);
         panel[newIndex].SetActive(true);
+        panel[newIndex].GetComponent<Animator>().SetBool("Opened", true);
         panel[oldIndex].SetActive(false);
     }
 }
