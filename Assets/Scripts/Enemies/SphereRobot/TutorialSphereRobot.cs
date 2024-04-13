@@ -5,8 +5,14 @@ using UnityEngine.AI;
 
 public class TutorialSphereRobot : Enemy
 {
+    enum STATE
+    {
+        REST,
+        WALK
+    }
+
     Transform player;
-    Transform playerHead;
+    [NonEditable][SerializeField] STATE state;
     Animator animator;
     [SerializeField] GameObject corpsPrefab;
 
@@ -18,9 +24,9 @@ public class TutorialSphereRobot : Enemy
         animator = transform.GetChild(0).GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        playerHead = GameObject.FindGameObjectWithTag("PlayerHead").transform;
         material = new Material(originalMaterial);
         foreach (var materialGO in materialGameObjects) materialGO.GetComponent<MeshRenderer>().material = material;
+        state = STATE.REST;
 
         currentHealth = maxHealth;
     }
@@ -28,12 +34,31 @@ public class TutorialSphereRobot : Enemy
     // Update is called once per frame
     void Update()
     {
-        agent.destination = player.position;
+        switch (state)
+        {
+            case STATE.REST:
+                animator.SetTrigger("Activate");
+                Invoke("StartWalk", 1.7f);
+                break;
+            case STATE.WALK:
+                agent.destination = player.position;
+                break;
+            default:
+                break;
+        }
+    }
+
+    void StartWalk()
+    {
+        animator.SetTrigger("Walk");
+        state = STATE.WALK;
+        agent.speed = 2;
+        animator.speed = 0.7f;
     }
 
     public override void StartCheckOptions()
     {
-        animator.SetTrigger("Walk");
+        
     }
 
     public override void TakeDamage(float amount)
@@ -80,12 +105,14 @@ public class TutorialSphereRobot : Enemy
 
     public override void Die()
     {
+        animator.speed = 1.0f;
         animator.SetTrigger("Destroy");
-        transform.GetComponentInChildren<AnimSphereRobot>().StopRing();
         alive = false;
+        agent.speed = 0;
+        Invoke("Destroyed", 1.45f);
     }
 
-    public void Destroyed()
+    void Destroyed()
     {
         GameObject.Instantiate(corpsPrefab, transform.position, transform.rotation, transform.parent);
         GiveCoin();

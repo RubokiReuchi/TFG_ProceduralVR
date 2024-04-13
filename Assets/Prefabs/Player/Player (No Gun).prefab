@@ -11533,7 +11533,7 @@ Transform:
   - {fileID: 5103290868830836747}
   - {fileID: 1952586129347682062}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2437771770316920196
 MonoBehaviour:
@@ -11735,7 +11735,7 @@ MonoBehaviour:
   dashPs: {fileID: 5630194992452283499}
   tunnelingMaterial: {fileID: 2100000, guid: 0dc9ba1aeba8a634ba4756fff1409c36, type: 2}
   airDashObtained: 0
-  slowMetterMat: {fileID: 0}
+  slowMetterMat: {fileID: 2100000, guid: 7457dfcf623433d45a7b2c121c432bd5, type: 2}
 --- !u!143 &8199321030347553444
 CharacterController:
   m_ObjectHideFlags: 0

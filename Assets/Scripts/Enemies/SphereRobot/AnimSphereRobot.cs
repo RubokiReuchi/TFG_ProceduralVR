@@ -16,7 +16,7 @@ public class AnimSphereRobot : MonoBehaviour
 
     public void CheckOtions()
     {
-        script.StartCheckOptions();
+        if (script) script.StartCheckOptions();
     }
 
     public void SpawnRay()

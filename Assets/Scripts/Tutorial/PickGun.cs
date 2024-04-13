@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PickGun : MonoBehaviour
 {
-    [SerializeField] GameObject playerWithoutGun;
-    [SerializeField] GameObject player;
     [SerializeField] Material fadeMaterial;
     bool activated = false;
 
@@ -21,14 +20,11 @@ public class PickGun : MonoBehaviour
         float opacity = 0.0f;
         while (opacity < 1)
         {
-            opacity += Time.deltaTime * 1.0f;
+            opacity += Time.deltaTime * 2.0f;
             if (opacity > 1) opacity = 1;
             fadeMaterial.SetFloat("_Opacity", opacity);
             yield return null;
         }
-        playerWithoutGun.SetActive(false);
-        player.SetActive(true);
-        player.transform.SetPositionAndRotation(playerWithoutGun.transform.position, playerWithoutGun.transform.rotation);
-        Destroy(gameObject);
+        SceneManager.LoadScene(2); // tutorial
     }
 }

@@ -2,11 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Unity.XR.CoreUtils;
 using UnityEngine.SceneManagement;
-using UnityEditor.Recorder;
-using UnityEditor;
-using UnityEngine.XR.Interaction.Toolkit;
 
 public enum LEFT_HAND_POSE
 {
@@ -57,7 +53,7 @@ public class PlayerState : MonoBehaviour
     List<string> activeUUIDs = new();
     float cdUUID = 0;
 
-    RecorderWindow recorderWindow;
+    //RecorderWindow recorderWindow;
 
     private void Awake()
     {
@@ -89,7 +85,7 @@ public class PlayerState : MonoBehaviour
         deathMaterial.SetFloat("_Opacity", 0);
         StartCoroutine(FadeOut());
 
-        recorderWindow = (RecorderWindow)EditorWindow.GetWindow(typeof(RecorderWindow));
+        //recorderWindow = (RecorderWindow)EditorWindow.GetWindow(typeof(RecorderWindow));
     }
 
     void Update()
@@ -97,8 +93,8 @@ public class PlayerState : MonoBehaviour
         // temp
         if (temporalySaveGame.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.Space))
         {
-            if (!recorderWindow.IsRecording()) recorderWindow.StartRecording();
-            else recorderWindow.StopRecording();
+            //if (!recorderWindow.IsRecording()) recorderWindow.StartRecording();
+            //else recorderWindow.StopRecording();
         }
         //
 

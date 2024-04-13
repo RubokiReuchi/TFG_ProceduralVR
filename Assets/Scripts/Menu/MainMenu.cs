@@ -40,7 +40,7 @@ public class MainMenu : MonoBehaviour
     {
         if (!existingSaveFile)
         {
-            StartCoroutine(FadeOut(2/*1*/)); // tutorial level
+            StartCoroutine(FadeOut(1)); // pre tutorial level
             platformAnimator.SetTrigger("Move");
             newGameAnimator.SetBool("Open", false);
             continueAnimator.SetBool("Open", false);
@@ -62,7 +62,7 @@ public class MainMenu : MonoBehaviour
 
     public void Continue()
     {
-        StartCoroutine(FadeOut(2)); // lobby level
+        StartCoroutine(FadeOut(3)); // lobby level
         platformAnimator.SetTrigger("Move");
         newGameAnimator.SetBool("Open", false);
         continueAnimator.SetBool("Open", false);
@@ -76,7 +76,7 @@ public class MainMenu : MonoBehaviour
         if (delete)
         {
             File.Delete(fullPath);
-            StartCoroutine(FadeOut(2/*1*/)); // tutorial level
+            StartCoroutine(FadeOut(1)); // pre tutorial level
             platformAnimator.SetTrigger("Move");
             newGameAnimator.SetBool("Open", false);
             continueAnimator.SetBool("Open", false);

@@ -33,6 +33,6 @@ public class ExitPlatform : MonoBehaviour
             yield return null;
         }
 
-        SceneManager.LoadScene(3); // level scene
+        SceneManager.LoadScene(4); // level scene
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public enum ENEMY_TYPE
 {
     SPHERE_ROBOT,
+    TUTORIAL_SPHERE_ROBOT,
     MUTANT,
     MUTANT_ORB
 }

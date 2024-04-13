@@ -24,6 +24,8 @@ public class TutorialRoomBehaviour : MonoBehaviour
         onCombat = false;
 
         if (!TutorialRoomGenerator.instance.activeRooms.Contains(this)) gameObject.SetActive(false);
+
+        for (int i = 0; i < gatesInMap.Length; i++) gatesInMap[i].GetComponent<GateInMap>().SetUp();
     }
 
     void Update()
@@ -73,6 +75,9 @@ public class TutorialRoomBehaviour : MonoBehaviour
             {
                 case ENEMY_TYPE.SPHERE_ROBOT:
                     enemies[i].GetComponent<SphereRobot>().enabled = true;
+                    break;
+                case ENEMY_TYPE.TUTORIAL_SPHERE_ROBOT:
+                    enemies[i].GetComponent<TutorialSphereRobot>().enabled = true;
                     break;
                 case ENEMY_TYPE.MUTANT:
                     enemies[i].GetComponent<Mutant>().enabled = true;
