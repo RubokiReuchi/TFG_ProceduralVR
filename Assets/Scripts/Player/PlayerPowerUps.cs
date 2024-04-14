@@ -26,6 +26,9 @@ public class PlayerPowerUps : MonoBehaviour
             case POWER_UP_TYPE.XRAY_VISION:
                 PlayerState.instance.xRayVisionObtained = true;
                 xRayBattery.SetActive(true);
+                float maxBattery = 50 + 50 * (Mathf.CeilToInt(PlayerSkills.instance.xRayVisionLevel / 2.0f) * 0.5f);
+                float[] xRayValues = { maxBattery, maxBattery / 2.5f + 2.5f * (Mathf.FloorToInt(PlayerSkills.instance.xRayVisionLevel / 2.0f)) };
+                StatusMenuPoints.instance.panels[3].GetComponent<StatusMenuPanel>().UpdateInformation(2, xRayValues);
                 break;
             case POWER_UP_TYPE.AUTOMATIC_MODE:
                 playerGun.projectileType = PROJECTILE_TYPE.AUTOMATIC;
@@ -49,12 +52,16 @@ public class PlayerPowerUps : MonoBehaviour
                 break;
             case POWER_UP_TYPE.AIR_DASH:
                 playerMovement.airDashObtained = true;
+                StatusMenuPoints.instance.panels[2].GetComponent<StatusMenuPanel>().UpdateInformation(1, null);
                 break;
             case POWER_UP_TYPE.DOBLE_JUMP:
                 playerMovement.dobleJumpObtained = true;
+                StatusMenuPoints.instance.panels[1].GetComponent<StatusMenuPanel>().UpdateInformation(2, null);
                 break;
             case POWER_UP_TYPE.SHIELD:
                 PlayerState.instance.shieldObtained = true;
+                float[] shieldValues = { (PlayerSkills.instance.shieldLevel * 10) };
+                StatusMenuPoints.instance.panels[2].GetComponent<StatusMenuPanel>().UpdateInformation(4, shieldValues);
                 break;
             default:
                 break;

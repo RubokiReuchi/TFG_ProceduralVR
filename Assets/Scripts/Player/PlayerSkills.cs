@@ -118,6 +118,38 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
             float[] greenValues = { 30 + 30 * (attackLevel * 0.05f), (greenBeamLevel * 20) };
             panel0.UpdateInformation(6, greenValues);
         }
+
+        if (superJumpUnlocked)
+        {
+            points.panels[1].GetComponent<StatusMenuPanel>().UpdateInformation(1, null);
+        }
+
+        if (dashUnlocked)
+        {
+            float[] dashValues = { (dashCdLevel * 3) };
+            points.panels[2].GetComponent<StatusMenuPanel>().UpdateInformation(0, dashValues);
+        }
+        if (defenseLevel > 0)
+        {
+            float[] defenseValues = { (defenseLevel * 5) };
+            points.panels[2].GetComponent<StatusMenuPanel>().UpdateInformation(2, defenseValues);
+        }
+
+        if (maxHealthLevel > 0)
+        {
+            float[] healthValues = { 250 + (maxHealthLevel * 50) };
+            points.panels[3].GetComponent<StatusMenuPanel>().UpdateInformation(0, healthValues);
+        }
+        if (lifeRegenLevel > 0)
+        {
+            float[] regenValues = { (lifeRegenLevel * 0.2f) };
+            points.panels[3].GetComponent<StatusMenuPanel>().UpdateInformation(1, regenValues);
+        }
+
+        if (blockingFistUnlocked)
+        {
+            points.panels[4].GetComponent<StatusMenuPanel>().UpdateInformation(0, null);
+        }
     }
 
     public void SaveData(ref GameData data)
@@ -188,6 +220,7 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
             case SKILL_TYPE.BLOCKING_FIST:
                 blockingFistUnlocked = true;
                 if (blockingFistUnlocked) leftHandCollision.tag = "ShieldedHand";
+                StatusMenuPoints.instance.panels[4].GetComponent<StatusMenuPanel>().UpdateInformation(0, null);
                 break;
             case SKILL_TYPE.PURPLE:
                 purpleUnlocked = true;
@@ -202,6 +235,7 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
             case SKILL_TYPE.SUPER_JUMP:
                 superJumpUnlocked = true;
                 playerMovement.superJumpUnlocked = true;
+                StatusMenuPoints.instance.panels[1].GetComponent<StatusMenuPanel>().UpdateInformation(1, null);
                 break;
             case SKILL_TYPE.GREEN:
                 greenUnlocked = true;

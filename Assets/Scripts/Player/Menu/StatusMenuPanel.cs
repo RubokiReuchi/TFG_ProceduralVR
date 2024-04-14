@@ -16,24 +16,12 @@ public class StatusMenuPanel : MonoBehaviour
     {
         panel[currentIndex].SetActive(true);
         panel[currentIndex].GetComponent<Animator>().SetBool("Opened", true);
-        int currentButton = (currentIndex > 8) ? 8 : currentIndex;
-        EventSystem.current.SetSelectedGameObject(buttons[currentButton]);
+        EventSystem.current.SetSelectedGameObject(buttons[currentIndex]);
     }
 
     public void SelectButton(int index)
     {
         if (index == currentIndex) return;
-        if (index == 8)
-        {
-            PROJECTILE_TYPE projectileType = GameObject.Find("RightHand").GetComponent<PlayerGun>().projectileType;
-            switch (projectileType)
-            {
-                case PROJECTILE_TYPE.AUTOMATIC: index = 8; break;
-                case PROJECTILE_TYPE.TRIPLE: index = 9; break;
-                case PROJECTILE_TYPE.MISSILE: index = 10; break;
-                default: Debug.LogError("Something does wrong!"); break;
-            }
-        }
         StartCoroutine(OpenMenu(index, currentIndex));
         currentIndex = index;
     }
@@ -49,11 +37,7 @@ public class StatusMenuPanel : MonoBehaviour
 
     public void UpdateInformation(int index, float[] values)
     {
-        if (index == 10) buttons[8].GetComponentInChildren<TextMeshProUGUI>().text = "Missile Mode";
-        else if (index == 9) buttons[8].GetComponentInChildren<TextMeshProUGUI>().text = "Triple Shot Mode";
-        else if (index == 8) buttons[8].GetComponentInChildren<TextMeshProUGUI>().text = "Automatic Mode";
-        int currentButton = (index > 8) ? 8 : index;
-        if (!buttons[currentButton].activeSelf) buttons[currentButton].SetActive(true);
+        if (!buttons[index].activeSelf) buttons[index].SetActive(true);
         if (values != null) panel[index].GetComponent<StatusMenuDescription>().UpdateData(values);
     }
 }
