@@ -95,6 +95,7 @@ public class PlayerState : MonoBehaviour
         {
             //if (!recorderWindow.IsRecording()) recorderWindow.StartRecording();
             //else recorderWindow.StopRecording();
+            DataPersistenceManager.instance.SaveGame();
         }
         //
 

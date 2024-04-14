@@ -49,6 +49,8 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
     [NonEditable] public int redBeamLevel;
     [NonEditable] public int greenBeamLevel;
 
+    StatusMenuPoints points;
+
     private void Awake()
     {
         instance = this;
@@ -86,6 +88,36 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
         greenBeamLevel = data.greenBeamLevel;
 
         LateStart();
+
+        // Status Menu
+        points = GameObject.FindObjectOfType<StatusMenuPoints>();
+        StatusMenuPanel panel0 = points.panels[0].GetComponent<StatusMenuPanel>();
+        float[] beamValues = { attackLevel * 5, proyectileSpeedLevel * 10 };
+        panel0.UpdateInformation(0, beamValues);
+        float[] chargedValues = { chargeSpeedLevel * 7, lifeChargeLevel * 1 };
+        panel0.UpdateInformation(1, chargedValues);
+        float[] yellowValues = { 25 + 25 * (attackLevel * 0.05f) };
+        panel0.UpdateInformation(2, yellowValues);
+        if (blueUnlocked)
+        {
+            float[] blueValues = { 20 + 20 * (attackLevel * 0.05f), 1 + (blueBeamLevel * 0.05f) };
+            panel0.UpdateInformation(3, blueValues);
+        }
+        if (redUnlocked)
+        {
+            float[] redValues = { 20 + 20 * (attackLevel * 0.05f), 100 + (redBeamLevel * 10) };
+            panel0.UpdateInformation(4, redValues);
+        }
+        if (purpleUnlocked)
+        {
+            float[] purpleValues = { 20 + 20 * (attackLevel * 0.05f) };
+            panel0.UpdateInformation(5, purpleValues);
+        }
+        if (greenUnlocked)
+        {
+            float[] greenValues = { 30 + 30 * (attackLevel * 0.05f), (greenBeamLevel * 20) };
+            panel0.UpdateInformation(6, greenValues);
+        }
     }
 
     public void SaveData(ref GameData data)
@@ -139,8 +171,9 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
                 {
                     playerGun.blueUnlocked = true;
                     playerGun.NewBeamUnlocked(GUN_TYPE.BLUE);
-
                 }
+                float[] blueValues = { 20 + 20 * (attackLevel * 0.05f), 1 + (blueBeamLevel * 0.05f) };
+                StatusMenuPoints.instance.panels[0].GetComponent<StatusMenuPanel>().UpdateInformation(3, blueValues);
                 break;
             case SKILL_TYPE.RED:
                 redUnlocked = true;
@@ -148,8 +181,9 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
                 {
                     playerGun.redUnlocked = true;
                     playerGun.NewBeamUnlocked(GUN_TYPE.RED);
-
                 }
+                float[] redValues = { 20 + 20 * (attackLevel * 0.05f), 100 + (redBeamLevel * 10) };
+                StatusMenuPoints.instance.panels[0].GetComponent<StatusMenuPanel>().UpdateInformation(4, redValues);
                 break;
             case SKILL_TYPE.BLOCKING_FIST:
                 blockingFistUnlocked = true;
@@ -161,8 +195,9 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
                 {
                     playerGun.purpleUnlocked = true;
                     playerGun.NewBeamUnlocked(GUN_TYPE.PURPLE);
-
                 }
+                float[] purpleValues = { 20 + 20 * (attackLevel * 0.05f) };
+                StatusMenuPoints.instance.panels[0].GetComponent<StatusMenuPanel>().UpdateInformation(5, purpleValues);
                 break;
             case SKILL_TYPE.SUPER_JUMP:
                 superJumpUnlocked = true;
@@ -174,8 +209,9 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
                 {
                     playerGun.greenUnlocked = true;
                     playerGun.NewBeamUnlocked(GUN_TYPE.GREEN);
-
                 }
+                float[] greenValues = { 30 + 30 * (attackLevel * 0.05f), (greenBeamLevel * 20) };
+                StatusMenuPoints.instance.panels[0].GetComponent<StatusMenuPanel>().UpdateInformation(6, greenValues);
                 break;
             default:
                 break;

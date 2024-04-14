@@ -29,16 +29,23 @@ public class PlayerPowerUps : MonoBehaviour
                 break;
             case POWER_UP_TYPE.AUTOMATIC_MODE:
                 playerGun.projectileType = PROJECTILE_TYPE.AUTOMATIC;
+                float[] automaticValues = { 8 + 8 * (PlayerSkills.instance.automaticModeLevel * 0.1f) };
+                StatusMenuPoints.instance.panels[0].GetComponent<StatusMenuPanel>().UpdateInformation(8, automaticValues);
                 break;
             case POWER_UP_TYPE.TRIPLE_SHOT:
                 playerGun.projectileType = PROJECTILE_TYPE.TRIPLE;
+                float[] tripleShotValues = { 50 + (PlayerSkills.instance.tripleShotModeLevel * 10) };
+                StatusMenuPoints.instance.panels[0].GetComponent<StatusMenuPanel>().UpdateInformation(9, tripleShotValues);
                 break;
             case POWER_UP_TYPE.missile_MODE:
                 playerGun.projectileType = PROJECTILE_TYPE.MISSILE;
+                float[] missileValues = { (Mathf.CeilToInt(PlayerSkills.instance.missileModeLevel / 2.0f) * 10), (Mathf.FloorToInt(PlayerSkills.instance.missileModeLevel / 2.0f) * 15) };
+                StatusMenuPoints.instance.panels[0].GetComponent<StatusMenuPanel>().UpdateInformation(10, missileValues);
                 playerGun.SwapGunType(GUN_TYPE.NULL);
                 break;
             case POWER_UP_TYPE.SHOCKWAVE:
                 playerGun.shockwaveObtained = true;
+                StatusMenuPoints.instance.panels[0].GetComponent<StatusMenuPanel>().UpdateInformation(7, null);
                 break;
             case POWER_UP_TYPE.AIR_DASH:
                 playerMovement.airDashObtained = true;

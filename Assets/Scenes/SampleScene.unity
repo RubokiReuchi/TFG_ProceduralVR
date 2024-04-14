@@ -1092,10 +1092,10 @@ RectTransform:
   m_Father: {fileID: 1954270163}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -599.99994, y: -20}
-  m_SizeDelta: {x: 265, y: -116}
+  m_SizeDelta: {x: 265, y: 740}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &263157128
 MonoBehaviour:
@@ -1433,6 +1433,7 @@ GameObject:
   m_Component:
   - component: {fileID: 301175976}
   - component: {fileID: 301175977}
+  - component: {fileID: 301175978}
   m_Layer: 5
   m_Name: TripleShotBeamDescription
   m_TagString: Untagged
@@ -1487,6 +1488,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &301175978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301175975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e1c9ca1cd9d36438e09feccb9cf063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info:
+  - {fileID: 1517059541}
+  frontLabel:
+  - 'Total Extra Beams Damage: '
+  backLabel:
+  - '%'
 --- !u!1 &322066262
 GameObject:
   m_ObjectHideFlags: 0
@@ -1497,6 +1516,7 @@ GameObject:
   m_Component:
   - component: {fileID: 322066263}
   - component: {fileID: 322066264}
+  - component: {fileID: 322066265}
   m_Layer: 5
   m_Name: BeamDescription
   m_TagString: Untagged
@@ -1553,6 +1573,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &322066265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322066262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e1c9ca1cd9d36438e09feccb9cf063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info:
+  - {fileID: 1079777969}
+  - {fileID: 557161320}
+  frontLabel:
+  - 'Damage Bonus: '
+  - 'Speed Bonus: '
+  backLabel:
+  - '%'
+  - '%'
 --- !u!1 &326359249
 GameObject:
   m_ObjectHideFlags: 0
@@ -2130,7 +2171,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &358799213
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2356,7 +2397,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &374647074
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3086,6 +3127,7 @@ GameObject:
   m_Component:
   - component: {fileID: 430614162}
   - component: {fileID: 430614163}
+  - component: {fileID: 430614164}
   m_Layer: 5
   m_Name: YellowBeamDescription
   m_TagString: Untagged
@@ -3140,6 +3182,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &430614164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 430614161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e1c9ca1cd9d36438e09feccb9cf063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info:
+  - {fileID: 500965789}
+  frontLabel:
+  - 'Total Damage: '
+  backLabel:
+  - 
 --- !u!1 &436169069
 GameObject:
   m_ObjectHideFlags: 0
@@ -3410,7 +3470,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Total Damage: 20'
+  m_text: 'Total Damage: 30'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3930,7 +3990,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &559897183
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3947,11 +4007,11 @@ RectTransform:
   m_Father: {fileID: 263157127}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.0005836487, y: -693}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.00079345703, y: -345.5}
   m_SizeDelta: {x: 240, y: 75}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 0.2}
 --- !u!114 &559897184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4079,7 +4139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &577256146
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4432,6 +4492,7 @@ GameObject:
   m_Component:
   - component: {fileID: 612485998}
   - component: {fileID: 612485999}
+  - component: {fileID: 612486000}
   m_Layer: 5
   m_Name: RedBeamDescription
   m_TagString: Untagged
@@ -4488,6 +4549,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &612486000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612485997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e1c9ca1cd9d36438e09feccb9cf063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info:
+  - {fileID: 1419926356}
+  - {fileID: 1414722790}
+  frontLabel:
+  - 'Total Damage: '
+  - 'Extra Damage to Shields: '
+  backLabel:
+  - 
+  - '%'
 --- !u!1 &645720419
 GameObject:
   m_ObjectHideFlags: 0
@@ -5090,7 +5172,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Base Damage: 20'
+  m_text: 'Base Damage: 30'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6040,6 +6122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 847567615}
   - component: {fileID: 847567616}
+  - component: {fileID: 847567617}
   m_Layer: 5
   m_Name: PurpleBeamDescription
   m_TagString: Untagged
@@ -6096,6 +6179,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &847567617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847567614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e1c9ca1cd9d36438e09feccb9cf063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info:
+  - {fileID: 1213695504}
+  frontLabel:
+  - 'Total Damage: '
+  backLabel:
+  - 
 --- !u!1 &935232218
 GameObject:
   m_ObjectHideFlags: 0
@@ -6183,6 +6284,7 @@ GameObject:
   m_Component:
   - component: {fileID: 958225453}
   - component: {fileID: 958225454}
+  - component: {fileID: 958225455}
   m_Layer: 5
   m_Name: ChargedBeamDescription
   m_TagString: Untagged
@@ -6237,6 +6339,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &958225455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958225452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e1c9ca1cd9d36438e09feccb9cf063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info:
+  - {fileID: 1624590408}
+  - {fileID: 2141009775}
+  frontLabel:
+  - 'Charge Speed Bonus: '
+  - 'Life Charge Heal: '
+  backLabel:
+  - '%'
+  - '% of MaxHP'
 --- !u!1 &967524454
 GameObject:
   m_ObjectHideFlags: 0
@@ -8548,7 +8671,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Ignore Wall Collision.
+  m_text: Ignore Wall Collision
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8713,7 +8836,7 @@ GameObject:
   - component: {fileID: 1255549454}
   - component: {fileID: 1255549453}
   m_Layer: 5
-  m_Name: ShieldDamageBonusLabel
+  m_Name: ExtraDamageLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8846,6 +8969,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1261334597}
   - component: {fileID: 1261334598}
+  - component: {fileID: 1261334599}
   m_Layer: 5
   m_Name: GreenBeamDescription
   m_TagString: Untagged
@@ -8902,6 +9026,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1261334599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261334596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e1c9ca1cd9d36438e09feccb9cf063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info:
+  - {fileID: 473231225}
+  - {fileID: 1255549453}
+  frontLabel:
+  - 'Total Damage: '
+  - 'Extra Damage to Organic: '
+  backLabel:
+  - 
+  - '%'
 --- !u!1 &1280734921
 GameObject:
   m_ObjectHideFlags: 0
@@ -8912,6 +9057,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1280734922}
   - component: {fileID: 1280734923}
+  - component: {fileID: 1280734924}
   m_Layer: 5
   m_Name: AutomaticBeamDescription
   m_TagString: Untagged
@@ -8966,6 +9112,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1280734924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280734921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e1c9ca1cd9d36438e09feccb9cf063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info:
+  - {fileID: 1588417061}
+  frontLabel:
+  - 'Total Beams Per Second: '
+  backLabel:
+  - 
 --- !u!1 &1295992681
 GameObject:
   m_ObjectHideFlags: 0
@@ -9078,9 +9242,9 @@ RectTransform:
   m_Father: {fileID: 263157127}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.0005836487, y: -48.3}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.00079345703, y: 321.69995}
   m_SizeDelta: {x: 240, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1319999810
@@ -9494,6 +9658,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1344965094}
   - component: {fileID: 1344965095}
+  - component: {fileID: 1344965096}
   m_Layer: 5
   m_Name: MissileBeamDescription
   m_TagString: Untagged
@@ -9550,6 +9715,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1344965096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1344965093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e1c9ca1cd9d36438e09feccb9cf063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info:
+  - {fileID: 844254486}
+  - {fileID: 1765076958}
+  frontLabel:
+  - 'Missile Delay Reduced: '
+  - 'SuperMissile Delay Reduced: '
+  backLabel:
+  - '%'
+  - '%'
 --- !u!1 &1383504066
 GameObject:
   m_ObjectHideFlags: 0
@@ -12600,6 +12786,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1817711684}
   - component: {fileID: 1817711685}
+  - component: {fileID: 1817711686}
   m_Layer: 5
   m_Name: ShockwaveDescription
   m_TagString: Untagged
@@ -12652,6 +12839,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1817711686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817711683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e1c9ca1cd9d36438e09feccb9cf063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info: []
+  frontLabel: []
+  backLabel: []
 --- !u!1 &1818727669
 GameObject:
   m_ObjectHideFlags: 0
@@ -13340,7 +13542,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1872748503
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14157,7 +14359,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1954270163
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14930,7 +15132,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2018133883
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15519,6 +15721,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2117105086}
   - component: {fileID: 2117105087}
+  - component: {fileID: 2117105088}
   m_Layer: 5
   m_Name: BlueBeamDescription
   m_TagString: Untagged
@@ -15575,6 +15778,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2117105088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117105085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9e1c9ca1cd9d36438e09feccb9cf063, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info:
+  - {fileID: 48602546}
+  - {fileID: 1702304113}
+  frontLabel:
+  - 'Total Damage: '
+  - 'Freeze On Hit: '
+  backLabel:
+  - 
+  - x of base damage
 --- !u!1 &2132993100
 GameObject:
   m_ObjectHideFlags: 0

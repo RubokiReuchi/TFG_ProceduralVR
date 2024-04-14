@@ -58,9 +58,10 @@ public class Skill : MonoBehaviour
         if (!ready) return;
         if (!other.transform.root.CompareTag("Player")) return;
 
+        PlayerSkills.instance.UnlockSkill(type);
+
         puzzle.StartPuzzle();
 
-        PlayerSkills.instance.UnlockSkill(type);
         Destroy(gameObject);
     }
 }

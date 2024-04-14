@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class StatusMenuPoints : MonoBehaviour
 {
-    [SerializeField] GameObject[] panels;
+    public static StatusMenuPoints instance;
+    public GameObject[] panels;
     int currentIndex = -1; // -1 --> no selected
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     public void SelectPoint(int index)
     {
