@@ -17,6 +17,8 @@ public class PlayerState : MonoBehaviour
     public static PlayerState instance;
 
     [NonEditable] public LEFT_HAND_POSE leftHandPose;
+    bool shown = false;
+    [SerializeField] Animator coinDisplayAnimator;
 
     [Header("Health & Shield")]
     [NonEditable][SerializeField] float currentHealth;
@@ -98,6 +100,17 @@ public class PlayerState : MonoBehaviour
             DataPersistenceManager.instance.SaveGame();
         }
         //
+
+        if (leftHandPose == LEFT_HAND_POSE.OK && !shown)
+        {
+            coinDisplayAnimator.SetBool("Shown", true);
+            shown = true;
+        }
+        else if (leftHandPose != LEFT_HAND_POSE.OK && shown)
+        {
+            coinDisplayAnimator.SetBool("Shown", false);
+            shown = false;
+        }
 
         if (cdUUID > 0)
         {

@@ -13,11 +13,13 @@ public class LeftHand : MonoBehaviour
     float gripTarget;
     float indexCurrent;
     float gripCurrent;
+    PlayerState state;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        state = PlayerState.instance;
     }
 
     // Update is called once per frame
@@ -54,9 +56,9 @@ public class LeftHand : MonoBehaviour
 
     void CalculateState()
     {
-        if (indexCurrent > 0.9f && gripCurrent > 0.9f) PlayerState.instance.leftHandPose = LEFT_HAND_POSE.CLOSE;
-        else if (indexCurrent < 0.1f && gripCurrent > 0.9f) PlayerState.instance.leftHandPose = LEFT_HAND_POSE.INDEX;
-        else if (indexCurrent < 0.9f && gripCurrent > 0.1f) PlayerState.instance.leftHandPose = LEFT_HAND_POSE.OK;
-        else PlayerState.instance.leftHandPose = LEFT_HAND_POSE.OPEN;
+        if (indexTarget > 0.9f && gripTarget > 0.9f) state.leftHandPose = LEFT_HAND_POSE.CLOSE;
+        else if (indexTarget < 0.1f && gripTarget > 0.9f) state.leftHandPose = LEFT_HAND_POSE.INDEX;
+        else if (indexTarget > 0.9f && gripTarget < 0.1f) state.leftHandPose = LEFT_HAND_POSE.OK;
+        else state.leftHandPose = LEFT_HAND_POSE.OPEN;
     }
 }
