@@ -1,22 +1,29 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class StatusMenuPanel : MonoBehaviour
 {
     [SerializeField] GameObject[] buttons;
     [SerializeField] GameObject[] panel;
+    [SerializeField] GameObject mark;
     int currentIndex = 0;
 
     private void OnEnable()
     {
+        if (!buttons[currentIndex].activeSelf)
+        {
+            mark.SetActive(false);
+            return;
+        }
+        mark.SetActive(true);
         panel[currentIndex].SetActive(true);
         panel[currentIndex].GetComponent<Animator>().SetBool("Opened", true);
-        EventSystem.current.SetSelectedGameObject(buttons[currentIndex]);
+    }
+
+    private void Update()
+    {
+        if (mark.activeSelf) mark.transform.position = buttons[currentIndex].transform.position;
     }
 
     public void SelectButton(int index)

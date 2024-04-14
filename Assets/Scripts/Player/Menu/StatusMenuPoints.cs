@@ -5,8 +5,12 @@ using UnityEngine;
 public class StatusMenuPoints : MonoBehaviour
 {
     public static StatusMenuPoints instance;
+
     public GameObject[] panels;
     int currentIndex = -1; // -1 --> no selected
+
+    [SerializeField] GameObject leftArrow;
+    [SerializeField] GameObject rightArrow;
 
     private void Awake()
     {
@@ -18,6 +22,9 @@ public class StatusMenuPoints : MonoBehaviour
         panels[index].SetActive(true);
         panels[index].GetComponent<Animator>().SetBool("Opened", true);
         currentIndex = index;
+
+        leftArrow.SetActive(false);
+        rightArrow.SetActive(false);
     }
 
 
@@ -25,6 +32,9 @@ public class StatusMenuPoints : MonoBehaviour
     {
         StartCoroutine(ClosePanelCo(currentIndex));
         currentIndex = -1;
+
+        leftArrow.SetActive(true);
+        rightArrow.SetActive(true);
     }
 
     IEnumerator ClosePanelCo(int index)
