@@ -9,6 +9,6 @@ public class PlayerPositionOnMap : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.localPosition = new Vector3(transform.position.x / 3, transform.position.z / 3, 0);
+        transform.localPosition = new Vector3(player.position.x / 3, player.position.z / 3, 0);
     }
 }

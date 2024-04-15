@@ -12,23 +12,19 @@ public class HandScreen : MonoBehaviour
 
     [Header("Menu")]
     [SerializeField] Animator menuAnimator;
-    [SerializeField] RectTransform mapFix;
-    Vector3 saveMapPosition;
+    [SerializeField] Transform mapCenter;
+    [SerializeField] Transform playerMark;
+    [SerializeField] Transform centerPosition;
+    ScrollRect scrollRect;
+    Vector3 mapCenterTarget;
     [NonEditable][SerializeField] bool menuOpened;
 
     // Start is called before the first frame update
     void Start()
     {
-        mapFix.localScale = new Vector3(1, 0, 1);
-        saveMapPosition = Vector3.zero;
-
         menuOpened = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        scrollRect = centerPosition.GetComponent<ScrollRect>();
+        mapCenter.position += centerPosition.position - playerMark.position;
     }
 
     public void OpenMenu()
@@ -43,6 +39,23 @@ public class HandScreen : MonoBehaviour
             menuAnimator.SetBool("Opened", false);
             menuOpened = false;
         }
+    }
+
+    public void CenterMap()
+    {
+        mapCenterTarget = mapCenter.position + centerPosition.position - playerMark.position;
+        StartCoroutine(CenterMapCo());
+    }
+
+    IEnumerator CenterMapCo()
+    {
+        scrollRect.enabled = false;
+        while (Vector3.Distance(mapCenter.position, mapCenterTarget) > 0.005f)
+        {
+            mapCenter.position += (centerPosition.position - playerMark.position) * 0.05f;
+            yield return null;
+        }
+        scrollRect.enabled = true;
     }
 
     public void SetScreen(GUN_TYPE type)
