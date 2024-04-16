@@ -43,6 +43,10 @@ public class Enemy : MonoBehaviour
     [Header("AreaDamage")]
     List<string> activeUUIDs = new();
 
+    [Header("DamageDisplay")]
+    public Transform damageTextCenter;
+
+
     private void LateUpdate()
     {
         if (freezePercentage == 100)
@@ -121,7 +125,7 @@ public class Enemy : MonoBehaviour
 
     protected void GiveCoin()
     {
-        if (type == COIN.BIOMATTER) PlayerSkills.instance.biomatter += coinAmount;
-        else PlayerSkills.instance.gear += coinAmount;
+        if (type == COIN.BIOMATTER) PlayerSkills.instance.AddBiomatter(coinAmount);
+        else PlayerSkills.instance.AddGear(coinAmount);
     }
 }

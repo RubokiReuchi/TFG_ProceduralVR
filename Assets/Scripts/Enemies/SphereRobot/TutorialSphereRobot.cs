@@ -70,7 +70,7 @@ public class TutorialSphereRobot : Enemy
             currentHealth -= amount * 5.0f;
             if (damageText != null)
             {
-                FloatingDamageText text = GameObject.Instantiate(damageText, transform.position + Vector3.one * Random.Range(-2.0f, 2.0f), Quaternion.identity).GetComponent<FloatingDamageText>();
+                FloatingDamageText text = GameObject.Instantiate(damageText, damageTextCenter.position + Vector3.one * Random.Range(-0.2f, 0.2f), Quaternion.identity).GetComponentInChildren<FloatingDamageText>();
                 text.damage = amount * 5.0f;
             }
             freezePercentage = 0;
@@ -88,7 +88,7 @@ public class TutorialSphereRobot : Enemy
             currentHealth -= amount;
             if (damageText != null)
             {
-                FloatingDamageText text = GameObject.Instantiate(damageText, transform.position + Vector3.one * Random.Range(-2.0f, 2.0f), Quaternion.identity).GetComponent<FloatingDamageText>();
+                FloatingDamageText text = GameObject.Instantiate(damageText, damageTextCenter.position + Vector3.one * Random.Range(-0.2f, 0.2f), Quaternion.identity).GetComponentInChildren<FloatingDamageText>();
                 text.damage = amount;
             }
         }

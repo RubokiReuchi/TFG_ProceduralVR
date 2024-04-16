@@ -41,7 +41,12 @@ public class EnemyShield : MonoBehaviour
     {
         if (!enabled) return;
         currentHealth -= amount;
-        
+        if (damageText != null)
+        {
+            FloatingDamageText text = GameObject.Instantiate(damageText, enemyScript.damageTextCenter.position + Vector3.one * Random.Range(-0.2f, 0.2f) + Vector3.up * 0.5f, Quaternion.identity).GetComponentInChildren<FloatingDamageText>();
+            text.damage = amount * 5.0f;
+        }
+
         if (currentHealth <= 0)
         {
             currentHealth = 0;

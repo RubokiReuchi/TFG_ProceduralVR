@@ -21,10 +21,12 @@ public class DataPersistenceManager : MonoBehaviour
 
         if (objs.Length > 1)
         {
+            //DataPersistenceManager.instance.LoadGame();
             Destroy(gameObject);
+            return;
         }
 
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         instance = this;
     }

@@ -3250,6 +3250,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7481527261284859716
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 141003528816641133}
+  m_Layer: 10
+  m_Name: DamageTextCenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &141003528816641133
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7481527261284859716}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3638229366201839054}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7647287435566184757
 GameObject:
   m_ObjectHideFlags: 0
@@ -4198,8 +4229,9 @@ Transform:
   m_Children:
   - {fileID: 6987688795404356978}
   - {fileID: 5448550687400710991}
+  - {fileID: 141003528816641133}
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1404831002205447687
 MonoBehaviour:
@@ -4293,6 +4325,7 @@ MonoBehaviour:
   freezeResistance: 0
   iceBlocksParticlesPrefab: {fileID: 1955825772615386086, guid: 744498853c516314a93dade2f3f83d77, type: 3}
   iceBlocksParticlesSpawn: {fileID: 5448550687400710991}
+  damageTextCenter: {fileID: 141003528816641133}
   state: 0
   walkDistance: 10
   shootDistance: 5

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FloatingDamageText : MonoBehaviour
 {
-    /*[HideInInspector]*/ public float damage;
+    [HideInInspector] public float damage;
     [SerializeField] float minSize;
     [SerializeField] float maxSize;
     float size;
@@ -13,7 +13,7 @@ public class FloatingDamageText : MonoBehaviour
     void Start()
     {
         transform.localScale = Vector3.zero;
-        GetComponent<TextMeshPro>().text = damage.ToString();
+        GetComponent<TextMeshPro>().text = Mathf.RoundToInt(damage).ToString();
         if (damage < 250) size = Mathf.Lerp(minSize, maxSize, damage / 250.0f);
         else size = Mathf.Lerp(maxSize, 0.3f, damage / 1000f);
         StartCoroutine(Fade());

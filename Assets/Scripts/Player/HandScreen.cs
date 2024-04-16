@@ -23,8 +23,11 @@ public class HandScreen : MonoBehaviour
     void Start()
     {
         menuOpened = false;
-        scrollRect = centerPosition.GetComponent<ScrollRect>();
-        mapCenter.position += centerPosition.position - playerMark.position;
+        if (centerPosition != null)
+        {
+            scrollRect = centerPosition.GetComponent<ScrollRect>();
+            mapCenter.position += centerPosition.position - playerMark.position;
+        }
     }
 
     public void OpenMenu()

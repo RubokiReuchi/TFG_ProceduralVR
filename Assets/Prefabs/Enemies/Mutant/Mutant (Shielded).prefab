@@ -1120,6 +1120,37 @@ Transform:
   m_Father: {fileID: 5171398177223965660}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: -8.59987, y: 12.500925, z: -58.123295}
+--- !u!1 &2067638284057221960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3734187171806593154}
+  m_Layer: 10
+  m_Name: DamageTextCenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3734187171806593154
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067638284057221960}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1542812798658449999}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2109276654136098693
 GameObject:
   m_ObjectHideFlags: 0
@@ -7194,6 +7225,7 @@ Transform:
   - {fileID: 7109375495652413367}
   - {fileID: 4754688293435409555}
   - {fileID: 4868615754408337419}
+  - {fileID: 3734187171806593154}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7334,6 +7366,7 @@ MonoBehaviour:
   freezeResistance: 20
   iceBlocksParticlesPrefab: {fileID: 3071684718299860570, guid: ab06922e142d84046a650b3ed0c05b2f, type: 3}
   iceBlocksParticlesSpawn: {fileID: 4754688293435409555}
+  damageTextCenter: {fileID: 3734187171806593154}
   state: 0
   slashDistance: 2
   backflipSpeed: 10

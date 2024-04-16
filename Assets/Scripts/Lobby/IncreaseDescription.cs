@@ -216,8 +216,8 @@ public class IncreaseDescription : MonoBehaviour
             //money spend
             switch (usedCoin)
             {
-                case COIN.BIOMATTER: inventory.biomatter -= priceAmount; break;
-                case COIN.GEAR: inventory.gear -= priceAmount; break;
+                case COIN.BIOMATTER: inventory.AddBiomatter(-priceAmount); break;
+                case COIN.GEAR: inventory.AddGear(-priceAmount); break;
             }
 
             CloseAfterPurchase();

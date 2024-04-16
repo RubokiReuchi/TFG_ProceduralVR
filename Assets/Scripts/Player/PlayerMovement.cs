@@ -125,17 +125,11 @@ public class PlayerMovement : MonoBehaviour
             slowPercentage -= Time.deltaTime * 100.0f;
             if (slowPercentage < 0) slowPercentage = 0;
             displayedSlow = slowPercentage;
-            slowMetterMat.SetFloat("_FillPercentage", displayedSlow);
+            slowMetterMat.SetFloat("_FillPercentage", displayedSlow / 2.0f);
         }
-        if (moveProvider.moveSpeed != baseSpeed)
+        if (moveProvider.moveSpeed != baseSpeed - baseSpeed * (slowPercentage / 100.0f))
         {
-            moveProvider.moveSpeed = baseSpeed * slowPercentage;
-        }
-        if (displayedSlow < slowPercentage)
-        {
-            displayedSlow += Time.deltaTime;
-            if (displayedSlow > slowPercentage) displayedSlow = slowPercentage;
-            slowMetterMat.SetFloat("_FillPercentage", displayedSlow);
+            moveProvider.moveSpeed = baseSpeed - baseSpeed * (slowPercentage / 100.0f);
         }
     }
 
@@ -165,5 +159,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (slowPercentage >= this.slowPercentage) this.slowPercentage = slowPercentage;
         this.slowDuration = slowDuration;
+        slowMetterMat.SetFloat("_FillPercentage", this.slowPercentage / 2.0f);
     }
 }

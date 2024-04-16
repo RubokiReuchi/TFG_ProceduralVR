@@ -467,7 +467,7 @@ Transform:
   - {fileID: 8766056400472875458}
   - {fileID: 2499483029453410809}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4941092675593092336
 MonoBehaviour:
@@ -7470,6 +7470,7 @@ GameObject:
   - component: {fileID: 646897141507143821}
   - component: {fileID: 5697187105518680228}
   - component: {fileID: 1346402944693357392}
+  - component: {fileID: 888082404646920112}
   m_Layer: 0
   m_Name: CoinDisplay
   m_TagString: Untagged
@@ -7580,6 +7581,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &888082404646920112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060143829552098856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8f692564d6b0648ad8696ec6c402f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  biomatterText: {fileID: 9172076076511272874}
+  gearText: {fileID: 931612629663207928}
 --- !u!1 &2091063269872652072
 GameObject:
   m_ObjectHideFlags: 0
@@ -37123,6 +37138,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 6275698644058724443}
+  cam: {fileID: 6667081644325226677}
 --- !u!1 &6415110584291965339
 GameObject:
   m_ObjectHideFlags: 0

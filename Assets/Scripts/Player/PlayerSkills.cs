@@ -89,8 +89,13 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
 
         LateStart();
 
+        CoinDisplay coinDisplay = GameObject.Find("CoinDisplay").GetComponent<CoinDisplay>();
+        coinDisplay.biomatterText.text = biomatter.ToString();
+        coinDisplay.gearText.text = gear.ToString();
+
         // Status Menu
         points = GameObject.FindObjectOfType<StatusMenuPoints>();
+        if (points == null) return;
         StatusMenuPanel panel0 = points.panels[0].GetComponent<StatusMenuPanel>();
         float[] beamValues = { attackLevel * 5, proyectileSpeedLevel * 10 };
         panel0.UpdateInformation(0, beamValues);
@@ -294,5 +299,17 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
             default:
                 return false;
         }
+    }
+
+    public void AddBiomatter(int amount)
+    {
+        biomatter += amount;
+        CoinDisplay.instance.biomatterText.text = biomatter.ToString();
+    }
+
+    public void AddGear(int amount)
+    {
+        gear += amount;
+        CoinDisplay.instance.gearText.text = gear.ToString();
     }
 }

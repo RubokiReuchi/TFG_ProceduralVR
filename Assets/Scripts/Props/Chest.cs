@@ -37,8 +37,8 @@ public class Chest : MonoBehaviour
             {
                 handInTime = 1;
                 GetComponent<Animator>().enabled = true;
-                if (type == COIN.BIOMATTER) PlayerSkills.instance.biomatter += amount;
-                else PlayerSkills.instance.gear += amount;
+                if (type == COIN.BIOMATTER) PlayerSkills.instance.AddBiomatter(amount);
+                else PlayerSkills.instance.AddGear(amount);
                 enabled = false;
             }
             material.SetColor("_GridColor", new Color(0.35f, 1, 0.54f + 0.46f * handInTime, 1));

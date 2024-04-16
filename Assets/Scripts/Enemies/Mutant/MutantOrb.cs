@@ -51,7 +51,7 @@ public class MutantOrb : Enemy
         currentHealth -= amount;
         if (damageText != null)
         {
-            FloatingDamageText text = GameObject.Instantiate(damageText, transform.position + Vector3.one * Random.Range(-2.0f, 2.0f), Quaternion.identity).GetComponent<FloatingDamageText>();
+            FloatingDamageText text = GameObject.Instantiate(damageText, damageTextCenter.position + Vector3.one * Random.Range(-0.2f, 0.2f) + Vector3.up * 0.5f, Quaternion.identity).GetComponentInChildren<FloatingDamageText>();
             text.damage = amount * 5.0f;
         }
 
