@@ -320,8 +320,12 @@ public class PlayerState : MonoBehaviour
             fadeMaterial.SetFloat("_Opacity", opacity);
             yield return null;
         }
-        DataPersistenceManager.instance.SaveGame();
-        SceneManager.LoadScene(2); // lobby
+
+        if (SceneManager.GetActiveScene().buildIndex == 2) // die in tutorial
+        {
+            DataPersistenceManager.instance.NewGame();
+        }
+        SceneManager.LoadScene(3); // lobby
     }
 
     public void IncreaseMaxHealth()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class DataPersistenceManager : MonoBehaviour
 {
@@ -17,25 +18,39 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void Awake()
     {
-        GameObject[] objs = GameObject.FindGameObjectsWithTag("DataPersistenceManager");
-
-        if (objs.Length > 1)
+        if (instance != null)
         {
-            //DataPersistenceManager.instance.LoadGame();
-            Destroy(gameObject);
+            Destroy(this.gameObject);
             return;
         }
 
-        //DontDestroyOnLoad(gameObject);
-
         instance = this;
+        DontDestroyOnLoad(this.gameObject);
+
+        dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
-        dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnSceneUnLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SceneManager.sceneUnloaded -= OnSceneUnLoaded;
+    }
+
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
         dataPersistanceObjects = FindAllDataPersistanceObjects();
         LoadGame();
+    }
+
+    public void OnSceneUnLoaded(Scene scene)
+    {
+        SaveGame();
     }
 
     public void NewGame()
@@ -47,7 +62,7 @@ public class DataPersistenceManager : MonoBehaviour
     {
         gameData = dataHandler.Load();
 
-        if (this.gameData == null) NewGame();
+        if (this.gameData == null) return;
 
         foreach (var dataPersistanceObject in dataPersistanceObjects)
         {
@@ -57,6 +72,8 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void SaveGame()
     {
+        if (this.gameData == null) return;
+
         foreach (var dataPersistanceObject in dataPersistanceObjects)
         {
             dataPersistanceObject.SaveData(ref gameData);

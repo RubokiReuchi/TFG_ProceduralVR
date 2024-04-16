@@ -16,7 +16,6 @@ public class ExitPlatform : MonoBehaviour
             playerLocomotionSystem.SetActive(false);
             StartCoroutine(FadeOut());
             GetComponent<Animator>().SetTrigger("Move");
-            DataPersistenceManager.instance.SaveGame();
         }
     }
 

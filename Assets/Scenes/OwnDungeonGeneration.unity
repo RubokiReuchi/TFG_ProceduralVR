@@ -302,6 +302,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DataPersistenceManager
       objectReference: {fileID: 0}
+    - target: {fileID: 900245663207300178, guid: b3e730ccc0ba9dc42acd6df0a90ccb3d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2904192357406194837, guid: b3e730ccc0ba9dc42acd6df0a90ccb3d, type: 3}
       propertyPath: useEncryption
       value: 0

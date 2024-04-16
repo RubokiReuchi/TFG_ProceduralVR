@@ -40,7 +40,6 @@ public class BossRoomBehaviour : RoomBehaviour
         for (int i = 0; i < gatesInMap.Count; i++) gatesInMap[i].GetComponent<GateInMap>().ShowGate();
 
         StartCoroutine(FadeOut());
-        DataPersistenceManager.instance.SaveGame();
     }
 
     IEnumerator FadeOut()
