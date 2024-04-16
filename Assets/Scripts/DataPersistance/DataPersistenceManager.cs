@@ -33,24 +33,17 @@ public class DataPersistenceManager : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneManager.sceneUnloaded += OnSceneUnLoaded;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        SceneManager.sceneUnloaded -= OnSceneUnLoaded;
     }
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         dataPersistanceObjects = FindAllDataPersistanceObjects();
         LoadGame();
-    }
-
-    public void OnSceneUnLoaded(Scene scene)
-    {
-        SaveGame();
     }
 
     public void NewGame()
@@ -76,7 +69,7 @@ public class DataPersistenceManager : MonoBehaviour
 
         foreach (var dataPersistanceObject in dataPersistanceObjects)
         {
-            dataPersistanceObject.SaveData(ref gameData);
+            dataPersistanceObject.SaveData(gameData);
         }
 
         dataHandler.Save(gameData);
@@ -84,7 +77,7 @@ public class DataPersistenceManager : MonoBehaviour
 
     List<IDataPersistence> FindAllDataPersistanceObjects()
     {
-        IEnumerable<IDataPersistence> dataPersistanceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>();
+        IEnumerable<IDataPersistence> dataPersistanceObjects = FindObjectsOfType<MonoBehaviour>(true).OfType<IDataPersistence>();
         return new List<IDataPersistence>(dataPersistanceObjects);
     }
 }

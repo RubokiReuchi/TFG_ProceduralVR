@@ -52,6 +52,7 @@ public class BossRoomBehaviour : RoomBehaviour
             fadeMaterial.SetFloat("_Opacity", opacity);
             yield return null;
         }
+        DataPersistenceManager.instance.SaveGame();
         SceneManager.LoadScene(2); // lobby
     }
 

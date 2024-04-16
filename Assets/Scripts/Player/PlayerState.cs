@@ -325,6 +325,7 @@ public class PlayerState : MonoBehaviour
         {
             DataPersistenceManager.instance.NewGame();
         }
+        DataPersistenceManager.instance.SaveGame();
         SceneManager.LoadScene(3); // lobby
     }
 

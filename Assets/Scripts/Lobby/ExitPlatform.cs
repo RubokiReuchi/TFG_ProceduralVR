@@ -31,7 +31,7 @@ public class ExitPlatform : MonoBehaviour
             fadeMat.SetFloat("_Opacity", opacity);
             yield return null;
         }
-
+        DataPersistenceManager.instance.SaveGame();
         SceneManager.LoadScene(4); // level scene
     }
 }
