@@ -10,6 +10,7 @@ public class PlayerMissile : Projectile
     [SerializeField] GameObject smokeHitMark;
     [SerializeField] GameObject hitMark;
     [SerializeField] GameObject smokeTrail;
+    [SerializeField] GameObject damageText;
     PlayerSkills skills;
 
     // Start is called before the first frame update
@@ -65,7 +66,7 @@ public class PlayerMissile : Projectile
             if (script.enabled)
             {
                 if (gameObject.CompareTag("GreenProjectile") && script.type == COIN.BIOMATTER) damage += (skills.greenBeamLevel * 0.2f) * damage;
-                script.TakeDamage(damage);
+                script.TakeDamage(damage, damageText);
                 if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze(damage + (skills.blueBeamLevel * 0.05f) * damage);
             }
         }
@@ -75,7 +76,7 @@ public class PlayerMissile : Projectile
             GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
             float finalDamage = !gameObject.CompareTag("RedProjectile") ? damage / 2.0f : damage + (skills.redBeamLevel * 0.1f) * damage;
             EnemyShield script = collision.gameObject.GetComponent<EnemyShield>();
-            if (script.enabled) script.TakeDamage(finalDamage);
+            if (script.enabled) script.TakeDamage(finalDamage, damageText);
         }
         else if (collision.gameObject.CompareTag("DeflectProjectile"))
         {

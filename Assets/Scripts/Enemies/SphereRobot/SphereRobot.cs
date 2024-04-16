@@ -224,13 +224,18 @@ public class SphereRobot : Enemy
         freezeApplied = false;
     }
 
-    public override void TakeDamage(float amount)
+    public override void TakeDamage(float amount, GameObject damageText = null)
     {
         if (!enabled || invulneravilityTime > 0) return;
 
         if (freezePercentage == 100)
         {
             currentHealth -= amount * 5.0f;
+            if (damageText != null)
+            {
+                FloatingDamageText text = GameObject.Instantiate(damageText, transform.position + Vector3.one * Random.Range(-2.0f, 2.0f), Quaternion.identity).GetComponent<FloatingDamageText>();
+                text.damage = amount * 5.0f;
+            }
             freezePercentage = 0;
             material.SetFloat("_FreezeInterpolation", 0);
             if (currentHealth < 0)
@@ -241,7 +246,15 @@ public class SphereRobot : Enemy
                 return;
             }
         }
-        else currentHealth -= amount;
+        else
+        {
+            currentHealth -= amount;
+            if (damageText != null)
+            {
+                FloatingDamageText text = GameObject.Instantiate(damageText, transform.position + Vector3.one * Random.Range(-2.0f, 2.0f), Quaternion.identity).GetComponent<FloatingDamageText>();
+                text.damage = amount;
+            }
+        }
         
         if (currentHealth <= 0)
         {

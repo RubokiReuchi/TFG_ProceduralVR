@@ -9,6 +9,7 @@ public class PlayerSuperMissile : Projectile
     [SerializeField] GameObject decal;
     [SerializeField] GameObject smokeHitMark;
     [SerializeField] GameObject hitMark;
+    [SerializeField] GameObject damageText;
     bool playVFXs = false;
     float cdVFX = 0;
     bool shockwave = false;
@@ -73,7 +74,7 @@ public class PlayerSuperMissile : Projectile
             if (script.enabled)
             {
                 if (gameObject.CompareTag("GreenProjectile") && script.type == COIN.BIOMATTER) damage += (skills.greenBeamLevel * 0.2f) * damage;
-                script.TakeDamage(damage);
+                script.TakeDamage(damage, damageText);
                 if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze((damage / 2.0f) + (skills.blueBeamLevel * 0.05f) * (damage / 2.0f));
                 float lifeChargeAmount = PlayerSkills.instance.lifeChargeLevel * 0.01f;
                 if (lifeChargeAmount > 0) PlayerState.instance.HealPercentage(lifeChargeAmount);
@@ -90,7 +91,7 @@ public class PlayerSuperMissile : Projectile
             GameObject.Instantiate(smokeHitMark, collision.contacts[0].point, Quaternion.identity);
             float finalDamage = !gameObject.CompareTag("RedProjectile") ? damage / 2.0f : damage + (skills.redBeamLevel * 0.1f) * damage;
             EnemyShield script = collision.gameObject.GetComponent<EnemyShield>();
-            if (script.enabled) script.TakeDamage(finalDamage);
+            if (script.enabled) script.TakeDamage(finalDamage, damageText);
             if (shockwave)
             {
                 PlayerShockwave shockwave = GameObject.Instantiate(shockwavePrefab, collision.contacts[0].point, Quaternion.identity).GetComponent<PlayerShockwave>();

@@ -8,6 +8,7 @@ public class PlayerProjectile : Projectile
     [SerializeField] float damage;
     [SerializeField] GameObject decal;
     [SerializeField] GameObject hitMark;
+    [SerializeField] GameObject damageText;
     PlayerSkills skills;
 
     [SerializeField] bool isTripleShotSecondary;
@@ -48,7 +49,7 @@ public class PlayerProjectile : Projectile
             if (script.enabled)
             {
                 if (gameObject.CompareTag("GreenProjectile") && script.type == COIN.BIOMATTER) damage += (skills.greenBeamLevel * 0.2f) * damage;
-                script.TakeDamage(damage);
+                script.TakeDamage(damage, damageText);
                 if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze(damage + (skills.blueBeamLevel * 0.05f) * damage);
             }
         }
@@ -57,7 +58,7 @@ public class PlayerProjectile : Projectile
             GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
             float finalDamage = !gameObject.CompareTag("RedProjectile") ? damage / 2.0f : damage + (skills.redBeamLevel * 0.1f) * damage;
             EnemyShield script = collision.gameObject.GetComponent<EnemyShield>();
-            if (script.enabled) script.TakeDamage(finalDamage);
+            if (script.enabled) script.TakeDamage(finalDamage, damageText);
         }
         else if (collision.gameObject.CompareTag("DeflectProjectile"))
         {

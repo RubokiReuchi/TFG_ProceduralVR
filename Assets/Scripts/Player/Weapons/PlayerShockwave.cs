@@ -8,6 +8,7 @@ public class PlayerShockwave : MonoBehaviour
     List<Transform> entityDamaged = new();
     bool increase = true;
     [HideInInspector] public float maxSize = 2.0f;
+    [SerializeField] GameObject damageText;
     string UUID;
 
     private void OnEnable()
@@ -42,7 +43,7 @@ public class PlayerShockwave : MonoBehaviour
             Enemy script = other.GetComponent<Enemy>();
             if (script.enabled)
             {
-                script.TakeAreaDamage(damage, UUID);
+                script.TakeAreaDamage(damage, UUID, damageText);
                 if (gameObject.CompareTag("BlueProjectile")) script.TakeAreaFreeze(damage, UUID);
             }
         }
@@ -50,7 +51,7 @@ public class PlayerShockwave : MonoBehaviour
         {
             float finalDamage = !gameObject.CompareTag("RedProjectile") ? damage / 10.0f : damage;
             EnemyShield script = other.GetComponent<EnemyShield>();
-            if (script.enabled) script.TakeDamage(finalDamage);
+            if (script.enabled) script.TakeDamage(finalDamage, damageText);
             entityDamaged.Add(other.transform);
         }
         else if (other.CompareTag("Puzzle"))

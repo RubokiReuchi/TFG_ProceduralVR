@@ -37,7 +37,7 @@ public class EnemyShield : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, GameObject damageText = null)
     {
         if (!enabled) return;
         currentHealth -= amount;

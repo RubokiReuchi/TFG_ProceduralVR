@@ -46,9 +46,14 @@ public class MutantOrb : Enemy
         destroyPs.transform.rotation = Quaternion.identity;
     }
 
-    public override void TakeDamage(float amount)
+    public override void TakeDamage(float amount, GameObject damageText = null)
     {
         currentHealth -= amount;
+        if (damageText != null)
+        {
+            FloatingDamageText text = GameObject.Instantiate(damageText, transform.position + Vector3.one * Random.Range(-2.0f, 2.0f), Quaternion.identity).GetComponent<FloatingDamageText>();
+            text.damage = amount * 5.0f;
+        }
 
         if (currentHealth <= 0)
         {

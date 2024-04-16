@@ -447,13 +447,18 @@ public class Mutant : Enemy
         }
     }
 
-    public override void TakeDamage(float amount)
+    public override void TakeDamage(float amount, GameObject damageText = null)
     {
         if (!enabled || invulneravilityTime > 0) return;
 
         if (freezePercentage == 100)
         {
             currentHealth -= amount * 5.0f;
+            if (damageText != null)
+            {
+                FloatingDamageText text = GameObject.Instantiate(damageText, transform.position + Vector3.one * Random.Range(-2.0f, 2.0f), Quaternion.identity).GetComponent<FloatingDamageText>();
+                text.damage = amount * 5.0f;
+            }
             freezePercentage = 0;
             material.SetFloat("_FreezeInterpolation", 0);
             material2.SetFloat("_FreezeInterpolation", 0);
@@ -465,7 +470,15 @@ public class Mutant : Enemy
                 return;
             }
         }
-        else currentHealth -= amount;
+        else
+        {
+            currentHealth -= amount;
+            if (damageText != null)
+            {
+                FloatingDamageText text = GameObject.Instantiate(damageText, transform.position + Vector3.one * Random.Range(-2.0f, 2.0f), Quaternion.identity).GetComponent<FloatingDamageText>();
+                text.damage = amount;
+            }
+        }
 
         if (currentHealth <= 0)
         {

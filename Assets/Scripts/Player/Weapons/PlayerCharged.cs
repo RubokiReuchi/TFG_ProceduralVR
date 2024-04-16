@@ -17,6 +17,7 @@ public class PlayerCharged : Projectile
     Vector3 initialScale;
     [SerializeField] GameObject decal;
     [SerializeField] GameObject hitMark;
+    [SerializeField] GameObject damageText;
     bool shockwave = false;
     [SerializeField] GameObject shockwavePrefab;
     PlayerSkills skills;
@@ -64,7 +65,7 @@ public class PlayerCharged : Projectile
             if (script.enabled)
             {
                 if (gameObject.CompareTag("GreenProjectile") && script.type == COIN.BIOMATTER) damage += (skills.greenBeamLevel * 0.2f) * damage;
-                script.TakeDamage(damage);
+                script.TakeDamage(damage, damageText);
                 if (gameObject.CompareTag("BlueProjectile")) script.TakeFreeze((damage / 2.0f) + (skills.blueBeamLevel * 0.05f) * (damage / 2.0f));
                 if (fullyCharged)
                 {
@@ -84,7 +85,7 @@ public class PlayerCharged : Projectile
             GameObject.Instantiate(hitMark, collision.contacts[0].point, Quaternion.identity);
             float finalDamage = !gameObject.CompareTag("RedProjectile") ? damage / 2.0f : damage + (skills.redBeamLevel * 0.1f) * damage;
             EnemyShield script = collision.gameObject.GetComponent<EnemyShield>();
-            if (script.enabled) script.TakeDamage(finalDamage);
+            if (script.enabled) script.TakeDamage(finalDamage, damageText);
             if (shockwave)
             {
                 PlayerShockwave shockwave = GameObject.Instantiate(shockwavePrefab, collision.contacts[0].point, Quaternion.identity).GetComponent<PlayerShockwave>();

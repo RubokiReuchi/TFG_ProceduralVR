@@ -79,18 +79,18 @@ public class Enemy : MonoBehaviour
 
     }
 
-    public virtual void TakeDamage(float amount)
+    public virtual void TakeDamage(float amount, GameObject damageText = null)
     {
 
     }
 
-    public void TakeAreaDamage(float amount, string UUID)
+    public void TakeAreaDamage(float amount, string UUID, GameObject damageText = null)
     {
         if (activeUUIDs.Contains(UUID)) return;
         else
         {
             activeUUIDs.Add(UUID);
-            TakeDamage(amount);
+            TakeDamage(amount, damageText);
         }
     }
 

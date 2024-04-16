@@ -10,5 +10,6 @@ public class PlayerPositionOnMap : MonoBehaviour
     void Update()
     {
         transform.localPosition = new Vector3(player.position.x / 3, player.position.z / 3, 0);
+        transform.localRotation = new Quaternion(player.rotation.x, player.rotation.z, 0, player.rotation.w);
     }
 }
