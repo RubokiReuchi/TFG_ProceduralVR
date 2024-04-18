@@ -90,8 +90,11 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
         LateStart();
 
         CoinDisplay coinDisplay = GameObject.Find("CoinDisplay").GetComponent<CoinDisplay>();
-        coinDisplay.biomatterText.text = biomatter.ToString();
-        coinDisplay.gearText.text = gear.ToString();
+        if (coinDisplay != null)
+        {
+            coinDisplay.biomatterText.text = biomatter.ToString();
+            coinDisplay.gearText.text = gear.ToString();
+        }
 
         // Status Menu
         points = GameObject.FindObjectOfType<StatusMenuPoints>();

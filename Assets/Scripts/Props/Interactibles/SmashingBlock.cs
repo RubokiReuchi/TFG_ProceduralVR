@@ -11,15 +11,9 @@ public class SmashingBlock : Puzzle
     [SerializeField] bool startActivated;
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         if (startActivated) animator.SetTrigger("Active");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public override void StartPuzzle()

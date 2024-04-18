@@ -52,8 +52,8 @@ public class TutorialSphereRobot : Enemy
     {
         animator.SetTrigger("Walk");
         state = STATE.WALK;
-        agent.speed = 2;
-        animator.speed = 0.7f;
+        agent.speed = 1.2f;
+        animator.speed = 0.31f;
     }
 
     public override void StartCheckOptions()

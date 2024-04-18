@@ -83,6 +83,7 @@ public class TutorialGateBehaviour : MonoBehaviour
                 break;
             case GATE_STATE.BOSS:
                 OpenGate();
+                otherGateBehaviour.OpenGate();
                 break;
             case GATE_STATE.DESTROYED:
             case GATE_STATE.NULL:

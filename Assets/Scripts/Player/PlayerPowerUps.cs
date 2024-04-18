@@ -61,7 +61,7 @@ public class PlayerPowerUps : MonoBehaviour
             case POWER_UP_TYPE.SHIELD:
                 PlayerState.instance.shieldObtained = true;
                 float[] shieldValues = { (PlayerSkills.instance.shieldLevel * 10) };
-                StatusMenuPoints.instance.panels[2].GetComponent<StatusMenuPanel>().UpdateInformation(4, shieldValues);
+                StatusMenuPoints.instance.panels[2].GetComponent<StatusMenuPanel>().UpdateInformation(3, shieldValues);
                 break;
             default:
                 break;

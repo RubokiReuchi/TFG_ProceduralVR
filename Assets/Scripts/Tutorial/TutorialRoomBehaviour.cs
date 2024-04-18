@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TutorialRoomBehaviour : MonoBehaviour
 {
+    [SerializeField] bool isBoss; // temporal
+
     [Header("Room")]
     public TutorialGateBehaviour[] gateBehaviours;
     [NonEditable][SerializeField] protected bool entered;
@@ -47,6 +49,8 @@ public class TutorialRoomBehaviour : MonoBehaviour
     {
         if (!other.CompareTag("PlayerHead")) return;
         TutorialRoomGenerator.instance.UpdateRooms(this);
+
+        if (isBoss) PlayerState.instance.TakeDamage(1000); // temp
 
         if (entered) return;
         EnteredInRoom();
