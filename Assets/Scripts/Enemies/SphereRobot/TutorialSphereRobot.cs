@@ -122,7 +122,7 @@ public class TutorialSphereRobot : Enemy
         animator.SetTrigger("Destroy");
         alive = false;
         agent.speed = 0;
-        Invoke("Destroyed", 1.45f);
+        Invoke("Destroyed", 2.5f);
     }
 
     void Destroyed()

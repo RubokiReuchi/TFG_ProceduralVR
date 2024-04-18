@@ -50,7 +50,12 @@ public class TutorialRoomBehaviour : MonoBehaviour
         if (!other.CompareTag("PlayerHead")) return;
         TutorialRoomGenerator.instance.UpdateRooms(this);
 
-        if (isBoss) PlayerState.instance.TakeDamage(1000); // temp
+        // temp
+        if (isBoss)
+        {
+            PlayerState.instance.TakeDamage(1000);
+            PlayerState.instance.TakeDamage(1000);
+        }
 
         if (entered) return;
         EnteredInRoom();

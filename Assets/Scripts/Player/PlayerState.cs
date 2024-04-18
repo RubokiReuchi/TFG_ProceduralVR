@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public enum LEFT_HAND_POSE
 {
@@ -190,6 +191,9 @@ public class PlayerState : MonoBehaviour
         if (currentHealth <= 0)
         {
             currentHealth = 0;
+            GetComponent<PlayerMovement>().enabled = false;
+            GameObject.Find("LocomotionSystem").SetActive(false);
+            GetComponentInChildren<PlayerGun>().enabled = false;
             StartCoroutine(DeathFadeOut());
             return;
         }
