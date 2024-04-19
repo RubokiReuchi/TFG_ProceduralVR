@@ -145,10 +145,9 @@ MonoBehaviour:
   - {fileID: -5900156287507556825}
   - {fileID: -6293776284769678792}
   - {fileID: -3819596286013512660}
-  - {fileID: 7616484806718097526}
-  - {fileID: 2906650452508660119}
   - {fileID: 6939651758712618320}
-  m_RendererFeatureMap: 2716d3eb1d6f1eae388a869ad003a8a82c64c33a6a11feca768897ed9330b36997d101bc2f7f562850fdfab681984e60
+  - {fileID: 7324887522165403104}
+  m_RendererFeatureMap: 2716d3eb1d6f1eae388a869ad003a8a82c64c33a6a11feca50fdfab681984e60e02d5c7a643aa765
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -186,21 +185,6 @@ MonoBehaviour:
   m_CopyDepthMode: 1
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
---- !u!114 &2906650452508660119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2f337ff598389d42b128104bedefb1a, type: 3}
-  m_Name: ColorBlitRendererFeature
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  m_Shader: {fileID: 4800000, guid: 70e8ee2ac5b6f314194561dfd09f403c, type: 3}
-  m_Intensity: 1
 --- !u!114 &6939651758712618320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,14 +195,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
-  m_Name: BW Dither Effect
+  m_Name: Dither Effect
   m_EditorClassIdentifier: 
   m_Active: 1
   passMaterial: {fileID: 2100000, guid: 0e98e7656361f624d81462d6d8ca0faa, type: 2}
   injectionPoint: 600
   requirements: 4
   passIndex: 0
---- !u!114 &7616484806718097526
+--- !u!114 &7324887522165403104
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -227,36 +211,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: RenderObjects
+  m_Script: {fileID: 11500000, guid: a6cf5c6a4e850cb4789ca4d95f009134, type: 3}
+  m_Name: DitherRendererFeature
   m_EditorClassIdentifier: 
-  m_Active: 1
-  settings:
-    passTag: RenderObjects
-    Event: 500
-    filterSettings:
-      RenderQueueType: 1
-      LayerMask:
-        serializedVersion: 2
-        m_Bits: 2
-      PassNames: []
-    overrideMaterial: {fileID: 0}
-    overrideMaterialPassIndex: 0
-    overrideShader: {fileID: 0}
-    overrideShaderPassIndex: 0
-    overrideMode: 1
-    overrideDepthState: 0
-    depthCompareFunction: 4
-    enableWrite: 1
-    stencilSettings:
-      overrideStencilState: 0
-      stencilReference: 0
-      stencilCompareFunction: 8
-      passOperation: 0
-      failOperation: 0
-      zFailOperation: 0
-    cameraSettings:
-      overrideCamera: 0
-      restoreCamera: 1
-      offset: {x: 0, y: 0, z: 0, w: 0}
-      cameraFieldOfView: 60
+  m_Active: 0
+  m_Shader: {fileID: 4800000, guid: d46a5a457fefedf42a83d75545dd7379, type: 3}
+  m_DitherSpread: 0.1
+  m_ColorResolution: 30
