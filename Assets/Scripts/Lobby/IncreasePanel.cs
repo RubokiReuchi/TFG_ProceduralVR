@@ -28,6 +28,8 @@ public enum LEVEL_UP
 
 public class IncreasePanel : MonoBehaviour
 {
+    Transform cameraTransform;
+
     LobbyPanel[] panels;
     [SerializeField] float triggerDistance;
     [SerializeField] GameObject selectIcon;
@@ -49,12 +51,14 @@ public class IncreasePanel : MonoBehaviour
         buttons = GetComponentsInChildren<IncreaseButton>();
         playerSkills = PlayerSkills.instance;
         foreach (IncreaseButton button in buttons) button.CalculateColor(playerSkills);
+
+        cameraTransform = Camera.main.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 distance = Camera.main.transform.position - transform.position;
+        Vector3 distance = cameraTransform.position - transform.position;
         if (distance.magnitude < triggerDistance)
         {
             if (showing) return;

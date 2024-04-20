@@ -11,11 +11,14 @@ public class TutorialExplanation : MonoBehaviour
     [SerializeField] bool active;
     [SerializeField] GameObject activeOnDestroy;
 
+    Transform cameraTransform;
+
     void Start()
     {
         Canvas canvas = GetComponent<Canvas>();
         if (!active) canvas.enabled = false;
         if (canvas.worldCamera == null) canvas.worldCamera = Camera.main;
+        cameraTransform = Camera.main.transform;
     }
 
     // Update is called once per frame
@@ -28,7 +31,7 @@ public class TutorialExplanation : MonoBehaviour
             active = true;
         }
 
-        Vector3 distance = Camera.main.transform.position - transform.position;
+        Vector3 distance = cameraTransform.position - transform.position;
         if (distance.magnitude < triggerDistance)
         {
             if (showing) return;
