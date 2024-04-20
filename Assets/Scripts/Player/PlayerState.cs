@@ -192,7 +192,7 @@ public class PlayerState : MonoBehaviour
         {
             currentHealth = 0;
             GetComponent<PlayerMovement>().enabled = false;
-            GameObject.Find("LocomotionSystem").SetActive(false);
+            GameObject.Find("Locomotion System").SetActive(false);
             GetComponentInChildren<PlayerGun>().enabled = false;
             StartCoroutine(DeathFadeOut());
             return;
