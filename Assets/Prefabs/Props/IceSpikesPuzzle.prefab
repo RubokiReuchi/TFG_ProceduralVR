@@ -37,7 +37,7 @@ Transform:
   - {fileID: 2202370249968813092}
   - {fileID: 8551523751457817184}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3349495651477737053
 Animator:
@@ -4920,6 +4920,7 @@ GameObject:
   - component: {fileID: 6360312252385773472}
   - component: {fileID: 64119877469555843}
   - component: {fileID: 4315655170389312997}
+  - component: {fileID: 8871313778647556805}
   m_Layer: 0
   m_Name: Spike (2)
   m_TagString: Puzzle
@@ -5026,6 +5027,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17974da7afab6af4788d87772c4069df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8871313778647556805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4191114435539775891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33e2bc4ff96ddaa44a0e970ebfa73d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puzzle: {fileID: 5948722831786599353}
 --- !u!1 &4782983738283132322
 GameObject:
   m_ObjectHideFlags: 0
@@ -5039,6 +5053,7 @@ GameObject:
   - component: {fileID: 3113378070898598875}
   - component: {fileID: 2220539097518136906}
   - component: {fileID: 6770328661881412303}
+  - component: {fileID: 2620781200720125059}
   m_Layer: 0
   m_Name: Spike
   m_TagString: Puzzle
@@ -5145,6 +5160,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17974da7afab6af4788d87772c4069df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2620781200720125059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4782983738283132322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33e2bc4ff96ddaa44a0e970ebfa73d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puzzle: {fileID: 5948722831786599353}
 --- !u!1 &4960714321979060877
 GameObject:
   m_ObjectHideFlags: 0
@@ -5158,6 +5186,7 @@ GameObject:
   - component: {fileID: 6725323538204303582}
   - component: {fileID: 2165140574978350365}
   - component: {fileID: 890269293382236688}
+  - component: {fileID: 7112184850005066905}
   m_Layer: 0
   m_Name: Spike (3)
   m_TagString: Puzzle
@@ -5264,6 +5293,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17974da7afab6af4788d87772c4069df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7112184850005066905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4960714321979060877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33e2bc4ff96ddaa44a0e970ebfa73d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puzzle: {fileID: 5948722831786599353}
 --- !u!1 &7302831052221639544
 GameObject:
   m_ObjectHideFlags: 0
@@ -5330,6 +5372,7 @@ GameObject:
   - component: {fileID: 3763660083676986033}
   - component: {fileID: 594496750564464336}
   - component: {fileID: 5299425240317837923}
+  - component: {fileID: 5958933099969804662}
   m_Layer: 0
   m_Name: Spike (1)
   m_TagString: Puzzle
@@ -5436,3 +5479,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17974da7afab6af4788d87772c4069df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5958933099969804662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8974084309278131369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33e2bc4ff96ddaa44a0e970ebfa73d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puzzle: {fileID: 5948722831786599353}
