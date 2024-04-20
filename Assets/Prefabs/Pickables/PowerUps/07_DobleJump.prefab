@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5875919419282288115}
   - component: {fileID: 5192167842519917065}
   - component: {fileID: 6662703666520215981}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 991ff25bd05e8bd4a9d859e478612c80, type: 2}
+  - {fileID: 2100000, guid: 80d3a28a47e0920459573b20c2de4b6e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 4807390515191949220}
   - component: {fileID: 2801699948674857069}
   - component: {fileID: 5874319519859381544}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: 07_DobleJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ Transform:
   m_Children:
   - {fileID: 6731531805915371134}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2801699948674857069
 MonoBehaviour:

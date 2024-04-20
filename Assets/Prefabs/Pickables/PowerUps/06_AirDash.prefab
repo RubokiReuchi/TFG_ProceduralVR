@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 275263709438244826}
   - component: {fileID: 7432877652868336397}
   - component: {fileID: 753337266160962993}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: 06_AirDash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 4171900539327860775}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7432877652868336397
 MonoBehaviour:
@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 5680943814745378000}
   - component: {fileID: 19962445046017326}
   - component: {fileID: 8806257920279438513}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 991ff25bd05e8bd4a9d859e478612c80, type: 2}
+  - {fileID: 2100000, guid: 80d3a28a47e0920459573b20c2de4b6e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

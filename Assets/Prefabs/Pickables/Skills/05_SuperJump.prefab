@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6651273401688560235}
   - component: {fileID: 2388914229375635522}
   - component: {fileID: 941514550379939630}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 991ff25bd05e8bd4a9d859e478612c80, type: 2}
+  - {fileID: 2100000, guid: 80d3a28a47e0920459573b20c2de4b6e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 5463843346115510500}
   - component: {fileID: 1173207496417146595}
   - component: {fileID: 4816386017931210511}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: 05_SuperJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ Transform:
   m_Children:
   - {fileID: 5038454544212380397}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1173207496417146595
 MonoBehaviour:

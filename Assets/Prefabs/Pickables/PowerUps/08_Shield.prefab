@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1038937767542912754}
   - component: {fileID: 1118465351001340215}
   - component: {fileID: 2915146369585037462}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: 08_Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 3026141429730133481}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1118465351001340215
 MonoBehaviour:
@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 2990862876855312960}
   - component: {fileID: 6669175315099692064}
   - component: {fileID: 8068962295317412806}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 991ff25bd05e8bd4a9d859e478612c80, type: 2}
+  - {fileID: 2100000, guid: 80d3a28a47e0920459573b20c2de4b6e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

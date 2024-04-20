@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9142218632709619620}
   - component: {fileID: 5468923640300562160}
   - component: {fileID: 6380142115352332840}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 4027254137299481522}
   - component: {fileID: 5180997580992539576}
   - component: {fileID: 4114267832336497460}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: 02_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ Transform:
   m_Children:
   - {fileID: 3043806405206297811}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5180997580992539576
 MonoBehaviour:

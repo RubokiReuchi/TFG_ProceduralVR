@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3991369998970110765}
   - component: {fileID: 669134480229207333}
   - component: {fileID: -2365083907408469557}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: 00_HandOfTheGiant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 8868539006121559790}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &669134480229207333
 MonoBehaviour:
@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 31592686897669665}
   - component: {fileID: 4644233298889157186}
   - component: {fileID: 4849968176204579386}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 991ff25bd05e8bd4a9d859e478612c80, type: 2}
+  - {fileID: 2100000, guid: 80d3a28a47e0920459573b20c2de4b6e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3057117885818559459}
   - component: {fileID: 2756622322687973279}
   - component: {fileID: 9077741874438992642}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: 04_MisileMode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 4943859613797969717}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2756622322687973279
 MonoBehaviour:
@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 246717700105122271}
   - component: {fileID: 5681396153723038490}
   - component: {fileID: 3875042035618167453}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 991ff25bd05e8bd4a9d859e478612c80, type: 2}
+  - {fileID: 2100000, guid: 80d3a28a47e0920459573b20c2de4b6e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

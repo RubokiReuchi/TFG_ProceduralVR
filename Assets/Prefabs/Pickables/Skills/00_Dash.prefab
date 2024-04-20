@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3674147130701530473}
   - component: {fileID: 5752655981939395319}
   - component: {fileID: 6728556075601161447}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 991ff25bd05e8bd4a9d859e478612c80, type: 2}
+  - {fileID: 2100000, guid: 80d3a28a47e0920459573b20c2de4b6e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 7553934685136814779}
   - component: {fileID: 6723475980464120073}
   - component: {fileID: 6471796310624488192}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: 00_Dash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ Transform:
   m_Children:
   - {fileID: 1159933146302736984}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6723475980464120073
 MonoBehaviour:

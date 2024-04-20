@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4723570691817251260}
   - component: {fileID: 4227766134372950138}
   - component: {fileID: 5958570462413042452}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 5317005700446410145}
   - component: {fileID: 8850556557305513764}
   - component: {fileID: 2762906985466684470}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: 06_Green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ Transform:
   m_Children:
   - {fileID: 1678226768696100466}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8850556557305513764
 MonoBehaviour:

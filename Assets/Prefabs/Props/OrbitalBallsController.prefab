@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8495491484664265656}
   - component: {fileID: 8122425556808688646}
   - component: {fileID: 3809544024063018278}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: OrbitalBall1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2265344132168836516}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: OrbitalPoint2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2972700662272619462}
   - component: {fileID: 8002866470820872011}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: OrbitalBallsController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ Transform:
   - {fileID: 914375635009001399}
   - {fileID: 2265344132168836516}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8002866470820872011
 MonoBehaviour:
@@ -212,7 +212,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 914375635009001399}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: OrbitalPoint1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +244,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8183283005820252146}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: OrbitalPoint0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 3072445927753054471}
   - component: {fileID: 6490000473667982477}
   - component: {fileID: 3646564580721517978}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: OrbitalBall2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,7 +399,7 @@ GameObject:
   - component: {fileID: 7297931629086971066}
   - component: {fileID: 1027857712302703005}
   - component: {fileID: 9144222903373035727}
-  m_Layer: 0
+  m_Layer: 22
   m_Name: OrbitalBall0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
