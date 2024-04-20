@@ -146,8 +146,7 @@ MonoBehaviour:
   - {fileID: -6293776284769678792}
   - {fileID: -3819596286013512660}
   - {fileID: 6939651758712618320}
-  - {fileID: 7324887522165403104}
-  m_RendererFeatureMap: 2716d3eb1d6f1eae388a869ad003a8a82c64c33a6a11feca50fdfab681984e60e02d5c7a643aa765
+  m_RendererFeatureMap: 2716d3eb1d6f1eae388a869ad003a8a82c64c33a6a11feca50fdfab681984e60
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -202,19 +201,3 @@ MonoBehaviour:
   injectionPoint: 600
   requirements: 4
   passIndex: 0
---- !u!114 &7324887522165403104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6cf5c6a4e850cb4789ca4d95f009134, type: 3}
-  m_Name: DitherRendererFeature
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  m_Shader: {fileID: 4800000, guid: d46a5a457fefedf42a83d75545dd7379, type: 3}
-  m_DitherSpread: 0.1
-  m_ColorResolution: 30
