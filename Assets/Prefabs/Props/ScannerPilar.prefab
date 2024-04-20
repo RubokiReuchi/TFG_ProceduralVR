@@ -229,7 +229,7 @@ Transform:
   - {fileID: 4043665485017926860}
   - {fileID: 378548752668972225}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
 --- !u!33 &1834983168597477973
 MeshFilter:
@@ -296,7 +296,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectorCollider: {fileID: 793705941962582621}
-  leftHandCollider: {fileID: 0}
   barrier: {fileID: 0}
 --- !u!1 &7335097193154775202
 GameObject:
