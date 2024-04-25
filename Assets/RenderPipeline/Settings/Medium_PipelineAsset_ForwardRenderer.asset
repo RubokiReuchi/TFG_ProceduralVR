@@ -146,7 +146,8 @@ MonoBehaviour:
   - {fileID: -6293776284769678792}
   - {fileID: -3819596286013512660}
   - {fileID: 6939651758712618320}
-  m_RendererFeatureMap: 2716d3eb1d6f1eae388a869ad003a8a82c64c33a6a11feca50fdfab681984e60
+  - {fileID: 4355789674652347061}
+  m_RendererFeatureMap: 2716d3eb1d6f1eae388a869ad003a8a82c64c33a6a11feca50fdfab681984e60b5aaf791a1df723c
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -184,6 +185,23 @@ MonoBehaviour:
   m_CopyDepthMode: 1
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
+--- !u!114 &4355789674652347061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
+  m_Name: Pixelation Effect
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  passMaterial: {fileID: 2100000, guid: 7691829a10d39274ab4f24ebd062af38, type: 2}
+  injectionPoint: 600
+  requirements: 4
+  passIndex: 0
 --- !u!114 &6939651758712618320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
   m_Name: Dither Effect
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   passMaterial: {fileID: 2100000, guid: 0e98e7656361f624d81462d6d8ca0faa, type: 2}
   injectionPoint: 550
   requirements: 4
