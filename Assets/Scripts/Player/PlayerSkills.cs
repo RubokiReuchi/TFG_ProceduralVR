@@ -204,6 +204,8 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
             case SKILL_TYPE.DASH:
                 dashUnlocked = true;
                 playerMovement.dashUnlocked = true;
+                StatusMenuPoints.instance.panels[2].GetComponent<StatusMenuPanel>().UpdateInformation(0, null);
+                StatusMenuPoints.instance.SetExclamation(2);
                 break;
             case SKILL_TYPE.BLUE:
                 blueUnlocked = true;
@@ -214,6 +216,7 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
                 }
                 float[] blueValues = { 20 + 20 * (attackLevel * 0.05f), 1 + (blueBeamLevel * 0.05f) };
                 StatusMenuPoints.instance.panels[0].GetComponent<StatusMenuPanel>().UpdateInformation(3, blueValues);
+                StatusMenuPoints.instance.SetExclamation(0);
                 break;
             case SKILL_TYPE.RED:
                 redUnlocked = true;
@@ -224,11 +227,13 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
                 }
                 float[] redValues = { 20 + 20 * (attackLevel * 0.05f), 100 + (redBeamLevel * 10) };
                 StatusMenuPoints.instance.panels[0].GetComponent<StatusMenuPanel>().UpdateInformation(4, redValues);
+                StatusMenuPoints.instance.SetExclamation(0);
                 break;
             case SKILL_TYPE.BLOCKING_FIST:
                 blockingFistUnlocked = true;
                 if (blockingFistUnlocked) leftHandCollision.tag = "ShieldedHand";
                 StatusMenuPoints.instance.panels[4].GetComponent<StatusMenuPanel>().UpdateInformation(0, null);
+                StatusMenuPoints.instance.SetExclamation(4);
                 break;
             case SKILL_TYPE.PURPLE:
                 purpleUnlocked = true;
@@ -239,11 +244,13 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
                 }
                 float[] purpleValues = { 20 + 20 * (attackLevel * 0.05f) };
                 StatusMenuPoints.instance.panels[0].GetComponent<StatusMenuPanel>().UpdateInformation(5, purpleValues);
+                StatusMenuPoints.instance.SetExclamation(0);
                 break;
             case SKILL_TYPE.SUPER_JUMP:
                 superJumpUnlocked = true;
                 playerMovement.superJumpUnlocked = true;
                 StatusMenuPoints.instance.panels[1].GetComponent<StatusMenuPanel>().UpdateInformation(1, null);
+                StatusMenuPoints.instance.SetExclamation(1);
                 break;
             case SKILL_TYPE.GREEN:
                 greenUnlocked = true;
@@ -254,6 +261,7 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
                 }
                 float[] greenValues = { 30 + 30 * (attackLevel * 0.05f), (greenBeamLevel * 20) };
                 StatusMenuPoints.instance.panels[0].GetComponent<StatusMenuPanel>().UpdateInformation(6, greenValues);
+                StatusMenuPoints.instance.SetExclamation(0);
                 break;
             default:
                 break;

@@ -13,6 +13,17 @@ public class StatusMenuPanel : MonoBehaviour
     {
         if (!buttons[currentIndex].activeSelf)
         {
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                if (buttons[i].activeSelf)
+                {
+                    currentIndex = i;
+                    break;
+                }
+            }
+        }
+        if (!buttons[currentIndex].activeSelf)
+        {
             mark.SetActive(false);
             return;
         }

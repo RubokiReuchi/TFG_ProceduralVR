@@ -92,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
             if (superJumpUnlocked) movement.y = superJumpHeight;
             else movement.y = jumpHeight;
             expectedGravity = jumpHeight;
-            //moveProvider.m_VerticalVelocity = Vector3.zero; // m_VerticalVelocity wasn't public, I change it
+            moveProvider.m_VerticalVelocity = Vector3.zero; // m_VerticalVelocity wasn't public, I change it
         }
         if (movement.y > 0) controller.Move(movement * Time.deltaTime);
 

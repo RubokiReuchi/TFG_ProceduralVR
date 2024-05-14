@@ -60,7 +60,7 @@ public class Skill : MonoBehaviour
 
         PlayerSkills.instance.UnlockSkill(type);
 
-        puzzle.StartPuzzle();
+        if (puzzle) puzzle.StartPuzzle();
 
         Destroy(gameObject);
     }
