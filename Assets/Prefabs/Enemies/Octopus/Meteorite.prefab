@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 387100783236696482}
   - component: {fileID: 1349067691191161035}
   - component: {fileID: 401342012376182280}
+  - component: {fileID: 6785818410668726019}
+  - component: {fileID: 4952991342256789497}
   m_Layer: 0
   m_Name: MediumFlames (3)
   m_TagString: Untagged
@@ -4840,6 +4842,40 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!135 &6785818410668726019
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089099366267478676}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.4285752
+  m_Center: {x: -0.038309097, y: 0.1787291, z: 0.00000002130617}
+--- !u!114 &4952991342256789497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1089099366267478676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52fffd4ed4f71284ab86e44f2da44cd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
 --- !u!1 &2017059664708353019
 GameObject:
   m_ObjectHideFlags: 0
@@ -14509,6 +14545,8 @@ GameObject:
   - component: {fileID: 2410676337895133835}
   - component: {fileID: 1029441850874707658}
   - component: {fileID: 4654453647026444676}
+  - component: {fileID: 4385926595749726834}
+  - component: {fileID: 8059359549876999452}
   m_Layer: 0
   m_Name: MediumFlames (4)
   m_TagString: Untagged
@@ -19338,6 +19376,40 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!135 &4385926595749726834
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2231935260357378932}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.4285752
+  m_Center: {x: -0.038309097, y: 0.1787291, z: 0.00000002130617}
+--- !u!114 &8059359549876999452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2231935260357378932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52fffd4ed4f71284ab86e44f2da44cd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
 --- !u!1 &2933268769694859843
 GameObject:
   m_ObjectHideFlags: 0
@@ -24360,10 +24432,12 @@ GameObject:
   - component: {fileID: 8986994330157205261}
   - component: {fileID: 1959595668094193042}
   - component: {fileID: 8339000174354235473}
-  - component: {fileID: 5364566233813173638}
+  - component: {fileID: 1192421214962030444}
+  - component: {fileID: 5897674114114099425}
+  - component: {fileID: 583072360985998715}
   m_Layer: 0
   m_Name: Asteroid
-  m_TagString: Untagged
+  m_TagString: Meteorite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24377,7 +24451,7 @@ Transform:
   m_GameObject: {fileID: 5188896056898585043}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 150, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1172170132507877209}
@@ -24434,7 +24508,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &5364566233813173638
+--- !u!135 &1192421214962030444
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24453,8 +24527,49 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.01
-  m_Center: {x: -0.0000000023283064, y: -0.0000000018626448, z: 0}
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &5897674114114099425
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5188896056898585043}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &583072360985998715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5188896056898585043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 689ab375dd5064d4e88988a26b588169, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 100
+  landed: 0
 --- !u!1 &5258037625786265440
 GameObject:
   m_ObjectHideFlags: 0
@@ -24466,6 +24581,8 @@ GameObject:
   - component: {fileID: 6049817354667599323}
   - component: {fileID: 5109710026540091283}
   - component: {fileID: 5123967886163851811}
+  - component: {fileID: 7508477514379647513}
+  - component: {fileID: 851473542054199901}
   m_Layer: 0
   m_Name: MediumFlames
   m_TagString: Untagged
@@ -29295,6 +29412,40 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!135 &7508477514379647513
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5258037625786265440}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.4285752
+  m_Center: {x: -0.038309097, y: 0.1787291, z: 0.00000002130617}
+--- !u!114 &851473542054199901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5258037625786265440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52fffd4ed4f71284ab86e44f2da44cd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
 --- !u!1 &5377106538872244663
 GameObject:
   m_ObjectHideFlags: 0
@@ -48733,6 +48884,8 @@ GameObject:
   - component: {fileID: 3199943689758444212}
   - component: {fileID: 8496214922659856430}
   - component: {fileID: 3803496942945085446}
+  - component: {fileID: 5949743095619931536}
+  - component: {fileID: 4940506897052327703}
   m_Layer: 0
   m_Name: MediumFlames (1)
   m_TagString: Untagged
@@ -53562,6 +53715,40 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!135 &5949743095619931536
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7287844694445762508}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.4285752
+  m_Center: {x: -0.038309097, y: 0.1787291, z: 0.00000002130617}
+--- !u!114 &4940506897052327703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7287844694445762508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52fffd4ed4f71284ab86e44f2da44cd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
 --- !u!1 &7560616973257192159
 GameObject:
   m_ObjectHideFlags: 0
@@ -53680,6 +53867,8 @@ GameObject:
   - component: {fileID: 613818535179364528}
   - component: {fileID: 4036652592242306793}
   - component: {fileID: 5345305283182379184}
+  - component: {fileID: 8708517811755487326}
+  - component: {fileID: 429233650706832059}
   m_Layer: 0
   m_Name: MediumFlames (2)
   m_TagString: Untagged
@@ -58509,6 +58698,40 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!135 &8708517811755487326
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8528444975131869586}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.4285752
+  m_Center: {x: -0.038309097, y: 0.1787291, z: 0.00000002130617}
+--- !u!114 &429233650706832059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8528444975131869586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52fffd4ed4f71284ab86e44f2da44cd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
 --- !u!1 &8776012586595318803
 GameObject:
   m_ObjectHideFlags: 0

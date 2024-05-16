@@ -48,6 +48,7 @@ public class Meteorite : MonoBehaviour
             mark.SetActive(false);
             markCircle.SetActive(false);
             explosion.SetActive(true);
+            asteroid.GetComponent<Asteroid>().landed = true;
             staticState = true;
         }
     }
