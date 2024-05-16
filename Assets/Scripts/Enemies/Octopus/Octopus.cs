@@ -14,6 +14,7 @@ public class Octopus : Enemy
     Transform player;
     [NonEditable][SerializeField] STATE state;
     [SerializeField] Animator[] animators;
+    [SerializeField] GameObject meteorite;
 
     private void OnEnable()
     {
@@ -45,7 +46,25 @@ public class Octopus : Enemy
 
     public override void StartCheckOptions()
     {
-        
+        // meteorite
+        foreach (var animator in animators)
+        {
+            animator.SetBool("Idle", false);
+            animator.SetTrigger("Meteorite");
+        }
+    }
+
+    public void Idle()
+    {
+        foreach (var animator in animators)
+        {
+            animator.SetBool("Idle", true);
+        }
+    }
+
+    public void SpawnMeteorite()
+    {
+        GameObject.Instantiate(meteorite);
     }
 
     public override void TakeDamage(float amount, GameObject damageText = null)

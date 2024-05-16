@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Meteorite : MonoBehaviour
 {
+    Transform player;
     [SerializeField] GameObject asteroid;
     [SerializeField] ParticleSystem asteroidTrail;
     [SerializeField] GameObject smoke;
@@ -19,6 +20,7 @@ public class Meteorite : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         asteroidOriginalPos = asteroid.transform.localPosition;
         asteroidFinalPos = Vector3.zero + Vector3.up * 0.5f;
     }
@@ -30,6 +32,7 @@ public class Meteorite : MonoBehaviour
         if (timer <= 1.0f)
         {
             if (timer < 0.2f) asteroid.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, timer * 5.0f);
+            if (timer < 0.6f) gameObject.transform.position = new Vector3(player.position.x, 0.0f, player.position.z);
             if (timer > 0.8f && !smoke.activeSelf)
             {
                 smoke.SetActive(true);
