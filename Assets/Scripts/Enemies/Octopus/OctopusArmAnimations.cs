@@ -5,14 +5,20 @@ using UnityEngine;
 public class OctopusArmAnimations : MonoBehaviour
 {
     [SerializeField] Octopus script;
+    [SerializeField] bool commanderArm;
 
     public void Idle()
     {
-        script.Idle();
+        if (commanderArm) script.Idle();
     }
 
     public void SpawnMeteorite()
     {
-        script.SpawnMeteorite();
+        if (commanderArm) script.SpawnMeteorite();
+    }
+
+    public void SpawnNuke()
+    {
+        if (commanderArm) script.SpawnNuke();
     }
 }

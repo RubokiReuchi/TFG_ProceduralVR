@@ -9,7 +9,7 @@ public class Meteorite : MonoBehaviour
     [SerializeField] ParticleSystem asteroidTrail;
     [SerializeField] GameObject smoke;
     [SerializeField] GameObject mark;
-    [SerializeField] GameObject markCircle;
+    [SerializeField] ParticleSystem smallCirclePs;
     [SerializeField] GameObject explosion;
     [SerializeField] GameObject[] residualFlames;
     Vector3 asteroidOriginalPos;
@@ -32,13 +32,16 @@ public class Meteorite : MonoBehaviour
         if (timer <= 1.0f)
         {
             if (timer < 0.2f) asteroid.transform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one, timer * 5.0f);
-            if (timer < 0.6f) gameObject.transform.position = new Vector3(player.position.x, 0.0f, player.position.z);
+            if (timer < 0.6f)
+            {
+                gameObject.transform.position = new Vector3(player.position.x, 0.0f, player.position.z);
+                if (timer + Time.deltaTime * 0.25f >= 0.6f) smallCirclePs.Pause();
+            }
             if (timer > 0.8f && !smoke.activeSelf)
             {
                 smoke.SetActive(true);
                 foreach (var flame in residualFlames) flame.SetActive(true);
             }
-            markCircle.transform.localScale = new Vector3(timer, timer, timer);
             asteroid.transform.localPosition = Vector3.Lerp(asteroidOriginalPos, asteroidFinalPos, timer);
             timer += Time.deltaTime * 0.25f;
         }
@@ -46,7 +49,6 @@ public class Meteorite : MonoBehaviour
         {
             asteroidTrail.Stop(true, ParticleSystemStopBehavior.StopEmitting);
             mark.SetActive(false);
-            markCircle.SetActive(false);
             explosion.SetActive(true);
             asteroid.GetComponent<Asteroid>().landed = true;
             asteroid.GetComponent<Rigidbody>().isKinematic = true;

@@ -15,6 +15,7 @@ public class Octopus : Enemy
     [NonEditable][SerializeField] STATE state;
     [SerializeField] Animator[] animators;
     [SerializeField] GameObject meteorite;
+    [SerializeField] GameObject nuke;
 
     private void OnEnable()
     {
@@ -28,6 +29,7 @@ public class Octopus : Enemy
         }
 
         currentHealth = maxHealth;
+        //Invoke("StartCheckOptions", 3.0f);
     }
 
     // Update is called once per frame
@@ -47,10 +49,16 @@ public class Octopus : Enemy
     public override void StartCheckOptions()
     {
         // meteorite
-        foreach (var animator in animators)
+        /*foreach (var animator in animators)
         {
             animator.SetBool("Idle", false);
             animator.SetTrigger("Meteorite");
+        }*/
+        // nuke
+        foreach (var animator in animators)
+        {
+            animator.SetBool("Idle", false);
+            animator.SetTrigger("Nuke");
         }
     }
 
@@ -65,6 +73,11 @@ public class Octopus : Enemy
     public void SpawnMeteorite()
     {
         GameObject.Instantiate(meteorite);
+    }
+
+    public void SpawnNuke()
+    {
+        GameObject.Instantiate(nuke, new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity);
     }
 
     public override void TakeDamage(float amount, GameObject damageText = null)
