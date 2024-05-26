@@ -29,7 +29,7 @@ public class Octopus : Enemy
         }
 
         currentHealth = maxHealth;
-        //Invoke("StartCheckOptions", 3.0f);
+        Invoke("StartCheckOptions", 3.0f);
     }
 
     // Update is called once per frame
@@ -49,17 +49,17 @@ public class Octopus : Enemy
     public override void StartCheckOptions()
     {
         // meteorite
-        /*foreach (var animator in animators)
-        {
-            animator.SetBool("Idle", false);
-            animator.SetTrigger("Meteorite");
-        }*/
-        // nuke
         foreach (var animator in animators)
         {
             animator.SetBool("Idle", false);
-            animator.SetTrigger("Nuke");
+            animator.SetTrigger("Meteorite");
         }
+        // nuke
+        /*foreach (var animator in animators)
+        {
+            animator.SetBool("Idle", false);
+            animator.SetTrigger("Nuke");
+        }*/
     }
 
     public void Idle()

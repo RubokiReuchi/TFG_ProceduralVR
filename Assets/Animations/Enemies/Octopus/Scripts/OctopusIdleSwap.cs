@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class OctopusIdleSwap : StateMachineBehaviour
 {
+    public bool isNullState;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
@@ -19,7 +20,8 @@ public class OctopusIdleSwap : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.SetInteger("IdleAnimation", Random.Range(0, 12));
+        if (!isNullState) animator.SetInteger("IdleAnimation", Random.Range(0, 3));
+        else animator.SetInteger("IdleAnimation", Random.Range(0, 12));
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
