@@ -1422,7 +1422,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 1
+    scalar: 1.6
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -6203,7 +6203,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 1
+    scalar: 1.6
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -17197,7 +17197,7 @@ ParticleSystem:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-      cycleCount: 10
+      cycleCount: 30
       repeatInterval: 0.05
       probability: 1
   SizeModule:
@@ -21092,7 +21092,7 @@ GameObject:
   - component: {fileID: 837128397109109796}
   - component: {fileID: 2153248331234310363}
   m_Layer: 0
-  m_Name: Red energy explosion
+  m_Name: Nuke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21253,7 +21253,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 2.6
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -26169,7 +26169,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 1
+    scalar: 1.6
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -31102,7 +31102,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.8
+      scalar: 2.4
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -36015,7 +36015,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 1
+    scalar: 1.6
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -41785,7 +41785,7 @@ ParticleSystem:
           m_PreInfinity: 2
           m_PostInfinity: 2
           m_RotationOrder: 4
-      cycleCount: 3
+      cycleCount: 9
       repeatInterval: 0.25
       probability: 1
   SizeModule:
@@ -45715,7 +45715,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 1
+    scalar: 1.6
     minScalar: 0
     maxCurve:
       serializedVersion: 2
@@ -50571,7 +50571,7 @@ ParticleSystem:
   startDelay:
     serializedVersion: 2
     minMaxState: 0
-    scalar: 1
+    scalar: 1.6
     minScalar: 0
     maxCurve:
       serializedVersion: 2
