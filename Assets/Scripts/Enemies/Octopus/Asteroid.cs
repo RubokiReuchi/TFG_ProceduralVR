@@ -5,6 +5,7 @@ using UnityEngine;
 public class Asteroid : MonoBehaviour
 {
     [SerializeField] float damage;
+    [SerializeField] GameObject breakPs;
     string UUID;
     public bool landed = false;
 
@@ -20,18 +21,18 @@ public class Asteroid : MonoBehaviour
             if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("PlayerHead") || collision.gameObject.CompareTag("NormalHand"))
             {
                 collision.transform.root.GetComponent<PlayerState>().TakeAreaDamage(damage, UUID);
-                StartCoroutine(BreakMeteorite());
+                BreakMeteorite();
             }
         }
         if (collision.gameObject.CompareTag("Meteorite"))
         {
-            StartCoroutine(BreakMeteorite());
+            BreakMeteorite();
         }
     }
 
-    IEnumerator BreakMeteorite()
+    void BreakMeteorite()
     {
-        yield return null;
+        Instantiate(breakPs, transform.position, Quaternion.identity);
         Destroy(transform.root.gameObject);
     }
 }

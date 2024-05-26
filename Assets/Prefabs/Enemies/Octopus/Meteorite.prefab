@@ -19449,7 +19449,7 @@ Transform:
   - {fileID: 387100783236696482}
   - {fileID: 2410676337895133835}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3069947449053073273
 MonoBehaviour:
@@ -24537,7 +24537,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5188896056898585043}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 10000
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -24552,7 +24552,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -24569,6 +24569,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 100
+  breakPs: {fileID: 175723686562213952, guid: 6e09f390675e290498ee9e395bfacede, type: 3}
   landed: 0
 --- !u!1 &5258037625786265440
 GameObject:
