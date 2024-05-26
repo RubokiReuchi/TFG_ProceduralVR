@@ -178,6 +178,7 @@ public class PlayerState : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
+        if (currentHealth == 0) return;
         if (currentShieldCooldown == 0)
         {
             currentShieldCooldown = shieldCooldown;
@@ -308,6 +309,7 @@ public class PlayerState : MonoBehaviour
 
     IEnumerator DeathFadeOut()
     {
+        Debug.Log("Death");
         float opacity = 0.0f;
         while (opacity < 1)
         {
