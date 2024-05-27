@@ -15,6 +15,7 @@ public class Octopus : Enemy
     [NonEditable][SerializeField] STATE state;
     [SerializeField] Animator[] animators;
     [SerializeField] GameObject meteorite;
+    [SerializeField] ParticleSystem launchMeteoritePs;
     [SerializeField] GameObject nuke;
     [SerializeField] Transform energyShield;
     [SerializeField] Transform physicShield;
@@ -32,7 +33,6 @@ public class Octopus : Enemy
 
         currentHealth = maxHealth;
         Invoke("StartCheckOptions", 3.0f);
-        Invoke("StartCheckOptions", 8.0f);
     }
 
     // Update is called once per frame
@@ -52,18 +52,17 @@ public class Octopus : Enemy
     public override void StartCheckOptions()
     {
         // meteorite
-        /*foreach (var animator in animators)
+        foreach (var animator in animators)
         {
             animator.SetBool("Idle", false);
             animator.SetTrigger("Meteorite");
         }
         // nuke
-        foreach (var animator in animators)
+        /*foreach (var animator in animators)
         {
             animator.SetBool("Idle", false);
             animator.SetTrigger("Nuke");
         }*/
-        StartCoroutine(CreatePhysicShield());
     }
 
     public void Idle()
@@ -77,6 +76,7 @@ public class Octopus : Enemy
     public void SpawnMeteorite()
     {
         GameObject.Instantiate(meteorite);
+        launchMeteoritePs.Play();
     }
 
     public void SpawnNuke()
@@ -96,16 +96,30 @@ public class Octopus : Enemy
         }
     }
 
-    IEnumerator CreatePhysicShield()
+    IEnumerator OpenPhysicShield()
     {
         float size = 0.0f;
         physicShield.gameObject.SetActive(true);
         while (size < 3.75f)
         {
             size += Time.deltaTime * 3.75f;
+            if (size > 3.75f) size = 3.75f;
             physicShield.localScale = new Vector3(size, size, size);
             yield return null;
         }
+    }
+
+    IEnumerator ClosePhysicShield()
+    {
+        float size = 3.75f;
+        while (size > 0.0f)
+        {
+            size -= Time.deltaTime * 3.75f;
+            if (size < 0.0f) size = 0.0f;
+            physicShield.localScale = new Vector3(size, size, size);
+            yield return null;
+        }
+        physicShield.gameObject.SetActive(false);
     }
 
     public override void TakeDamage(float amount, GameObject damageText = null)
