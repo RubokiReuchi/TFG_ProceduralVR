@@ -6,6 +6,7 @@ public class EnemyShieldOrientation : MonoBehaviour
 {
     Transform player;
     [SerializeField] Enemy enemyScript;
+    [SerializeField] bool threeD;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,7 @@ public class EnemyShieldOrientation : MonoBehaviour
     {
         if (!enemyScript.enabled) return;
 
-        transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+        if (!threeD) transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+        else transform.LookAt(player.position);
     }
 }
