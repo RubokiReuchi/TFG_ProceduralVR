@@ -19,6 +19,7 @@ public class Octopus : Enemy
     [SerializeField] GameObject nuke;
     [SerializeField] Transform energyShield;
     [SerializeField] Transform physicShield;
+    [SerializeField] GameObject[] slowdownRings;
 
     private void OnEnable()
     {
@@ -52,17 +53,22 @@ public class Octopus : Enemy
     public override void StartCheckOptions()
     {
         // meteorite
-        foreach (var animator in animators)
+        /*foreach (var animator in animators)
         {
             animator.SetBool("Idle", false);
             animator.SetTrigger("Meteorite");
         }
         // nuke
-        /*foreach (var animator in animators)
+        foreach (var animator in animators)
         {
             animator.SetBool("Idle", false);
             animator.SetTrigger("Nuke");
         }*/
+        // slowdownRings
+        animators[0].SetBool("Idle", false);
+        animators[0].SetTrigger("SlowdownRingsRight");
+        animators[4].SetBool("Idle", false);
+        animators[4].SetTrigger("SlowdownRingsLeft");
     }
 
     public void Idle()
@@ -82,6 +88,23 @@ public class Octopus : Enemy
     public void SpawnNuke()
     {
         GameObject.Instantiate(nuke, new Vector3(transform.position.x, 0, transform.position.z), Quaternion.identity);
+    }
+
+    public void StartSlowdownRings()
+    {
+        foreach (var ring in slowdownRings)
+        {
+            ring.SetActive(true);
+        }
+        Invoke("EndSlowdownRings", 10.0f);
+    }
+
+    void EndSlowdownRings()
+    {
+        foreach (var ring in slowdownRings)
+        {
+            ring.SetActive(false);
+        }
     }
 
     IEnumerator CreateEnergyShield()

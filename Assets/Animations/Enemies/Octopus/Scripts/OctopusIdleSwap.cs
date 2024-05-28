@@ -11,15 +11,15 @@ public class OctopusIdleSwap : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         doOnce = true;
+        if (isNullState) animator.SetInteger("IdleAnimation", Random.Range(0, 12));
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (stateInfo.normalizedTime >= 0.85f && doOnce)
+        if (!isNullState && stateInfo.normalizedTime >= 0.85f && doOnce)
         {
-            if (!isNullState) animator.SetInteger("IdleAnimation", Random.Range(0, 3));
-            else animator.SetInteger("IdleAnimation", Random.Range(0, 12));
+            animator.SetInteger("IdleAnimation", Random.Range(0, 3));
             doOnce = false;
         }
     }
