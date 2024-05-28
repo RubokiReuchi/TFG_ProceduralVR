@@ -63,12 +63,24 @@ public class Octopus : Enemy
         {
             animator.SetBool("Idle", false);
             animator.SetTrigger("Nuke");
-        }*/
+        }
         // slowdownRings
         animators[0].SetBool("Idle", false);
         animators[0].SetTrigger("SlowdownRingsRight");
         animators[4].SetBool("Idle", false);
-        animators[4].SetTrigger("SlowdownRingsLeft");
+        animators[4].SetTrigger("SlowdownRingsLeft");*/
+        // sonnar
+        for (int i = 0; i < 4; i++)
+        {
+            animators[i].SetBool("Idle", false);
+            animators[i].SetTrigger("SonnarRight");
+        }
+        for (int i = 4; i < 8; i++)
+        {
+            animators[i].SetBool("Idle", false);
+            animators[i].SetTrigger("SonnarLeft");
+        }
+        
     }
 
     public void Idle()
