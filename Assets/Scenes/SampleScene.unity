@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!95 &283126614 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 7120147726920845617, guid: 2f5ef6a99a7a51b47b9bc23598032e5f, type: 3}
+  m_PrefabInstance: {fileID: 1920585957}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,6 +505,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: ae177103377abca4798b0aeb966281fd, type: 2}
     - target: {fileID: 1273042486972981393, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
+      propertyPath: sonnar
+      value: 
+      objectReference: {fileID: 283126614}
+    - target: {fileID: 1273042486972981393, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
       propertyPath: slowdownRings.Array.size
       value: 9
       objectReference: {fileID: 0}
@@ -853,7 +862,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6046099865160284656, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 6046099865160284656, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1311,10 +1320,6 @@ PrefabInstance:
     - target: {fileID: 578699312927519967, guid: 2f5ef6a99a7a51b47b9bc23598032e5f, type: 3}
       propertyPath: m_Name
       value: BossRoom0
-      objectReference: {fileID: 0}
-    - target: {fileID: 578699312927519967, guid: 2f5ef6a99a7a51b47b9bc23598032e5f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6658492070083833180, guid: 2f5ef6a99a7a51b47b9bc23598032e5f, type: 3}
       propertyPath: m_RootOrder

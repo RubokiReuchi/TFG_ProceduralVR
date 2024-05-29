@@ -20,6 +20,7 @@ public class Octopus : Enemy
     [SerializeField] Transform energyShield;
     [SerializeField] Transform physicShield;
     [SerializeField] GameObject[] slowdownRings;
+    [SerializeField] Animator sonnar;
 
     private void OnEnable()
     {
@@ -80,7 +81,6 @@ public class Octopus : Enemy
             animators[i].SetBool("Idle", false);
             animators[i].SetTrigger("SonnarLeft");
         }
-        
     }
 
     public void Idle()
@@ -117,6 +117,11 @@ public class Octopus : Enemy
         {
             ring.SetActive(false);
         }
+    }
+
+    public void SpawnSonnar()
+    {
+        sonnar.enabled = true;
     }
 
     IEnumerator CreateEnergyShield()

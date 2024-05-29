@@ -26,4 +26,9 @@ public class OctopusArmAnimations : MonoBehaviour
     {
         if (commanderArm) script.StartSlowdownRings();
     }
+
+    public void SpawnSonnar()
+    {
+        if (commanderArm) script.SpawnSonnar();
+    }
 }
