@@ -71,7 +71,7 @@ public class Octopus : Enemy
         animators[4].SetBool("Idle", false);
         animators[4].SetTrigger("SlowdownRingsLeft");*/
         // sonnar
-        for (int i = 0; i < 4; i++)
+        /*for (int i = 0; i < 4; i++)
         {
             animators[i].SetBool("Idle", false);
             animators[i].SetTrigger("SonnarRight");
@@ -80,7 +80,9 @@ public class Octopus : Enemy
         {
             animators[i].SetBool("Idle", false);
             animators[i].SetTrigger("SonnarLeft");
-        }
+        }*/
+        // homing bomb
+        StartCoroutine(StartHomingBombSequence());
     }
 
     public void Idle()
@@ -122,6 +124,23 @@ public class Octopus : Enemy
     public void SpawnSonnar()
     {
         sonnar.enabled = true;
+    }
+
+    public IEnumerator StartHomingBombSequence()
+    {
+        animators[0].SetBool("Idle", false);
+        animators[0].SetTrigger("HomingBomb");
+        yield return new WaitForSeconds(0.8f);
+        animators[4].SetBool("Idle", false);
+        animators[4].SetTrigger("HomingBomb");
+    }
+
+    public void ContinueHomingBombSequence()
+    {
+        animators[0].SetBool("Idle", false);
+        animators[0].SetTrigger("HomingBomb");
+        animators[4].SetBool("Idle", false);
+        animators[4].SetTrigger("HomingBomb");
     }
 
     IEnumerator CreateEnergyShield()

@@ -6,6 +6,9 @@ public class OctopusArmAnimations : MonoBehaviour
 {
     [SerializeField] Octopus script;
     [SerializeField] bool commanderArm;
+    [SerializeField] GameObject homingBomb;
+    [SerializeField] Transform homingBombOrigin;
+    [SerializeField] ParticleSystem launchHomingBombPs;
 
     public void Idle()
     {
@@ -30,5 +33,16 @@ public class OctopusArmAnimations : MonoBehaviour
     public void SpawnSonnar()
     {
         if (commanderArm) script.SpawnSonnar();
+    }
+
+    public void SpawnHomingBomb()
+    {
+        if (commanderArm)
+        {
+            if (Random.Range(0, 3) > 0) script.ContinueHomingBombSequence();
+            else script.Idle();
+        }
+        //GameObject.Instantiate(homingBomb, homingBombOrigin.position, homingBombOrigin.rotation);
+        launchHomingBombPs.Play();
     }
 }
