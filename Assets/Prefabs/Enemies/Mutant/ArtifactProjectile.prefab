@@ -144,6 +144,8 @@ MonoBehaviour:
   lifeTime: 5
   damage: 20
   homingStrenght: 150
+  slowPercentage: 25
+  slowDuration: 1
   trailPrefab: {fileID: 3703081631725514299, guid: 548e22b91e413c2488a867df3a5f6330, type: 3}
 --- !u!1 &8542549091467517019
 GameObject:

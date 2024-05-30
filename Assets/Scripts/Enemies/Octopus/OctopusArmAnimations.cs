@@ -37,12 +37,12 @@ public class OctopusArmAnimations : MonoBehaviour
 
     public void SpawnHomingBomb()
     {
-        if (commanderArm)
-        {
-            if (Random.Range(0, 3) > 0) script.ContinueHomingBombSequence();
-            else script.Idle();
-        }
-        //GameObject.Instantiate(homingBomb, homingBombOrigin.position, homingBombOrigin.rotation);
+        GameObject.Instantiate(homingBomb, homingBombOrigin.position, homingBombOrigin.rotation);
         launchHomingBombPs.Play();
+    }
+
+    public void CheckHomingBombLoop()
+    {
+        if (commanderArm && Random.Range(0, 3) == 0) script.Idle();
     }
 }

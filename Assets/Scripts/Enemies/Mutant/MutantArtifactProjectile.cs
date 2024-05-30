@@ -7,6 +7,8 @@ public class MutantArtifactProjectile : Projectile
     Transform playerHead;
     [SerializeField] float damage;
     [SerializeField] float homingStrenght;
+    [SerializeField] float slowPercentage;
+    [SerializeField] float slowDuration;
     [SerializeField] GameObject trailPrefab;
 
     // Start is called before the first frame update
@@ -33,6 +35,7 @@ public class MutantArtifactProjectile : Projectile
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("PlayerHead") || collision.gameObject.CompareTag("NormalHand"))
         {
             collision.transform.root.GetComponent<PlayerState>().TakeDamage(damage);
+            collision.transform.root.GetComponentInChildren<PlayerMovement>().TakeSlow(slowPercentage, slowDuration);
         }
         Destroy(gameObject);
     }

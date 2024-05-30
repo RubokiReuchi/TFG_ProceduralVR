@@ -10698,6 +10698,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 9fb8aed13a7a16b4eb73cfeaecef2c90, type: 2}
     - target: {fileID: 6474248622512898259, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
+      propertyPath: homingBomb
+      value: 
+      objectReference: {fileID: 7693430635978532213, guid: a520b7e90eae4c8409ba3867b9aee6b8, type: 3}
+    - target: {fileID: 6474248622512898259, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
       propertyPath: homingBombOrigin
       value: 
       objectReference: {fileID: 2099802511}
@@ -10781,6 +10785,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9fb8aed13a7a16b4eb73cfeaecef2c90, type: 2}
+    - target: {fileID: 8535534937908866327, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
+      propertyPath: homingBomb
+      value: 
+      objectReference: {fileID: 1497995748779292120, guid: 3930da48a7fb3484190f1801ae548c40, type: 3}
     - target: {fileID: 8535534937908866327, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
       propertyPath: homingBombOrigin
       value: 

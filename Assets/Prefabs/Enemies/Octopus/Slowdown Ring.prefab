@@ -14829,6 +14829,7 @@ GameObject:
   - component: {fileID: 1236875854993420134}
   - component: {fileID: 8729310394176151727}
   - component: {fileID: 3891936884982067733}
+  - component: {fileID: 1341763923781938375}
   m_Layer: 0
   m_Name: Slowdown Ring
   m_TagString: Untagged
@@ -14852,7 +14853,7 @@ Transform:
   - {fileID: 1736792542845892547}
   - {fileID: 3251395035009893625}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &1236875854993420134
 ParticleSystem:
@@ -19722,9 +19723,23 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 3.9
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1341763923781938375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8729503963864957419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c83d6f8885d87b4b85f087c1d4ddc54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slowPercentage: 50
+  slowDuration: 0.5
