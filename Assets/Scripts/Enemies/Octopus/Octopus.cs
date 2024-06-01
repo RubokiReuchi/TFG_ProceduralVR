@@ -21,11 +21,14 @@ public class Octopus : Enemy
     [SerializeField] Transform physicShield;
     [SerializeField] GameObject[] slowdownRings;
     [SerializeField] Animator sonnar;
+    [SerializeField] GameObject rain;
 
     private void OnEnable()
     {
         if (!firstEnable) return;
         firstEnable = false;
+
+        player = GameObject.FindGameObjectWithTag("Player").transform;
 
         state = STATE.REST;
         foreach (var animator in animators)
@@ -66,10 +69,10 @@ public class Octopus : Enemy
             animator.SetTrigger("Nuke");
         }*/
         // slowdownRings
-        animators[0].SetBool("Idle", false);
-        animators[0].SetTrigger("SlowdownRingsRight");
-        animators[4].SetBool("Idle", false);
-        animators[4].SetTrigger("SlowdownRingsLeft");
+        //animators[0].SetBool("Idle", false);
+        //animators[0].SetTrigger("SlowdownRingsRight");
+        //animators[4].SetBool("Idle", false);
+        //animators[4].SetTrigger("SlowdownRingsLeft");
         // sonnar
         /*for (int i = 0; i < 4; i++)
         {
@@ -83,13 +86,31 @@ public class Octopus : Enemy
         }
         // homing bomb
         StartCoroutine(StartHomingBombSequence());*/
+        // rain
+        StartCoroutine(StartRainSequence());
     }
 
-    public void Idle()
+    public void Idle(bool row0 = true, bool row1 = true, bool row2 = true, bool row3 = true)
     {
-        foreach (var animator in animators)
+        if (row0)
         {
-            animator.SetBool("Idle", true);
+            animators[0].SetBool("Idle", true);
+            animators[4].SetBool("Idle", true);
+        }
+        if (row1)
+        {
+            animators[1].SetBool("Idle", true);
+            animators[5].SetBool("Idle", true);
+        }
+        if (row2)
+        {
+            animators[2].SetBool("Idle", true);
+            animators[6].SetBool("Idle", true);
+        }
+        if (row3)
+        {
+            animators[3].SetBool("Idle", true);
+            animators[7].SetBool("Idle", true);
         }
     }
 
@@ -133,6 +154,21 @@ public class Octopus : Enemy
         yield return new WaitForSeconds(0.8f);
         animators[4].SetBool("Idle", false);
         animators[4].SetTrigger("HomingBomb");
+    }
+
+    public IEnumerator StartRainSequence()
+    {
+        animators[1].SetBool("Idle", false);
+        animators[1].SetTrigger("Rain");
+        animators[1].GetComponent<OctopusArmAnimations>().commanderArm = true;
+        yield return new WaitForSeconds(0.8f);
+        animators[5].SetBool("Idle", false);
+        animators[5].SetTrigger("Rain");
+    }
+
+    public void SpawnRain()
+    {
+        GameObject.Instantiate(rain, new Vector3(player.position.x + Random.Range(-5, 6), 0, player.position.z + Random.Range(-5, 6)), Quaternion.identity);
     }
 
     IEnumerator CreateEnergyShield()

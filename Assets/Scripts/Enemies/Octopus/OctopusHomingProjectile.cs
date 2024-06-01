@@ -9,6 +9,8 @@ public class OctopusHomingProjectile : Projectile
     [SerializeField] float homingStrenght;
     [SerializeField] float slowPercentage;
     [SerializeField] float slowDuration;
+    [SerializeField] GameObject evaporateParticles;
+    [SerializeField] GameObject explosionParticles;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +37,9 @@ public class OctopusHomingProjectile : Projectile
         {
             if (damage > 0) collision.transform.root.GetComponent<PlayerState>().TakeDamage(damage);
             if (slowDuration > 0) collision.transform.root.GetComponentInChildren<PlayerMovement>().TakeSlow(slowPercentage, slowDuration);
+            GameObject.Instantiate(explosionParticles, transform.position, Quaternion.identity);
         }
+        else GameObject.Instantiate(evaporateParticles, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

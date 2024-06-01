@@ -33,7 +33,7 @@ Transform:
   m_Children:
   - {fileID: 4898703836539597367}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &3638171491537800346
 SphereCollider:
@@ -101,6 +101,8 @@ MonoBehaviour:
   homingStrenght: 3
   slowPercentage: 0
   slowDuration: 0
+  evaporateParticles: {fileID: 5660841450118606490, guid: ca7b6e2f40381b945a9940005f5d9d34, type: 3}
+  explosionParticles: {fileID: 2050206321263549261, guid: b1e63fd69c01f4349a6fd7016aad07cf, type: 3}
 --- !u!1 &6684394594408726459
 GameObject:
   m_ObjectHideFlags: 0

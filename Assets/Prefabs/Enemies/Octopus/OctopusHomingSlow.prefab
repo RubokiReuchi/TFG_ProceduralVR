@@ -161,7 +161,7 @@ Transform:
   m_Children:
   - {fileID: 198430990638224733}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &6401573142378404323
 SphereCollider:
@@ -229,3 +229,5 @@ MonoBehaviour:
   homingStrenght: 3
   slowPercentage: 75
   slowDuration: 1
+  evaporateParticles: {fileID: 5424347339568510117, guid: 9f0ef702f26a37340b86c43a95211fe2, type: 3}
+  explosionParticles: {fileID: 99470940837898987, guid: 137194f8d40ef464b80c00d07611f0c8, type: 3}
