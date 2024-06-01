@@ -102,4 +102,13 @@ public class OctopusArmAnimations : MonoBehaviour
             else currentLoop++;
         }
     }
+
+    public void LaunchMinionWave()
+    {
+        if (commanderArm)
+        {
+            script.Idle();
+            script.LaunchMinionWave();
+        }
+    }
 }

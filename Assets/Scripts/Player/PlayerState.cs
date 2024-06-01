@@ -211,6 +211,7 @@ public class PlayerState : MonoBehaviour
             activeUUIDs.Add(UUID);
             cdUUID = 1;
             TakeDamage(amount);
+            Debug.Log(amount);
         }
     }
 

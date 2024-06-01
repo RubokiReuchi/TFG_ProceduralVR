@@ -60,6 +60,8 @@ public class SphereRobot : Enemy
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.K)) Die();
+
         // freeze
         freezeSlow = 1.0f - (freezePercentage / 100.0f);
         animator.speed = freezeSlow;

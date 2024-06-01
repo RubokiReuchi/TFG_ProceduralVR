@@ -92,6 +92,12 @@ public class Octopus : Enemy
         StartCoroutine(StartRainSequence());*/
         // minion
         StartCoroutine(StartMinionSequence());
+        // minion wave
+        /*foreach (var animator in animators)
+        {
+            animator.SetBool("Idle", false);
+            animator.SetTrigger("MinionWave");
+        }*/
     }
 
     public void Idle(bool row0 = true, bool row1 = true, bool row2 = true, bool row3 = true)
@@ -188,8 +194,27 @@ public class Octopus : Enemy
     public void SpawnMinion(Transform origin)
     {
         Rigidbody rb = GameObject.Instantiate(sphereRobot, origin.position, Quaternion.identity).GetComponent<Rigidbody>();
-        rb.AddForce(transform.right * 500);
-        rb.AddForce(transform.up * 500);
+        rb.AddForce(transform.right * Random.Range(450, 550));
+        rb.AddForce(transform.up * Random.Range(450, 550));
+    }
+
+    public void LaunchMinionWave()
+    {
+        StartCoroutine(AddImpulseToBall());
+    }
+
+    IEnumerator AddImpulseToBall()
+    {
+        foreach (var ball in balls)
+        {
+            Vector3 direction = Vector3.Normalize(ball.transform.position - transform.position);
+            ball.GetComponent<Rigidbody>().mass = 1.0f;
+            OctopusBall script = ball.GetComponent<OctopusBall>();
+            yield return null;
+            ball.GetComponent<Rigidbody>().AddForce(direction * 1500);
+            yield return null;
+            script.launching = true;
+        }
     }
 
     IEnumerator CreateEnergyShield()

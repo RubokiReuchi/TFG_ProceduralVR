@@ -30011,6 +30011,30 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1705508678971213783, guid: 56842a31179f35245917882262979c00, type: 3}
     - target: {fileID: 1273042486972981393, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
+      propertyPath: balls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1273042486972981393, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
+      propertyPath: balls.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1273042486972981393, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
+      propertyPath: balls.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1273042486972981393, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
+      propertyPath: balls.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1273042486972981393, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
+      propertyPath: balls.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1273042486972981393, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
+      propertyPath: balls.Array.data[4]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1273042486972981393, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
       propertyPath: slowdownRings.Array.size
       value: 9
       objectReference: {fileID: 0}
@@ -30085,6 +30109,10 @@ PrefabInstance:
     - target: {fileID: 1725905765360036606, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
       propertyPath: m_Name
       value: Octopus
+      objectReference: {fileID: 0}
+    - target: {fileID: 1725905765360036606, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1771856364674421565, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
       propertyPath: m_Materials.Array.data[0]
