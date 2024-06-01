@@ -6,10 +6,15 @@ public class OctopusArmAnimations : MonoBehaviour
 {
     [SerializeField] Octopus script;
     public bool commanderArm;
+    float currentLoop = 0;
     [SerializeField] GameObject homingBomb;
     [SerializeField] Transform projectileOrigin;
     [SerializeField] ParticleSystem launchHomingBombPs;
+    [SerializeField] float maxHomingLoops;
     [SerializeField] ParticleSystem launchRainPs;
+    [SerializeField] float maxRainLoops;
+    [SerializeField] ParticleSystem launchMinionPs;
+    [SerializeField] float maxMinionLoops;
 
     public void IdleAllRows()
     {
@@ -49,7 +54,15 @@ public class OctopusArmAnimations : MonoBehaviour
 
     public void CheckHomingBombLoop()
     {
-        if (commanderArm && Random.Range(0, 3) == 0) script.Idle(true, false, false, false);
+        if (commanderArm)
+        {
+            if (Random.Range(0, 3) == 0 || currentLoop == maxHomingLoops)
+            {
+                currentLoop = 0;
+                script.Idle(true, false, false, false);
+            }
+            else currentLoop++;
+        }
     }
 
     public void SpawnRain()
@@ -60,10 +73,33 @@ public class OctopusArmAnimations : MonoBehaviour
 
     public void CheckRainLoop()
     {
-        if (commanderArm && Random.Range(0, 3) == 0)
+        if (commanderArm)
         {
-            script.Idle(false, true, false, false);
-            commanderArm = false;
+            if (Random.Range(0, 3) == 0 || currentLoop == maxRainLoops)
+            {
+                currentLoop = 0;
+                script.Idle(false, true, false, false);
+            }
+            else currentLoop++;
+        }
+    }
+
+    public void SpawnMinion()
+    {
+        script.SpawnMinion(projectileOrigin);
+        launchMinionPs.Play();
+    }
+
+    public void CheckMinionLoop()
+    {
+        if (commanderArm)
+        {
+            if (Random.Range(0, 2) == 0 || currentLoop == maxMinionLoops)
+            {
+                currentLoop = 0;
+                script.Idle(false, false, false, true);
+            }
+            else currentLoop++;
         }
     }
 }

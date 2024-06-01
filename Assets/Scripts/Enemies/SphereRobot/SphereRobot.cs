@@ -36,6 +36,8 @@ public class SphereRobot : Enemy
     [SerializeField] GameObject explosionPrefab;
     [SerializeField] GameObject corpsPrefab;
     Vector3 sideRollingDestination;
+    [SerializeField] bool isOctopusGenerated;
+    [SerializeField] GameObject octopusCorpsPrefab;
 
     private void OnEnable()
     {
@@ -289,8 +291,15 @@ public class SphereRobot : Enemy
 
     public void Destroyed()
     {
-        GameObject.Instantiate(corpsPrefab, transform.position, transform.rotation, transform.parent);
-        GiveCoin();
+        if (!isOctopusGenerated)
+        {
+            GameObject.Instantiate(corpsPrefab, transform.position, transform.rotation, transform.parent);
+            GiveCoin();
+        }
+        else
+        {
+            GameObject.Find("Octopus").GetComponent<Octopus>().balls.Add(GameObject.Instantiate(octopusCorpsPrefab, transform.position, transform.rotation, transform.parent));
+        }
         Destroy(gameObject);
     }
 

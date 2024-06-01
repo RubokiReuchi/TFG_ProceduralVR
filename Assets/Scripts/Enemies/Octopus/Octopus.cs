@@ -22,6 +22,8 @@ public class Octopus : Enemy
     [SerializeField] GameObject[] slowdownRings;
     [SerializeField] Animator sonnar;
     [SerializeField] GameObject rain;
+    [SerializeField] GameObject sphereRobot;
+    [HideInInspector] public List<GameObject> balls;
 
     private void OnEnable()
     {
@@ -85,9 +87,11 @@ public class Octopus : Enemy
             animators[i].SetTrigger("SonnarLeft");
         }
         // homing bomb
-        StartCoroutine(StartHomingBombSequence());*/
+        StartCoroutine(StartHomingBombSequence());
         // rain
-        StartCoroutine(StartRainSequence());
+        StartCoroutine(StartRainSequence());*/
+        // minion
+        StartCoroutine(StartMinionSequence());
     }
 
     public void Idle(bool row0 = true, bool row1 = true, bool row2 = true, bool row3 = true)
@@ -169,6 +173,23 @@ public class Octopus : Enemy
     public void SpawnRain()
     {
         GameObject.Instantiate(rain, new Vector3(player.position.x + Random.Range(-5, 6), 0, player.position.z + Random.Range(-5, 6)), Quaternion.identity);
+    }
+
+    public IEnumerator StartMinionSequence()
+    {
+        animators[3].SetBool("Idle", false);
+        animators[3].SetTrigger("Minion");
+        animators[3].GetComponent<OctopusArmAnimations>().commanderArm = true;
+        yield return new WaitForSeconds(0.8f);
+        animators[7].SetBool("Idle", false);
+        animators[7].SetTrigger("Minion");
+    }
+
+    public void SpawnMinion(Transform origin)
+    {
+        Rigidbody rb = GameObject.Instantiate(sphereRobot, origin.position, Quaternion.identity).GetComponent<Rigidbody>();
+        rb.AddForce(transform.right * 500);
+        rb.AddForce(transform.up * 500);
     }
 
     IEnumerator CreateEnergyShield()
