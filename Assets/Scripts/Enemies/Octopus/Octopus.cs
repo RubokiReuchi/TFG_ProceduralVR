@@ -28,9 +28,7 @@ public class Octopus : Enemy
     [SerializeField] GameObject sphereRobot;
     [HideInInspector] public List<GameObject> balls;
     [SerializeField] ParticleSystem minionWavePs;
-    [SerializeField] GameObject[] corners;
-    int currentCorner = 0;
-    float pathTime = 0;
+    Animator pathAnimator;
     bool canRotate = true;
 
     private void OnEnable()
@@ -39,6 +37,10 @@ public class Octopus : Enemy
         firstEnable = false;
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        pathAnimator = GetComponent<Animator>();
+        float startOffset = Random.Range(-0.25f, 0.25f);
+        if (startOffset < 0) startOffset = 1 + startOffset;
+        pathAnimator.SetFloat("LoopOffset", startOffset);
 
         state = STATE.REST;
         foreach (var animator in animators)
@@ -53,19 +55,22 @@ public class Octopus : Enemy
     // Update is called once per frame
     void Update()
     {
-        if (canRotate) transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
-
         switch (state)
         {
             case STATE.REST:
                 break;
             case STATE.PANNING:
-                Move(true);
                 break;
             case STATE.WAITING:
                 break;
             default:
                 break;
+        }
+
+        if (canRotate)
+        {
+            transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+            transform.Rotate(new Vector3(0, -90, 0));
         }
     }
 
@@ -313,20 +318,6 @@ public class Octopus : Enemy
             yield return null;
         }
         physicShield.gameObject.SetActive(false);
-    }
-
-    void Move(bool rightDirection)
-    {
-        int targetCorner = currentCorner + 1;
-        if (targetCorner == 4) targetCorner = 0;
-        transform.position = Vector3.Lerp(transform.position, corners[targetCorner].transform.position, pathTime);
-        pathTime += Time.deltaTime * 0.3f;
-        if (pathTime >= 1.0f)
-        {
-            currentCorner += 1;
-            if (currentCorner == 4) currentCorner = 0;
-            pathTime = 0.0f;
-        }
     }
 
     public override void TakeDamage(float amount, GameObject damageText = null)
