@@ -103,6 +103,11 @@ public class OctopusArmAnimations : MonoBehaviour
         }
     }
 
+    public void CollectMinionWave()
+    {
+        if (commanderArm) script.CollectMinionWave();
+    }
+
     public void LaunchMinionWave()
     {
         if (commanderArm)

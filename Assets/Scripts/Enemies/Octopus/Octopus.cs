@@ -8,6 +8,9 @@ public class Octopus : Enemy
     enum STATE
     {
         REST,
+        PANNING,
+        CENTRING,
+        UNCENTRING,
         WAITING
     }
 
@@ -24,6 +27,11 @@ public class Octopus : Enemy
     [SerializeField] GameObject rain;
     [SerializeField] GameObject sphereRobot;
     [HideInInspector] public List<GameObject> balls;
+    [SerializeField] ParticleSystem minionWavePs;
+    [SerializeField] GameObject[] corners;
+    int currentCorner = 0;
+    float pathTime = 0;
+    bool canRotate = true;
 
     private void OnEnable()
     {
@@ -39,15 +47,20 @@ public class Octopus : Enemy
         }
 
         currentHealth = maxHealth;
-        Invoke("StartCheckOptions", 3.0f);
+        state = STATE.PANNING;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (canRotate) transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+
         switch (state)
         {
             case STATE.REST:
+                break;
+            case STATE.PANNING:
+                Move(true);
                 break;
             case STATE.WAITING:
                 break;
@@ -89,15 +102,15 @@ public class Octopus : Enemy
         // homing bomb
         StartCoroutine(StartHomingBombSequence());
         // rain
-        StartCoroutine(StartRainSequence());*/
+        StartCoroutine(StartRainSequence());
         // minion
-        StartCoroutine(StartMinionSequence());
+        StartCoroutine(StartMinionSequence());*/
         // minion wave
-        /*foreach (var animator in animators)
+        foreach (var animator in animators)
         {
             animator.SetBool("Idle", false);
             animator.SetTrigger("MinionWave");
-        }*/
+        }
     }
 
     public void Idle(bool row0 = true, bool row1 = true, bool row2 = true, bool row3 = true)
@@ -198,22 +211,69 @@ public class Octopus : Enemy
         rb.AddForce(transform.up * Random.Range(450, 550));
     }
 
+    public void CollectMinionWave()
+    {
+        StartCoroutine(AddInverseImpulseToBall());
+        StartCoroutine(MinionWaveParticlesIn());
+    }
+
+    IEnumerator AddInverseImpulseToBall()
+    {
+        foreach (var ball in balls)
+        {
+            Vector3 direction = Vector3.Normalize(new Vector3(ball.transform.position.x - transform.position.x, 0, ball.transform.position.z - transform.position.z));
+            ball.GetComponent<Rigidbody>().mass = 1.0f;
+            OctopusBall script = ball.GetComponent<OctopusBall>();
+            yield return null;
+            ball.GetComponent<Rigidbody>().AddForce(-direction * 1000);
+            ball.GetComponent<Rigidbody>().AddForce(Vector3.up * 1000);
+            yield return null;
+            script.launching = true;
+        }
+    }
+
+    IEnumerator MinionWaveParticlesIn()
+    {
+        minionWavePs.gameObject.SetActive(true);
+        float size = 6.5f;
+        while (size > 0)
+        {
+            size -= Time.deltaTime * 6.5f;
+            minionWavePs.transform.localScale = new Vector3(size, size, size);
+            yield return null;
+        }
+    }
+
     public void LaunchMinionWave()
     {
         StartCoroutine(AddImpulseToBall());
+        StartCoroutine(MinionWaveParticlesOut());
     }
 
     IEnumerator AddImpulseToBall()
     {
         foreach (var ball in balls)
         {
-            Vector3 direction = Vector3.Normalize(ball.transform.position - transform.position);
+            Vector3 direction = Vector3.Normalize(new Vector3(ball.transform.position.x - transform.position.x, 0, ball.transform.position.z - transform.position.z));
             ball.GetComponent<Rigidbody>().mass = 1.0f;
             OctopusBall script = ball.GetComponent<OctopusBall>();
             yield return null;
             ball.GetComponent<Rigidbody>().AddForce(direction * 1500);
             yield return null;
             script.launching = true;
+        }
+    }
+
+    IEnumerator MinionWaveParticlesOut()
+    {
+        minionWavePs.gameObject.SetActive(true);
+        float size = 0;
+        while (size < 30.0f)
+        {
+            size += Time.deltaTime * 40.0f;
+            minionWavePs.transform.localScale = new Vector3(size, size, size);
+            if (size >= 30.0f) minionWavePs.gameObject.SetActive(false);
+            yield return null;
         }
     }
 
@@ -253,6 +313,20 @@ public class Octopus : Enemy
             yield return null;
         }
         physicShield.gameObject.SetActive(false);
+    }
+
+    void Move(bool rightDirection)
+    {
+        int targetCorner = currentCorner + 1;
+        if (targetCorner == 4) targetCorner = 0;
+        transform.position = Vector3.Lerp(transform.position, corners[targetCorner].transform.position, pathTime);
+        pathTime += Time.deltaTime * 0.3f;
+        if (pathTime >= 1.0f)
+        {
+            currentCorner += 1;
+            if (currentCorner == 4) currentCorner = 0;
+            pathTime = 0.0f;
+        }
     }
 
     public override void TakeDamage(float amount, GameObject damageText = null)

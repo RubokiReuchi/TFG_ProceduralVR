@@ -18,10 +18,11 @@ public class OctopusBall : MonoBehaviour
 
     void Update()
     {
-        if (launching && rb.velocity == Vector3.zero)
+        if (launching && rb.velocity.magnitude < 0.1f)
         {
             launching = false;
             rb.mass = 10000.0f;
+            rb.velocity = Vector3.zero;
         }
     }
 
