@@ -178,6 +178,7 @@ public class PlayerState : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
+        return; // DEBUG
         if (currentHealth == 0) return;
         if (currentShieldCooldown == 0)
         {

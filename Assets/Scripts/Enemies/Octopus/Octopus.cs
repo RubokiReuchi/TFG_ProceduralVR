@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class Octopus : Enemy
 {
@@ -11,10 +11,16 @@ public class Octopus : Enemy
         PANNING,
         CENTRING,
         UNCENTRING,
+        SLOW_RINGS,
+        SONNAR,
+        HOMING_BOMB,
+        RAIN,
+        MINION,
         WAITING
     }
 
     Transform player;
+    [SerializeField] GameObject portal;
     [NonEditable][SerializeField] STATE state;
     [SerializeField] Animator[] animators;
     [SerializeField] GameObject meteorite;
@@ -30,6 +36,10 @@ public class Octopus : Enemy
     [SerializeField] ParticleSystem minionWavePs;
     Animator pathAnimator;
     bool canRotate = true;
+    float panningTime;
+    STATE lastAttack = STATE.REST;
+    float pathDirection = 1;
+    Vector3 centerPos;
 
     private void OnEnable()
     {
@@ -38,18 +48,17 @@ public class Octopus : Enemy
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
         pathAnimator = GetComponent<Animator>();
-        float startOffset = Random.Range(-0.25f, 0.25f);
-        if (startOffset < 0) startOffset = 1 + startOffset;
-        pathAnimator.SetFloat("LoopOffset", startOffset);
+        StartCoroutine(EnterSequence());
 
         state = STATE.REST;
+        transform.localScale = Vector3.zero;
+        centerPos = new Vector3(0.0f, 7.0f, 19.5f);
         foreach (var animator in animators)
         {
             animator.SetInteger("IdleAnimation", Random.Range(0, 12));
         }
 
         currentHealth = maxHealth;
-        state = STATE.PANNING;
     }
 
     // Update is called once per frame
@@ -60,6 +69,35 @@ public class Octopus : Enemy
             case STATE.REST:
                 break;
             case STATE.PANNING:
+                if (panningTime > 0) panningTime -= Time.deltaTime;
+                else StartCheckOptions();
+                break;
+            case STATE.CENTRING:
+                if (Vector3.Distance(transform.position, centerPos) < 0.01)
+                {
+                    switch (lastAttack)
+                    {
+                        case STATE.SONNAR:
+                            for (int i = 0; i < 4; i++)
+                            {
+                                animators[i].SetBool("Idle", false);
+                                animators[i].SetTrigger("SonnarRight");
+                            }
+                            for (int i = 4; i < 8; i++)
+                            {
+                                animators[i].SetBool("Idle", false);
+                                animators[i].SetTrigger("SonnarLeft");
+                            }
+                            pathAnimator.SetFloat("Speed", 0);
+                            panningTime = (currentHealth > maxHealth / 2.0f) ? 10.0f : 8.0f;
+                            break;
+                        default:
+                            break;
+                    }
+                    state = lastAttack;
+                }
+                break;
+            case STATE.UNCENTRING:
                 break;
             case STATE.WAITING:
                 break;
@@ -74,8 +112,115 @@ public class Octopus : Enemy
         }
     }
 
+    IEnumerator EnterSequence()
+    {
+        float size = 0;
+        while (size < 18)
+        {
+            size += Time.deltaTime * 5.0f;
+            portal.transform.localScale = new Vector3(size, size, size);
+            yield return null;
+        }
+        size = 0;
+        while (size < 1)
+        {
+            size += Time.deltaTime;
+            if (size > 1.0f) size = 1.0f;
+            transform.localScale = new Vector3(size, size, size);
+            yield return null;
+        }
+        pathAnimator.enabled = true;
+        float startOffset = Random.Range(-0.25f, 0.25f);
+        if (startOffset < 0) startOffset = 1 + startOffset;
+        pathAnimator.SetFloat("LoopOffset", startOffset);
+        yield return new WaitForSeconds(0.3f);
+        size = 18;
+        while (size > 0)
+        {
+            size -= Time.deltaTime * 5.0f;
+            portal.transform.localScale = new Vector3(size, size, size);
+            yield return null;
+        }
+        portal.SetActive(false);
+        state = STATE.PANNING;
+        panningTime = 1.5f;
+    }
+
     public override void StartCheckOptions()
     {
+        float rand = Random.Range(0, 100);
+        
+        // slowdownRings
+        if (rand < 20)
+        {
+            if (lastAttack == STATE.SLOW_RINGS)
+            {
+                StartCheckOptions();
+                return;
+            }
+            animators[0].SetBool("Idle", false);
+            animators[0].SetTrigger("SlowdownRingsRight");
+            animators[4].SetBool("Idle", false);
+            animators[4].SetTrigger("SlowdownRingsLeft");
+            state = STATE.SLOW_RINGS;
+            lastAttack = STATE.SLOW_RINGS;
+            pathAnimator.SetFloat("Speed", 0);
+            panningTime = 0.2f;
+        }
+        // sonnar
+        else if (rand < 40)
+        {
+            if (lastAttack == STATE.SONNAR)
+            {
+                StartCheckOptions();
+                return;
+            }
+            pathAnimator.SetBool("Center", true);
+            state = STATE.CENTRING;
+            lastAttack = STATE.SONNAR;
+        }
+        // homing bomb
+        else if (rand < 60)
+        {
+            if (lastAttack == STATE.HOMING_BOMB)
+            {
+                StartCheckOptions();
+                return;
+            }
+            StartCoroutine(StartHomingBombSequence());
+            state = STATE.HOMING_BOMB;
+            lastAttack = STATE.HOMING_BOMB;
+            pathAnimator.SetFloat("Speed", 0);
+            panningTime = 7.5f;
+        }
+        // rain
+        else if (rand < 80)
+        {
+            if (lastAttack == STATE.RAIN)
+            {
+                StartCheckOptions();
+                return;
+            }
+            StartCoroutine(StartRainSequence());
+            state = STATE.RAIN;
+            lastAttack = STATE.RAIN;
+            pathAnimator.SetFloat("Speed", 0);
+            panningTime = 7.5f;
+        }
+        // minion
+        else
+        {
+            if (lastAttack == STATE.MINION)
+            {
+                StartCheckOptions();
+                return;
+            }
+            StartCoroutine(StartMinionSequence());
+            state = STATE.MINION;
+            lastAttack = STATE.MINION;
+            pathAnimator.SetFloat("Speed", 0);
+            panningTime = 15.0f;
+        }
         // meteorite
         /*foreach (var animator in animators)
         {
@@ -88,34 +233,14 @@ public class Octopus : Enemy
             animator.SetBool("Idle", false);
             animator.SetTrigger("Nuke");
         }*/
-        // slowdownRings
-        //animators[0].SetBool("Idle", false);
-        //animators[0].SetTrigger("SlowdownRingsRight");
-        //animators[4].SetBool("Idle", false);
-        //animators[4].SetTrigger("SlowdownRingsLeft");
-        // sonnar
-        /*for (int i = 0; i < 4; i++)
-        {
-            animators[i].SetBool("Idle", false);
-            animators[i].SetTrigger("SonnarRight");
-        }
-        for (int i = 4; i < 8; i++)
-        {
-            animators[i].SetBool("Idle", false);
-            animators[i].SetTrigger("SonnarLeft");
-        }
-        // homing bomb
-        StartCoroutine(StartHomingBombSequence());
-        // rain
-        StartCoroutine(StartRainSequence());
-        // minion
-        StartCoroutine(StartMinionSequence());*/
+
+        /*
         // minion wave
         foreach (var animator in animators)
         {
             animator.SetBool("Idle", false);
             animator.SetTrigger("MinionWave");
-        }
+        }*/
     }
 
     public void Idle(bool row0 = true, bool row1 = true, bool row2 = true, bool row3 = true)
@@ -140,6 +265,32 @@ public class Octopus : Enemy
             animators[3].SetBool("Idle", true);
             animators[7].SetBool("Idle", true);
         }
+
+        switch (state)
+        {
+            case STATE.SLOW_RINGS:
+            case STATE.SONNAR:
+                ContinueMovement();
+                break;
+            case STATE.HOMING_BOMB:
+            case STATE.RAIN:
+            case STATE.MINION:
+                Invoke("ContinueMovement", 3.0f);
+                break;
+            default:
+                break;
+        }
+    }
+
+    void ContinueMovement()
+    {
+        if (state != STATE.SLOW_RINGS)
+        {
+            int direction = Random.Range(0, 10);
+            pathAnimator.SetFloat("Speed", (direction < 3) ? -pathDirection : pathDirection);
+        }
+        if (state == STATE.SONNAR) pathAnimator.SetBool("Center", false);
+        state = STATE.PANNING;
     }
 
     public void SpawnMeteorite()
@@ -172,14 +323,14 @@ public class Octopus : Enemy
 
     public void SpawnSonnar()
     {
-        sonnar.enabled = true;
+        sonnar.SetBool("Enabled", true);
     }
 
     public IEnumerator StartHomingBombSequence()
     {
         animators[0].SetBool("Idle", false);
         animators[0].SetTrigger("HomingBomb");
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(1.3f);
         animators[4].SetBool("Idle", false);
         animators[4].SetTrigger("HomingBomb");
     }
@@ -340,7 +491,7 @@ public class Octopus : Enemy
 
     public override void TakeFreeze(float amount)
     {
-        
+
     }
 
     public override void Die()

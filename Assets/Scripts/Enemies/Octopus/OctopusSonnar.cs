@@ -14,6 +14,6 @@ public class OctopusSonnar : MonoBehaviour
 
     public void DisableAnimator()
     {
-        animator.enabled = false;
+        animator.SetBool("Enabled", false);
     }
 }
