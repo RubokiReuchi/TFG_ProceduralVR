@@ -16,6 +16,9 @@ public class Octopus : Enemy
         HOMING_BOMB,
         RAIN,
         MINION,
+        MINION_WAVE,
+        METEORITE,
+        NUKE,
         WAITING
     }
 
@@ -40,6 +43,8 @@ public class Octopus : Enemy
     STATE lastAttack = STATE.REST;
     float pathDirection = 1;
     Vector3 centerPos;
+    STATE ensureAttack = STATE.REST;
+    float shieldCd = 10.0f;
 
     private void OnEnable()
     {
@@ -64,6 +69,8 @@ public class Octopus : Enemy
     // Update is called once per frame
     void Update()
     {
+        if (!hasShield && shieldCd > 0) shieldCd -= Time.deltaTime;
+
         switch (state)
         {
             case STATE.REST:
@@ -90,6 +97,24 @@ public class Octopus : Enemy
                             }
                             pathAnimator.SetFloat("Speed", 0);
                             panningTime = (currentHealth > maxHealth / 2.0f) ? 10.0f : 8.0f;
+                            break;
+                        case STATE.MINION_WAVE:
+                            foreach (var animator in animators)
+                            {
+                                animator.SetBool("Idle", false);
+                                animator.SetTrigger("MinionWave");
+                            }
+                            pathAnimator.SetFloat("Speed", 0);
+                            panningTime = 8.0f;
+                            break;
+                        case STATE.NUKE:
+                            foreach (var animator in animators)
+                            {
+                                animator.SetBool("Idle", false);
+                                animator.SetTrigger("Nuke");
+                            }
+                            pathAnimator.SetFloat("Speed", 0);
+                            panningTime = 8.0f;
                             break;
                         default:
                             break;
@@ -148,8 +173,48 @@ public class Octopus : Enemy
 
     public override void StartCheckOptions()
     {
+        if (shieldCd <= 0)
+        {
+            if (Random.Range(0, 2) == 0) StartCoroutine(CreateEnergyShield());
+            else StartCoroutine(OpenPhysicShield());
+            hasShield = true;
+        }
+
+        // meteorite
+        if (ensureAttack == STATE.METEORITE)
+        {
+            foreach (var animator in animators)
+            {
+                animator.SetBool("Idle", false);
+                animator.SetTrigger("Meteorite");
+            }
+            state = STATE.METEORITE;
+            lastAttack = STATE.METEORITE;
+            pathAnimator.SetFloat("Speed", 0);
+            panningTime = 4.5f;
+            ensureAttack = STATE.REST;
+            return;
+        }
+        // nuke
+        else if (ensureAttack == STATE.NUKE)
+        {
+            pathAnimator.SetBool("Center", true);
+            state = STATE.CENTRING;
+            lastAttack = STATE.NUKE;
+            ensureAttack = STATE.REST;
+            return;
+        }
+
+        // minion wave
+        if (balls.Count > 3 && lastAttack != STATE.MINION_WAVE && Random.Range(0, 100) < 15)
+        {
+            pathAnimator.SetBool("Center", true);
+            state = STATE.CENTRING;
+            lastAttack = STATE.MINION_WAVE;
+            return;
+        }
+
         float rand = Random.Range(0, 100);
-        
         // slowdownRings
         if (rand < 20)
         {
@@ -221,26 +286,6 @@ public class Octopus : Enemy
             pathAnimator.SetFloat("Speed", 0);
             panningTime = 15.0f;
         }
-        // meteorite
-        /*foreach (var animator in animators)
-        {
-            animator.SetBool("Idle", false);
-            animator.SetTrigger("Meteorite");
-        }
-        // nuke
-        foreach (var animator in animators)
-        {
-            animator.SetBool("Idle", false);
-            animator.SetTrigger("Nuke");
-        }*/
-
-        /*
-        // minion wave
-        foreach (var animator in animators)
-        {
-            animator.SetBool("Idle", false);
-            animator.SetTrigger("MinionWave");
-        }*/
     }
 
     public void Idle(bool row0 = true, bool row1 = true, bool row2 = true, bool row3 = true)
@@ -270,6 +315,9 @@ public class Octopus : Enemy
         {
             case STATE.SLOW_RINGS:
             case STATE.SONNAR:
+            case STATE.MINION_WAVE:
+            case STATE.METEORITE:
+            case STATE.NUKE:
                 ContinueMovement();
                 break;
             case STATE.HOMING_BOMB:
@@ -456,11 +504,7 @@ public class Octopus : Enemy
             physicShield.localScale = new Vector3(size, size, size);
             yield return null;
         }
-    }
-
-    IEnumerator ClosePhysicShield()
-    {
-        float size = 3.75f;
+        yield return new WaitForSeconds(10.0f);
         while (size > 0.0f)
         {
             size -= Time.deltaTime * 3.75f;
@@ -469,6 +513,8 @@ public class Octopus : Enemy
             yield return null;
         }
         physicShield.gameObject.SetActive(false);
+        hasShield = false;
+        shieldCd = 30.0f;
     }
 
     public override void TakeDamage(float amount, GameObject damageText = null)
