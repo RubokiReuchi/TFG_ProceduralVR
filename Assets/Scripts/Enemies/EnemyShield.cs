@@ -97,5 +97,10 @@ public class EnemyShield : MonoBehaviour
         material.SetFloat("_DissolvePercentage", 1.0f);
         transform.parent.localScale = Vector3.zero;
         transform.parent.gameObject.SetActive(false);
+        if (enemyScript is Octopus)
+        {
+            Octopus octopus = (Octopus)enemyScript;
+            octopus.EnergyShieldBreak();
+        }
     }
 }

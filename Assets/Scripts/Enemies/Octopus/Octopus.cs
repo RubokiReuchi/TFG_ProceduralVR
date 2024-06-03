@@ -10,7 +10,6 @@ public class Octopus : Enemy
         REST,
         PANNING,
         CENTRING,
-        UNCENTRING,
         SLOW_RINGS,
         SONNAR,
         HOMING_BOMB,
@@ -18,8 +17,7 @@ public class Octopus : Enemy
         MINION,
         MINION_WAVE,
         METEORITE,
-        NUKE,
-        WAITING
+        NUKE
     }
 
     Transform player;
@@ -38,13 +36,12 @@ public class Octopus : Enemy
     [HideInInspector] public List<GameObject> balls;
     [SerializeField] ParticleSystem minionWavePs;
     Animator pathAnimator;
-    bool canRotate = true;
     float panningTime;
     STATE lastAttack = STATE.REST;
     float pathDirection = 1;
     Vector3 centerPos;
     STATE ensureAttack = STATE.REST;
-    float shieldCd = 10.0f;
+    float shieldCd = 30.0f;
 
     private void OnEnable()
     {
@@ -69,12 +66,13 @@ public class Octopus : Enemy
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.K)) TakeDamage(315);
+
+        if (!alive) return;
         if (!hasShield && shieldCd > 0) shieldCd -= Time.deltaTime;
 
         switch (state)
         {
-            case STATE.REST:
-                break;
             case STATE.PANNING:
                 if (panningTime > 0) panningTime -= Time.deltaTime;
                 else StartCheckOptions();
@@ -122,19 +120,12 @@ public class Octopus : Enemy
                     state = lastAttack;
                 }
                 break;
-            case STATE.UNCENTRING:
-                break;
-            case STATE.WAITING:
-                break;
             default:
                 break;
         }
 
-        if (canRotate)
-        {
-            transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
-            transform.Rotate(new Vector3(0, -90, 0));
-        }
+        transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+        transform.Rotate(new Vector3(0, -90, 0));
     }
 
     IEnumerator EnterSequence()
@@ -173,7 +164,7 @@ public class Octopus : Enemy
 
     public override void StartCheckOptions()
     {
-        if (shieldCd <= 0)
+        if (!hasShield && shieldCd <= 0)
         {
             if (Random.Range(0, 2) == 0) StartCoroutine(CreateEnergyShield());
             else StartCoroutine(OpenPhysicShield());
@@ -337,7 +328,7 @@ public class Octopus : Enemy
             int direction = Random.Range(0, 10);
             pathAnimator.SetFloat("Speed", (direction < 3) ? -pathDirection : pathDirection);
         }
-        if (state == STATE.SONNAR) pathAnimator.SetBool("Center", false);
+        if (state == STATE.SONNAR || state == STATE.MINION_WAVE || state == STATE.NUKE) pathAnimator.SetBool("Center", false);
         state = STATE.PANNING;
     }
 
@@ -493,6 +484,12 @@ public class Octopus : Enemy
         }
     }
 
+    public void EnergyShieldBreak()
+    {
+        hasShield = false;
+        shieldCd = 30.0f;
+    }
+
     IEnumerator OpenPhysicShield()
     {
         float size = 0.0f;
@@ -524,9 +521,17 @@ public class Octopus : Enemy
         currentHealth -= amount;
         if (damageText != null)
         {
-            FloatingDamageText text = GameObject.Instantiate(damageText, damageTextCenter.position + Vector3.one * Random.Range(-0.2f, 0.2f), Quaternion.identity).GetComponentInChildren<FloatingDamageText>();
+            FloatingDamageText text = GameObject.Instantiate(damageText, damageTextCenter.position + Vector3.one * Random.Range(-2.0f, 2.0f), Quaternion.identity).GetComponentInChildren<FloatingDamageText>();
             text.damage = amount;
         }
+
+        if (currentHealth + amount > (maxHealth / 8) * 7 && currentHealth < (maxHealth / 8) * 7) ensureAttack = STATE.METEORITE;
+        else if (currentHealth + amount > (maxHealth / 8) * 6 && currentHealth < (maxHealth / 8) * 6) ensureAttack = STATE.METEORITE;
+        else if (currentHealth + amount > (maxHealth / 8) * 5 && currentHealth < (maxHealth / 8) * 5) ensureAttack = STATE.METEORITE;
+        else if (currentHealth + amount > (maxHealth / 8) * 4 && currentHealth < (maxHealth / 8) * 4) ensureAttack = STATE.NUKE;
+        else if (currentHealth + amount > (maxHealth / 8) * 3 && currentHealth < (maxHealth / 8) * 3) ensureAttack = STATE.METEORITE;
+        else if (currentHealth + amount > (maxHealth / 8) * 2 && currentHealth < (maxHealth / 8) * 2) ensureAttack = STATE.METEORITE;
+        else if (currentHealth + amount > (maxHealth / 8) * 1 && currentHealth < (maxHealth / 8) * 1) ensureAttack = STATE.METEORITE;
 
         if (currentHealth <= 0)
         {
@@ -542,6 +547,26 @@ public class Octopus : Enemy
 
     public override void Die()
     {
+        ensureAttack = STATE.NUKE;
+    }
+
+    public void StartDeathSequence()
+    {
+        foreach (var animator in animators)
+        {
+            animator.enabled = false;
+            animator.gameObject.SetActive(false);
+        }
+        Invoke("EndDeathSequence", 3.0f);
         alive = false;
+    }
+
+    public void EndDeathSequence()
+    {
+        foreach (var animator in animators)
+        {
+            animator.enabled = false;
+            animator.gameObject.SetActive(false);
+        }
     }
 }

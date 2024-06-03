@@ -123,11 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &386499266 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8489909625087881697, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
-  m_PrefabInstance: {fileID: 5617494800130968253}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,11 +878,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &2117783561 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4400242616745276972, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
-  m_PrefabInstance: {fileID: 5617494800130968253}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &941387324268155711 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4586240735712011785, guid: 2f5ef6a99a7a51b47b9bc23598032e5f, type: 3}
@@ -966,21 +956,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4412296890885523263, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
-      propertyPath: projectileOrigin
-      value: 
-      objectReference: {fileID: 386499266}
     - target: {fileID: 4687784988306581373, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
       propertyPath: m_Name
       value: Octopus
-      objectReference: {fileID: 0}
-    - target: {fileID: 4687784988306581373, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5787985715027499587, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
-      propertyPath: looping
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5934067940091627859, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
       propertyPath: portal
@@ -1026,10 +1004,6 @@ PrefabInstance:
       propertyPath: slowdownRings.Array.data[8]
       value: 
       objectReference: {fileID: 846235924}
-    - target: {fileID: 6747491718430911950, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
-      propertyPath: projectileOrigin
-      value: 
-      objectReference: {fileID: 2117783561}
     - target: {fileID: 6791037647628230444, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
       propertyPath: m_RootOrder
       value: 2

@@ -60,6 +60,7 @@ public class OctopusArmAnimations : MonoBehaviour
             {
                 currentLoop = 0;
                 script.Idle(true, false, false, false);
+                commanderArm = false;
             }
             else currentLoop++;
         }
@@ -79,6 +80,7 @@ public class OctopusArmAnimations : MonoBehaviour
             {
                 currentLoop = 0;
                 script.Idle(false, true, false, false);
+                commanderArm = false;
             }
             else currentLoop++;
         }
@@ -98,6 +100,7 @@ public class OctopusArmAnimations : MonoBehaviour
             {
                 currentLoop = 0;
                 script.Idle(false, false, false, true);
+                commanderArm = false;
             }
             else currentLoop++;
         }
