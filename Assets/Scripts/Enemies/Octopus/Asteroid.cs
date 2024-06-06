@@ -30,7 +30,7 @@ public class Asteroid : MonoBehaviour
         }
     }
 
-    void BreakMeteorite()
+    public void BreakMeteorite()
     {
         Instantiate(breakPs, transform.position, Quaternion.identity);
         Destroy(transform.root.gameObject);

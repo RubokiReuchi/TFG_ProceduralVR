@@ -26,6 +26,7 @@ public class Octopus : Enemy
     [SerializeField] Animator[] animators;
     [SerializeField] GameObject meteorite;
     [SerializeField] ParticleSystem launchMeteoritePs;
+    [HideInInspector] public List<GameObject> meteorites;
     [SerializeField] GameObject nuke;
     [SerializeField] Transform energyShield;
     [SerializeField] Transform physicShield;
@@ -334,7 +335,7 @@ public class Octopus : Enemy
 
     public void SpawnMeteorite()
     {
-        GameObject.Instantiate(meteorite);
+        meteorites.Add(GameObject.Instantiate(meteorite));
         launchMeteoritePs.Play();
     }
 
