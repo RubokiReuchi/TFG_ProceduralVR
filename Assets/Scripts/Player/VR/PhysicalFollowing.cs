@@ -16,7 +16,7 @@ public class PhysicalFollowing : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.velocity = (controller.position - transform.position) / Time.fixedDeltaTime * 10.0f;
+        rb.velocity = (controller.position - transform.position) / Time.fixedDeltaTime;
 
         transform.rotation = controller.rotation;
     }
