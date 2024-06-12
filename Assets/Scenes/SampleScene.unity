@@ -1016,6 +1016,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1861048019}
     - target: {fileID: 5934067940091627859, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
+      propertyPath: maxHealth
+      value: 1200
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934067940091627859, guid: fe4a7e2d96c61454fbd2229bc5ba2efc, type: 3}
       propertyPath: slowdownRings.Array.data[0]
       value: 
       objectReference: {fileID: 8954178172580146264}

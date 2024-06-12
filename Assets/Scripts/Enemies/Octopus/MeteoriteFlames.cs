@@ -12,6 +12,7 @@ public class MeteoriteFlames : MonoBehaviour
     {
         UUID = System.Guid.NewGuid().ToString();
         ps = GetComponent<ParticleSystem>();
+        Invoke("EnableCollision", 1.0f);
     }
 
     void Update()
@@ -25,5 +26,10 @@ public class MeteoriteFlames : MonoBehaviour
         {
             other.transform.root.GetComponent<PlayerState>().TakeAreaDamage(damage, UUID);
         }
+    }
+
+    void EnableCollision()
+    {
+        GetComponent<SphereCollider>().enabled = true;
     }
 }

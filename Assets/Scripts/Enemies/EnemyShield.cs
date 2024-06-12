@@ -19,6 +19,7 @@ public class EnemyShield : MonoBehaviour
     bool xRayLayer = false;
     Material material;
     [SerializeField] protected float dissolveSpeed;
+    [SerializeField] float damageTextScale = 1.0f;
 
     public virtual void Start()
     {
@@ -52,7 +53,8 @@ public class EnemyShield : MonoBehaviour
         if (damageText != null)
         {
             FloatingDamageText text = GameObject.Instantiate(damageText, enemyScript.damageTextCenter.position + Vector3.one * Random.Range(-0.2f, 0.2f) + Vector3.up * 0.5f, Quaternion.identity).GetComponentInChildren<FloatingDamageText>();
-            text.damage = amount * 5.0f;
+            text.damage = amount;
+            text.scaleMultiplier = damageTextScale;
         }
 
         if (currentHealth <= 0)

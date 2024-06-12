@@ -43,6 +43,7 @@ public class Octopus : Enemy
     Vector3 centerPos;
     STATE ensureAttack = STATE.REST;
     float shieldCd = 30.0f;
+    bool physicalShieldActive = false;
 
     private void OnEnable()
     {
@@ -168,7 +169,7 @@ public class Octopus : Enemy
             else StartCoroutine(OpenPhysicShield());
             hasShield = true;
         }
-
+        */
         // meteorite
         if (ensureAttack == STATE.METEORITE)
         {
@@ -192,10 +193,10 @@ public class Octopus : Enemy
             lastAttack = STATE.NUKE;
             ensureAttack = STATE.REST;
             return;
-        }*/
+        }
 
         // minion wave
-        if (balls.Count > 3 && lastAttack != STATE.MINION_WAVE && Random.Range(0, 100) < 15)
+        if (balls.Count > 3 && lastAttack != STATE.MINION_WAVE && Random.Range(0, 100) < 20)
         {
             pathAnimator.SetBool("Center", true);
             state = STATE.CENTRING;
@@ -264,7 +265,7 @@ public class Octopus : Enemy
         // minion
         else
         {
-            if (lastAttack == STATE.MINION)
+            if (lastAttack == STATE.MINION || physicalShieldActive)
             {
                 StartCheckOptions();
                 return;
@@ -279,6 +280,12 @@ public class Octopus : Enemy
 
     public void Idle(bool row0 = true, bool row1 = true, bool row2 = true, bool row3 = true)
     {
+        if (currentHealth == 0)
+        {
+            StartDeathSequence();
+            return;
+        }
+
         if (row0)
         {
             animators[0].SetBool("Idle", true);
@@ -490,31 +497,33 @@ public class Octopus : Enemy
 
     IEnumerator OpenPhysicShield()
     {
+        physicalShieldActive = true;
         float size = 0.0f;
         physicShield.gameObject.SetActive(true);
-        while (size < 3.75f)
+        while (size < 4.5f)
         {
-            size += Time.deltaTime * 3.75f;
-            if (size > 3.75f) size = 3.75f;
+            size += Time.deltaTime * 4.5f;
+            if (size > 4.5f) size = 4.5f;
             physicShield.localScale = new Vector3(size, size, size);
             yield return null;
         }
-        yield return new WaitForSeconds(10.0f);
+        yield return new WaitForSeconds(30.0f);
         while (size > 0.0f)
         {
-            size -= Time.deltaTime * 3.75f;
+            size -= Time.deltaTime * 4.5f;
             if (size < 0.0f) size = 0.0f;
             physicShield.localScale = new Vector3(size, size, size);
             yield return null;
         }
         physicShield.gameObject.SetActive(false);
+        physicalShieldActive = true;
         hasShield = false;
         shieldCd = 30.0f;
     }
 
     public override void TakeDamage(float amount, GameObject damageText = null)
     {
-        if (!enabled || invulneravilityTime > 0) return;
+        if (!enabled || invulneravilityTime > 0 || currentHealth == 0) return;
 
         currentHealth -= amount;
         if (damageText != null)
@@ -524,13 +533,13 @@ public class Octopus : Enemy
             text.scaleMultiplier = 5.0f;
         }
 
-        if (currentHealth + amount > (maxHealth / 8) * 7 && currentHealth < (maxHealth / 8) * 7) ensureAttack = STATE.METEORITE;
-        else if (currentHealth + amount > (maxHealth / 8) * 6 && currentHealth < (maxHealth / 8) * 6) ensureAttack = STATE.METEORITE;
-        else if (currentHealth + amount > (maxHealth / 8) * 5 && currentHealth < (maxHealth / 8) * 5) ensureAttack = STATE.METEORITE;
-        else if (currentHealth + amount > (maxHealth / 8) * 4 && currentHealth < (maxHealth / 8) * 4) ensureAttack = STATE.NUKE;
-        else if (currentHealth + amount > (maxHealth / 8) * 3 && currentHealth < (maxHealth / 8) * 3) ensureAttack = STATE.METEORITE;
-        else if (currentHealth + amount > (maxHealth / 8) * 2 && currentHealth < (maxHealth / 8) * 2) ensureAttack = STATE.METEORITE;
-        else if (currentHealth + amount > (maxHealth / 8) * 1 && currentHealth < (maxHealth / 8) * 1) ensureAttack = STATE.METEORITE;
+        if (currentHealth + amount >= (maxHealth / 8) * 7 && currentHealth < (maxHealth / 8) * 7) ensureAttack = STATE.METEORITE;
+        else if (currentHealth + amount >= (maxHealth / 8) * 6 && currentHealth < (maxHealth / 8) * 6) ensureAttack = STATE.METEORITE;
+        else if (currentHealth + amount >= (maxHealth / 8) * 5 && currentHealth < (maxHealth / 8) * 5) ensureAttack = STATE.METEORITE;
+        else if (currentHealth + amount >= (maxHealth / 8) * 4 && currentHealth < (maxHealth / 8) * 4) ensureAttack = STATE.NUKE;
+        else if (currentHealth + amount >= (maxHealth / 8) * 3 && currentHealth < (maxHealth / 8) * 3) ensureAttack = STATE.METEORITE;
+        else if (currentHealth + amount >= (maxHealth / 8) * 2 && currentHealth < (maxHealth / 8) * 2) ensureAttack = STATE.METEORITE;
+        else if (currentHealth + amount >= (maxHealth / 8) * 1 && currentHealth < (maxHealth / 8) * 1) ensureAttack = STATE.METEORITE;
 
         if (currentHealth <= 0)
         {
@@ -554,7 +563,6 @@ public class Octopus : Enemy
         foreach (var animator in animators)
         {
             animator.enabled = false;
-            animator.gameObject.SetActive(false);
         }
         Invoke("EndDeathSequence", 3.0f);
         alive = false;

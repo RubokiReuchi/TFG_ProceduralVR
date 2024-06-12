@@ -8,8 +8,8 @@ public class NukeCollision : MonoBehaviour
 
     private void OnEnable()
     {
-        Invoke("CheckPlayer", 3.0f);
-        Invoke("Destroy", 8.0f);
+        Invoke("CheckPlayer", 4.5f);
+        Invoke("Destroy", 12.0f);
     }
 
     void CheckPlayer()
