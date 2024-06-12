@@ -11,6 +11,7 @@ public class OctopusHomingProjectile : Projectile
     [SerializeField] float slowDuration;
     [SerializeField] GameObject evaporateParticles;
     [SerializeField] GameObject explosionParticles;
+    bool destroying = false;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +26,7 @@ public class OctopusHomingProjectile : Projectile
         rb.velocity = transform.forward * speed;
         Vector3 direction = playerHead.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(direction);
-        float homingSpeed = (lifeTime > 4) ? 1000.0f : homingStrenght;
+        float homingSpeed = (lifeTime > 9) ? 1000.0f : homingStrenght;
         rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, rotation, homingSpeed * Time.deltaTime));
         lifeTime -= Time.deltaTime;
         if (lifeTime < 0) Destroy(gameObject);
@@ -33,6 +34,7 @@ public class OctopusHomingProjectile : Projectile
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (destroying) return;
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("PlayerHead") || collision.gameObject.CompareTag("NormalHand"))
         {
             if (damage > 0) collision.transform.root.GetComponent<PlayerState>().TakeDamage(damage);
@@ -40,6 +42,7 @@ public class OctopusHomingProjectile : Projectile
             GameObject.Instantiate(explosionParticles, transform.position, Quaternion.identity);
         }
         else GameObject.Instantiate(evaporateParticles, transform.position, Quaternion.identity);
+        destroying = true;
         Destroy(gameObject);
     }
 }

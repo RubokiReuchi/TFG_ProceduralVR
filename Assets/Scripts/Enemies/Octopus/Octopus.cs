@@ -147,9 +147,6 @@ public class Octopus : Enemy
             yield return null;
         }
         pathAnimator.enabled = true;
-        float startOffset = Random.Range(-0.25f, 0.25f);
-        if (startOffset < 0) startOffset = 1 + startOffset;
-        pathAnimator.SetFloat("LoopOffset", startOffset);
         yield return new WaitForSeconds(0.3f);
         size = 18;
         while (size > 0)
@@ -165,7 +162,7 @@ public class Octopus : Enemy
 
     public override void StartCheckOptions()
     {
-        if (!hasShield && shieldCd <= 0)
+        /*if (!hasShield && shieldCd <= 0)
         {
             if (Random.Range(0, 2) == 0) StartCoroutine(CreateEnergyShield());
             else StartCoroutine(OpenPhysicShield());
@@ -195,7 +192,7 @@ public class Octopus : Enemy
             lastAttack = STATE.NUKE;
             ensureAttack = STATE.REST;
             return;
-        }
+        }*/
 
         // minion wave
         if (balls.Count > 3 && lastAttack != STATE.MINION_WAVE && Random.Range(0, 100) < 15)
@@ -205,7 +202,7 @@ public class Octopus : Enemy
             lastAttack = STATE.MINION_WAVE;
             return;
         }
-
+        
         float rand = Random.Range(0, 100);
         // slowdownRings
         if (rand < 20)
@@ -248,7 +245,7 @@ public class Octopus : Enemy
             state = STATE.HOMING_BOMB;
             lastAttack = STATE.HOMING_BOMB;
             pathAnimator.SetFloat("Speed", 0);
-            panningTime = 7.5f;
+            panningTime = 5.0f;
         }
         // rain
         else if (rand < 80)
@@ -380,7 +377,7 @@ public class Octopus : Enemy
         animators[1].SetBool("Idle", false);
         animators[1].SetTrigger("Rain");
         animators[1].GetComponent<OctopusArmAnimations>().commanderArm = true;
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(1.3f);
         animators[5].SetBool("Idle", false);
         animators[5].SetTrigger("Rain");
     }
@@ -395,7 +392,7 @@ public class Octopus : Enemy
         animators[3].SetBool("Idle", false);
         animators[3].SetTrigger("Minion");
         animators[3].GetComponent<OctopusArmAnimations>().commanderArm = true;
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(1.3f);
         animators[7].SetBool("Idle", false);
         animators[7].SetTrigger("Minion");
     }
@@ -524,6 +521,7 @@ public class Octopus : Enemy
         {
             FloatingDamageText text = GameObject.Instantiate(damageText, damageTextCenter.position + Vector3.one * Random.Range(-2.0f, 2.0f), Quaternion.identity).GetComponentInChildren<FloatingDamageText>();
             text.damage = amount;
+            text.scaleMultiplier = 5.0f;
         }
 
         if (currentHealth + amount > (maxHealth / 8) * 7 && currentHealth < (maxHealth / 8) * 7) ensureAttack = STATE.METEORITE;

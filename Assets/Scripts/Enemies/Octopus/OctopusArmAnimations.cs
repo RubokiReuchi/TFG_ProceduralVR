@@ -56,11 +56,10 @@ public class OctopusArmAnimations : MonoBehaviour
     {
         if (commanderArm)
         {
-            if (Random.Range(0, 3) == 0 || currentLoop == maxHomingLoops)
+            if (Random.Range(0, 3) == 0 || currentLoop == maxHomingLoops - 1)
             {
                 currentLoop = 0;
                 script.Idle(true, false, false, false);
-                commanderArm = false;
             }
             else currentLoop++;
         }
@@ -76,7 +75,7 @@ public class OctopusArmAnimations : MonoBehaviour
     {
         if (commanderArm)
         {
-            if (Random.Range(0, 3) == 0 || currentLoop == maxRainLoops)
+            if (Random.Range(0, 3) == 0 || currentLoop == maxRainLoops - 1)
             {
                 currentLoop = 0;
                 script.Idle(false, true, false, false);
@@ -96,7 +95,7 @@ public class OctopusArmAnimations : MonoBehaviour
     {
         if (commanderArm)
         {
-            if (Random.Range(0, 2) == 0 || currentLoop == maxMinionLoops)
+            if (Random.Range(0, 2) == 0 || currentLoop == maxMinionLoops - 1)
             {
                 currentLoop = 0;
                 script.Idle(false, false, false, true);

@@ -9,6 +9,7 @@ public class FloatingDamageText : MonoBehaviour
     [SerializeField] float minSize;
     [SerializeField] float maxSize;
     float size;
+    [HideInInspector] public float scaleMultiplier = 1.0f;
 
     void Start()
     {
@@ -16,6 +17,7 @@ public class FloatingDamageText : MonoBehaviour
         GetComponent<TextMeshPro>().text = Mathf.RoundToInt(damage).ToString();
         if (damage < 250) size = Mathf.Lerp(minSize, maxSize, damage / 250.0f);
         else size = Mathf.Lerp(maxSize, 0.3f, damage / 1000f);
+        size *= scaleMultiplier;
         StartCoroutine(Fade());
     }
 

@@ -98,6 +98,7 @@ public class PlayerState : MonoBehaviour
         {
             //if (!recorderWindow.IsRecording()) recorderWindow.StartRecording();
             //else recorderWindow.StopRecording();
+            DataPersistenceManager.instance.NewGame();
             DataPersistenceManager.instance.SaveGame();
         }
         //
@@ -178,7 +179,6 @@ public class PlayerState : MonoBehaviour
 
     public void TakeDamage(float amount)
     {
-        return; // DEBUG
         if (currentHealth == 0) return;
         if (currentShieldCooldown == 0)
         {
@@ -188,8 +188,8 @@ public class PlayerState : MonoBehaviour
         }
         else currentShieldCooldown = shieldCooldown;
 
-        displayHealth.UpdateHealthDisplay(currentHealth);
         currentHealth -= amount * (1 - defense);
+        displayHealth.UpdateHealthDisplay(currentHealth);
         if (currentHealth <= 0)
         {
             currentHealth = 0;
