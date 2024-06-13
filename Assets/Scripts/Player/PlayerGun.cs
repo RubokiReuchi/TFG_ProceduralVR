@@ -85,7 +85,7 @@ public class PlayerGun : MonoBehaviour
     [Header("Triple")]
     [SerializeField] Transform projectileOrigin2Start;
     [SerializeField] Transform projectileOrigin3Start;
-    [Header("missile")]
+    [Header("Missile")]
     [SerializeField] GameObject yellowMissilePrefab;
     [SerializeField] GameObject blueMissilePrefab;
     [SerializeField] GameObject redMissilePrefab;
@@ -100,6 +100,15 @@ public class PlayerGun : MonoBehaviour
     [SerializeField] ParticleSystem superMissileChargingPs;
     [SerializeField] VisualEffect superMissileReady;
     bool superMissileCharged = false;
+
+    [Header("Audio")]
+    [SerializeField] AudioClip normal;
+    [SerializeField] AudioClip loadCharged;
+    [SerializeField] AudioClip launchCharged;
+    [SerializeField] AudioClip missile;
+    [SerializeField] AudioClip loadSupermissile;
+    [SerializeField] AudioClip launchSupermissile;
+    AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -126,6 +135,7 @@ public class PlayerGun : MonoBehaviour
         chargeSpeedReduction = skills.chargeSpeedLevel * 0.07f;
         automaticCadence += (skills.automaticModeLevel * 0.1f) * automaticCadence;
 
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame

@@ -34817,6 +34817,12 @@ MonoBehaviour:
   superMissileTime: 2
   superMissileChargingPs: {fileID: 8835737542098629951}
   superMissileReady: {fileID: 4741595025013737859}
+  normal: {fileID: 0}
+  loadCharged: {fileID: 0}
+  launchCharged: {fileID: 0}
+  missile: {fileID: 0}
+  loadSupermissile: {fileID: 0}
+  launchSupermissile: {fileID: 0}
 --- !u!1 &5919252238546422506
 GameObject:
   m_ObjectHideFlags: 0
