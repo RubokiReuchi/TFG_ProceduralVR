@@ -7,7 +7,6 @@ public class Meteorite : MonoBehaviour
     Transform player;
     [SerializeField] GameObject asteroid;
     [SerializeField] ParticleSystem asteroidTrail;
-    [SerializeField] GameObject smoke;
     [SerializeField] GameObject mark;
     [SerializeField] ParticleSystem smallCirclePs;
     [SerializeField] GameObject explosion;
@@ -37,9 +36,8 @@ public class Meteorite : MonoBehaviour
                 gameObject.transform.position = new Vector3(player.position.x, 0.0f, player.position.z);
                 if (timer + Time.deltaTime * 0.25f >= 0.6f) smallCirclePs.Pause();
             }
-            if (timer > 0.8f && !smoke.activeSelf)
+            if (timer > 0.8f && !residualFlames[0].activeSelf)
             {
-                smoke.SetActive(true);
                 foreach (var flame in residualFlames) flame.SetActive(true);
             }
             asteroid.transform.localPosition = Vector3.Lerp(asteroidOriginalPos, asteroidFinalPos, timer);

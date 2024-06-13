@@ -32,6 +32,7 @@ public class Asteroid : MonoBehaviour
 
     public void BreakMeteorite()
     {
+        GameObject.Find("Octopus").GetComponent<Octopus>().meteorites.Remove(transform.parent.gameObject);
         Instantiate(breakPs, transform.position, Quaternion.identity);
         Destroy(transform.root.gameObject);
     }

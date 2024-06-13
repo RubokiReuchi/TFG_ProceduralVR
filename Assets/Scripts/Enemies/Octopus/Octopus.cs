@@ -26,7 +26,7 @@ public class Octopus : Enemy
     [SerializeField] Animator[] animators;
     [SerializeField] GameObject meteorite;
     [SerializeField] ParticleSystem launchMeteoritePs;
-    [HideInInspector] public List<GameObject> meteorites;
+    [HideInInspector] public List<GameObject> meteorites = new();
     [SerializeField] GameObject nuke;
     [SerializeField] Transform energyShield;
     [SerializeField] Transform physicShield;
@@ -34,16 +34,18 @@ public class Octopus : Enemy
     [SerializeField] Animator sonnar;
     [SerializeField] GameObject rain;
     [SerializeField] GameObject sphereRobot;
-    [HideInInspector] public List<GameObject> balls;
+    [HideInInspector] public List<GameObject> balls = new();
     [SerializeField] ParticleSystem minionWavePs;
     Animator pathAnimator;
     float panningTime;
     STATE lastAttack = STATE.REST;
     float pathDirection = 1;
     Vector3 centerPos;
-    STATE ensureAttack = STATE.REST;
+    List<STATE> ensureAttack = new();
     float shieldCd = 30.0f;
     bool physicalShieldActive = false;
+    [SerializeField] ParticleSystem[] deathExplosion;
+    int explosionNum = 0;
 
     private void OnEnable()
     {
@@ -171,7 +173,7 @@ public class Octopus : Enemy
         }
         */
         // meteorite
-        if (ensureAttack == STATE.METEORITE)
+        if (ensureAttack.Count > 0 && ensureAttack[0] == STATE.METEORITE)
         {
             foreach (var animator in animators)
             {
@@ -182,16 +184,16 @@ public class Octopus : Enemy
             lastAttack = STATE.METEORITE;
             pathAnimator.SetFloat("Speed", 0);
             panningTime = 4.5f;
-            ensureAttack = STATE.REST;
+            ensureAttack.Remove(ensureAttack[0]);
             return;
         }
         // nuke
-        else if (ensureAttack == STATE.NUKE)
+        else if (ensureAttack.Count > 0 && ensureAttack[0] == STATE.NUKE)
         {
             pathAnimator.SetBool("Center", true);
             state = STATE.CENTRING;
             lastAttack = STATE.NUKE;
-            ensureAttack = STATE.REST;
+            ensureAttack.Remove(ensureAttack[0]);
             return;
         }
 
@@ -280,12 +282,6 @@ public class Octopus : Enemy
 
     public void Idle(bool row0 = true, bool row1 = true, bool row2 = true, bool row3 = true)
     {
-        if (currentHealth == 0)
-        {
-            StartDeathSequence();
-            return;
-        }
-
         if (row0)
         {
             animators[0].SetBool("Idle", true);
@@ -523,9 +519,8 @@ public class Octopus : Enemy
 
     public override void TakeDamage(float amount, GameObject damageText = null)
     {
-        if (!enabled || invulneravilityTime > 0 || currentHealth == 0) return;
+        if (!enabled || invulneravilityTime > 0 || !alive) return;
 
-        currentHealth -= amount;
         if (damageText != null)
         {
             FloatingDamageText text = GameObject.Instantiate(damageText, damageTextCenter.position + Vector3.one * Random.Range(-2.0f, 2.0f), Quaternion.identity).GetComponentInChildren<FloatingDamageText>();
@@ -533,13 +528,17 @@ public class Octopus : Enemy
             text.scaleMultiplier = 5.0f;
         }
 
-        if (currentHealth + amount >= (maxHealth / 8) * 7 && currentHealth < (maxHealth / 8) * 7) ensureAttack = STATE.METEORITE;
-        else if (currentHealth + amount >= (maxHealth / 8) * 6 && currentHealth < (maxHealth / 8) * 6) ensureAttack = STATE.METEORITE;
-        else if (currentHealth + amount >= (maxHealth / 8) * 5 && currentHealth < (maxHealth / 8) * 5) ensureAttack = STATE.METEORITE;
-        else if (currentHealth + amount >= (maxHealth / 8) * 4 && currentHealth < (maxHealth / 8) * 4) ensureAttack = STATE.NUKE;
-        else if (currentHealth + amount >= (maxHealth / 8) * 3 && currentHealth < (maxHealth / 8) * 3) ensureAttack = STATE.METEORITE;
-        else if (currentHealth + amount >= (maxHealth / 8) * 2 && currentHealth < (maxHealth / 8) * 2) ensureAttack = STATE.METEORITE;
-        else if (currentHealth + amount >= (maxHealth / 8) * 1 && currentHealth < (maxHealth / 8) * 1) ensureAttack = STATE.METEORITE;
+        if (currentHealth == 0) return;
+        currentHealth -= amount;
+        
+
+        if (currentHealth + amount >= (maxHealth / 8) * 7 && currentHealth < (maxHealth / 8) * 7) ensureAttack.Add(STATE.METEORITE);
+        else if (currentHealth + amount >= (maxHealth / 8) * 6 && currentHealth < (maxHealth / 8) * 6) ensureAttack.Add(STATE.METEORITE);
+        else if (currentHealth + amount >= (maxHealth / 8) * 5 && currentHealth < (maxHealth / 8) * 5) ensureAttack.Add(STATE.METEORITE);
+        else if (currentHealth + amount >= (maxHealth / 8) * 4 && currentHealth < (maxHealth / 8) * 4) ensureAttack.Add(STATE.NUKE);
+        else if (currentHealth + amount >= (maxHealth / 8) * 3 && currentHealth < (maxHealth / 8) * 3) ensureAttack.Add(STATE.METEORITE);
+        else if (currentHealth + amount >= (maxHealth / 8) * 2 && currentHealth < (maxHealth / 8) * 2) ensureAttack.Add(STATE.METEORITE);
+        else if (currentHealth + amount >= (maxHealth / 8) * 1 && currentHealth < (maxHealth / 8) * 1) ensureAttack.Add(STATE.METEORITE);
 
         if (currentHealth <= 0)
         {
@@ -555,25 +554,26 @@ public class Octopus : Enemy
 
     public override void Die()
     {
-        ensureAttack = STATE.NUKE;
+        ensureAttack.Add(STATE.NUKE);
     }
 
-    public void StartDeathSequence()
+    public void DeathPath()
     {
-        foreach (var animator in animators)
+        if (currentHealth == 0)
         {
-            animator.enabled = false;
+            pathAnimator.SetBool("Death", true);
+            alive = false;
         }
-        Invoke("EndDeathSequence", 3.0f);
-        alive = false;
     }
 
-    public void EndDeathSequence()
+    public void DeathExplosion()
     {
-        foreach (var animator in animators)
-        {
-            animator.enabled = false;
-            animator.gameObject.SetActive(false);
-        }
+        deathExplosion[explosionNum].Play();
+        explosionNum++;
+    }
+
+    public void DestroyEnemy()
+    {
+        Destroy(gameObject);
     }
 }

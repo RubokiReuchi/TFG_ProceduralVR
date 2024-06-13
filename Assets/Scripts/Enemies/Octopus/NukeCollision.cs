@@ -23,11 +23,10 @@ public class NukeCollision : MonoBehaviour
         }
 
         Octopus octopusScript = GameObject.Find("Octopus").GetComponent<Octopus>();
-        foreach (GameObject meteorite in octopusScript.meteorites)
+        while(octopusScript.meteorites.Count > 0)
         {
-            meteorite.GetComponentInChildren<Asteroid>().BreakMeteorite();
+            octopusScript.meteorites[0].GetComponentInChildren<Asteroid>().BreakMeteorite();
         }
-        octopusScript.meteorites.Clear();
     }
 
     void Destroy()

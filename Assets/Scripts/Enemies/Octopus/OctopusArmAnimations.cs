@@ -118,4 +118,12 @@ public class OctopusArmAnimations : MonoBehaviour
             script.LaunchMinionWave();
         }
     }
+
+    public void DeathPath()
+    {
+        if (commanderArm)
+        {
+            script.DeathPath();
+        }
+    }
 }
