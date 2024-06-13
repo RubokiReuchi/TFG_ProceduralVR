@@ -47,7 +47,7 @@ public class TutorialGateBehaviour : MonoBehaviour
         switch (type)
         {
             case GATE_STATE.YELLOW:
-                if (collisionGO.CompareTag("YellowProjectile"))
+                if (collisionGO.CompareTag("YellowProjectile") || collisionGO.CompareTag("GreenProjectile"))
                 {
                     OpenGate();
                     otherGateBehaviour.OpenGate();

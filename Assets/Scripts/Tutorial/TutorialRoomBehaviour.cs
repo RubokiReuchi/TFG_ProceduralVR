@@ -71,22 +71,28 @@ public class TutorialRoomBehaviour : MonoBehaviour
 
     void InitEnemies()
     {
-        for (int i = 0; i < enemies.Length; i++)
+        if (enemies.Length == 1 && enemies[0].GetComponent<Octopus>() != null)
         {
-            switch (enemies[i].GetComponent<EnemyType>().type)
+            enemies[0].GetComponent<Octopus>().enabled = true;
+        }
+        else
+        {
+            for (int i = 0; i < enemies.Length; i++)
             {
-                case ENEMY_TYPE.SPHERE_ROBOT:
-                    enemies[i].GetComponent<SphereRobot>().enabled = true;
-                    break;
-                case ENEMY_TYPE.TUTORIAL_SPHERE_ROBOT:
-                    enemies[i].GetComponent<TutorialSphereRobot>().enabled = true;
-                    break;
-                case ENEMY_TYPE.MUTANT:
-                    enemies[i].GetComponent<Mutant>().enabled = true;
-                    break;
-                default:
-                    if (enemies[i].GetComponent<Octopus>() != null) enemies[i].GetComponent<Octopus>().enabled = true;
-                    break;
+                switch (enemies[i].GetComponent<EnemyType>().type)
+                {
+                    case ENEMY_TYPE.SPHERE_ROBOT:
+                        enemies[i].GetComponent<SphereRobot>().enabled = true;
+                        break;
+                    case ENEMY_TYPE.TUTORIAL_SPHERE_ROBOT:
+                        enemies[i].GetComponent<TutorialSphereRobot>().enabled = true;
+                        break;
+                    case ENEMY_TYPE.MUTANT:
+                        enemies[i].GetComponent<Mutant>().enabled = true;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }

@@ -40,7 +40,7 @@ public class Octopus : Enemy
     float panningTime;
     STATE lastAttack = STATE.REST;
     float pathDirection = 1;
-    Vector3 centerPos;
+    [SerializeField] Transform centerPos;
     List<STATE> ensureAttack = new();
     float shieldCd = 30.0f;
     bool physicalShieldActive = false;
@@ -58,7 +58,6 @@ public class Octopus : Enemy
 
         state = STATE.REST;
         transform.localScale = Vector3.zero;
-        centerPos = new Vector3(0.0f, 7.0f, 19.5f);
         foreach (var animator in animators)
         {
             animator.SetInteger("IdleAnimation", Random.Range(0, 12));
@@ -82,7 +81,7 @@ public class Octopus : Enemy
                 else StartCheckOptions();
                 break;
             case STATE.CENTRING:
-                if (Vector3.Distance(transform.position, centerPos) < 0.01)
+                if (Vector3.Distance(transform.position, centerPos.position) < 0.01)
                 {
                     switch (lastAttack)
                     {
@@ -134,6 +133,7 @@ public class Octopus : Enemy
 
     IEnumerator EnterSequence()
     {
+        portal.GetComponent<ParticleSystem>().Play();
         float size = 0;
         while (size < 18)
         {
@@ -239,7 +239,7 @@ public class Octopus : Enemy
         // homing bomb
         else if (rand < 60)
         {
-            if (lastAttack == STATE.HOMING_BOMB)
+            if (lastAttack == STATE.HOMING_BOMB || isTutorial)
             {
                 StartCheckOptions();
                 return;
@@ -531,12 +531,10 @@ public class Octopus : Enemy
         if (currentHealth == 0) return;
         currentHealth -= amount;
 
-
-        if (currentHealth + amount >= (maxHealth / 8) * 7 && currentHealth < (maxHealth / 8) * 7)
-        {
-            if (!isTutorial) ensureAttack.Add(STATE.METEORITE);
-            else ensureAttack.Add(STATE.NUKE);
-        }
+        // tutorial
+        if (isTutorial && currentHealth < maxHealth - 1000.0f) ensureAttack.Add(STATE.NUKE);
+        // normal boss
+        else if (currentHealth + amount >= (maxHealth / 8) * 7 && currentHealth < (maxHealth / 8) * 7) ensureAttack.Add(STATE.METEORITE);
         else if (currentHealth + amount >= (maxHealth / 8) * 6 && currentHealth < (maxHealth / 8) * 6) ensureAttack.Add(STATE.METEORITE);
         else if (currentHealth + amount >= (maxHealth / 8) * 5 && currentHealth < (maxHealth / 8) * 5) ensureAttack.Add(STATE.METEORITE);
         else if (currentHealth + amount >= (maxHealth / 8) * 4 && currentHealth < (maxHealth / 8) * 4) ensureAttack.Add(STATE.NUKE);

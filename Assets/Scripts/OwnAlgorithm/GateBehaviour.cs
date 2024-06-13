@@ -45,7 +45,7 @@ public class GateBehaviour : MonoBehaviour
         switch (type)
         {
             case GATE_STATE.YELLOW:
-                if (collisionGO.CompareTag("YellowProjectile"))
+                if (collisionGO.CompareTag("YellowProjectile") || collisionGO.CompareTag("GreenProjectile"))
                 {
                     OpenGate();
                     this.other.self.GetComponent<GateBehaviour>().OpenGate();

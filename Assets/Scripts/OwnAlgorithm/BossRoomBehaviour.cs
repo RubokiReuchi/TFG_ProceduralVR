@@ -29,22 +29,22 @@ public class BossRoomBehaviour : RoomBehaviour
         if (boss) return;
 
         onCombat = false;
-        StartCoroutine(FadeOut());
+        StartCoroutine(FadeIn());
     }
 
-    IEnumerator FadeOut()
+    IEnumerator FadeIn()
     {
         yield return new WaitForSeconds(3.0f);
-        float opacity = 1.0f;
-        while (opacity > 0)
+        float opacity = 0.0f;
+        while (opacity < 1.0f)
         {
-            opacity -= Time.deltaTime * 0.5f;
-            if (opacity < 0) opacity = 0;
+            opacity += Time.deltaTime * 0.5f;
+            if (opacity > 1.0f) opacity = 1.0f;
             fadeMaterial.SetFloat("_Opacity", opacity);
             yield return null;
         }
         DataPersistenceManager.instance.SaveGame();
-        SceneManager.LoadScene(2); // lobby
+        SceneManager.LoadScene(3); // lobby
     }
 
     private void OnTriggerEnter(Collider other)
