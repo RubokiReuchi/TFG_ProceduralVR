@@ -63,9 +63,9 @@ public class RoomBehaviour : MonoBehaviour
     public List<GameObject> mapJoints = new();
 
     [Header("Enemies")]
-    [NonEditable][SerializeField] bool onCombat;
+    [NonEditable][SerializeField] protected bool onCombat;
     [SerializeField] GameObject[] enemies;
-    [SerializeField] GameObject[] blockedGates;
+    [SerializeField] protected GameObject[] blockedGates;
 
     void Start()
     {

@@ -9,19 +9,44 @@ public class BossRoomBehaviour : RoomBehaviour
     public int width; // in tiles
     public int height; // in tiles
 
+    [SerializeField] GameObject boss;
     [SerializeField] Material fadeMaterial;
 
     // Start is called before the first frame update
     void Start()
     {
+        entered = false;
+        onCombat = false;
+
         if (!RoomGenarator.instance.activeRooms.Contains(this)) gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!onCombat) return;
 
+        if (boss) return;
+
+        onCombat = false;
+        StartCoroutine(FadeOut());
     }
+
+    IEnumerator FadeOut()
+    {
+        yield return new WaitForSeconds(3.0f);
+        float opacity = 1.0f;
+        while (opacity > 0)
+        {
+            opacity -= Time.deltaTime * 0.5f;
+            if (opacity < 0) opacity = 0;
+            fadeMaterial.SetFloat("_Opacity", opacity);
+            yield return null;
+        }
+        DataPersistenceManager.instance.SaveGame();
+        SceneManager.LoadScene(2); // lobby
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("PlayerHead")) return;
@@ -39,25 +64,21 @@ public class BossRoomBehaviour : RoomBehaviour
         if (roomInMap) roomInMap.SetActive(true);
         for (int i = 0; i < gatesInMap.Count; i++) gatesInMap[i].GetComponent<GateInMap>().ShowGate();
 
-        StartCoroutine(FadeOut());
-    }
-
-    IEnumerator FadeOut()
-    {
-        float opacity = 1.0f;
-        while (opacity > 0)
+        onCombat = true;
+        InitEnemies();
+        foreach (GameObject blockedGate in blockedGates)
         {
-            opacity -= Time.deltaTime * 0.5f;
-            if (opacity < 0) opacity = 0;
-            fadeMaterial.SetFloat("_Opacity", opacity);
-            yield return null;
+            blockedGate.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Close");
         }
-        DataPersistenceManager.instance.SaveGame();
-        SceneManager.LoadScene(2); // lobby
     }
 
     public Vector3 GetEnterDoorPosition()
     {
         return doorsTransform[0].position;
+    }
+
+    void InitEnemies()
+    {
+        boss.GetComponent<Octopus>().enabled = true;
     }
 }

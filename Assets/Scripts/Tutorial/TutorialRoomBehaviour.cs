@@ -50,13 +50,6 @@ public class TutorialRoomBehaviour : MonoBehaviour
         if (!other.CompareTag("PlayerHead")) return;
         TutorialRoomGenerator.instance.UpdateRooms(this);
 
-        // temp
-        if (isBoss)
-        {
-            PlayerState.instance.TakeDamage(1000);
-            PlayerState.instance.TakeDamage(1000);
-        }
-
         if (entered) return;
         EnteredInRoom();
     }
@@ -92,6 +85,7 @@ public class TutorialRoomBehaviour : MonoBehaviour
                     enemies[i].GetComponent<Mutant>().enabled = true;
                     break;
                 default:
+                    if (enemies[i].GetComponent<Octopus>() != null) enemies[i].GetComponent<Octopus>().enabled = true;
                     break;
             }
         }

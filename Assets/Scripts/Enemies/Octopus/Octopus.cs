@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 
 public class Octopus : Enemy
@@ -20,6 +19,7 @@ public class Octopus : Enemy
         NUKE
     }
 
+    [SerializeField] bool isTutorial;
     Transform player;
     [SerializeField] GameObject portal;
     [NonEditable][SerializeField] STATE state;
@@ -165,13 +165,13 @@ public class Octopus : Enemy
 
     public override void StartCheckOptions()
     {
-        /*if (!hasShield && shieldCd <= 0)
+        if (!hasShield && shieldCd <= 0)
         {
             if (Random.Range(0, 2) == 0) StartCoroutine(CreateEnergyShield());
             else StartCoroutine(OpenPhysicShield());
             hasShield = true;
         }
-        */
+        
         // meteorite
         if (ensureAttack.Count > 0 && ensureAttack[0] == STATE.METEORITE)
         {
@@ -530,9 +530,13 @@ public class Octopus : Enemy
 
         if (currentHealth == 0) return;
         currentHealth -= amount;
-        
 
-        if (currentHealth + amount >= (maxHealth / 8) * 7 && currentHealth < (maxHealth / 8) * 7) ensureAttack.Add(STATE.METEORITE);
+
+        if (currentHealth + amount >= (maxHealth / 8) * 7 && currentHealth < (maxHealth / 8) * 7)
+        {
+            if (!isTutorial) ensureAttack.Add(STATE.METEORITE);
+            else ensureAttack.Add(STATE.NUKE);
+        }
         else if (currentHealth + amount >= (maxHealth / 8) * 6 && currentHealth < (maxHealth / 8) * 6) ensureAttack.Add(STATE.METEORITE);
         else if (currentHealth + amount >= (maxHealth / 8) * 5 && currentHealth < (maxHealth / 8) * 5) ensureAttack.Add(STATE.METEORITE);
         else if (currentHealth + amount >= (maxHealth / 8) * 4 && currentHealth < (maxHealth / 8) * 4) ensureAttack.Add(STATE.NUKE);
