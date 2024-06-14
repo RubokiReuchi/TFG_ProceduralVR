@@ -176,6 +176,86 @@ MonoBehaviour:
     pitch: 0.7
     fadeOutSpeed: 0
     source: {fileID: 0}
+  - name: OpenMenu
+    clip: {fileID: 8300000, guid: 2c6d14797a675b141b920a641a684b52, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: CloseMenu
+    clip: {fileID: 8300000, guid: a9450d83ff64bf24d9514bd35195b651, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: SelectOption
+    clip: {fileID: 8300000, guid: 6f8c92295678e1c4c8436812cf2b3560, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: CancelOption
+    clip: {fileID: 8300000, guid: 6f8c92295678e1c4c8436812cf2b3560, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 0.5
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: BlockedOption
+    clip: {fileID: 8300000, guid: 480ddc10498e05f4d954b5470823749e, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: ChangeMenuPage
+    clip: {fileID: 8300000, guid: d67ed3dd52fbc2a4c973d96e95856d68, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: PickSkill
+    clip: {fileID: 8300000, guid: 2d0aed73c11401f4c96dd8695652e7c1, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: PickPowerUp
+    clip: {fileID: 8300000, guid: cc8a13b2a6da9d04a9e56a492ae8680c, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 0.7
+    pitch: 0.7
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: IncreaseHandSize
+    clip: {fileID: 8300000, guid: ee192309a73e96f48950ff2ec1aafc51, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: ToggleVisionX
+    clip: {fileID: 8300000, guid: 987d22b957803574981dd2044d448ae3, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
   soundArrays:
   - name: Step
     clips:

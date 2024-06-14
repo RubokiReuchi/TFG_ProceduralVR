@@ -36716,11 +36716,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   info:
-  - {fileID: 1061095631075938338}
+  - {fileID: 115025651009088451}
+  - {fileID: 4348149088300481376}
   frontLabel:
-  - 'Damage Reduction: '
+  - 'Total Battery Duration: '
+  - 'Total Recovery Time: '
   backLabel:
-  - '%'
+  - ' seconds'
+  - ' seconds'
 --- !u!1 &6215364026080849043
 GameObject:
   m_ObjectHideFlags: 0

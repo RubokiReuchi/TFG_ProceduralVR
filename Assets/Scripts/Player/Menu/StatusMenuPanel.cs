@@ -9,6 +9,9 @@ public class StatusMenuPanel : MonoBehaviour
     [SerializeField] GameObject mark;
     int currentIndex = 0;
 
+    [Header("Audio")]
+    AudioManager audioManager;
+
     private void OnEnable()
     {
         if (!buttons[currentIndex].activeSelf)
@@ -32,6 +35,11 @@ public class StatusMenuPanel : MonoBehaviour
         panel[currentIndex].GetComponent<Animator>().SetBool("Opened", true);
     }
 
+    void Start()
+    {
+        audioManager = AudioManager.instance;
+    }
+
     private void Update()
     {
         if (mark.activeSelf) mark.transform.position = buttons[currentIndex].transform.position;
@@ -42,6 +50,8 @@ public class StatusMenuPanel : MonoBehaviour
         if (index == currentIndex) return;
         StartCoroutine(OpenMenu(index, currentIndex));
         currentIndex = index;
+
+        audioManager.PlaySound("SelectOption");
     }
 
     IEnumerator OpenMenu(int newIndex, int oldIndex)

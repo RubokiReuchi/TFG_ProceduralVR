@@ -11,9 +11,17 @@ public class PlayerPowerUps : MonoBehaviour
     [SerializeField] PlayerMovement playerMovement;
     [SerializeField] GameObject xRayBattery;
 
+    [Header("Audio")]
+    AudioManager audioManager;
+
     private void Awake()
     {
         instance = this;
+    }
+
+    void Start()
+    {
+        audioManager = AudioManager.instance;
     }
 
     public void GetPowerUp(POWER_UP_TYPE type)
@@ -24,12 +32,13 @@ public class PlayerPowerUps : MonoBehaviour
                 StartCoroutine(GetHandOfTheGiant());
                 StatusMenuPoints.instance.panels[4].GetComponent<StatusMenuPanel>().UpdateInformation(1, null);
                 StatusMenuPoints.instance.SetExclamation(4);
+                audioManager.PlaySound("IncreaseHandSize");
                 break;
             case POWER_UP_TYPE.XRAY_VISION:
                 PlayerState.instance.xRayVisionObtained = true;
                 xRayBattery.SetActive(true);
                 float maxBattery = 50 + 50 * (Mathf.CeilToInt(PlayerSkills.instance.xRayVisionLevel / 2.0f) * 0.5f);
-                float[] xRayValues = { maxBattery, maxBattery / 2.5f + 2.5f * (Mathf.FloorToInt(PlayerSkills.instance.xRayVisionLevel / 2.0f)) };
+                float[] xRayValues = { maxBattery / 10.0f, maxBattery / 2.5f + 2.5f * (Mathf.FloorToInt(PlayerSkills.instance.xRayVisionLevel / 2.0f)) };
                 StatusMenuPoints.instance.panels[3].GetComponent<StatusMenuPanel>().UpdateInformation(2, xRayValues);
                 StatusMenuPoints.instance.SetExclamation(3);
                 break;
@@ -76,6 +85,7 @@ public class PlayerPowerUps : MonoBehaviour
             default:
                 break;
         }
+        audioManager.PlaySound("PickPowerUp");
     }
 
     IEnumerator GetHandOfTheGiant()

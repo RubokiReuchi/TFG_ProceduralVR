@@ -14,9 +14,17 @@ public class StatusMenuPoints : MonoBehaviour
     [SerializeField] GameObject leftArrow;
     [SerializeField] GameObject rightArrow;
 
+    [Header("Audio")]
+    AudioManager audioManager;
+
     private void Awake()
     {
         instance = this;
+    }
+
+    void Start()
+    {
+        audioManager = AudioManager.instance;
     }
 
     public void SelectPoint(int index)
@@ -29,6 +37,8 @@ public class StatusMenuPoints : MonoBehaviour
         rightArrow.SetActive(false);
 
         if (exclamations[index].activeSelf) exclamations[index].SetActive(false);
+
+        audioManager.PlaySound("SelectOption");
     }
 
 
@@ -39,6 +49,8 @@ public class StatusMenuPoints : MonoBehaviour
 
         leftArrow.SetActive(true);
         rightArrow.SetActive(true);
+
+        audioManager.PlaySound("CancelOption");
     }
 
     IEnumerator ClosePanelCo(int index)

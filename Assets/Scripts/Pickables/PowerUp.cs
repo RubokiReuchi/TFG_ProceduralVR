@@ -25,6 +25,7 @@ public class PowerUp : MonoBehaviour
         if (!other.CompareTag("Player")) return;
 
         PlayerPowerUps.instance.GetPowerUp(type);
+
         Destroy(gameObject);
     }
 }

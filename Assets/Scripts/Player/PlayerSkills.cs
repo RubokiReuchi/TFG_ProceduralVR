@@ -51,6 +51,9 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
 
     StatusMenuPoints points;
 
+    [Header("Audio")]
+    AudioManager audioManager;
+
     private void Awake()
     {
         instance = this;
@@ -197,6 +200,11 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
         if (blockingFistUnlocked) leftHandCollision.tag = "ShieldedHand";
     }
 
+    void Start()
+    {
+        audioManager = AudioManager.instance;
+    }
+
     public void UnlockSkill(SKILL_TYPE type)
     {
         switch (type)
@@ -266,6 +274,7 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
             default:
                 break;
         }
+        AudioManager.instance.PlaySound("PickSkill");
     }
 
     public int GetUpgradeLevel()

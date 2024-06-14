@@ -283,6 +283,7 @@ public class PlayerState : MonoBehaviour
 
     IEnumerator XRayOn()
     {
+        audioManager.PlaySound("ToggleVisionX");
         float apertureSize = xRayMaterial.GetFloat("_ApertureSize");
         while (apertureSize > 0)
         {
@@ -295,6 +296,7 @@ public class PlayerState : MonoBehaviour
 
     IEnumerator XRayOff()
     {
+        audioManager.PlaySound("ToggleVisionX");
         float apertureSize = xRayMaterial.GetFloat("_ApertureSize");
         while (apertureSize < 1)
         {

@@ -334,7 +334,12 @@ public class PlayerGun : MonoBehaviour
 
     public void SwapGunType(GUN_TYPE newType)
     {
-        if (newType == GUN_TYPE.NULL) newType = selectedGun;
+        bool skipSound = false;
+        if (newType == GUN_TYPE.NULL)
+        {
+            newType = selectedGun;
+            skipSound = true;
+        }
 
         if (newType == GUN_TYPE.BLUE && !blueUnlocked) return;
         else if (newType == GUN_TYPE.RED && !redUnlocked) return;
@@ -424,7 +429,7 @@ public class PlayerGun : MonoBehaviour
                 }
                 break;
         }
-        if (newType != selectedGun) audioManager.PlaySound("SelectColor");
+        if (newType != selectedGun && !skipSound) audioManager.PlaySound("SelectColor");
         selectedGun = newType;
         screen.SetScreen(newType);
     }

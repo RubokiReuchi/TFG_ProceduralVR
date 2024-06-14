@@ -10,11 +10,15 @@ public class MenuMask : MonoBehaviour
 
     float targetScale;
     [SerializeField] float transitionSpeed;
+    [Header("Audio")]
+    AudioManager audioManager;
 
     // Start is called before the first frame update
     void Start()
     {
         SetUp();
+
+        audioManager = AudioManager.instance;
     }
 
     // Update is called once per frame
@@ -35,12 +39,14 @@ public class MenuMask : MonoBehaviour
     {
         StopAllCoroutines();
         StartCoroutine(ChangeMenuCo(1));
+        audioManager.PlaySound("ChangeMenuPage");
     }
 
     public void PrevMenu()
     {
         StopAllCoroutines();
         StartCoroutine(ChangeMenuCo(-1));
+        audioManager.PlaySound("ChangeMenuPage");
     }
 
     void UpdateIndexOnScreen(int value)

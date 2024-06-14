@@ -19,6 +19,9 @@ public class HandScreen : MonoBehaviour
     Vector3 mapCenterTarget;
     [NonEditable][SerializeField] bool menuOpened;
 
+    [Header("Audio")]
+    AudioManager audioManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +31,8 @@ public class HandScreen : MonoBehaviour
             scrollRect = centerPosition.GetComponent<ScrollRect>();
             mapCenter.position += centerPosition.position - playerMark.position;
         }
+
+        audioManager = AudioManager.instance;
     }
 
     public void OpenMenu()
@@ -36,11 +41,13 @@ public class HandScreen : MonoBehaviour
         {
             menuAnimator.SetBool("Opened", true);
             menuOpened = true;
+            audioManager.PlaySound("OpenMenu");
         }
         else
         {
             menuAnimator.SetBool("Opened", false);
             menuOpened = false;
+            audioManager.PlaySound("CloseMenu");
         }
     }
 
