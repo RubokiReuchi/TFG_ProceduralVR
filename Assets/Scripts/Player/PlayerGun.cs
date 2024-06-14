@@ -198,7 +198,8 @@ public class PlayerGun : MonoBehaviour
                     {
                         GameObject.Instantiate(selectedProjectilePrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
                         automaticCd = 1 / automaticCadence;
-                        audioManager.PlaySound("NormalBeam");
+                        if (triggerState == TRIGGER_STATE.DOWN) audioManager.PlaySound("NormalBeam");
+                        else audioManager.PlaySound("AutomaticBeam");
                     }
                 }
                 break;

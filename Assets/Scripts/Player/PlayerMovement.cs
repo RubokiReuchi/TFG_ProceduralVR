@@ -40,6 +40,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Material slowMetterMat;
     float displayedSlow;
 
+    [Header("Audio")]
+    AudioManager audioManager;
+    float stepSoundCd = 1.0f;
+    bool lastFrameGrounded = true;
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +69,8 @@ public class PlayerMovement : MonoBehaviour
         displayedSlow = 0;
 
         tunnelingMaterial.SetFloat("_ApertureSize", 1);
+
+        audioManager = AudioManager.instance;
     }
 
     // Update is called once per frame
@@ -73,6 +79,14 @@ public class PlayerMovement : MonoBehaviour
         // jump
         if (IsGrounded())
         {
+            stepSoundCd -= Time.deltaTime * controller.velocity.magnitude;
+            if (stepSoundCd <= 0)
+            {
+                audioManager.PlaySoundArray("Step");
+                stepSoundCd = 1.0f;
+            }
+            if (!lastFrameGrounded) audioManager.PlaySound("Land");
+
             groundJump = true;
             if (dobleJumpObtained) airJump = true;
             movement.y = 0;
@@ -89,8 +103,16 @@ public class PlayerMovement : MonoBehaviour
         {
             if (groundJump) groundJump = false;
             else airJump = false;
-            if (superJumpUnlocked) movement.y = superJumpHeight;
-            else movement.y = jumpHeight;
+            if (superJumpUnlocked)
+            {
+                movement.y = superJumpHeight;
+                audioManager.PlaySound("SuperJump");
+            }
+            else
+            {
+                movement.y = jumpHeight;
+                audioManager.PlaySound("Jump");
+            }
             expectedGravity = jumpHeight;
             //moveProvider.m_VerticalVelocity = Vector3.zero; // m_VerticalVelocity wasn't public, I change it
         }
@@ -112,6 +134,7 @@ public class PlayerMovement : MonoBehaviour
                 Quaternion headRotationY = new Quaternion(0, head.rotation.y, 0, head.rotation.w);
                 Vector3 direction = (stickX == 0 && stickY == 0) ? headRotationY * (-transform.forward) : headRotationY * new Vector3(stickX, 0, stickY).normalized;
                 StartCoroutine(DashCo(direction));
+                audioManager.PlaySound("Dash");
             }
         }
 
@@ -131,11 +154,13 @@ public class PlayerMovement : MonoBehaviour
         {
             moveProvider.moveSpeed = baseSpeed - baseSpeed * (slowPercentage / 100.0f);
         }
+
+        lastFrameGrounded = IsGrounded();
     }
 
     bool IsGrounded()
     {
-        return Physics.Raycast(transform.position - Vector3.down * 0.1f, Vector3.down, 0.1f);
+        return Physics.Raycast(transform.position - Vector3.down * 0.1f, Vector3.down, 0.15f);
     }
 
     IEnumerator DashCo(Vector3 direction)

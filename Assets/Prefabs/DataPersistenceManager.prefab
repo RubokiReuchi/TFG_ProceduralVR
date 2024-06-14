@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 696042906908463366}
   - component: {fileID: 2904192357406194837}
+  - component: {fileID: 5077565634198530352}
   m_Layer: 0
   m_Name: DataPersistenceManager
   m_TagString: DataPersistenceManager
@@ -46,3 +47,83 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fileName: Data.dat
   useEncryption: 1
+--- !u!114 &5077565634198530352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900245663207300178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b91e6a25deb2ae429ccf4b082d99a46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicMixer: {fileID: -6171380951812516059, guid: d8c72eb4ec6b75843993e8586e7c2697, type: 2}
+  sfxMixer: {fileID: 7931185845074137703, guid: d8c72eb4ec6b75843993e8586e7c2697, type: 2}
+  enviromentMixer: {fileID: 8486073243894682320, guid: d8c72eb4ec6b75843993e8586e7c2697, type: 2}
+  sounds:
+  - name: NormalBeam
+    clip: {fileID: 8300000, guid: e9388a187239e414ea49d920912c3404, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 0.823
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: LoadChargedBeam
+    clip: {fileID: 8300000, guid: be964aa7a8ec1264b98458a2ce91f915, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: LaunchChargedBeam
+    clip: {fileID: 8300000, guid: 804fab9948f567b479347da2f32e2aa9, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: SpawnMissile
+    clip: {fileID: 8300000, guid: ee764a82d8d7d364f8827d40911ec3ba, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 0.7
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: LoadSuperMissile
+    clip: {fileID: 8300000, guid: 775f34de21eb08846875f20f6c98ef2c, type: 3}
+    mixer: 1
+    loop: 1
+    volume: 1
+    pitch: 0.7
+    fadeOutSpeed: 2
+    source: {fileID: 0}
+  - name: SpawnSuperMissile
+    clip: {fileID: 8300000, guid: ee764a82d8d7d364f8827d40911ec3ba, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 0.3
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: AutomaticBeam
+    clip: {fileID: 8300000, guid: e9388a187239e414ea49d920912c3404, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 0.5
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: SelectColor
+    clip: {fileID: 8300000, guid: 80e2c1caa8ee5dc4c971dcbd25f70de9, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}

@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class AudioManager : MonoBehaviour
 {
@@ -10,8 +11,10 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] AudioMixerGroup musicMixer;
     [SerializeField] AudioMixerGroup sfxMixer;
+    [SerializeField] AudioMixerGroup projectileMixer;
     [SerializeField] AudioMixerGroup enviromentMixer;
     [SerializeField] Sound[] sounds;
+    [SerializeField] SoundArray[] soundArrays;
 
     // Start is called before the first frame update
     void Awake()
@@ -36,8 +39,34 @@ public class AudioManager : MonoBehaviour
                 case Sound.MIXER.SFX:
                     sound.source.outputAudioMixerGroup = sfxMixer;
                     break;
+                case Sound.MIXER.PROJECTILE:
+                    sound.source.outputAudioMixerGroup = projectileMixer;
+                    break;
                 case Sound.MIXER.ENVIROMENT:
                     sound.source.outputAudioMixerGroup = enviromentMixer;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        foreach (var soundArray in soundArrays)
+        {
+            soundArray.source = gameObject.AddComponent<AudioSource>();
+            soundArray.InitSound();
+            switch (soundArray.mixer)
+            {
+                case Sound.MIXER.MUSIC:
+                    soundArray.source.outputAudioMixerGroup = musicMixer;
+                    break;
+                case Sound.MIXER.SFX:
+                    soundArray.source.outputAudioMixerGroup = sfxMixer;
+                    break;
+                case Sound.MIXER.PROJECTILE:
+                    soundArray.source.outputAudioMixerGroup = projectileMixer;
+                    break;
+                case Sound.MIXER.ENVIROMENT:
+                    soundArray.source.outputAudioMixerGroup = enviromentMixer;
                     break;
                 default:
                     break;
@@ -82,5 +111,12 @@ public class AudioManager : MonoBehaviour
         }
         source.Stop();
         source.volume = initialVolume;
+    }
+
+    public void PlaySoundArray(string soundArrayName)
+    {
+        SoundArray soundArray = Array.Find(soundArrays, soundArrays => soundArrays.name == soundArrayName);
+        soundArray.source.clip = soundArray.clips[UnityEngine.Random.Range(0, soundArray.clips.Length)];
+        soundArray.source.Play();
     }
 }
