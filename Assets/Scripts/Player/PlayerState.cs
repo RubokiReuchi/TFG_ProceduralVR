@@ -56,6 +56,9 @@ public class PlayerState : MonoBehaviour
     List<string> activeUUIDs = new();
     float cdUUID = 0;
 
+    [Header("Audio")]
+    AudioManager audioManager;
+
     //RecorderWindow recorderWindow;
 
     private void Awake()
@@ -88,6 +91,8 @@ public class PlayerState : MonoBehaviour
         deathMaterial.SetFloat("_Opacity", 0);
         StartCoroutine(FadeOut());
 
+        audioManager = AudioManager.instance;
+
         //recorderWindow = (RecorderWindow)EditorWindow.GetWindow(typeof(RecorderWindow));
     }
 
@@ -98,8 +103,9 @@ public class PlayerState : MonoBehaviour
         {
             //if (!recorderWindow.IsRecording()) recorderWindow.StartRecording();
             //else recorderWindow.StopRecording();
-            DataPersistenceManager.instance.NewGame();
-            DataPersistenceManager.instance.SaveGame();
+            //DataPersistenceManager.instance.NewGame();
+            //DataPersistenceManager.instance.SaveGame();
+            TakeDamage(125);
         }
         //
 
@@ -184,12 +190,14 @@ public class PlayerState : MonoBehaviour
         {
             currentShieldCooldown = shieldCooldown;
             StartCoroutine(ShieldCo());
+            audioManager.PlaySound("PlayerShield");
             return;
         }
         else currentShieldCooldown = shieldCooldown;
 
         currentHealth -= amount * (1 - defense);
         displayHealth.UpdateHealthDisplay(currentHealth);
+        audioManager.PlaySoundArray("PlayerHit");
         if (currentHealth <= 0)
         {
             currentHealth = 0;
@@ -197,6 +205,7 @@ public class PlayerState : MonoBehaviour
             GameObject.Find("Locomotion System").SetActive(false);
             GetComponentInChildren<PlayerGun>().enabled = false;
             StartCoroutine(DeathFadeOut());
+            audioManager.PlaySound("PlayerDeath");
             return;
         }
 

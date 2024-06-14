@@ -61,11 +61,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicMixer: {fileID: -6171380951812516059, guid: d8c72eb4ec6b75843993e8586e7c2697, type: 2}
   sfxMixer: {fileID: 7931185845074137703, guid: d8c72eb4ec6b75843993e8586e7c2697, type: 2}
+  projectileMixer: {fileID: 2566074812962445781, guid: d8c72eb4ec6b75843993e8586e7c2697, type: 2}
   enviromentMixer: {fileID: 8486073243894682320, guid: d8c72eb4ec6b75843993e8586e7c2697, type: 2}
   sounds:
   - name: NormalBeam
     clip: {fileID: 8300000, guid: e9388a187239e414ea49d920912c3404, type: 3}
-    mixer: 1
+    mixer: 2
     loop: 0
     volume: 0.823
     pitch: 1
@@ -81,7 +82,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: LaunchChargedBeam
     clip: {fileID: 8300000, guid: 804fab9948f567b479347da2f32e2aa9, type: 3}
-    mixer: 1
+    mixer: 2
     loop: 0
     volume: 1
     pitch: 1
@@ -89,7 +90,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: SpawnMissile
     clip: {fileID: 8300000, guid: ee764a82d8d7d364f8827d40911ec3ba, type: 3}
-    mixer: 1
+    mixer: 2
     loop: 0
     volume: 1
     pitch: 0.7
@@ -105,7 +106,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: SpawnSuperMissile
     clip: {fileID: 8300000, guid: ee764a82d8d7d364f8827d40911ec3ba, type: 3}
-    mixer: 1
+    mixer: 2
     loop: 0
     volume: 1
     pitch: 0.3
@@ -113,7 +114,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: AutomaticBeam
     clip: {fileID: 8300000, guid: e9388a187239e414ea49d920912c3404, type: 3}
-    mixer: 1
+    mixer: 2
     loop: 0
     volume: 0.5
     pitch: 1
@@ -121,6 +122,81 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: SelectColor
     clip: {fileID: 8300000, guid: 80e2c1caa8ee5dc4c971dcbd25f70de9, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: Jump
+    clip: {fileID: 8300000, guid: b50e23e62ab07944e8f7e59c94036fd0, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 0.8
+    pitch: 0.5
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: SuperJump
+    clip: {fileID: 8300000, guid: c6d567d004d03f94e815b0dca8743c89, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 0.8
+    pitch: 0.5
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: Land
+    clip: {fileID: 8300000, guid: c15a84a8370e1304f89d1c8452b5f299, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 0.8
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: Dash
+    clip: {fileID: 8300000, guid: 631fe641de6366445b4b202a6d1221e3, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1.2
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: PlayerDeath
+    clip: {fileID: 8300000, guid: 5d11b732eb07b6e408dc7d74efe60bd5, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 0.7
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: PlayerShield
+    clip: {fileID: 8300000, guid: de9fda449612f28429a9bb1d8983352e, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 0.8
+    pitch: 0.7
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  soundArrays:
+  - name: Step
+    clips:
+    - {fileID: 8300000, guid: 8161a08dac1a3e64ab769e9d0dd69444, type: 3}
+    - {fileID: 8300000, guid: 1af0499ea74f7844b8d3565fa0478e5d, type: 3}
+    - {fileID: 8300000, guid: d03ef880a60122449b4e763f13ba1746, type: 3}
+    - {fileID: 8300000, guid: 40b9ff4ae972f4d48a44c59de68ad326, type: 3}
+    - {fileID: 8300000, guid: 36a633bf26d780443858df8567def04d, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: PlayerHit
+    clips:
+    - {fileID: 8300000, guid: deff595cf376f9c4e938fef719e954a5, type: 3}
+    - {fileID: 8300000, guid: 78baef99db02d4a44b41f54a4c249f00, type: 3}
+    - {fileID: 8300000, guid: ee4d544bc70b32a459c3adb6aefb80fe, type: 3}
+    - {fileID: 8300000, guid: 3e84ea3ca5a3e7a47baae2c30f18eee8, type: 3}
+    - {fileID: 8300000, guid: eb489986d38f0f344ac38b7696bbaa11, type: 3}
     mixer: 1
     loop: 0
     volume: 1
