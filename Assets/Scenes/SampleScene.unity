@@ -123,6 +123,67 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &489705105
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2200071849115252227, guid: 721b41adb88b09b47a331811d51e3f3c, type: 3}
+      propertyPath: m_Name
+      value: 03_TripleShot
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311197786915467219, guid: 721b41adb88b09b47a331811d51e3f3c, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311197786915467219, guid: 721b41adb88b09b47a331811d51e3f3c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.513
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311197786915467219, guid: 721b41adb88b09b47a331811d51e3f3c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311197786915467219, guid: 721b41adb88b09b47a331811d51e3f3c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.586
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311197786915467219, guid: 721b41adb88b09b47a331811d51e3f3c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311197786915467219, guid: 721b41adb88b09b47a331811d51e3f3c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311197786915467219, guid: 721b41adb88b09b47a331811d51e3f3c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311197786915467219, guid: 721b41adb88b09b47a331811d51e3f3c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311197786915467219, guid: 721b41adb88b09b47a331811d51e3f3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311197786915467219, guid: 721b41adb88b09b47a331811d51e3f3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7311197786915467219, guid: 721b41adb88b09b47a331811d51e3f3c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 721b41adb88b09b47a331811d51e3f3c, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,112 +441,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5902485666990061644, guid: bb2c66e0c6346fc41b073bc58d7cd6a4, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 796038782}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb2c66e0c6346fc41b073bc58d7cd6a4, type: 3}
---- !u!1 &796038781 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5902485666990061644, guid: bb2c66e0c6346fc41b073bc58d7cd6a4, type: 3}
-  m_PrefabInstance: {fileID: 796038780}
-  m_PrefabAsset: {fileID: 0}
---- !u!82 &796038782
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 796038781}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 7931185845074137703, guid: d8c72eb4ec6b75843993e8586e7c2697, type: 2}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &1011535223
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,7 +521,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1705095775315207034, guid: 5411d9831fa60374da5b379a2f7e3b57, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1705095775315207034, guid: 5411d9831fa60374da5b379a2f7e3b57, type: 3}
       propertyPath: m_LocalPosition.x
@@ -719,8 +676,93 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: -45}
+--- !u!1 &1690205475 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 900245663207300178, guid: b3e730ccc0ba9dc42acd6df0a90ccb3d, type: 3}
+  m_PrefabInstance: {fileID: 5254878837512864884}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1690205476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690205475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b91e6a25deb2ae429ccf4b082d99a46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicMixer: {fileID: -6171380951812516059, guid: d8c72eb4ec6b75843993e8586e7c2697, type: 2}
+  sfxMixer: {fileID: 7931185845074137703, guid: d8c72eb4ec6b75843993e8586e7c2697, type: 2}
+  enviromentMixer: {fileID: 8486073243894682320, guid: d8c72eb4ec6b75843993e8586e7c2697, type: 2}
+  sounds:
+  - name: NormalBeam
+    clip: {fileID: 8300000, guid: e9388a187239e414ea49d920912c3404, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 0.823
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: LoadChargedBeam
+    clip: {fileID: 8300000, guid: be964aa7a8ec1264b98458a2ce91f915, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: LaunchChargedBeam
+    clip: {fileID: 8300000, guid: 804fab9948f567b479347da2f32e2aa9, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: SpawnMissile
+    clip: {fileID: 8300000, guid: ee764a82d8d7d364f8827d40911ec3ba, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 0.7
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: LoadSuperMissile
+    clip: {fileID: 8300000, guid: 775f34de21eb08846875f20f6c98ef2c, type: 3}
+    mixer: 1
+    loop: 1
+    volume: 1
+    pitch: 0.7
+    fadeOutSpeed: 2
+    source: {fileID: 0}
+  - name: SpawnSuperMissile
+    clip: {fileID: 8300000, guid: ee764a82d8d7d364f8827d40911ec3ba, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 0.3
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: SelectColor
+    clip: {fileID: 8300000, guid: 80e2c1caa8ee5dc4c971dcbd25f70de9, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
+  - name: BlockedColor
+    clip: {fileID: 8300000, guid: 545f5a77bb5cdf94b818eb9078f5e407, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 1
+    pitch: 1
+    fadeOutSpeed: 0
+    source: {fileID: 0}
 --- !u!1 &1900204925
 GameObject:
   m_ObjectHideFlags: 0
@@ -936,5 +978,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 900245663207300178, guid: b3e730ccc0ba9dc42acd6df0a90ccb3d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1690205476}
   m_SourcePrefab: {fileID: 100100000, guid: b3e730ccc0ba9dc42acd6df0a90ccb3d, type: 3}

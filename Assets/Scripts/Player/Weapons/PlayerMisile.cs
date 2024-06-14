@@ -35,6 +35,7 @@ public class PlayerMissile : Projectile
             if (delay <= 0)
             {
                 smokeTrail.GetComponent<ParticleSystem>().Play();
+                GetComponent<AudioSource>().Play();
             }
             else return;
         }

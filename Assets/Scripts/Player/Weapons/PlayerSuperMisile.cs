@@ -34,7 +34,11 @@ public class PlayerSuperMissile : Projectile
         if (delay > 0)
         {
             delay -= Time.deltaTime;
-            if (delay <= 0) playVFXs = true;
+            if (delay <= 0)
+            {
+                playVFXs = true;
+                GetComponent<AudioSource>().Play();
+            }
             else return;
         }
         

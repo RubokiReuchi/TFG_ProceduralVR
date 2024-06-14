@@ -102,13 +102,8 @@ public class PlayerGun : MonoBehaviour
     bool superMissileCharged = false;
 
     [Header("Audio")]
-    [SerializeField] AudioClip normal;
-    [SerializeField] AudioClip loadCharged;
-    [SerializeField] AudioClip launchCharged;
-    [SerializeField] AudioClip missile;
-    [SerializeField] AudioClip loadSupermissile;
-    [SerializeField] AudioClip launchSupermissile;
-    AudioSource audioSource;
+    AudioManager audioManager;
+    bool playingChargeSound = false;
 
     // Start is called before the first frame update
     void Start()
@@ -135,7 +130,7 @@ public class PlayerGun : MonoBehaviour
         chargeSpeedReduction = skills.chargeSpeedLevel * 0.07f;
         automaticCadence += (skills.automaticModeLevel * 0.1f) * automaticCadence;
 
-        audioSource = GetComponent<AudioSource>();
+        audioManager = AudioManager.instance;
     }
 
     // Update is called once per frame
@@ -149,6 +144,7 @@ public class PlayerGun : MonoBehaviour
                 if (triggerState == TRIGGER_STATE.DOWN)
                 {
                     GameObject.Instantiate(selectedProjectilePrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
+                    audioManager.PlaySound("NormalBeam");
                 }
                 else if (triggerState == TRIGGER_STATE.REPEAT)
                 {
@@ -161,8 +157,18 @@ public class PlayerGun : MonoBehaviour
                         {
                             chargedProjectile = GameObject.Instantiate(selectedChargedPrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation).GetComponent<PlayerCharged>();
                             chargedProjectile.SetUp();
+                            audioManager.PlaySound("LoadChargedBeam");
+                            playingChargeSound = true;
                         }
-                        if (holdTime > maxIncrease) holdTime = maxIncrease;
+                        if (holdTime > maxIncrease)
+                        {
+                            holdTime = maxIncrease;
+                            if (playingChargeSound)
+                            {
+                                audioManager.StopSound("LoadChargedBeam");
+                                playingChargeSound = false;
+                            }
+                        }
                         chargedProjectile.Increase(new Vector3(holdTime, holdTime, holdTime), projectileOriginCurrent.position);
                     }
                 }
@@ -174,6 +180,12 @@ public class PlayerGun : MonoBehaviour
                         chargedProjectile.Launch(projectileOriginCurrent.rotation, shockwaveObtained);
                         chargedProjectile = null;
                         projectileOriginCurrent.position = projectileOriginStart.position;
+                        if (playingChargeSound)
+                        {
+                            audioManager.StopSound("LoadChargedBeam");
+                            playingChargeSound = false;
+                        }
+                        audioManager.PlaySound("LaunchChargedBeam");
                     }
                     repeatTime = 0;
                 }
@@ -186,6 +198,7 @@ public class PlayerGun : MonoBehaviour
                     {
                         GameObject.Instantiate(selectedProjectilePrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
                         automaticCd = 1 / automaticCadence;
+                        audioManager.PlaySound("NormalBeam");
                     }
                 }
                 break;
@@ -195,6 +208,7 @@ public class PlayerGun : MonoBehaviour
                     GameObject.Instantiate(selectedProjectilePrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
                     GameObject.Instantiate(selectedProjectileSecondaryPrefab, projectileOrigin2Start.position, projectileOrigin2Start.rotation);
                     GameObject.Instantiate(selectedProjectileSecondaryPrefab, projectileOrigin3Start.position, projectileOrigin3Start.rotation);
+                    audioManager.PlaySound("NormalBeam");
                 }
                 else if (triggerState == TRIGGER_STATE.REPEAT)
                 {
@@ -210,8 +224,18 @@ public class PlayerGun : MonoBehaviour
                         {
                             chargedProjectile = GameObject.Instantiate(selectedChargedPrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation).GetComponent<PlayerCharged>();
                             chargedProjectile.SetUp();
+                            audioManager.PlaySound("LoadChargedBeam");
+                            playingChargeSound = true;
                         }
-                        if (holdTime > maxIncrease) holdTime = maxIncrease;
+                        if (holdTime > maxIncrease)
+                        {
+                            holdTime = maxIncrease;
+                            if (playingChargeSound)
+                            {
+                                audioManager.StopSound("LoadChargedBeam");
+                                playingChargeSound = false;
+                            }
+                        }
                         chargedProjectile.Increase(new Vector3(holdTime, holdTime, holdTime), projectileOriginCurrent.position);
                     }
                 }
@@ -223,6 +247,12 @@ public class PlayerGun : MonoBehaviour
                         chargedProjectile.Launch(projectileOriginCurrent.rotation, shockwaveObtained);
                         chargedProjectile = null;
                         projectileOriginCurrent.position = projectileOriginStart.position;
+                        if (playingChargeSound)
+                        {
+                            audioManager.StopSound("LoadChargedBeam");
+                            playingChargeSound = false;
+                        }
+                        audioManager.PlaySound("LaunchChargedBeam");
                     }
                     repeatTime = 0;
                 }
@@ -231,32 +261,50 @@ public class PlayerGun : MonoBehaviour
                 if (triggerState == TRIGGER_STATE.DOWN)
                 {
                     GameObject.Instantiate(selectedProjectilePrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
+                    audioManager.PlaySound("SpawnMissile");
                 }
                 else if (triggerState == TRIGGER_STATE.REPEAT)
                 {
                     repeatTime += Time.deltaTime;
                     if (superMissileCharged) return;
-                    if (!superMissileChargingPs.isPlaying && repeatTime >= 0.5f) superMissileChargingPs.Play();
+                    if (!superMissileChargingPs.isPlaying && repeatTime >= 0.5f)
+                    {
+                        superMissileChargingPs.Play();
+                        audioManager.PlaySound("LoadSuperMissile");
+                        playingChargeSound = true;
+                    }
                     if (repeatTime >= superMissileTime - superMissileTime * chargeSpeedReduction)
                     {
                         superMissileChargingPs.Stop();
                         if (!superMissileReady.enabled) superMissileReady.enabled = true;
                         else superMissileReady.Play();
                         superMissileCharged = true;
+                        if (playingChargeSound)
+                        {
+                            audioManager.FadeOutSound("LoadSuperMissile");
+                            playingChargeSound = false;
+                        }
                     }
                 }
                 else if (triggerState == TRIGGER_STATE.UP)
                 {
                     if (superMissileChargingPs.isPlaying) superMissileChargingPs.Stop();
+                    if (playingChargeSound)
+                    {
+                        audioManager.StopSound("LoadSuperMissile");
+                        playingChargeSound = false;
+                    }
                     if (repeatTime >= superMissileTime - superMissileTime * chargeSpeedReduction)
                     {
                         GameObject supermissile = GameObject.Instantiate(selectedChargedPrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
                         if (shockwaveObtained) supermissile.GetComponent<PlayerSuperMissile>().AddShockwave();
                         superMissileCharged = false;
+                        audioManager.PlaySound("SpawnSuperMissile");
                     }
                     else if (repeatTime >= 0.5f)
                     {
                         GameObject.Instantiate(selectedProjectilePrefab, projectileOriginCurrent.position, projectileOriginCurrent.rotation);
+                        audioManager.PlaySound("SpawnMissile");
                     }
                     repeatTime = 0;
                 }
@@ -375,6 +423,7 @@ public class PlayerGun : MonoBehaviour
                 }
                 break;
         }
+        if (newType != selectedGun) audioManager.PlaySound("SelectColor");
         selectedGun = newType;
         screen.SetScreen(newType);
     }
