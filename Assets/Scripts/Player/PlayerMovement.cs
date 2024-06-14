@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     bool airJump;
     Vector3 movement;
     [NonEditable] public bool dobleJumpObtained = false;
+    float skipGroudDetection = 0.0f;
 
     [Header("Dash")]
     [SerializeField] Transform head;
@@ -76,8 +77,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool isGrounded = IsGrounded();
+
         // jump
-        if (IsGrounded())
+        if (isGrounded)
         {
             stepSoundCd -= Time.deltaTime * controller.velocity.magnitude;
             if (stepSoundCd <= 0)
@@ -115,6 +118,7 @@ public class PlayerMovement : MonoBehaviour
             }
             expectedGravity = jumpHeight;
             //moveProvider.m_VerticalVelocity = Vector3.zero; // m_VerticalVelocity wasn't public, I change it
+            skipGroudDetection = 0.1f;
         }
         if (movement.y > 0) controller.Move(movement * Time.deltaTime);
 
@@ -127,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
                 if (dashCd <= 0) dashPs.Stop(true, ParticleSystemStopBehavior.StopEmitting);
             }
 
-            if ((IsGrounded() || airDashObtained) && dashCd <= 0 && dashAction.action.WasPressedThisFrame())
+            if ((isGrounded || airDashObtained) && dashCd <= 0 && dashAction.action.WasPressedThisFrame())
             {
                 float stickX = stickAction.action.ReadValue<Vector2>().x;
                 float stickY = stickAction.action.ReadValue<Vector2>().y;
@@ -155,11 +159,16 @@ public class PlayerMovement : MonoBehaviour
             moveProvider.moveSpeed = baseSpeed - baseSpeed * (slowPercentage / 100.0f);
         }
 
-        lastFrameGrounded = IsGrounded();
+        lastFrameGrounded = isGrounded;
     }
 
     bool IsGrounded()
     {
+        if (skipGroudDetection > 0.0f)
+        {
+            skipGroudDetection -= Time.deltaTime;
+            return false;
+        }
         return Physics.Raycast(transform.position - Vector3.down * 0.1f, Vector3.down, 0.15f);
     }
 
