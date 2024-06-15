@@ -24,5 +24,6 @@ public class Interruptor : Puzzle
         material.color = Color.green;
         barrier.PuzzleCompleted();
         enabled = false;
+        GetComponent<AudioSource>().Play();
     }
 }

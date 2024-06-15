@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     float skipGroudDetection = 0.0f;
 
     [Header("Dash")]
+    [SerializeField] bool inLobby;
     [SerializeField] Transform head;
     [SerializeField] InputActionProperty stickAction;
     [SerializeField] InputActionProperty dashAction;
@@ -49,13 +50,16 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Skills Unlocked
-        PlayerSkills skills = PlayerSkills.instance;
-        dashUnlocked = skills.dashUnlocked;
-        superJumpUnlocked = skills.superJumpUnlocked;
+        if (!inLobby)
+        {
+            // Skills Unlocked
+            PlayerSkills skills = PlayerSkills.instance;
+            dashUnlocked = skills.dashUnlocked;
+            superJumpUnlocked = skills.superJumpUnlocked;
 
-        // Power Increase
-        dashCooldown -= (skills.dashCdLevel * 0.03f) * dashCooldown;
+            // Power Increase
+            dashCooldown -= (skills.dashCdLevel * 0.03f) * dashCooldown;
+        }
 
         controller = GetComponent<CharacterController>();
         groundJump = true;

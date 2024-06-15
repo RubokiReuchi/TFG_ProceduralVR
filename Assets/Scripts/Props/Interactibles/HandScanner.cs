@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class HandScanner : Puzzle
@@ -5,9 +6,12 @@ public class HandScanner : Puzzle
     [SerializeField] BoxCollider detectorCollider;
     Bounds colliderBounds;
     CapsuleCollider leftHandCollider;
-    float handInTime;
+    float handInTime = 0.0f;
     [SerializeField] EnergyBarrier barrier;
     Material material;
+    [SerializeField] AudioSource scannerSource;
+    [SerializeField] AudioSource completedSource;
+    bool handPlaced = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +30,7 @@ public class HandScanner : Puzzle
     {
         if (colliderBounds.Contains(leftHandCollider.bounds.center))
         {
+            if (handInTime == 0.0f) scannerSource.Play();
             handInTime += Time.deltaTime;
 
             if (handInTime >= 1)
@@ -33,11 +38,19 @@ public class HandScanner : Puzzle
                 handInTime = 1;
                 barrier.PuzzleCompleted();
                 enabled = false;
+                scannerSource.Stop();
+                completedSource.Play();
             }
             material.SetColor("_GridColor", new Color(0.35f , 1, 0.54f + 0.46f * handInTime, 1));
+            handPlaced = true;
         }
         else if (handInTime > 0)
         {
+            if (handPlaced)
+            {
+                StartCoroutine(FadeOutScanner());
+                handPlaced = false;
+            }
             handInTime -= Time.deltaTime;
             if (handInTime < 0) handInTime = 0;
             material.SetColor("_GridColor", new Color(0.35f, 1, 0.54f + 0.23f * handInTime, 1));
@@ -48,5 +61,20 @@ public class HandScanner : Puzzle
     {
         enabled = true;
         barrier.PuzzleStarted();
+    }
+
+    IEnumerator FadeOutScanner()
+    {
+        float initialVolume = scannerSource.volume;
+        float volume = initialVolume;
+        while (volume > 0.0f)
+        {
+            volume -= Time.deltaTime * 2.0f;
+            if (volume < 0.0f) volume = 0.0f;
+            scannerSource.volume = volume;
+            yield return null;
+        }
+        scannerSource.Stop();
+        scannerSource.volume = initialVolume;
     }
 }

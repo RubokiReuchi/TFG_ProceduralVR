@@ -638,6 +638,7 @@ MonoBehaviour:
   jumpHeight: 3
   superJumpHeight: 5
   dobleJumpObtained: 0
+  inLobby: 0
   head: {fileID: 6667081644325226677}
   stickAction:
     m_UseReference: 1
@@ -2409,7 +2410,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8745116847177294357
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37114,7 +37115,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3130942704314624726
 RectTransform:
   m_ObjectHideFlags: 0

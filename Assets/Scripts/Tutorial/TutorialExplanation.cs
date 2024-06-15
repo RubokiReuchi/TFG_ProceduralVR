@@ -13,6 +13,9 @@ public class TutorialExplanation : MonoBehaviour
 
     Transform cameraTransform;
 
+    [SerializeField] AudioSource openSource;
+    [SerializeField] AudioSource closeSource;
+
     void Start()
     {
         Canvas canvas = GetComponent<Canvas>();
@@ -38,6 +41,7 @@ public class TutorialExplanation : MonoBehaviour
             markAnimator.SetBool("Shown", false);
             textAnimator.SetBool("Shown", true);
             showing = true;
+            openSource.Play();
         }
         else
         {
@@ -45,6 +49,7 @@ public class TutorialExplanation : MonoBehaviour
             markAnimator.SetBool("Shown", true);
             textAnimator.SetBool("Shown", false);
             showing = false;
+            closeSource.Play();
         }
     }
 }

@@ -7,6 +7,9 @@ public class ExitPlatform : MonoBehaviour
     [SerializeField] GameObject playerLocomotionSystem;
     [SerializeField] Material fadeMat;
 
+    [SerializeField] AudioSource platformSource;
+    [SerializeField] AudioSource tubeSource;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -33,5 +36,15 @@ public class ExitPlatform : MonoBehaviour
         }
         DataPersistenceManager.instance.SaveGame();
         SceneManager.LoadScene(4); // level scene
+    }
+
+    public void PlayPlatformSound()
+    {
+        platformSource.Play();
+    }
+
+    public void PlayTubeSound()
+    {
+        tubeSource.Play();
     }
 }

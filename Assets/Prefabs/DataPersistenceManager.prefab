@@ -264,6 +264,14 @@ MonoBehaviour:
     pitch: 0.7
     fadeOutSpeed: 0
     source: {fileID: 0}
+  - name: DeflectProjectile
+    clip: {fileID: 8300000, guid: b8095114a30452a42aa11bc07948adba, type: 3}
+    mixer: 1
+    loop: 0
+    volume: 0.7
+    pitch: 0.5
+    fadeOutSpeed: 0
+    source: {fileID: 0}
   soundArrays:
   - name: Step
     clips:

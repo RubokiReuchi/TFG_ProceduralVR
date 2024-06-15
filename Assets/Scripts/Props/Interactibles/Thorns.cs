@@ -14,6 +14,8 @@ public class Thorns : Puzzle
     Material greenMaterial;
     Material redMaterial;
     bool destroying = false;
+    [SerializeField] AudioSource growSource;
+    [SerializeField] AudioSource destroySource;
 
     void Start()
     {
@@ -32,11 +34,16 @@ public class Thorns : Puzzle
     {
         animator.enabled = true;
         GetComponent<BoxCollider>().enabled = true;
+        growSource.Play();
     }
 
     public override void HitPuzzle(float damage, string projectileTag)
     {
-        if (!destroying && projectileTag == "GreenProjectile") StartCoroutine(Disintegrate());
+        if (!destroying && projectileTag == "GreenProjectile")
+        {
+            StartCoroutine(Disintegrate());
+            destroySource.Play();
+        }
     }
 
     IEnumerator Disintegrate()

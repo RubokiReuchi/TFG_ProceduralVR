@@ -59,7 +59,7 @@ public class PlayerState : MonoBehaviour
     [Header("Audio")]
     AudioManager audioManager;
 
-    //RecorderWindow recorderWindow;
+    RecorderWindow recorderWindow;
 
     private void Awake()
     {
@@ -92,8 +92,6 @@ public class PlayerState : MonoBehaviour
         StartCoroutine(FadeOut());
 
         audioManager = AudioManager.instance;
-
-        //recorderWindow = (RecorderWindow)EditorWindow.GetWindow(typeof(RecorderWindow));
     }
 
     void Update()
@@ -101,13 +99,9 @@ public class PlayerState : MonoBehaviour
         // temp
         if (temporalySaveGame.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.Space))
         {
-            //if (!recorderWindow.IsRecording()) recorderWindow.StartRecording();
-            //else recorderWindow.StopRecording();
             //DataPersistenceManager.instance.NewGame();
             //DataPersistenceManager.instance.SaveGame();
-            TakeDamage(125);
         }
-        //
 
         if (leftHandPose == LEFT_HAND_POSE.OK && !shown)
         {
@@ -143,7 +137,7 @@ public class PlayerState : MonoBehaviour
             }
             else
             {
-                // no battery sound
+                audioManager.PlaySound("CancelOption");
             }
         }
         if (xRayVisionActive)

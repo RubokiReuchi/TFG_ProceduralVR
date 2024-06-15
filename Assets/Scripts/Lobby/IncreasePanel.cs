@@ -44,6 +44,13 @@ public class IncreasePanel : MonoBehaviour
 
     PlayerSkills playerSkills;
 
+    [SerializeField] AudioSource openSource;
+    [SerializeField] AudioSource closeSource;
+    [SerializeField] AudioSource selectSource;
+    public AudioSource purchaseSource;
+    public AudioSource errorSource;
+    public AudioSource closeDescriptionSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -64,12 +71,14 @@ public class IncreasePanel : MonoBehaviour
             if (showing) return;
             foreach (LobbyPanel panel in panels) panel.Display(true);
             showing = true;
+            openSource.Play();
         }
         else
         {
             if (!showing) return;
             foreach (LobbyPanel panel in panels) panel.Display(false);
             showing = false;
+            closeSource.Play();
             if (!selectedButton) return;
             selectedButton.GetComponent<Image>().raycastTarget = true;
             selectedButton.GetComponent<IncreaseButton>().CalculateColor(playerSkills);
@@ -97,6 +106,7 @@ public class IncreasePanel : MonoBehaviour
 
         selectedButton.GetComponent<IncreaseButton>().SelectButton();
         selectIcon.transform.position = selectedButton.transform.position;
+        selectSource.Play();
     }
 
     public void Deselect(bool purchased)

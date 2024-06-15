@@ -221,11 +221,12 @@ public class IncreaseDescription : MonoBehaviour
             }
 
             CloseAfterPurchase();
+            increasePanel.purchaseSource.Play();
         }
         else
         {
             priceAnimator.SetTrigger("Blink");
-            // Play sound
+            increasePanel.errorSource.Play();
         }
     }
 
@@ -235,6 +236,7 @@ public class IncreaseDescription : MonoBehaviour
         animator.SetBool("Shown", false);
         increasePanel.Deselect(false);
         otherLobbyPanel.MoveFront();
+        increasePanel.closeDescriptionSource.Play();
     }
 
     void CloseAfterPurchase()
