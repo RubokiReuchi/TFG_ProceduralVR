@@ -14,6 +14,7 @@ public class TutorialGateBehaviour : MonoBehaviour
     Bounds hallwayBounds;
     Transform player;
     bool close;
+    AudioSource source;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,8 @@ public class TutorialGateBehaviour : MonoBehaviour
         hallwayBounds = new Bounds(new Vector3(transform.position.x - (transform.position.x - otherGateBehaviour.transform.position.x) / 2.0f, 2.5f, transform.position.z - (transform.position.z - otherGateBehaviour.transform.position.z) / 2.0f), new Vector3(3.001f, 6, 3.001f));
         roomBounds = roomBehaviour.GetComponent<BoxCollider>().bounds;
         roomBounds.Expand(1.5f);
+
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -34,6 +37,7 @@ public class TutorialGateBehaviour : MonoBehaviour
         {
             close = false;
             animator.SetTrigger("Close");
+            source.Play();
         }
         else if (!opened && hallwayBounds.Contains(player.position))
         {
@@ -96,7 +100,7 @@ public class TutorialGateBehaviour : MonoBehaviour
     {
         animator.SetTrigger("Open");
         opened = true;
-        //gateInMap.GetComponent<GateInMap>().HideGate();
+        source.Play();
     }
 
     public IEnumerator CloseGateDelay()

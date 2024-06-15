@@ -31,7 +31,7 @@ public class AnimSphereRobot : MonoBehaviour
 
     public void Destroyed()
     {
-        script.Destroyed();
+        if (script) script.Destroyed();
     }
 
     public void RollSpeed()

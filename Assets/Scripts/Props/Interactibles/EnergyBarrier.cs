@@ -5,17 +5,20 @@ using UnityEngine;
 public class EnergyBarrier : Barrier
 {
     Animator animator;
+    AudioSource source;
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        source = GetComponent<AudioSource>();
     }
 
     public override void PuzzleStarted()
     {
         gameObject.SetActive(true);
         StartCoroutine(Closeanim());
+        source.Play();
     }
 
     IEnumerator Closeanim()
@@ -28,6 +31,7 @@ public class EnergyBarrier : Barrier
     {
         animator.SetTrigger("Open");
         Invoke("AnimationEnded", 2.0f);
+        source.Play();
     }
 
     public void AnimationEnded()

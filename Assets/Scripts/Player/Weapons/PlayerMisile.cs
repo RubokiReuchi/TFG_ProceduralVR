@@ -83,6 +83,7 @@ public class PlayerMissile : Projectile
         {
             Vector3 deflectDirection = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
             transform.forward = deflectDirection;
+            AudioManager.instance.PlaySound("DeflectProjectile");
             return;
         }
         else if (collision.gameObject.CompareTag("Puzzle"))

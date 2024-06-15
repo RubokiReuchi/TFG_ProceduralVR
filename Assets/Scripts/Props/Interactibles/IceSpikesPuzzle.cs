@@ -9,6 +9,8 @@ public class IceSpikesPuzzle : Puzzle
     public Transform invisibleWall;
     public ParticleSystem meltPs;
     Vector3 targetScale;
+    [SerializeField] AudioSource landSource;
+    [SerializeField] AudioSource meltSource;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +44,12 @@ public class IceSpikesPuzzle : Puzzle
             meltPs.Play();
             targetScale -= Vector3.up * damage / 100.0f;
             if (targetScale.y < 0.4f) targetScale = Vector3.zero;
+            meltSource.Play();
         }
+    }
+
+    public void PlayLandSound()
+    {
+        landSource.Play();
     }
 }

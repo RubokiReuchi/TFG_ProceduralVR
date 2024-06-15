@@ -70,7 +70,11 @@ public class PlayerCharged : Projectile
                 if (fullyCharged)
                 {
                     float lifeChargeAmount = skills.lifeChargeLevel * 0.01f;
-                    if (lifeChargeAmount > 0) PlayerState.instance.HealPercentage(lifeChargeAmount);
+                    if (lifeChargeAmount > 0)
+                    {
+                        PlayerState.instance.HealPercentage(lifeChargeAmount);
+                        AudioManager.instance.PlaySound("HealingCharge");
+                    }
                 }
             }
             if (shockwave)
@@ -97,6 +101,7 @@ public class PlayerCharged : Projectile
         {
             Vector3 deflectDirection = Vector3.Reflect(transform.forward, collision.contacts[0].normal);
             transform.forward = deflectDirection;
+            AudioManager.instance.PlaySound("DeflectProjectile");
             return;
         }
         else if (collision.gameObject.CompareTag("Puzzle"))

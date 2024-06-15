@@ -439,7 +439,7 @@ public class PlayerGun : MonoBehaviour
         switch (type)
         {
             case GUN_TYPE.BLUE:
-                selectedTriangle[11].material = selectedMat[1];
+                selectedTriangle[1].material = selectedMat[1];
                 break;
             case GUN_TYPE.RED:
                 selectedTriangle[2].material = selectedMat[2];

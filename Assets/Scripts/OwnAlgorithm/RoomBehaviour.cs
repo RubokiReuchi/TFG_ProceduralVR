@@ -64,7 +64,7 @@ public class RoomBehaviour : MonoBehaviour
 
     [Header("Enemies")]
     [NonEditable][SerializeField] protected bool onCombat;
-    [SerializeField] GameObject[] enemies;
+    public GameObject[] enemies;
     [SerializeField] protected GameObject[] blockedGates;
 
     void Start()
@@ -82,6 +82,14 @@ public class RoomBehaviour : MonoBehaviour
         foreach (GameObject enemy in enemies)
         {
             if (enemy) return;
+        }
+        foreach (GameObject joinedRoom in joinedRooms)
+        {
+            RoomBehaviour script = joinedRoom.GetComponent<RoomBehaviour>();
+            foreach (GameObject enemy in script.enemies)
+            {
+                if (enemy) return;
+            }
         }
         onCombat = false;
         foreach (GameObject blockedGate in blockedGates)

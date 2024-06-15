@@ -114,6 +114,7 @@ public class PowerChecker : Puzzle
             barrier.PuzzleCompleted();
             completePs.Play();
             enabled = false;
+            GetComponent<AudioSource>().Play();
         }
     }
 

@@ -6,6 +6,8 @@ public class BlockedGate : MonoBehaviour
 {
     [SerializeField] ParticleSystem psClose;
     [SerializeField] ParticleSystem psOpen;
+    [SerializeField] AudioSource closeSource;
+    [SerializeField] AudioSource openSource;
 
     public void PlayCloseParticles()
     {
@@ -15,6 +17,7 @@ public class BlockedGate : MonoBehaviour
     public void PlayOpenParticles()
     {
         psOpen.Play();
+        openSource.Play();
     }
 
     public void StopOpenParticles()
@@ -22,4 +25,8 @@ public class BlockedGate : MonoBehaviour
         psOpen.Stop(true, ParticleSystemStopBehavior.StopEmitting);
     }
 
+    public void PlayCloseSound()
+    {
+        closeSource.Play();
+    }
 }

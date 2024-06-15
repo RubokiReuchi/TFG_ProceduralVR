@@ -9,6 +9,8 @@ public class SmashingBlock : Puzzle
     [SerializeField] Animator animator;
     [SerializeField] Material fadeMat;
     [SerializeField] bool startActivated;
+    [SerializeField] AudioSource moveSource;
+    [SerializeField] AudioSource hitSource;
 
     // Start is called before the first frame update
     void OnEnable()
@@ -26,6 +28,7 @@ public class SmashingBlock : Puzzle
         if (other.CompareTag("Player"))
         {
             StartCoroutine(RespawnCoroutine(other.gameObject));
+            hitSource.Play();
         }
     }
 
@@ -51,5 +54,10 @@ public class SmashingBlock : Puzzle
             fadeMat.SetFloat("_Opacity", opacity);
             yield return null;
         }
+    }
+
+    public void PlaySound()
+    {
+        moveSource.Play();
     }
 }
