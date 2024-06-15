@@ -3725,6 +3725,14 @@ PrefabInstance:
       propertyPath: m_text
       value: Red beam do a 100% extra damage to enemy shields and can melt some objects
       objectReference: {fileID: 0}
+    - target: {fileID: 2450266784928371744, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_VideoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: df7576a21b35d2348b9f0538af8aab60, type: 3}
+    - target: {fileID: 2450266784928371744, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 8400000, guid: 9697d3e2a2759a54a831168b616f100f, type: 2}
     - target: {fileID: 3712637221538557664, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
       propertyPath: m_Name
       value: Explanation
@@ -3817,6 +3825,10 @@ PrefabInstance:
       propertyPath: activeOnDestroy
       value: 
       objectReference: {fileID: 7518462458346569486}
+    - target: {fileID: 8662729219505351918, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 8400000, guid: 9697d3e2a2759a54a831168b616f100f, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

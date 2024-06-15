@@ -21,6 +21,7 @@ public class Interruptor : Puzzle
 
     public override void HitPuzzle(float damage, string projectileTag)
     {
+        if (!enabled) return;
         material.color = Color.green;
         barrier.PuzzleCompleted();
         enabled = false;

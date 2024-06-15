@@ -1559,6 +1559,14 @@ PrefabInstance:
       propertyPath: m_text
       value: SuperJump increases the jump height
       objectReference: {fileID: 0}
+    - target: {fileID: 2450266784928371744, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_VideoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: 57cc6ba51ea5e7a46b255e204b4622fa, type: 3}
+    - target: {fileID: 2450266784928371744, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 8400000, guid: 51315290ba81bd94cb17e0a755ad91e8, type: 2}
     - target: {fileID: 3712637221538557664, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
       propertyPath: m_Name
       value: Explanation
@@ -1647,6 +1655,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8662729219505351918, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 8400000, guid: 51315290ba81bd94cb17e0a755ad91e8, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

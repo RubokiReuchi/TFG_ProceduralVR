@@ -59,8 +59,6 @@ public class PlayerState : MonoBehaviour
     [Header("Audio")]
     AudioManager audioManager;
 
-    RecorderWindow recorderWindow;
-
     private void Awake()
     {
         instance = this;

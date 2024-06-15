@@ -1434,6 +1434,14 @@ PrefabInstance:
       propertyPath: m_text
       value: Blue beam apply frost buildUp on enemies and some tecnology artifacts
       objectReference: {fileID: 0}
+    - target: {fileID: 2450266784928371744, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_VideoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: 115a0ae60dad179418c1b1ffd26d6420, type: 3}
+    - target: {fileID: 2450266784928371744, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 8400000, guid: af5b527c858fc114caa1dc89d2b80f1e, type: 2}
     - target: {fileID: 3712637221538557664, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
       propertyPath: m_Name
       value: Explanation1
@@ -1526,6 +1534,10 @@ PrefabInstance:
       propertyPath: activeOnDestroy
       value: 
       objectReference: {fileID: 4945758228709961287}
+    - target: {fileID: 8662729219505351918, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 8400000, guid: af5b527c858fc114caa1dc89d2b80f1e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7628,6 +7640,14 @@ PrefabInstance:
       value: Frost buildUp slows entity movement, when frost buildUp is the maximum
         entity become freezed.
       objectReference: {fileID: 0}
+    - target: {fileID: 2450266784928371744, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_VideoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: b4acd9e2dc4e25341b567f375854cddb, type: 3}
+    - target: {fileID: 2450266784928371744, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 8400000, guid: 72185499f34273044b1e456c76388221, type: 2}
     - target: {fileID: 3712637221538557664, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
       propertyPath: m_Name
       value: Explanation1 (1)
@@ -7720,6 +7740,10 @@ PrefabInstance:
       propertyPath: activeOnDestroy
       value: 
       objectReference: {fileID: 4945758228709961287}
+    - target: {fileID: 8662729219505351918, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 8400000, guid: 72185499f34273044b1e456c76388221, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9625,6 +9649,14 @@ PrefabInstance:
       value: The next hit on a freezed entity will do 5 times the hit damage and
         will clear the freeze buildUp
       objectReference: {fileID: 0}
+    - target: {fileID: 2450266784928371744, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_VideoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: 163a09d4daa52c3459956c8837ac1104, type: 3}
+    - target: {fileID: 2450266784928371744, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 8400000, guid: cc7a9dc3d728c9d4f9a1873a95b5a4ec, type: 2}
     - target: {fileID: 3712637221538557664, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
       propertyPath: m_Name
       value: Explanation1 (2)
@@ -9717,6 +9749,10 @@ PrefabInstance:
       propertyPath: activeOnDestroy
       value: 
       objectReference: {fileID: 4945758228709961287}
+    - target: {fileID: 8662729219505351918, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 8400000, guid: cc7a9dc3d728c9d4f9a1873a95b5a4ec, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

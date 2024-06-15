@@ -8006,6 +8006,14 @@ PrefabInstance:
       value: Purple beam can go through walls, allowing to hit entities behind a
         cover
       objectReference: {fileID: 0}
+    - target: {fileID: 2450266784928371744, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_VideoClip
+      value: 
+      objectReference: {fileID: 32900000, guid: 19de7c9bca5470e4d9362ed55538a844, type: 3}
+    - target: {fileID: 2450266784928371744, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 8400000, guid: b3bfbc0bbb8434840a3810b7bd254cb0, type: 2}
     - target: {fileID: 3712637221538557664, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
       propertyPath: m_Name
       value: Explanation
@@ -8098,6 +8106,10 @@ PrefabInstance:
       propertyPath: activeOnDestroy
       value: 
       objectReference: {fileID: 4468173860975732801}
+    - target: {fileID: 8662729219505351918, guid: 3de52c8fcb92f2b4098a88362d8e166f, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 8400000, guid: b3bfbc0bbb8434840a3810b7bd254cb0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -394,6 +394,14 @@ PrefabInstance:
       propertyPath: m_RotationInput.m_Action.m_SingletonActionBindings.Array.data[1].m_Action
       value: Rotation
       objectReference: {fileID: 0}
+    - target: {fileID: 3097904023723764337, guid: 0791c54419ccfa846a38eb759df3dc8d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5235478026549001787, guid: 0791c54419ccfa846a38eb759df3dc8d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7242552882509781249, guid: 0791c54419ccfa846a38eb759df3dc8d, type: 3}
       propertyPath: m_RootOrder
       value: 3
