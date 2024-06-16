@@ -49,7 +49,6 @@ public class SphereRobot : Enemy
     [SerializeField] AudioClip aiming;
     [SerializeField] AudioClip shoot;
     [SerializeField] AudioClip autodestructionAlert;
-    [SerializeField] AudioClip explosion;
 
     private void OnEnable()
     {
@@ -86,7 +85,7 @@ public class SphereRobot : Enemy
         if (exploting) return;
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        if (distanceToPlayer < explosionDistance && !Physics.Raycast(transform.position, player.position, distanceToPlayer, foundationsLayers))
+        if (distanceToPlayer < explosionDistance && !Physics.Raycast(transform.position, player.position - transform.position, distanceToPlayer, foundationsLayers))
         {
             StartCoroutine(Exploting());
             return;
@@ -358,6 +357,7 @@ public class SphereRobot : Enemy
             if (i % 10 == 0) // i --> 0, 10, 20, 30...
             {
                 material.SetColor("_Color", new Color(1, 0.0f, 0));
+                AutodestructionSound();
             }
             else if (i % 10 == 1)
             {
@@ -437,6 +437,11 @@ public class SphereRobot : Enemy
     public void StopRollSound()
     {
         source.clip = stopRollHit;
+        source.Play();
+    }
+    public void AutodestructionSound()
+    {
+        source.clip = autodestructionAlert;
         source.Play();
     }
 }

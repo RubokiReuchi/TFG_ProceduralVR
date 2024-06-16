@@ -1818,6 +1818,15 @@ MonoBehaviour:
   corpsPrefab: {fileID: 2143369298535917415, guid: d3331669721cffa4c92bb5c2f5f0d5e6, type: 3}
   isOctopusGenerated: 0
   octopusCorpsPrefab: {fileID: 0}
+  activate: {fileID: 8300000, guid: 3ead7d39e1418384f9d9861b68d25273, type: 3}
+  walk0: {fileID: 8300000, guid: 47e6b5829d223994894a922f1e613c9b, type: 3}
+  walk1: {fileID: 8300000, guid: e48f4e8a6c1a7fa4c8c7ad402588b10d, type: 3}
+  startRoll: {fileID: 8300000, guid: 6e4838266a8efbc4889448c611c1205d, type: 3}
+  roll: {fileID: 8300000, guid: 9569176073cd7c140bde91caccdd2485, type: 3}
+  stopRollHit: {fileID: 8300000, guid: 8d0b4c95057ca2c4fad121edf0566fa5, type: 3}
+  aiming: {fileID: 8300000, guid: 4559e359d1d67d441bd13235e900ca2f, type: 3}
+  shoot: {fileID: 8300000, guid: fbc33abe3c2c6fb438627be2519ce2b4, type: 3}
+  autodestructionAlert: {fileID: 8300000, guid: 535cdb1c3a08c694aaf65aeb3dea5859, type: 3}
 --- !u!195 &8527958410363451332
 NavMeshAgent:
   m_ObjectHideFlags: 0
