@@ -21,6 +21,10 @@ public class EnemyShield : MonoBehaviour
     [SerializeField] protected float dissolveSpeed;
     [SerializeField] float damageTextScale = 1.0f;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip destroy;
+    AudioSource source;
+
     public virtual void Start()
     {
         enemyScript.hasShield = true;
@@ -30,6 +34,8 @@ public class EnemyShield : MonoBehaviour
         playerState = PlayerState.instance;
 
         currentHealth = maxHealth;
+
+        source = GetComponent<AudioSource>();
     }
 
     public virtual void Update()
@@ -48,7 +54,7 @@ public class EnemyShield : MonoBehaviour
 
     public virtual void TakeDamage(float amount, GameObject damageText = null)
     {
-        if (!enabled) return;
+        if (!enabled || currentHealth <= 0) return;
         currentHealth -= amount;
         if (damageText != null)
         {
@@ -57,16 +63,21 @@ public class EnemyShield : MonoBehaviour
             text.scaleMultiplier = damageTextScale;
         }
 
+        source.Play();
         if (currentHealth <= 0)
         {
             if (onDeath == ON_DEATH.DESTROY)
             {
                 currentHealth = 0;
                 StartCoroutine(Destroy());
+                source.clip = destroy;
+                source.Play();
             }
             else if (onDeath == ON_DEATH.HIDE_AND_REVIVE)
             {
                 StartCoroutine(Hide());
+                source.clip = destroy;
+                source.Play();
             }
         }
     }

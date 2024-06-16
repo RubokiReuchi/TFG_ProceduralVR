@@ -39,6 +39,18 @@ public class SphereRobot : Enemy
     [SerializeField] bool isOctopusGenerated;
     [SerializeField] GameObject octopusCorpsPrefab;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip activate;
+    [SerializeField] AudioClip walk0;
+    [SerializeField] AudioClip walk1;
+    [SerializeField] AudioClip startRoll;
+    [SerializeField] AudioClip roll;
+    [SerializeField] AudioClip stopRollHit;
+    [SerializeField] AudioClip aiming;
+    [SerializeField] AudioClip shoot;
+    [SerializeField] AudioClip autodestructionAlert;
+    [SerializeField] AudioClip explosion;
+
     private void OnEnable()
     {
         if (!firstEnable) return;
@@ -55,6 +67,8 @@ public class SphereRobot : Enemy
         lastCanShoot = 0;
 
         currentHealth = maxHealth;
+
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -83,6 +97,8 @@ public class SphereRobot : Enemy
             case STATE.REST:
                 animator.SetTrigger("Activate");
                 state = STATE.WAITING;
+                source.clip = activate;
+                source.Play();
                 break;
             case STATE.ROLL:
                 agent.destination = player.position;
@@ -90,6 +106,8 @@ public class SphereRobot : Enemy
                 {
                     animator.SetTrigger("Stop Roll");
                     state = STATE.WAITING;
+                    source.loop = false;
+                    source.Stop();
                 }
                 break;
             case STATE.SIDE_ROLLING:
@@ -98,6 +116,8 @@ public class SphereRobot : Enemy
                 {
                     animator.SetTrigger("Stop Roll");
                     state = STATE.WAITING;
+                    source.loop = false;
+                    source.Stop();
                 }
                 break;
             case STATE.WALK:
@@ -206,12 +226,20 @@ public class SphereRobot : Enemy
             animator.SetTrigger("Aiming");
             state = STATE.AIMING;
             lastCanShoot = 1;
+            source.clip = aiming;
+            source.pitch = 0.5f;
+            source.loop = true;
+            source.Play();
         }
     }
 
     public void SpawnRay()
     {
         GameObject.Instantiate(rayPrefab, rayOrigin.position, Quaternion.LookRotation((playerHead.position - rayOrigin.position).normalized));
+        source.clip = shoot;
+        source.pitch = 1.0f;
+        source.loop = false;
+        source.Play();
     }
 
     public void Stop()
@@ -275,6 +303,13 @@ public class SphereRobot : Enemy
             freezePercentage = 100;
             freezedTime = freezeDuration;
             invulneravilityTime = 1.0f;
+            source.clip = freezeComplete;
+            source.Play();
+        }
+        else
+        {
+            source.clip = recieveFreeze;
+            source.Play();
         }
         material.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);
         recoverTime = recoverDelay;
@@ -365,5 +400,43 @@ public class SphereRobot : Enemy
         GameObject.Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         GiveCoin();
         Destroy(gameObject);
+    }
+
+    // AudioFuntions
+    public IEnumerator FadeOutSound()
+    {
+        float initialVolume = source.volume;
+        float volume = initialVolume;
+        while (volume > 0.0f)
+        {
+            volume -= Time.deltaTime;
+            if (volume < 0.0f) volume = 0.0f;
+            source.volume = volume;
+            yield return null;
+        }
+        source.Stop();
+        source.volume = initialVolume;
+    }
+    public void WalkSound()
+    {
+        if (Random.Range(0, 2) == 0) source.clip = walk0;
+        else source.clip = walk1;
+        source.Play();
+    }
+    public void StartRollSound()
+    {
+        source.clip = startRoll;
+        source.Play();
+    }
+    public void RollSound()
+    {
+        source.clip = roll;
+        source.loop = true;
+        source.Play();
+    }
+    public void StopRollSound()
+    {
+        source.clip = stopRollHit;
+        source.Play();
     }
 }

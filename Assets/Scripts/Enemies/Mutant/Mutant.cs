@@ -81,6 +81,8 @@ public class Mutant : Enemy
         usedAuxiliarRoar = false;
 
         currentHealth = maxHealth;
+
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -497,6 +499,13 @@ public class Mutant : Enemy
             freezePercentage = 100;
             freezedTime = freezeDuration;
             invulneravilityTime = 1.0f;
+            source.clip = freezeComplete;
+            source.Play();
+        }
+        else
+        {
+            source.clip = recieveFreeze;
+            source.Play();
         }
         material.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);
         material2.SetFloat("_FreezeInterpolation", freezePercentage / 100.0f);

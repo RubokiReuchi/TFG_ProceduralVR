@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Unity.VisualScripting.Member;
 
 public class AnimSphereRobot : MonoBehaviour
 {
@@ -47,5 +48,27 @@ public class AnimSphereRobot : MonoBehaviour
     public void StopRing()
     {
         shootPs.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+    }
+
+    // AudioFuntions
+    public void FadeOutSound()
+    {
+        StartCoroutine(script.FadeOutSound());
+    }
+    public void WalkSound()
+    {
+        script.WalkSound();
+    }
+    public void StartRollSound()
+    {
+        script.StartRollSound();
+    }
+    public void RollSound()
+    {
+        script.RollSound();
+    }
+    public void StopRollSound()
+    {
+        script.StopRollSound();
     }
 }

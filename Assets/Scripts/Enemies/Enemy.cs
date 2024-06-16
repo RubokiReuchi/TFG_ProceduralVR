@@ -46,6 +46,11 @@ public class Enemy : MonoBehaviour
     [Header("DamageDisplay")]
     public Transform damageTextCenter;
 
+    [Header("Audio")]
+    [SerializeField] protected AudioClip recieveFreeze;
+    [SerializeField] protected AudioClip freezeComplete;
+    protected AudioSource source;
+
 
     private void LateUpdate()
     {
