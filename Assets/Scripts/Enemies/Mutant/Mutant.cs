@@ -60,6 +60,15 @@ public class Mutant : Enemy
     [Header("Shield")]
     [SerializeField] Animator shieldAnimator;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip land;
+    [SerializeField] AudioClip step;
+    [SerializeField] AudioClip die;
+    [SerializeField] AudioClip desintegrate;
+    [SerializeField] AudioClip backflip;
+    [SerializeField] AudioClip roar;
+    [SerializeField] AudioClip slash;
+
     private void OnEnable()
     {
         if (!firstEnable) return;
@@ -112,6 +121,8 @@ public class Mutant : Enemy
                     state = STATE.WAITING;
                     agent.enabled = true;
                     if (hasShield) shieldAnimator.SetBool("Open", true);
+                    source.clip = land;
+                    source.Play();
                 }
                 break;
             case STATE.WALK_SHOOTING_LEFT:
@@ -247,6 +258,8 @@ public class Mutant : Enemy
             state = STATE.BACKFLIPPNG;
             if (hasShield) shieldAnimator.SetBool("Open", true);
             agent.speed = 0;
+            source.clip = backflip;
+            source.Play();
         }
     }
 
@@ -423,6 +436,8 @@ public class Mutant : Enemy
         roarPs.Play();
         roarCollider.enabled = true;
         roarXRay.SetActive(true);
+        source.clip = roar;
+        source.Play();
         yield return new WaitForSeconds(1.5f);
         roarCollider.enabled = false;
         roarXRay.SetActive(false);
@@ -532,10 +547,16 @@ public class Mutant : Enemy
         state = STATE.DIYING;
         if (hasShield) shieldAnimator.SetBool("Open", false);
         alive = false;
+
+        source.clip = die;
+        source.Play();
     }
 
     public IEnumerator Dissolve()
     {
+        source.clip = desintegrate;
+        source.Play();
+
         float dissolveAmount = 0.0f;
         while (dissolveAmount < 1.0f)
         {
@@ -547,5 +568,17 @@ public class Mutant : Enemy
         }
         GiveCoin();
         Destroy(gameObject);
+    }
+
+    // Sound
+    public void StepSound()
+    {
+        source.clip = step;
+        source.Play();
+    }
+    public void SlashSound()
+    {
+        source.clip = slash;
+        source.Play();
     }
 }

@@ -321,6 +321,8 @@ public class SphereRobot : Enemy
         transform.GetComponentInChildren<AnimSphereRobot>().StopRing();
         state = STATE.DESTROYING;
         alive = false;
+        source.clip = activate;
+        source.Play();
     }
 
     public void Destroyed()

@@ -12,6 +12,9 @@ public class MutantOrb : Enemy
     [SerializeField] float growSpeed;
     [SerializeField] ParticleSystem destroyPs;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip die;
+
     void Start()
     {
         if (owner) owner.activeOrbs.Add(this);
@@ -19,6 +22,8 @@ public class MutantOrb : Enemy
         currentHealth = maxHealth;
 
         transform.localScale = Vector3.zero;
+
+        source = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -67,5 +72,7 @@ public class MutantOrb : Enemy
         destroyPs.Play();
         alive = false;
         transform.localScale = Vector3.zero;
+        source.clip = die;
+        source.Play();
     }
 }

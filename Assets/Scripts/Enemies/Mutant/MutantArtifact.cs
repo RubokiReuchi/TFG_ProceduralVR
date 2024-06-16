@@ -13,6 +13,10 @@ public class MutantArtifact : MonoBehaviour
     [SerializeField] float cadence; // projectiles/sec
     float projectileCd;
 
+    [Header("Audio")]
+    [SerializeField] AudioSource spawnSource;
+    [SerializeField] AudioSource shootSource;
+
     void Update()
     {
         transform.rotation = Quaternion.identity;
@@ -47,6 +51,7 @@ public class MutantArtifact : MonoBehaviour
             {
                 GameObject.Instantiate(rayPrefab, transform.position, Quaternion.identity);//Quaternion.Euler(-Vector3.right * 90));
                 projectileCd = 1 / cadence;
+                shootSource.Play();
             }
         }
     }
@@ -56,6 +61,7 @@ public class MutantArtifact : MonoBehaviour
         newScale = 0.0f;
         spawning = true;
         ps.Play();
+        spawnSource.Play();
     }
 
     public void Despawn()
