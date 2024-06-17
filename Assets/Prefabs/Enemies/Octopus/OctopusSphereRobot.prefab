@@ -1073,7 +1073,6 @@ MonoBehaviour:
   aiming: {fileID: 8300000, guid: 4559e359d1d67d441bd13235e900ca2f, type: 3}
   shoot: {fileID: 8300000, guid: fbc33abe3c2c6fb438627be2519ce2b4, type: 3}
   autodestructionAlert: {fileID: 8300000, guid: 535cdb1c3a08c694aaf65aeb3dea5859, type: 3}
-  explosion: {fileID: 8300000, guid: 4ece5941da493834fac03137f34c9dde, type: 3}
 --- !u!195 &4506459663859916623
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1168,7 +1167,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -681267025963399855, guid: d8c72eb4ec6b75843993e8586e7c2697, type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 4f79869a15acbea4ab4d41d2132919bd, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

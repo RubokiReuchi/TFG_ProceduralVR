@@ -81,7 +81,19 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: fc943fd2291bc4a43b34221a99c7a12e
+    name: EnemiesVolume
+  - guid: e1e055f1a7bff75459fdc351136bbf0f
+    name: EnviromentVolume
+  - guid: 582680197237ed24e90256811dfc74f0
+    name: MaterVolume
+  - guid: 095da409cea64eb44b1ca930453ba544
+    name: MusicVolume
+  - guid: 6bebcdeb6a6a0724fa0a90579431abd3
+    name: ProjectileVolume
+  - guid: 7c68481c3c93ea24a9797992ee154b09
+    name: EfectsVolume
   m_AudioMixerGroupViews:
   - guids:
     - a16850991cd70554aa80bd9de9889164

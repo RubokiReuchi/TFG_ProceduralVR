@@ -43,6 +43,7 @@ public class BossRoomBehaviour : RoomBehaviour
             fadeMaterial.SetFloat("_Opacity", opacity);
             yield return null;
         }
+        GetComponent<AudioSource>().Play();
         DataPersistenceManager.instance.SaveGame();
         SceneManager.LoadScene(3); // lobby
     }

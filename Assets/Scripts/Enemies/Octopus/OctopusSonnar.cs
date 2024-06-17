@@ -7,9 +7,18 @@ public class OctopusSonnar : MonoBehaviour
     [SerializeField] ParticleSystem ps;
     [SerializeField] Animator animator;
 
+    [Header("Audio")]
+    AudioSource waveSource;
+
+    void Start()
+    {
+        waveSource = GetComponent<AudioSource>();
+    }
+
     public void LaunchWave()
     {
         ps.Play();
+        waveSource.Play();
     }
 
     public void DisableAnimator()

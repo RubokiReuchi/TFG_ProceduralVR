@@ -13,6 +13,7 @@ public class SphereRobotLand : MonoBehaviour
             GetComponent<NavMeshAgent>().enabled = true;
             GetComponent<Rigidbody>().mass = 10000.0f;
             enabled = false;
+            GetComponent<AudioSource>().Play();
         }
     }
 }

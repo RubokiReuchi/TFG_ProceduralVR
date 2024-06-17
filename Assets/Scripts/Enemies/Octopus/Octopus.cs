@@ -42,10 +42,22 @@ public class Octopus : Enemy
     float pathDirection = 1;
     [SerializeField] Transform centerPos;
     List<STATE> ensureAttack = new();
-    float shieldCd = 30.0f;
+    float shieldCd = 0.0f;
     bool physicalShieldActive = false;
     [SerializeField] ParticleSystem[] deathExplosion;
     int explosionNum = 0;
+
+    [Header("Audio")]
+    [SerializeField] AudioClip idle;
+    [SerializeField] AudioClip meteoriteCharge;
+    [SerializeField] AudioClip nukePreparation;
+    [SerializeField] AudioClip slowRings;
+    [SerializeField] AudioClip homingBombLaunch;
+    [SerializeField] AudioClip minionLaunch;
+    [SerializeField] AudioClip death;
+    [SerializeField] AudioSource hitSource;
+    [SerializeField] AudioSource minionWavePullSource;
+    [SerializeField] AudioSource minionWavePushSource;
 
     private void OnEnable()
     {
@@ -64,6 +76,8 @@ public class Octopus : Enemy
         }
 
         currentHealth = maxHealth;
+
+        source = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -150,6 +164,7 @@ public class Octopus : Enemy
             yield return null;
         }
         pathAnimator.enabled = true;
+        source.Play();
         yield return new WaitForSeconds(0.3f);
         size = 18;
         while (size > 0)
@@ -205,7 +220,7 @@ public class Octopus : Enemy
             lastAttack = STATE.MINION_WAVE;
             return;
         }
-        
+
         float rand = Random.Range(0, 100);
         // slowdownRings
         if (rand < 20)
@@ -303,6 +318,11 @@ public class Octopus : Enemy
             animators[7].SetBool("Idle", true);
         }
 
+        source.clip = idle;
+        source.pitch = 1.0f;
+        source.loop = true;
+        source.Play();
+
         switch (state)
         {
             case STATE.SLOW_RINGS:
@@ -337,6 +357,10 @@ public class Octopus : Enemy
     {
         meteorites.Add(GameObject.Instantiate(meteorite));
         launchMeteoritePs.Play();
+        source.clip = meteoriteCharge;
+        source.pitch = 0.4f;
+        source.loop = false;
+        source.Play();
     }
 
     public void SpawnNuke()
@@ -411,6 +435,7 @@ public class Octopus : Enemy
     {
         StartCoroutine(AddInverseImpulseToBall());
         StartCoroutine(MinionWaveParticlesIn());
+        minionWavePullSource.Play();
     }
 
     IEnumerator AddInverseImpulseToBall()
@@ -444,6 +469,7 @@ public class Octopus : Enemy
     {
         StartCoroutine(AddImpulseToBall());
         StartCoroutine(MinionWaveParticlesOut());
+        minionWavePushSource.Play();
     }
 
     IEnumerator AddImpulseToBall()
@@ -504,6 +530,7 @@ public class Octopus : Enemy
             yield return null;
         }
         yield return new WaitForSeconds(30.0f);
+        physicShield.gameObject.GetComponent<AudioSource>().Play();
         while (size > 0.0f)
         {
             size -= Time.deltaTime * 4.5f;
@@ -527,6 +554,7 @@ public class Octopus : Enemy
             text.damage = amount;
             text.scaleMultiplier = 5.0f;
         }
+        hitSource.Play();
 
         if (currentHealth == 0) return;
         currentHealth -= amount;
@@ -565,17 +593,29 @@ public class Octopus : Enemy
         {
             pathAnimator.SetBool("Death", true);
             alive = false;
+            source.clip = death;
+            source.Play();
         }
     }
 
     public void DeathExplosion()
     {
         deathExplosion[explosionNum].Play();
+        deathExplosion[explosionNum].GetComponent<AudioSource>().Play();
         explosionNum++;
     }
 
     public void DestroyEnemy()
     {
         Destroy(gameObject);
+    }
+
+    // Sound
+    public void PrepareNukeSound()
+    {
+        source.clip = nukePreparation;
+        source.pitch = 1.0f;
+        source.loop = false;
+        source.Play();
     }
 }

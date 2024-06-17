@@ -15,6 +15,7 @@ public class OctopusArmAnimations : MonoBehaviour
     [SerializeField] float maxRainLoops;
     [SerializeField] ParticleSystem launchMinionPs;
     [SerializeField] float maxMinionLoops;
+    [SerializeField] AudioSource source;
 
     public void IdleAllRows()
     {
@@ -50,6 +51,7 @@ public class OctopusArmAnimations : MonoBehaviour
     {
         GameObject.Instantiate(homingBomb, projectileOrigin.position, projectileOrigin.rotation);
         launchHomingBombPs.Play();
+        source.Play();
     }
 
     public void CheckHomingBombLoop()
@@ -69,6 +71,7 @@ public class OctopusArmAnimations : MonoBehaviour
     {
         script.SpawnRain();
         launchRainPs.Play();
+        source.Play();
     }
 
     public void CheckRainLoop()
@@ -89,6 +92,7 @@ public class OctopusArmAnimations : MonoBehaviour
     {
         script.SpawnMinion(projectileOrigin);
         launchMinionPs.Play();
+        source.Play();
     }
 
     public void CheckMinionLoop()
@@ -125,5 +129,11 @@ public class OctopusArmAnimations : MonoBehaviour
         {
             script.DeathPath();
         }
+    }
+
+    // Sound
+    public void PrepareNukeSound()
+    {
+        if (commanderArm) script.PrepareNukeSound();
     }
 }

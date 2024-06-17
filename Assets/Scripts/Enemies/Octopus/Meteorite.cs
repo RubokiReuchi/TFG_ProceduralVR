@@ -16,6 +16,10 @@ public class Meteorite : MonoBehaviour
     float timer = 0.0f;
     bool staticState = false;
 
+    [Header("Audio")]
+    [SerializeField] AudioSource asteroidSource;
+    [SerializeField] AudioClip asteroidLand;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +43,7 @@ public class Meteorite : MonoBehaviour
             if (timer > 0.8f && !residualFlames[0].activeSelf)
             {
                 foreach (var flame in residualFlames) flame.SetActive(true);
+                GetComponent<AudioSource>().Play();
             }
             asteroid.transform.localPosition = Vector3.Lerp(asteroidOriginalPos, asteroidFinalPos, timer);
             timer += Time.deltaTime * 0.25f;
@@ -50,6 +55,9 @@ public class Meteorite : MonoBehaviour
             explosion.SetActive(true);
             asteroid.GetComponent<Asteroid>().landed = true;
             asteroid.GetComponent<Rigidbody>().isKinematic = true;
+            asteroidSource.clip = asteroidLand;
+            asteroidSource.pitch = 1.5f;
+            asteroidSource.Play();
             staticState = true;
         }
     }

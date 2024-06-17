@@ -1,15 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class NukeCollision : MonoBehaviour
 {
     [SerializeField] LayerMask layerMask;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip explosion;
+    AudioSource source;
+
     private void OnEnable()
     {
+        Invoke("ExplosionSound", 2.85f);
         Invoke("CheckPlayer", 4.5f);
         Invoke("Destroy", 12.0f);
+
+        source = GetComponent<AudioSource>();
     }
 
     void CheckPlayer()
@@ -32,5 +40,11 @@ public class NukeCollision : MonoBehaviour
     void Destroy()
     {
         Destroy(gameObject);
+    }
+
+    void ExplosionSound()
+    {
+        source.clip = explosion;
+        source.Play();
     }
 }
