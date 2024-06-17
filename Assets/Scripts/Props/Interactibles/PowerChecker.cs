@@ -38,12 +38,6 @@ public class PowerChecker : Puzzle
         supportGO.GetComponent<Renderer>().material = supportMaterial;
         pilarMaterial = new Material(pilarOriginalMaterial);
         pilarGO.GetComponent<Renderer>().material = pilarMaterial;
-
-        if (isPartOfPuzzle)
-        {
-            displayedText.text = "";
-            enabled = false;
-        }
     }
 
     private void Update()

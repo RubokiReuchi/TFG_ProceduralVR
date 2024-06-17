@@ -1194,7 +1194,7 @@ public class RoomGenarator : MonoBehaviour
             bool upgradeSuccesfullyPlacedThisLoop = false;
             if (!upgradeRoomPlaced)
             {
-                bool upgradeRoom = (Random.Range(0, 100) < 100);
+                bool upgradeRoom = (Random.Range(0, 100) < 80);
                 if (upgradeRoom)
                 {
                     auxScript = CreateNextUpgradeRoom(randomDoor, GetTreeIndex(randomDoor.script), upgradeRoomsPrefabs, mapUpgradeRoomsPrefabs); // upgrade room
@@ -1629,11 +1629,22 @@ public class RoomGenarator : MonoBehaviour
     DOOR_STATE GetDoorColor()
     {
         int rand = Random.Range(0, 100);
-        if (rand < 60) return DOOR_STATE.YELLOW;
-        else if (rand < 75) return DOOR_STATE.BLUE;
-        else if (rand < 90) return DOOR_STATE.RED;
-        else if (rand < 98) return DOOR_STATE.PURPLE;
-        else return DOOR_STATE.GREEN;
+        if (!upgradeRoomPlaced)
+        {
+            if (rand < 80) return DOOR_STATE.YELLOW;
+            else if (rand < 88) return DOOR_STATE.BLUE;
+            else if (rand < 95) return DOOR_STATE.RED;
+            else if (rand < 98) return DOOR_STATE.PURPLE;
+            else return DOOR_STATE.GREEN;
+        }
+        else
+        {
+            if (rand < 60) return DOOR_STATE.YELLOW;
+            else if (rand < 75) return DOOR_STATE.BLUE;
+            else if (rand < 90) return DOOR_STATE.RED;
+            else if (rand < 98) return DOOR_STATE.PURPLE;
+            else return DOOR_STATE.GREEN;
+        }
     }
 
     RoomBehaviour CreateNextPowerUpRoom(Door door, int roomTreeIndex, GameObject[] roomsPool, GameObject[] mapRoomsPool)
