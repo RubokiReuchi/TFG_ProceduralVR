@@ -97,8 +97,8 @@ public class PlayerState : MonoBehaviour
         // temp
         if (temporalySaveGame.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.Space))
         {
-            //DataPersistenceManager.instance.NewGame();
-            //DataPersistenceManager.instance.SaveGame();
+            DataPersistenceManager.instance.NewGame();
+            DataPersistenceManager.instance.SaveGame();
         }
 
         if (leftHandPose == LEFT_HAND_POSE.OK && !shown)
@@ -323,10 +323,16 @@ public class PlayerState : MonoBehaviour
             yield return null;
         }
         opacity = 0.0f;
+        bool musicFadeDone = false;
         while (opacity < 1)
         {
             opacity += Time.deltaTime * 0.5f;
             if (opacity > 1) opacity = 1;
+            else if (!musicFadeDone && opacity > 0.5f)
+            {
+                musicFadeDone = true;
+                MusicManager.instance.SwapTo(MUSIC_STATE.LOBBY);
+            }
             fadeMaterial.SetFloat("_Opacity", opacity);
             yield return null;
         }

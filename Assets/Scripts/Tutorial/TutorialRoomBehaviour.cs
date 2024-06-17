@@ -43,6 +43,7 @@ public class TutorialRoomBehaviour : MonoBehaviour
         {
             blockedGate.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Open");
         }
+        MusicManager.instance.SwapTo(MUSIC_STATE.OFF_COMBAT);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -74,6 +75,7 @@ public class TutorialRoomBehaviour : MonoBehaviour
         if (enemies.Length == 1 && enemies[0].GetComponent<Octopus>() != null)
         {
             enemies[0].GetComponent<Octopus>().enabled = true;
+            MusicManager.instance.SwapTo(MUSIC_STATE.BOSS);
         }
         else
         {
@@ -84,9 +86,6 @@ public class TutorialRoomBehaviour : MonoBehaviour
                     case ENEMY_TYPE.SPHERE_ROBOT:
                         enemies[i].GetComponent<SphereRobot>().enabled = true;
                         break;
-                    case ENEMY_TYPE.TUTORIAL_SPHERE_ROBOT:
-                        enemies[i].GetComponent<TutorialSphereRobot>().enabled = true;
-                        break;
                     case ENEMY_TYPE.MUTANT:
                         enemies[i].GetComponent<Mutant>().enabled = true;
                         break;
@@ -94,6 +93,7 @@ public class TutorialRoomBehaviour : MonoBehaviour
                         break;
                 }
             }
+            MusicManager.instance.SwapTo(MUSIC_STATE.ON_COMBAT);
         }
     }
 }

@@ -96,6 +96,7 @@ public class RoomBehaviour : MonoBehaviour
         {
             blockedGate.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Open");
         }
+        MusicManager.instance.SwapTo(MUSIC_STATE.OFF_COMBAT);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -128,6 +129,7 @@ public class RoomBehaviour : MonoBehaviour
         {
             blockedGate.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Close");
         }
+        MusicManager.instance.SwapTo(MUSIC_STATE.ON_COMBAT);
     }
 
     public bool GetDoorsFilled()

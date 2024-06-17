@@ -15,7 +15,7 @@ public class MusicManager : MonoBehaviour
 {
     public static MusicManager instance { get; private set; }
 
-    [NonEditable][SerializeField] MUSIC_STATE state = MUSIC_STATE.MENU;
+    [SerializeField] MUSIC_STATE state;
 
     [SerializeField] float fadeTime;
     bool fading = false;
@@ -146,6 +146,7 @@ public class MusicManager : MonoBehaviour
         }
 
         StartCoroutine(FadeOtherMusic(nextClip, fading));
+        state = newState;
     }
 
     IEnumerator FadeOtherMusic(AudioClip nextClip, bool wasFading)
@@ -169,6 +170,7 @@ public class MusicManager : MonoBehaviour
             }
             source1.Stop();
             playingSource1 = false;
+            if (state == MUSIC_STATE.MENU) source1.loop = false;
         }
         else
         {

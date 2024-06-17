@@ -22,6 +22,11 @@ public class MainMenu : MonoBehaviour
     bool existingSaveFile = false;
     bool delete; // true --> new game, false --> exit
 
+    [Header("Audio")]
+    [SerializeField] AudioSource selectSource;
+    [SerializeField] AudioSource cancelSource;
+    [SerializeField] AudioSource errorSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +52,7 @@ public class MainMenu : MonoBehaviour
             confirmAnimator.SetBool("Open", false);
             cancelAnimator.SetBool("Open", false);
             deleteAdviceAnimator.SetBool("Open", false);
+            selectSource.Play();
         }
         else
         {
@@ -57,6 +63,7 @@ public class MainMenu : MonoBehaviour
             cancelAnimator.SetBool("Open", true);
             deleteAdviceAnimator.SetBool("Open", true);
             delete = true;
+            errorSource.Play();
         }
     }
 
@@ -69,6 +76,7 @@ public class MainMenu : MonoBehaviour
         confirmAnimator.SetBool("Open", false);
         cancelAnimator.SetBool("Open", false);
         deleteAdviceAnimator.SetBool("Open", false);
+        selectSource.Play();
     }
 
     public void Confirm()
@@ -83,10 +91,7 @@ public class MainMenu : MonoBehaviour
             confirmAnimator.SetBool("Open", false);
             cancelAnimator.SetBool("Open", false);
             deleteAdviceAnimator.SetBool("Open", false);
-        }
-        else
-        {
-            Application.Quit();
+            selectSource.Play();
         }
     }
 
@@ -97,6 +102,7 @@ public class MainMenu : MonoBehaviour
         confirmAnimator.SetBool("Open", false);
         cancelAnimator.SetBool("Open", false);
         deleteAdviceAnimator.SetBool("Open", false);
+        cancelSource.Play();
     }
 
     IEnumerator FadeOut(int level, MUSIC_STATE musicState)

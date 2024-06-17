@@ -30,16 +30,23 @@ public class BossRoomBehaviour : RoomBehaviour
 
         onCombat = false;
         StartCoroutine(FadeIn());
+        MusicManager.instance.SwapTo(MUSIC_STATE.OFF_COMBAT);
     }
 
     IEnumerator FadeIn()
     {
         yield return new WaitForSeconds(3.0f);
         float opacity = 0.0f;
+        bool musicFadeDone = false;
         while (opacity < 1.0f)
         {
             opacity += Time.deltaTime * 0.5f;
             if (opacity > 1.0f) opacity = 1.0f;
+            else if (!musicFadeDone && opacity > 0.5f)
+            {
+                musicFadeDone = true;
+                MusicManager.instance.SwapTo(MUSIC_STATE.LOBBY);
+            }
             fadeMaterial.SetFloat("_Opacity", opacity);
             yield return null;
         }
@@ -71,6 +78,7 @@ public class BossRoomBehaviour : RoomBehaviour
         {
             blockedGate.transform.GetChild(0).GetComponent<Animator>().SetTrigger("Close");
         }
+        MusicManager.instance.SwapTo(MUSIC_STATE.BOSS);
     }
 
     public Vector3 GetEnterDoorPosition()
