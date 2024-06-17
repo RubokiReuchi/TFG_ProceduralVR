@@ -59,6 +59,8 @@ public class PlayerState : MonoBehaviour
     [Header("Audio")]
     AudioManager audioManager;
 
+    float suicideTimer = 0.0f;
+
     private void Awake()
     {
         instance = this;
@@ -95,11 +97,16 @@ public class PlayerState : MonoBehaviour
     void Update()
     {
         // temp
-        if (temporalySaveGame.action.WasPressedThisFrame() || Input.GetKeyDown(KeyCode.Space))
+        if (temporalySaveGame.action.WasPerformedThisFrame())
         {
-            DataPersistenceManager.instance.NewGame();
-            DataPersistenceManager.instance.SaveGame();
+            suicideTimer += Time.deltaTime;
+            if (suicideTimer >= 5.0f)
+            {
+                TakeDamage(1000);
+                TakeDamage(1000);
+            }
         }
+        else suicideTimer = 0;
 
         if (leftHandPose == LEFT_HAND_POSE.OK && !shown)
         {
