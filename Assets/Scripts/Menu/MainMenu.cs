@@ -40,7 +40,7 @@ public class MainMenu : MonoBehaviour
     {
         if (!existingSaveFile)
         {
-            StartCoroutine(FadeOut(1)); // pre tutorial level
+            StartCoroutine(FadeOut(1, MUSIC_STATE.OFF_COMBAT)); // pre tutorial level
             platformAnimator.SetTrigger("Move");
             newGameAnimator.SetBool("Open", false);
             continueAnimator.SetBool("Open", false);
@@ -62,7 +62,7 @@ public class MainMenu : MonoBehaviour
 
     public void Continue()
     {
-        StartCoroutine(FadeOut(3)); // lobby level
+        StartCoroutine(FadeOut(3, MUSIC_STATE.LOBBY)); // lobby level
         platformAnimator.SetTrigger("Move");
         newGameAnimator.SetBool("Open", false);
         continueAnimator.SetBool("Open", false);
@@ -76,7 +76,7 @@ public class MainMenu : MonoBehaviour
         if (delete)
         {
             File.Delete(fullPath);
-            StartCoroutine(FadeOut(1)); // pre tutorial level
+            StartCoroutine(FadeOut(1, MUSIC_STATE.OFF_COMBAT)); // pre tutorial level
             platformAnimator.SetTrigger("Move");
             newGameAnimator.SetBool("Open", false);
             continueAnimator.SetBool("Open", false);
@@ -99,15 +99,22 @@ public class MainMenu : MonoBehaviour
         deleteAdviceAnimator.SetBool("Open", false);
     }
 
-    IEnumerator FadeOut(int level)
+    IEnumerator FadeOut(int level, MUSIC_STATE musicState)
     {
         yield return new WaitForSeconds(3.0f);
+
+        bool musicFadeDone = false;
 
         float opacity = 0.0f;
         while (opacity < 1)
         {
             opacity += Time.deltaTime * 0.5f;
             if (opacity > 1) opacity = 1;
+            else if (!musicFadeDone && opacity > 0.5f)
+            {
+                musicFadeDone = true;
+                MusicManager.instance.SwapTo(musicState);
+            }
             fadeMat.SetFloat("_Opacity", opacity);
             yield return null;
         }
