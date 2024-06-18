@@ -475,6 +475,7 @@ public class Mutant : Enemy
             {
                 FloatingDamageText text = GameObject.Instantiate(damageText, damageTextCenter.position + Vector3.one * Random.Range(-0.2f, 0.2f), Quaternion.identity).GetComponentInChildren<FloatingDamageText>();
                 text.damage = amount * 5.0f;
+                text.scaleMultiplier = 1.0f;
             }
             freezePercentage = 0;
             material.SetFloat("_FreezeInterpolation", 0);
@@ -494,6 +495,7 @@ public class Mutant : Enemy
             {
                 FloatingDamageText text = GameObject.Instantiate(damageText, damageTextCenter.position + Vector3.one * Random.Range(-0.2f, 0.2f), Quaternion.identity).GetComponentInChildren<FloatingDamageText>();
                 text.damage = amount;
+                text.scaleMultiplier = 1.0f;
             }
         }
 

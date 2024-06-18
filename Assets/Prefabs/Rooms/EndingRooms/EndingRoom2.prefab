@@ -6423,6 +6423,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnergyBarrier
       objectReference: {fileID: 0}
+    - target: {fileID: 4729258011054726855, guid: c747822659ab6d245ad175d49e4b04ec, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.44983578
+      objectReference: {fileID: 0}
+    - target: {fileID: 4729258011054726855, guid: c747822659ab6d245ad175d49e4b04ec, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.10694122
+      objectReference: {fileID: 0}
+    - target: {fileID: 4729258011054726855, guid: c747822659ab6d245ad175d49e4b04ec, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4729258011054726855, guid: c747822659ab6d245ad175d49e4b04ec, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4729258011054726855, guid: c747822659ab6d245ad175d49e4b04ec, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4729258011054726855, guid: c747822659ab6d245ad175d49e4b04ec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6251220198761279280, guid: c747822659ab6d245ad175d49e4b04ec, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -8297,6 +8321,10 @@ PrefabInstance:
     - target: {fileID: 7269995934568469828, guid: be3ec0cffbbba534bbbec0b9c5e2ab1d, type: 3}
       propertyPath: m_Text
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 8645944029345631191, guid: be3ec0cffbbba534bbbec0b9c5e2ab1d, type: 3}
+      propertyPath: m_Text
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
