@@ -239,7 +239,7 @@ public class PlayerSkills : MonoBehaviour, IDataPersistence
                 break;
             case SKILL_TYPE.BLOCKING_FIST:
                 blockingFistUnlocked = true;
-                if (blockingFistUnlocked) leftHandCollision.tag = "ShieldedHand";
+                leftHandCollision.tag = "ShieldedHand";
                 StatusMenuPoints.instance.panels[4].GetComponent<StatusMenuPanel>().UpdateInformation(0, null);
                 StatusMenuPoints.instance.SetExclamation(4);
                 break;

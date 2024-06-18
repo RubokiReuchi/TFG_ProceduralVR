@@ -60,6 +60,7 @@ public class PlayerState : MonoBehaviour
     AudioManager audioManager;
 
     float suicideTimer = 0.0f;
+    bool suicideTimerOn = false;
 
     private void Awake()
     {
@@ -97,7 +98,10 @@ public class PlayerState : MonoBehaviour
     void Update()
     {
         // temp
-        if (temporalySaveGame.action.WasPerformedThisFrame())
+
+        if (temporalySaveGame.action.WasPressedThisFrame()) suicideTimerOn = true;
+        else if (temporalySaveGame.action.WasReleasedThisFrame()) suicideTimerOn = false;
+        if (suicideTimerOn)
         {
             suicideTimer += Time.deltaTime;
             if (suicideTimer >= 5.0f)

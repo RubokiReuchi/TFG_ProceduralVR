@@ -18,6 +18,7 @@ public class EnergyBarrier : Barrier
     {
         gameObject.SetActive(true);
         StartCoroutine(Closeanim());
+        if (!source) source = GetComponent<AudioSource>();
         source.Play();
     }
 

@@ -14,9 +14,10 @@ public class OrbitalBall : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("ShieldedHand"))
+        if (other.attachedRigidbody.CompareTag("ShieldedHand"))
         {
             rotateAround.gameObject.SetActive(false);
+            AudioManager.instance.PlaySound("DeflectProjectile");
         }
     }
 }
