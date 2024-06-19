@@ -23,7 +23,7 @@ public class IncreaseDescription : MonoBehaviour
     static int numOfRows = 5;
     string[] titles = new string[numOfColumns];
     string[,] descriptions = new string[numOfColumns, numOfRows];
-    int[] prices = { 300, 700, 1400, 3000, 7000 };
+    int[] prices = { 50, 150, 250, 350, 450 };
     PlayerSkills inventory;
     LEVEL_UP selectedType;
 
