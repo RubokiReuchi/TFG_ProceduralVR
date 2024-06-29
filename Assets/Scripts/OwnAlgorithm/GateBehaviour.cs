@@ -85,6 +85,7 @@ public class GateBehaviour : MonoBehaviour
                 break;
             case GATE_STATE.BOSS:
                 OpenGate();
+                this.other.self.GetComponent<GateBehaviour>().OpenGate();
                 break;
             case GATE_STATE.DESTROYED:
             case GATE_STATE.NULL:

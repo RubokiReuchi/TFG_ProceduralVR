@@ -59,17 +59,17 @@ public class SettingsMenu : MonoBehaviour
     {
         audioManager = AudioManager.instance;
 
-        mixer.SetFloat("MasterVolume", Mathf.Log10(configData.master) * 20);
+        mixer.SetFloat("MasterVolume", (configData.master > 0.0f) ? Mathf.Log10(configData.master) * 20 : -80);
         volumeValues[0].text = (configData.master * 100).ToString();
-        mixer.SetFloat("MusicVolume", Mathf.Log10(configData.music) * 20);
+        mixer.SetFloat("MusicVolume", (configData.music > 0.0f) ? Mathf.Log10(configData.music) * 20 : -80);
         volumeValues[1].text = (configData.music * 100).ToString();
-        mixer.SetFloat("EfectsVolume", Mathf.Log10(configData.sfx) * 20);
+        mixer.SetFloat("EfectsVolume", (configData.sfx > 0.0f) ? Mathf.Log10(configData.sfx) * 20 : -80);
         volumeValues[2].text = (configData.sfx * 100).ToString();
-        mixer.SetFloat("ProjectileVolume", Mathf.Log10(configData.projectiles) * 20);
+        mixer.SetFloat("ProjectileVolume", (configData.projectiles > 0.0f) ? Mathf.Log10(configData.projectiles) * 20 : -80);
         volumeValues[3].text = (configData.projectiles * 100).ToString();
-        mixer.SetFloat("EnemiesVolume", Mathf.Log10(configData.enemies) * 20);
+        mixer.SetFloat("EnemiesVolume", (configData.enemies > 0.0f) ? Mathf.Log10(configData.enemies) * 20 : -80);
         volumeValues[4].text = (configData.enemies * 100).ToString();
-        mixer.SetFloat("EnviromentVolume", Mathf.Log10(configData.enviroment) * 20);
+        mixer.SetFloat("EnviromentVolume", (configData.enviroment > 0.0f) ? Mathf.Log10(configData.enviroment) * 20 : -80);
         volumeValues[5].text = (configData.enviroment * 100).ToString();
     }
 

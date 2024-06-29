@@ -29,10 +29,5 @@ public class SphereRobotExplosion : MonoBehaviour
             other.transform.root.GetComponent<PlayerState>().TakeDamage(damage);
             entityDamaged.Add(other.transform.root);
         }
-        else if (other.CompareTag("Enemy"))
-        {
-            other.transform.root.GetComponent<Enemy>().TakeDamage(damage);
-            entityDamaged.Add(other.transform.root);
-        }
     }
 }
