@@ -1,3 +1,3 @@
 # Gun Rush
 
-[Rubén_Ayora_Entrega_Final_TFG.pdf](https://github.com/user-attachments/files/16458496/Ruben_Ayora_Entrega_Final_TFG.pdf)
+[Gun_Rush_DevelopmentDocumentation.pdf](https://github.com/user-attachments/files/16458515/Gun_Rush_DevelopmentDocumentation.pdf)
